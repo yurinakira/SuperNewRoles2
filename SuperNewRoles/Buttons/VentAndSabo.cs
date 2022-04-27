@@ -43,6 +43,13 @@ namespace SuperNewRoles.Buttons
                 HudManager.Instance.ImpostorVentButton.Hide();
                 HudManager.Instance.SabotageButton.Hide();
 
+                if (AmongUsClient.Instance.AmHost)
+                {
+                    if (Patch.DebugMode.DebugManager.IsHide)
+                    {
+                        return;
+                    }
+                }
                 if (PlayerControl.LocalPlayer.IsUseVent())
                 {
                     HudManager.Instance.ImpostorVentButton.Show();

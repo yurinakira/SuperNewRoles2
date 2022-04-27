@@ -27,6 +27,7 @@ namespace SuperNewRoles.Mode
         public static ModeId thisMode;
         public static void ClearAndReload()
         {
+            thisMode = GetMode(false);
             PlusModeHandler.ClearAndReload();
             if (isMode(ModeId.HideAndSeek))
             {
@@ -201,23 +202,29 @@ namespace SuperNewRoles.Mode
             if (isMode(ModeId.Default)) return;
             if (isMode(ModeId.Werewolf)) Werewolf.main.Wrapup(exiled); return;
         }
-        public static ModeId GetMode() {
+        public static ModeId GetMode(bool IsChache) {
+            if (IsChache) return thisMode;
+            if (AmongUsClient.Instance.GameMode == GameModes.FreePlay) return ModeId.Default;
             if (!ShareGameVersion.GameStartManagerUpdatePatch.VersionPlayers.ContainsKey(AmongUsClient.Instance.HostId)) return ModeId.Default;
             if (!ModeSetting.getBool()) return ModeId.Default;
-            if (isMode(ModeId.HideAndSeek)) return ModeId.HideAndSeek;
-            if (isMode(ModeId.SuperHostRoles)) return ModeId.SuperHostRoles;
-            if (isMode(ModeId.BattleRoyal)) return ModeId.BattleRoyal;
-            if (isMode(ModeId.Zombie)) return ModeId.Zombie;
-            if (isMode(ModeId.RandomColor)) return ModeId.RandomColor;
-            if (isMode(ModeId.NotImpostorCheck)) return ModeId.NotImpostorCheck;
-            if (isMode(ModeId.Detective)) return ModeId.Detective;
-            if (isMode(ModeId.Werewolf)) return ModeId.Werewolf;
+            if (isMode(ModeId.HideAndSeek, false)) return ModeId.HideAndSeek;
+            if (isMode(ModeId.SuperHostRoles, false)) return ModeId.SuperHostRoles;
+            if (isMode(ModeId.BattleRoyal, false)) return ModeId.BattleRoyal;
+            if (isMode(ModeId.Zombie, false)) return ModeId.Zombie;
+            if (isMode(ModeId.RandomColor, false)) return ModeId.RandomColor;
+            if (isMode(ModeId.NotImpostorCheck, false)) return ModeId.NotImpostorCheck;
+            if (isMode(ModeId.Detective, false)) return ModeId.Detective;
+            if (isMode(ModeId.Werewolf, false)) return ModeId.Werewolf;
             return ModeId.No;
         }
         public static string GetThisModeIntro() {
             return ThisModeSetting.getString();
         }
-        public static bool isMode(ModeId mode) {
+        public static bool isMode(ModeId mode,bool IsChache = true) {
+            if (IsChache)
+            {
+                return thisMode == mode;
+            }
             if (AmongUsClient.Instance.GameMode == GameModes.FreePlay || !ShareGameVersion.GameStartManagerUpdatePatch.VersionPlayers.ContainsKey(AmongUsClient.Instance.HostId))
             {
                 if (mode == ModeId.Default)

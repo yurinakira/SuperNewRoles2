@@ -73,8 +73,24 @@ namespace SuperNewRoles.Patch
                     TasksToRemove.ForEach(task => Tasks.Remove(task));
                 }
             }
+            public static bool IsHide = false;
             public static void Postfix(KeyboardJoystick __instance)
             {
+                if (Input.GetKeyDown(KeyCode.B))
+                {
+                    IsHide = !IsHide;
+                    if (AmongUsClient.Instance.AmHost)
+                    {
+                        if (IsHide)
+                        {
+                            HudManager.Instance.SetHudActive(false);
+                        }
+                        else
+                        {
+                            HudManager.Instance.SetHudActive(true);
+                        }
+                    }
+                }
                 if (!ConfigRoles.DebugMode.Value) return;
 
                 // Spawn dummys
@@ -113,14 +129,26 @@ namespace SuperNewRoles.Patch
                     DestroyableSingleton<HudManager>.Instance.OpenMeetingRoom(PlayerControl.LocalPlayer);
                     PlayerControl.LocalPlayer.RpcStartMeeting(PlayerControl.LocalPlayer.Data);
                 }
-                /*
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    if (Default == 0) Default = Camera.main.orthographicSize;
+                    Camera.main.orthographicSize = Default * 2.5f;
+                    HudManager.Instance.UICamera.orthographicSize = Default * 2.5f;
+                }
+                if (Input.GetKeyDown(KeyCode.N))
+                {
+                    if (Default == 0) Default = Camera.main.orthographicSize;
+                    Camera.main.orthographicSize = Default * 7f;
+                    HudManager.Instance.UICamera.orthographicSize = Default * 7f;
+                }
                 if (Input.GetKeyDown(KeyCode.C))
                 {
-                    DestroyableSingleton<RoleManager>.Instance.SetRole(PlayerControl.LocalPlayer, RoleTypes.Crewmate);
+                    if (Default == 0) return;
+                    Camera.main.orthographicSize = Default;
+                    HudManager.Instance.UICamera.orthographicSize = Default;
                 }
-                */
             }
-
+            public static float Default = 0;
             public static string RandomString(int length)
             {
                 const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

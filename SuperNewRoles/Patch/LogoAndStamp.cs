@@ -55,6 +55,13 @@ namespace SuperNewRoles.Patches
             static void Postfix(PingTracker __instance)
             {
                 __instance.text.alignment = TMPro.TextAlignmentOptions.TopRight;
+                if (Patch.DebugMode.DebugManager.IsHide && AmongUsClient.Instance.AmHost)
+                {
+                    __instance.gameObject.SetActive(false);
+                } else
+                {
+                    __instance.gameObject.SetActive(true);
+                }
                 if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
                 {
 

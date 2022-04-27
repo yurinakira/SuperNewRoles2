@@ -24,6 +24,9 @@ namespace SuperNewRoles.Map.Agartha.Patch
                 } else if(name == StringNames.Reactor)
                 {
                     __result = ModTranslation.getString("Agartha_WorkRoom");
+                } else if (name == StringNames.Nav)
+                {
+                    __result = "全箇所共通";//ModTranslation.getString("Agartha_WorkRoom");
                 }
             }
         }

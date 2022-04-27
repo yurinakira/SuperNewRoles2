@@ -145,6 +145,13 @@ namespace SuperNewRoles.Map.Agartha.Patch
             GameObject.Destroy(Labo_Object_LaboTable_1.GetComponent<PolygonCollider2D>());
             Labo_Object_LaboTable_1.gameObject.AddComponent<PolygonCollider2D>();
 
+            Transform Object_brigde_front = GameObject.Instantiate(Template);
+            Object_brigde_front.position = new Vector3(13.8f, -0.44f, -10f);
+            Object_brigde_front.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_brigde_front");
+            Object_brigde_front.name = "Object_brigde_front";
+            Object_brigde_front.localScale *= 3.6f;
+            GameObject.Destroy(Object_brigde_front.GetComponent<PolygonCollider2D>());
+
             GameObject.Destroy(Template.gameObject);
             Template = null;
 

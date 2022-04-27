@@ -164,10 +164,6 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Airlock_AisleSeeObject1.Rotate(new Vector3(0, 261f, 100f));
         }
         static Transform AirlockParticle;
-        static Dictionary<string, SystemTypes> ChangeTasks =  new Dictionary<string, SystemTypes>()
-        {
-            { "EmptyGarbage",SystemTypes.LifeSupp },{ "EmptyFilterChute",SystemTypes.Laboratory}
-        };
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.OpenHatch))]
         class ab
         {
@@ -191,6 +187,16 @@ namespace SuperNewRoles.Map.Agartha.Patch
             List<NormalPlayerTask> CommonTasks = new List<NormalPlayerTask>();
             List<NormalPlayerTask> NormalTasks = new List<NormalPlayerTask>();
             List<NormalPlayerTask> LongTasks = new List<NormalPlayerTask>();
+
+            var NewTask = GameObject.Instantiate(ShipStatus.Instance.CommonTasks[0]);
+            NewTask.StartAt = SystemTypes.Laboratory;
+            NewTask.TaskType = TaskTypes.CleanToilet;
+            NewTask.HasLocation = NewTask.HasLocation;
+            NewTask.LocationDirty = NewTask.LocationDirty;
+            NewTask.Id = NewTask.Id;
+            NewTask.Index = NewTask.Index;
+            CommonTasks.Add(NewTask);
+
             foreach (NormalPlayerTask task in ShipStatus.Instance.CommonTasks)
             {
                 switch (task.name)
@@ -292,39 +298,46 @@ namespace SuperNewRoles.Map.Agartha.Patch
             }
             */
 
+            List<Console> newconsole = ShipStatus.Instance.AllConsoles.ToList();
+            foreach (Console console in AddConsoles)
+            {
+                newconsole.Add(console);
+            }
+            ShipStatus.Instance.AllConsoles = newconsole.ToArray();
+
             ShipStatus.Instance.CommonTasks = CommonTasks.ToArray();
             ShipStatus.Instance.NormalTasks = NormalTasks.ToArray();
             ShipStatus.Instance.LongTasks = LongTasks.ToArray();
 
             foreach (NormalPlayerTask task in ShipStatus.Instance.LongTasks)
             {
+                if (ChangeTasks.ContainsKey(task.name))
+                {
+                    task.StartAt = ChangeTasks[task.name];
+                }
                 SuperNewRolesPlugin.Logger.LogInfo("(L)"+task.name);
             }
             foreach (NormalPlayerTask task in ShipStatus.Instance.NormalTasks)
             {
+                if (ChangeTasks.ContainsKey(task.name))
+                {
+                    task.StartAt = ChangeTasks[task.name];
+                }
                 SuperNewRolesPlugin.Logger.LogInfo("(N)"+task.name);
             }
             foreach (NormalPlayerTask task in ShipStatus.Instance.CommonTasks)
             {
+                if (ChangeTasks.ContainsKey(task.name))
+                {
+                    task.StartAt = ChangeTasks[task.name];
+                }
                 SuperNewRolesPlugin.Logger.LogInfo("(C)" + task.name);
             }
-
-            List<Console> newconsole = ShipStatus.Instance.AllConsoles.ToList();
-            /*
-            foreach (Console console in newconsole) {
-                SuperNewRolesPlugin.Logger.LogInfo("コンソール名:"+console.name+":"+console.ConsoleId);
-            }
-            foreach (Console console in MapLoader.Airship.AllConsoles.ToList())
-            {
-                SuperNewRolesPlugin.Logger.LogInfo("(Airship)コンソール名:" + console.name);
-            }
-            */
-            foreach (Console console in AddConsoles)
-            {
-                newconsole.Add(console);
-            }
-            ShipStatus.Instance.AllConsoles = newconsole.ToArray();
         }
+        static Dictionary<string, SystemTypes> ChangeTasks = new Dictionary<string, SystemTypes>()
+        {
+            { "EmptyGarbage",SystemTypes.LifeSupp },{ "EmptyFilterChute",SystemTypes.Laboratory},{ "UploadNav" ,SystemTypes.Nav}
+        };
         public static void SetSabotage(Transform Miraship)
         {
             Transform O2_Locker = Miraship.FindChild("Locker").FindChild("NoOxyConsole");
