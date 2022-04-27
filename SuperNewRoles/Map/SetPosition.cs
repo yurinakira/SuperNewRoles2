@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using System;
 using UnityEngine;
 
 namespace SuperNewRoles.Map
@@ -24,7 +25,13 @@ namespace SuperNewRoles.Map
             [HarmonyPatch]
             public static void Postfix(ShipStatus __instance)
             {
-                ApplyChanges(__instance);
+                try
+                {
+                    ApplyChanges(__instance);
+                }
+                catch(Exception e) {
+                    SuperNewRolesPlugin.Logger.LogInfo("ShipStatusのAwakeエラー:"+e);
+                }
                 SuperNewRoles.Patch.SelectTask.IsAwakeEnd = true;
             }
         }

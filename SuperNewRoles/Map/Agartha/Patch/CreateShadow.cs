@@ -68,7 +68,13 @@ namespace SuperNewRoles.Map.Agartha.Patch
             //倉庫
             EdgeCollider2D WareHouseCol = Cafe.gameObject.AddComponent<EdgeCollider2D>();
             WareHouseCol.points = new Vector2[] {
-                new Vector2(-17f,-19f),new Vector2(-20f,-19f)
+                new Vector2(-19.3f,-12.5f),new Vector2(-19.3f,-17.3f),new Vector2(-26.35f,-17.3f),new Vector2(-26.35f,-4.6f),new Vector2(-23.95f,-4.6f),new Vector2(-23.95f,-3.75f),new Vector2(-26.35f,-3.75f),new Vector2(-26.35f,4f)
+            };
+
+            //倉庫
+            EdgeCollider2D WorkRoomCol = Cafe.gameObject.AddComponent<EdgeCollider2D>();
+            WorkRoomCol.points = new Vector2[] {
+                new Vector2(-26.35f,6f),new Vector2(-26.35f,9f),new Vector2(-19.3f,9f),new Vector2(-19.3f,2.6f)
             };
         }
     }
