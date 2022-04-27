@@ -72,9 +72,9 @@ namespace SuperNewRoles.Map
                     //倉庫階段
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
                            new Vector2[] {
-                               new Vector2(-21.4f,12.15f),new Vector2(-21f,12.15f),new Vector2(-19.9f,12.4f),
-                               new Vector2(-19.9f,13.6f),new Vector2(-19f,13.6f),new Vector2(-19f,3.85f),new Vector2(-19.9f,3.85f),
-                               new Vector2(-19.9f,4.4f),new Vector2(-21f,4.15f),new Vector2(-21.4f,4.15f)
+                               new Vector2(-21.4f,12f),new Vector2(-21f,12f),new Vector2(-19.9f,12.25f),
+                               new Vector2(-19.9f,13.45f),new Vector2(-19f,13.45f),new Vector2(-19f,3.25f),new Vector2(-19.9f,3.7f),
+                               new Vector2(-19.9f,4.25f),new Vector2(-21f,4f),new Vector2(-21.4f,4f)
                                //new Vector2(-20f,10.8f), new Vector2(-21f,10.55f), new Vector2(-21.4f,10.55f)
                            };
                     //倉庫階段2

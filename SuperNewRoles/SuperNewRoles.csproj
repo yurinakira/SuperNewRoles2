@@ -19,6 +19,7 @@
         <EmbeddedResource Include="Resources\CustomHats\*.png" />
 		<EmbeddedResource Include="Resources\*.png" />
 		<EmbeddedResource Include="Resources\Agartha\*.png" />
+		<EmbeddedResource Include="Resources\Agartha\Animation\*.png" />
 		<EmbeddedResource Include="Resources\*.json" />
         <EmbeddedResource Include="Resources\TricksterAnimation\*.png" />
     </ItemGroup>
@@ -30,7 +31,9 @@
 
     <ItemGroup>
       <Folder Include="Map\Agartha\新しいフォルダー\" />
+      <Folder Include="Map\新しいフォルダー\" />
       <Folder Include="Mode\新しいフォルダー\" />
+      <Folder Include="新しいフォルダー\" />
     </ItemGroup>
 
     <Target Name="CopyCustomContent" AfterTargets="AfterBuild">

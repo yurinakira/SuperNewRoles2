@@ -64,6 +64,12 @@ namespace SuperNewRoles.Map.Agartha.Patch
             ToolCol.points = new Vector2[] {
                 new Vector2(-14f,-13.68f),new Vector2(-17f,-13.68f),new Vector2(-17f,-17.55f),new Vector2(-9.95f,-17.55f),new Vector2(-9.95f,-13.68f),new Vector2(-12.2f,-13.68f)
             };
+
+            //倉庫
+            EdgeCollider2D WareHouseCol = Cafe.gameObject.AddComponent<EdgeCollider2D>();
+            WareHouseCol.points = new Vector2[] {
+                new Vector2(-17f,-19f),new Vector2(-20f,-19f)
+            };
         }
     }
 }

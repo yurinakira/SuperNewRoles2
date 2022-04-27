@@ -137,6 +137,8 @@ namespace SuperNewRoles.Map.Agartha.Patch
 
             Transform OfficeStant = MiraShip.FindChild("Office").FindChild("divertElevStand");
             OfficeStant.gameObject.SetActive(true);
+            GameObject.Destroy(OfficeStant.GetComponent<CircleCollider2D>());
+            GameObject.Destroy(OfficeStant.GetComponent<SpriteRenderer>());
             Transform DivertPowerConsole6 = OfficeStant.FindChild("DivertPowerConsoleOffice");
             DivertPowerConsole6.gameObject.SetActive(true);
             DivertPowerConsole6.GetComponent<Console>().ConsoleId = 6;
@@ -357,6 +359,8 @@ namespace SuperNewRoles.Map.Agartha.Patch
 
             Transform OfficeMid = Miraship.FindChild("Office").FindChild("office-mid");
             OfficeMid.gameObject.SetActive(true);
+            GameObject.Destroy(OfficeMid.GetComponent<BoxCollider2D>());
+            GameObject.Destroy(OfficeMid.GetComponent<SpriteRenderer>());
             Transform Comms_Ofice = OfficeMid.FindChild("FixCommsConsole");
             Comms_Ofice.gameObject.SetActive(true);
             Comms_Ofice.position = new Vector3(-1.1f, 23.5f, 0.1f);

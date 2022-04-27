@@ -96,6 +96,8 @@ namespace SuperNewRoles.Map.Agartha.Patch
         }
         public static void SetObject(Transform MiraShip)
         {
+            CustomAnimation.Animation.Animations = new List<CustomAnimation.Animation>();
+
             Transform CommsTop = MiraShip.FindChild("Comms").FindChild("comms-top");
             CommsTop.gameObject.GetChildren().SetActiveAllObject("", false);
             CommsTop.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_ComputerTable");
@@ -151,6 +153,17 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Object_brigde_front.name = "Object_brigde_front";
             Object_brigde_front.localScale *= 3.6f;
             GameObject.Destroy(Object_brigde_front.GetComponent<PolygonCollider2D>());
+
+            Transform Object_Projecter = GameObject.Instantiate(Template);
+            Object_Projecter.position = new Vector3(10.6f, 18.1f, 0.1f);
+            GameObject.Destroy(Object_Projecter.GetComponent<PolygonCollider2D>());
+            Object_Projecter.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Animation.pro_polygon");
+            Object_Projecter.gameObject.AddComponent<PolygonCollider2D>();
+            Object_Projecter.name = "Object_Projecter";
+            CustomAnimation.Animation Object_Projecter_Animation = new CustomAnimation.Animation();
+            Object_Projecter_Animation.Start(8, Object_Projecter);
+            Object_Projecter_Animation.Sprites = CustomAnimation.LoadSprites.GetSprites("SuperNewRoles.Resources.Agartha.Animation.pro",32);
+            Object_Projecter.localScale *= 2.5f;
 
             GameObject.Destroy(Template.gameObject);
             Template = null;
