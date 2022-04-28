@@ -83,7 +83,11 @@ namespace SuperNewRoles.CustomRPC
         SideKiller,
         MadKiller,
         Survivor,
-        MadMayor
+        MadMayor,
+        NiceHawk,
+        Bakery,
+        Neta,
+        MadStuntMan,
         //RoleId
     }
 
@@ -130,7 +134,8 @@ namespace SuperNewRoles.CustomRPC
         UncheckedSetVanilaRole,
         SetMadKiller,
         SetCustomSabotage,
-        UseStuntmanCount
+        UseStuntmanCount,
+        UseMadStuntmanCount,
     }
     public static class RPCProcedure
     {
@@ -514,6 +519,7 @@ namespace SuperNewRoles.CustomRPC
                 RoleClass.Jackal.SidekickPlayer.RemoveAt(i);
             }
             PlayerControlHepler.refreshRoleDescription(PlayerControl.LocalPlayer);
+            ChacheManager.ResetMyRoleChache();
         }
         public static void CreateSidekick(byte playerid,bool IsFake) {
             var player = ModHelpers.playerById(playerid);
@@ -528,6 +534,7 @@ namespace SuperNewRoles.CustomRPC
                 player.ClearRole();
                 RoleClass.Jackal.SidekickPlayer.Add(player);
                 PlayerControlHepler.refreshRoleDescription(PlayerControl.LocalPlayer);
+                ChacheManager.ResetMyRoleChache();
             }
         }
         public static void BomKillRPC(byte sourceId)

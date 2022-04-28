@@ -195,7 +195,7 @@ namespace SuperNewRoles.Map
                     BackGroundWalls.transform.position = new Vector3(2.8f, 18.6f, 100f);
                     BackGroundWalls.transform.localScale *= 100000f;
                     
-                    SpriteRenderer Walls = ShipStatus.Instantiate(CafeteriaWalls).gameObject.GetComponent<SpriteRenderer>();
+                    SpriteRenderer Walls = ShipStatus.Instantiate(CafeteriaWalls, MiraShip).gameObject.GetComponent<SpriteRenderer>();
                     Walls.name = "Walls";
                     Walls.sprite = Agartha.ImageManager.AgarthagetSprite("Map");
                     Walls.transform.position = new Vector3(4.95f, 12.5f, 5.1f);

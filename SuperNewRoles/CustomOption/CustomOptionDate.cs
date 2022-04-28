@@ -70,14 +70,14 @@ namespace SuperNewRoles.CustomOption
         public static CustomRoleOption SheriffOption;
         public static CustomOption SheriffPlayerCount;
         public static CustomOption SheriffCoolTime;
-        public static CustomOption SheriffMadMateKill;
+        public static CustomOption SheriffMadRoleKill;
         public static CustomOption SheriffNeutralKill;
         public static CustomOption SheriffLoversKill;
         public static CustomOption SheriffKillMaxCount;
 
         public static CustomRoleOption MeetingSheriffOption;
         public static CustomOption MeetingSheriffPlayerCount;
-        public static CustomOption MeetingSheriffMadMateKill;
+        public static CustomOption MeetingSheriffMadRoleKill;
         public static CustomOption MeetingSheriffNeutralKill;
         public static CustomOption MeetingSheriffKillMaxCount;
         public static CustomOption MeetingSheriffOneMeetingMultiKill;
@@ -349,6 +349,22 @@ namespace SuperNewRoles.CustomOption
         public static CustomOption MadMayorIsImpostorLight;
         public static CustomOption MadMayorVoteCount;
 
+        public static CustomRoleOption NiceHawkOption;
+        public static CustomOption NiceHawkPlayerCount;
+        public static CustomOption NiceHawkCoolTime;
+        public static CustomOption NiceHawkDurationTime;
+
+        public static CustomRoleOption MadStuntManOption;
+        public static CustomOption MadStuntManPlayerCount;
+        public static CustomOption MadStuntManIsUseVent;
+        public static CustomOption MadStuntManIsImpostorLight;
+        public static CustomOption MadStuntManIsCheckImpostor;
+        public static CustomOption MadStuntManCommonTask;
+        public static CustomOption MadStuntManShortTask;
+        public static CustomOption MadStuntManLongTask;
+        public static CustomOption MadStuntManCheckImpostorTask;
+        public static CustomOption MadStuntManMaxGuardCount;
+
         public static CustomOption QuarreledOption;
         public static CustomOption QuarreledTeamCount;
         public static CustomOption QuarreledOnlyCrewMate;
@@ -364,6 +380,9 @@ namespace SuperNewRoles.CustomOption
         public static CustomOption LoversCommonTask;
         public static CustomOption LoversLongTask;
         public static CustomOption LoversShortTask;
+
+        public static CustomOption BakeryOption;
+        public static CustomOption BakeryPlayerCount;
 
         private static string[] GuesserCount = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
         public static string[] LevelingerTexts = new string[] { };
@@ -454,15 +473,15 @@ namespace SuperNewRoles.CustomOption
             SheriffOption = new CustomRoleOption(26, "SheriffName", RoleClass.Sheriff.color, 1);
             SheriffPlayerCount = CustomOption.Create(27, cs(Color.white, "SettingPlayerCountName"), CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], SheriffOption);
             SheriffCoolTime = CustomOption.Create(28, ModTranslation.getString("SheriffCoolDownSetting"), 30f, 2.5f, 60f, 2.5f, SheriffOption, format: "unitSeconds");
-            SheriffNeutralKill = CustomOption.Create(173, ModTranslation.getString("SheriffIsKillMadMateSetting"), false, SheriffOption);
+            SheriffNeutralKill = CustomOption.Create(173, ModTranslation.getString("SheriffIsKillNewtralSetting"), false, SheriffOption);
             SheriffLoversKill = CustomOption.Create(258, ModTranslation.getString("SheriffIsKillLoversSetting"), false, SheriffOption);
-            SheriffMadMateKill = CustomOption.Create(29, ModTranslation.getString("SheriffIsKillNeutralSetting"), false, SheriffOption);
+            SheriffMadRoleKill = CustomOption.Create(29, ModTranslation.getString("SheriffIsKillMadRoleSetting"), false, SheriffOption);
             SheriffKillMaxCount = CustomOption.Create(30, ModTranslation.getString("SheriffMaxKillCountSetting"), 1f, 1f, 20f, 1, SheriffOption, format: "unitSeconds");
             
             MeetingSheriffOption = new CustomRoleOption(31, "MeetingSheriffName", RoleClass.MeetingSheriff.color, 1);
             MeetingSheriffPlayerCount = CustomOption.Create(32, cs(Color.white, "SettingPlayerCountName"), CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], MeetingSheriffOption);
             MeetingSheriffNeutralKill = CustomOption.Create(174, ModTranslation.getString("MeetingSheriffIsKillNeutralSetting"), false, MeetingSheriffOption);
-            MeetingSheriffMadMateKill = CustomOption.Create(33, ModTranslation.getString("MeetingSheriffIsKillMadMateSetting"), false, MeetingSheriffOption);
+            MeetingSheriffMadRoleKill = CustomOption.Create(33, ModTranslation.getString("MeetingSheriffIsKillMadRoleSetting"), false, MeetingSheriffOption);
             MeetingSheriffKillMaxCount = CustomOption.Create(201, ModTranslation.getString("MeetingSheriffMaxKillCountSetting"), 1f, 1f, 20f, 1f, MeetingSheriffOption, format: "unitSeconds");
             MeetingSheriffOneMeetingMultiKill = CustomOption.Create(35, ModTranslation.getString("MeetingSheriffMeetingmultipleKillSetting"), false, MeetingSheriffOption);
             
@@ -738,6 +757,16 @@ namespace SuperNewRoles.CustomOption
             MadMayorIsUseVent = CustomOption.Create(309, ModTranslation.getString("MadMayorUseVentSetting"), false, MadMayorOption);
             MadMayorIsImpostorLight = CustomOption.Create(310, ModTranslation.getString("MadMayorImpostorLightSetting"), false, MadMayorOption);
 
+            NiceHawkOption = new CustomRoleOption(311, "NiceHawkName", RoleClass.NiceHawk.color, 1);
+            NiceHawkPlayerCount = CustomOption.Create(312, cs(Color.white, "SettingPlayerCountName"), CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], NiceHawkOption);
+            NiceHawkCoolTime = CustomOption.Create(313, ModTranslation.getString("HawkCoolTimeSetting"), 15f, 1f, 120f, 2.5f, NiceHawkOption, format: "unitCouples");
+            NiceHawkDurationTime = CustomOption.Create(314, ModTranslation.getString("HawkDurationTimeSetting"), 5f, 1f, 60f, 2.5f, NiceHawkOption, format: "unitCouples");
+
+            MadStuntManOption = new CustomRoleOption(301, "MadStuntManName", RoleClass.ImpostorRed, 1);
+            MadStuntManPlayerCount = CustomOption.Create(302, cs(Color.white, "SettingPlayerCountName"), CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], MadStuntManOption);
+            MadStuntManIsUseVent = CustomOption.Create(309, ModTranslation.getString("MadMayorUseVentSetting"), false, MadStuntManOption);
+            MadStuntManIsImpostorLight = CustomOption.Create(310, ModTranslation.getString("MadStuntManImpostorLightSetting"), false, MadStuntManOption);
+
             QuarreledOption = CustomOption.Create(122, cs(RoleClass.Quarreled.color, "QuarreledName"), false, null, isHeader: true);
             QuarreledTeamCount = CustomOption.Create(124, cs(Color.white, "QuarreledTeamCountSetting"), QuarreledPlayers[0], QuarreledPlayers[1], QuarreledPlayers[2], QuarreledPlayers[3], QuarreledOption);
             QuarreledOnlyCrewMate = CustomOption.Create(123, cs(Color.white, "QuarreledOnlyCrewMateSetting"), false, QuarreledOption);
@@ -754,6 +783,9 @@ namespace SuperNewRoles.CustomOption
             LoversCommonTask = loversoption.Item1;
             LoversShortTask = loversoption.Item2;
             LoversLongTask = loversoption.Item3;
+
+            BakeryOption = new CustomRoleOption(311, "BakeryName", RoleClass.Bakery.color, 1);
+            BakeryPlayerCount = CustomOption.Create(312, cs(Color.white, "SettingPlayerCountName"), CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], BakeryOption);
 
             SuperNewRolesPlugin.Logger.LogInfo("設定のidのMax:"+CustomOption.Max);
         }
