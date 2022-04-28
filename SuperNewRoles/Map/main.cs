@@ -32,6 +32,10 @@ namespace SuperNewRoles.Map
             //ThisMap = CustomMapNames.Skeld;
             //ThisMap = CustomMapNameData[MapStringNames[PlayerControl.GameOptions.MapId]];
             //ThisMap = CustomMapNames.Agartha;
+            if (ThisMap == CustomMapNames.Agartha)
+            {
+                Agartha.Patch.Task.CustomDoorTask.DoorData = new Dictionary<int, int>();
+            }
         }
         public static bool IsMap(CustomMapNames map)
         {

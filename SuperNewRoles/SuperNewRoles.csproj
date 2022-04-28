@@ -19,6 +19,7 @@
         <EmbeddedResource Include="Resources\CustomHats\*.png" />
 		<EmbeddedResource Include="Resources\*.png" />
 		<EmbeddedResource Include="Resources\Agartha\*.png" />
+		<EmbeddedResource Include="Resources\Agartha\*.raw" />
 		<EmbeddedResource Include="Resources\Agartha\Animation\*.png" />
 		<EmbeddedResource Include="Resources\*.json" />
         <EmbeddedResource Include="Resources\TricksterAnimation\*.png" />

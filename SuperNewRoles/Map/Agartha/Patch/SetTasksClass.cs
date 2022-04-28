@@ -150,8 +150,9 @@ namespace SuperNewRoles.Map.Agartha.Patch
             AddConsoles.Add(Airlock_O2.GetComponent<Console>());
 
             Transform Airlock_Labo = GameObject.Instantiate(MapLoader.Skeld.transform.FindChild("Cafeteria").FindChild("Ground").FindChild("GarbageConsole"));
+            Airlock_Labo.name = "Labo_GarbageConsole";
             Airlock_Labo.GetComponent<Console>().ConsoleId = 1;
-            //Airlock_Labo.position = new Vector3(19.4f, 8f, 4f);
+            Airlock_Labo.position = new Vector3(19.4f, 8f, 4f);
             AddConsoles.Add(Airlock_Labo.GetComponent<Console>());
 
             Transform Airlock_Aisle1 = GameObject.Instantiate(MapLoader.Skeld.transform.FindChild("Storage").FindChild("Ground").FindChild("AirlockConsole"));
@@ -189,15 +190,6 @@ namespace SuperNewRoles.Map.Agartha.Patch
             List<NormalPlayerTask> CommonTasks = new List<NormalPlayerTask>();
             List<NormalPlayerTask> NormalTasks = new List<NormalPlayerTask>();
             List<NormalPlayerTask> LongTasks = new List<NormalPlayerTask>();
-
-            var NewTask = GameObject.Instantiate(ShipStatus.Instance.CommonTasks[0]);
-            NewTask.StartAt = SystemTypes.Laboratory;
-            NewTask.TaskType = TaskTypes.CleanToilet;
-            NewTask.HasLocation = NewTask.HasLocation;
-            NewTask.LocationDirty = NewTask.LocationDirty;
-            NewTask.Id = NewTask.Id;
-            NewTask.Index = NewTask.Index;
-            CommonTasks.Add(NewTask);
 
             foreach (NormalPlayerTask task in ShipStatus.Instance.CommonTasks)
             {

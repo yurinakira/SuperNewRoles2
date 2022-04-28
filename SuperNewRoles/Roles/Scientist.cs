@@ -92,10 +92,8 @@ namespace SuperNewRoles.Roles
             {
                 if (AmongUsClient.Instance.GameState != AmongUsClient.GameStates.Started) return;
                 if (!ModeHandler.isMode(ModeId.Default)) return;
-                SuperNewRolesPlugin.Logger.LogInfo(Patch.DebugMode.DebugManager.IsHide+":"+__instance.myPlayer.PlayerId);
                 if ((Patch.DebugMode.DebugManager.IsHide && __instance.myPlayer.PlayerId == 0) || __instance.myPlayer.isRole(CustomRPC.RoleId.EvilScientist) || __instance.myPlayer.isRole(CustomRPC.RoleId.NiceScientist))
                 {
-                    SuperNewRolesPlugin.Logger.LogInfo("通過");
                     var Scientist = __instance.myPlayer;
                     if (Scientist == null || Scientist.isDead()) return;
                     var ison = RoleClass.NiceScientist.IsScientistPlayers.ContainsKey(__instance.myPlayer.PlayerId) && GameData.Instance && RoleClass.NiceScientist.IsScientistPlayers[__instance.myPlayer.PlayerId];

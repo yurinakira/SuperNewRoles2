@@ -165,6 +165,13 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Object_Projecter_Animation.Sprites = CustomAnimation.LoadSprites.GetSprites("SuperNewRoles.Resources.Agartha.Animation.pro",32);
             Object_Projecter.localScale *= 2.5f;
 
+            Transform Object_fence_1 = GameObject.Instantiate(Template);
+            Object_fence_1.position = new Vector3(15f, 22f, -2f);
+            Object_fence_1.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_fence_1");
+            Object_fence_1.name = "Object_fence_1";
+            Object_fence_1.localScale *= 3.8f;
+            GameObject.Destroy(Object_fence_1.GetComponent<PolygonCollider2D>());
+
             GameObject.Destroy(Template.gameObject);
             Template = null;
 
