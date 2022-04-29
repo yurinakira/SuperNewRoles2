@@ -299,6 +299,7 @@ namespace SuperNewRoles.CustomOption
             var snrSettings = UnityEngine.Object.Instantiate(gameSettings, gameSettings.transform.parent);
             var torMenu = snrSettings.transform.FindChild("GameGroup").FindChild("SliderInner").GetComponent<GameOptionsMenu>();
             snrSettings.name = "SNRSettings";
+            torMenu.name = "SNRSettingsMenu";
 
             var roleTab = GameObject.Find("RoleTab");
             var gameTab = GameObject.Find("GameTab");
@@ -458,7 +459,7 @@ namespace SuperNewRoles.CustomOption
         private static float timer = 1f;
         public static void Postfix(GameOptionsMenu __instance)
         {
-            if (__instance.Children.Length < 30) return; // TODO: Introduce a cleaner way to seperate the TOR settings from the game settings
+            if (__instance.name != "SNRSettingsMenu") return; // TODO: Introduce a cleaner way to seperate the TOR settings from the game settings
            
             timer += Time.deltaTime;
             if (timer < 0.1f) return;

@@ -57,18 +57,29 @@ namespace SuperNewRoles.Map.Agartha.Patch
             {
                 scale = new Vector3(1,1,1);
             }
-            PlainDoor door = GameObject.Instantiate(MapLoader.Airship.AllDoors[index]);
+            PlainDoor door = GameObject.Instantiate(MapLoader.Airship.AllDoors[index],miraship);
             door.transform.localScale = (Vector3)scale;
             door.transform.position = position;
             door.Id = id;
             new LateTask(() =>
             {
-                door.SetDoorway(false);
-            }, 4f, "SetDummyPosition");
+                //door.SetDoorway(false);
+            }, 0.1f, "SetDummyPosition");
             return door;
         }
+        [HarmonyLib.HarmonyPatch(typeof(PlainDoor),nameof(PlainDoor.Start))]
+        class start
+        {
+            public static void Postfix(PlainDoor __instance)
+            {
+                __instance.GetComponent<SpriteRenderer>().sprite = ImageManager.Object_Door_Open;
+                GameObject.Destroy(__instance.animator);
+            }
+        }
+        public static Transform miraship;
         public static void SetDoor()//Transform Miraship)
         {
+            
             List<PlainDoor> doors = new List<PlainDoor>();
             doors.Add(CreateDoor(new Vector3(13.5f, 20.55f, 7f),new Vector3(0.85f,0.75f,0.75f),0));
             doors.Add(CreateDoor(new Vector3(0.03f, 20.5f, 4f),new Vector3(0.95f,0.8f,1f),1));
@@ -96,8 +107,6 @@ namespace SuperNewRoles.Map.Agartha.Patch
         }
         public static void SetObject(Transform MiraShip)
         {
-            CustomAnimation.Animation.Animations = new List<CustomAnimation.Animation>();
-
             Transform CommsTop = MiraShip.FindChild("Comms").FindChild("comms-top");
             CommsTop.gameObject.GetChildren().SetActiveAllObject("", false);
             CommsTop.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_ComputerTable");
@@ -113,33 +122,33 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Template.gameObject.SetActive(true);
             Template.localScale *= 0.5f;
 
-            Transform Labo_Object_fossil_1 = GameObject.Instantiate(Template);
+            Transform Labo_Object_fossil_1 = GameObject.Instantiate(Template, MiraShip);
             Labo_Object_fossil_1.position = new Vector3(19.8f, 3.225f, 0.1f);
             Labo_Object_fossil_1.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_fossil_1");
             Labo_Object_fossil_1.gameObject.AddComponent<PolygonCollider2D>();
             Labo_Object_fossil_1.name = "Object_fossil_1";
 
-            Transform Labo_Object_fossil_2 = GameObject.Instantiate(Template);
+            Transform Labo_Object_fossil_2 = GameObject.Instantiate(Template, MiraShip);
             Labo_Object_fossil_2.position = new Vector3(20.9f, 3.25f, 0.1f);
             Labo_Object_fossil_2.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_fossil_2");
             Labo_Object_fossil_2.gameObject.AddComponent<PolygonCollider2D>();
             Labo_Object_fossil_2.name = "Object_fossil_2";
 
-            Transform Labo_Object_kitchen_1 = GameObject.Instantiate(Template);
+            Transform Labo_Object_kitchen_1 = GameObject.Instantiate(Template, MiraShip);
             Labo_Object_kitchen_1.position = new Vector3(20.7f, 9.2f, 0.1f);
             Labo_Object_kitchen_1.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_kitchen_1");
             Labo_Object_kitchen_1.gameObject.AddComponent<PolygonCollider2D>();
             Labo_Object_kitchen_1.name = "Object_kitchen_1";
             Labo_Object_kitchen_1.localScale *= 1.75f;
 
-            Transform Labo_Object_shelves_1 = GameObject.Instantiate(Template);
+            Transform Labo_Object_shelves_1 = GameObject.Instantiate(Template, MiraShip);
             Labo_Object_shelves_1.position = new Vector3(22.8f, 9f, 0.1f);
             Labo_Object_shelves_1.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_shelves_1");
             Labo_Object_shelves_1.gameObject.AddComponent<PolygonCollider2D>();
             Labo_Object_shelves_1.name = "Object_shelves_1";
             Labo_Object_shelves_1.localScale *= 1.75f;
 
-            Transform Labo_Object_LaboTable_1 = GameObject.Instantiate(Template);
+            Transform Labo_Object_LaboTable_1 = GameObject.Instantiate(Template, MiraShip);
             Labo_Object_LaboTable_1.position = new Vector3(21f, 7.25f, 0.1f);
             Labo_Object_LaboTable_1.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_LaboTable_1");
             Labo_Object_LaboTable_1.name = "Object_LaboTable_1";
@@ -147,14 +156,14 @@ namespace SuperNewRoles.Map.Agartha.Patch
             GameObject.Destroy(Labo_Object_LaboTable_1.GetComponent<PolygonCollider2D>());
             Labo_Object_LaboTable_1.gameObject.AddComponent<PolygonCollider2D>();
 
-            Transform Object_brigde_front = GameObject.Instantiate(Template);
+            Transform Object_brigde_front = GameObject.Instantiate(Template, MiraShip);
             Object_brigde_front.position = new Vector3(13.8f, -0.44f, -10f);
             Object_brigde_front.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_brigde_front");
             Object_brigde_front.name = "Object_brigde_front";
             Object_brigde_front.localScale *= 3.6f;
             GameObject.Destroy(Object_brigde_front.GetComponent<PolygonCollider2D>());
 
-            Transform Object_Projecter = GameObject.Instantiate(Template);
+            Transform Object_Projecter = GameObject.Instantiate(Template, MiraShip);
             Object_Projecter.position = new Vector3(10.6f, 18.1f, 0.1f);
             GameObject.Destroy(Object_Projecter.GetComponent<PolygonCollider2D>());
             Object_Projecter.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Animation.pro_polygon");
@@ -165,7 +174,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Object_Projecter_Animation.Sprites = CustomAnimation.LoadSprites.GetSprites("SuperNewRoles.Resources.Agartha.Animation.pro",32);
             Object_Projecter.localScale *= 2.5f;
 
-            Transform Object_fence_1 = GameObject.Instantiate(Template);
+            Transform Object_fence_1 = GameObject.Instantiate(Template,MiraShip);
             Object_fence_1.position = new Vector3(15f, 22f, -2f);
             Object_fence_1.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_fence_1");
             Object_fence_1.name = "Object_fence_1";

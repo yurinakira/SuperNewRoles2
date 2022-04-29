@@ -32,6 +32,8 @@ namespace SuperNewRoles.Map.Agartha.Patch
             UpObject.transform.localPosition = new Vector3(0f, 14.75f, 1002f);
             UpObject.transform.localScale = new Vector3(0.75f, 0.75f, 1.5f);
             UpGameObject.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("CustomExilePlayer_Up");
+
+            //AudioSource ExileSound = SoundManager.Instance.PlaySound(ModHelpers.loadAudioClipFromResources("SuperNewRoles.Resources.Agartha.ExileSound.raw"), true, 0.11f);
             if (ExileController.Instance.exiled != null)
             {
                 while (UpGameObject.transform.localPosition.y > 8.7f)
@@ -40,6 +42,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
                     Player.transform.localPosition += new Vector3(0, -0.06f, 0);
                     yield return null;
                 }
+                //ExileSound.Stop();
                 while (!IsEnd)
                 {
                     if (Time.deltaTime > 0)
@@ -57,7 +60,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
                 }
             }else
             {
-                yield return Effects.Slide2D(Background, new Vector2(0f, -3f), new Vector2(0f, 1.5f), 4.5f);
+                yield return Effects.Slide2D(Background, new Vector2(0f, -3f), new Vector2(0f, 3f), 4.5f);
             }
             ExileController.Instance.Player.gameObject.SetActive(false);
         }
@@ -190,8 +193,8 @@ namespace SuperNewRoles.Map.Agartha.Patch
 
                 if (__instance.exiled == null)
                 {
-                    BackUpTime = 2f;
-                    TextPlusTime = 1f;
+                    BackUpTime = 1.0f;
+                    TextPlusTime = 0.5f;
                 } else
                 {
                     BackUpTime = 2.75f;
@@ -226,6 +229,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             {
                 TaskBar.Instance.gameObject.SetActive(true);
             }
+            
             IsEnd = true;
         }
         [HarmonyPatch(typeof(MiraExileController), nameof(MiraExileController.Animate))]

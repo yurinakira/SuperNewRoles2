@@ -43,7 +43,6 @@ namespace SuperNewRoles.CustomAnimation
             if (Updatetime <= 0)
             {
                 render.sprite = Sprites[index];
-                SuperNewRolesPlugin.Logger.LogInfo(index);
                 index++;
                 if (Sprites.Length <= index)
                 {

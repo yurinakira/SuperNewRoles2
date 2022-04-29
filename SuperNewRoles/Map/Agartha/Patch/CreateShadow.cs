@@ -14,13 +14,10 @@ namespace SuperNewRoles.Map.Agartha.Patch
             int i = 0;
             foreach (EdgeCollider2D col in Cafe.GetComponents<EdgeCollider2D>())
             {
-                i++;
-                if (i < 5)
-                {
-                    GameObject.Destroy(col);
-                }
+                GameObject.Destroy(col);
             }
             Cafe.gameObject.SetActive(true);
+
             EdgeCollider2D CafeCol = Cafe.gameObject.AddComponent<EdgeCollider2D>();
             CafeCol.points = new Vector2[] { new Vector2(1f, 4.95f), new Vector2(3.85f, 4.95f), new Vector2(3.85f, -5.45f), new Vector2(-3.665f, -5.45f), new Vector2(-3.65f, -1.8f) };
             EdgeCollider2D CafeCol2 = Cafe.gameObject.AddComponent<EdgeCollider2D>();
@@ -37,9 +34,9 @@ namespace SuperNewRoles.Map.Agartha.Patch
 
             //EdgeCollider2D CafeAisleCol1 = Cafe.gameObject.AddComponent<EdgeCollider2D>();
             //CafeAisleCol1.points = new Vector2[] { new Vector2(-3.65f, 0.785f), new Vector2(-5.15f, 0.785f), new Vector2(-5.15f, 5.7f), new Vector2(-0.85f, 5.7f), new Vector2(-0.85f, 5f) };
-            
+
             EdgeCollider2D AdminAisleCol1 = Cafe.gameObject.AddComponent<EdgeCollider2D>();
-            AdminAisleCol1.points = new Vector2[] {  new Vector2(-5.15f, -9.33f), new Vector2(-3.75f, -9.33f), new Vector2(-3.775f, -8.5f), new Vector2(-2.95f, -7.7f), new Vector2(-0.1f, -7.7f), new Vector2(-0.1f, -12.8f), new Vector2(-3.75f, -12.8f), new Vector2(-3.75f, -11.8f), new Vector2(-5.04f, -11.8f) };
+            AdminAisleCol1.points = new Vector2[] { new Vector2(-5.15f, -9.33f), new Vector2(-3.75f, -9.33f), new Vector2(-3.775f, -8.5f), new Vector2(-2.95f, -7.7f), new Vector2(-0.1f, -7.7f), new Vector2(-0.1f, -12.8f), new Vector2(-3.75f, -12.8f), new Vector2(-3.75f, -11.8f), new Vector2(-5.04f, -11.8f) };
 
             //通信室
             EdgeCollider2D CommsCol = Cafe.gameObject.AddComponent<EdgeCollider2D>();
@@ -71,10 +68,16 @@ namespace SuperNewRoles.Map.Agartha.Patch
                 new Vector2(-19.3f,-12.5f),new Vector2(-19.3f,-17.3f),new Vector2(-26.35f,-17.3f),new Vector2(-26.35f,-4.6f),new Vector2(-23.95f,-4.6f),new Vector2(-23.95f,-3.75f),new Vector2(-26.35f,-3.75f),new Vector2(-26.35f,4f)
             };
 
-            //倉庫
+            //作業
             EdgeCollider2D WorkRoomCol = Cafe.gameObject.AddComponent<EdgeCollider2D>();
             WorkRoomCol.points = new Vector2[] {
                 new Vector2(-26.35f,6f),new Vector2(-26.35f,9f),new Vector2(-19.3f,9f),new Vector2(-19.3f,2.6f)
+            };
+
+            //倉庫&作業(右)
+            EdgeCollider2D WorkAndWareCol = Cafe.gameObject.AddComponent<EdgeCollider2D>();
+            WorkAndWareCol.points = new Vector2[] {
+                new Vector2(-19.3f,0.5f),new Vector2(-19.3f,-3.75f),new Vector2(-21.9f,-3.75f),new Vector2(-21.9f,-4.625f),new Vector2(-19.3f,-4.625f),new Vector2(-19.3f,-10.1f)
             };
         }
     }

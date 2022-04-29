@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SuperNewRoles.Map
@@ -21,10 +22,9 @@ namespace SuperNewRoles.Map
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Awake))]
         public static class ShipStatusAwakePatch
         {
-            [HarmonyPostfix]
-            [HarmonyPatch]
             public static void Postfix(ShipStatus __instance)
             {
+                CustomAnimation.Animation.Animations = new List<CustomAnimation.Animation>();
                 try
                 {
                     ApplyChanges(__instance);
@@ -44,10 +44,12 @@ namespace SuperNewRoles.Map
                     SuperNewRolesPlugin.Logger.LogInfo("Awakeを実行！");
                     Transform MiraShip = GameObject.Find("MiraShip(Clone)").transform;
 
+                    Agartha.Patch.SetPosition.miraship = MiraShip;
+
                     Agartha.Patch.SetPosition.SetCamera();
 
                     Transform Wall = MiraShip.FindChild("Walls");
-
+                    
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
                         new Vector2[] { new Vector2(-6.25f, 3f), new Vector2(10f, 3f), new Vector2(10f, 6f), new Vector2(12f, 6f), new Vector2(12f, 23.5f), new Vector2(11f, 23.5f), new Vector2(11f, 27.4f), new Vector2(-6.25f, 27.4f), new Vector2(-6.25f, 22f),
                             new Vector2(-11.8f, 22f), new Vector2(-11.8f, 24f), new Vector2(-10.5f, 24f), new Vector2(-10.5f, 26.7f), new Vector2(-15.5f, 26.7f), new Vector2(-15.5f, 24f), new Vector2(-13.3f, 24f), new Vector2(-13.3f, 22f), new Vector2(-19f, 22f), new Vector2(-19f, 26.7f), new Vector2(-25.3f, 26.7f), new Vector2(-25.3f, 16f),
@@ -79,16 +81,14 @@ namespace SuperNewRoles.Map
                     //倉庫階段
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
                            new Vector2[] {
-                               new Vector2(-21.4f,12f),new Vector2(-21f,12f),new Vector2(-19.9f,12.25f),
-                               new Vector2(-19.9f,13.45f),new Vector2(-19f,13.45f),new Vector2(-19f,3.25f),new Vector2(-19.9f,3.7f),
-                               new Vector2(-19.9f,4.25f),new Vector2(-21f,4f),new Vector2(-21.4f,4f)
-                               //new Vector2(-20f,10.8f), new Vector2(-21f,10.55f), new Vector2(-21.4f,10.55f)
+                               new Vector2(-21.4f,12.55f),new Vector2(-21f,12.55f),new Vector2(-20.2f,12.8f),new Vector2(-20.2f,12.9f),new Vector2(-19f,12.9f)
                            };
                     //倉庫階段2
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
                            new Vector2[] {
                                new Vector2(-21.4f,5f),new Vector2(-21f,5f),new Vector2(-19.9f,5.2f)
                            };
+                    
                     SuperNewRolesPlugin.Logger.LogInfo("オールドア:" + ShipStatus.Instance.AllDoors.Length);
 
                     SpriteRenderer CafeteriaWalls = Wall.FindChild("CafeteriaWalls").gameObject.GetComponent<SpriteRenderer>();
@@ -196,7 +196,7 @@ namespace SuperNewRoles.Map
                     BackGroundWalls.transform.localScale *= 100000f;
                     
                     SpriteRenderer Walls = ShipStatus.Instantiate(CafeteriaWalls, MiraShip).gameObject.GetComponent<SpriteRenderer>();
-                    Walls.name = "Walls";
+                    Walls.name = "WallImages";
                     Walls.sprite = Agartha.ImageManager.AgarthagetSprite("Map");
                     Walls.transform.position = new Vector3(4.95f, 12.5f, 5.1f);
                     Walls.transform.localScale = new Vector3(1.81f,1.81f,1.81f);

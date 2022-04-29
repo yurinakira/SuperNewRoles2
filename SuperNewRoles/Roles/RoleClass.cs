@@ -32,6 +32,10 @@ namespace SuperNewRoles.Roles
         public static void clearAndReloadRoles()
         {
             Patch.SelectTask.IsAwakeEnd = false;
+            if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started && AmongUsClient.Instance.GameMode != GameModes.FreePlay)
+            {
+                CustomAnimation.Animation.Animations = new List<CustomAnimation.Animation>();
+            };
             IsMeeting = false;
             IsCoolTimeSetted = false;
             IsStart = false;
