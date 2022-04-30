@@ -98,7 +98,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             ChangeRoomArea.ChangeAdmin(MapObject);
             //Camera.main.orthographicSize = Camera.main.orthographicSize * 6f;
             //HudManager.Instance.UICamera.orthographicSize *= 6f;
-            GameObject.Find("Main Camera").transform.FindChild("ShadowQuad").gameObject.SetActive(false);
+            //GameObject.Find("Main Camera").transform.FindChild("ShadowQuad").gameObject.SetActive(false);
         }
     }
 }

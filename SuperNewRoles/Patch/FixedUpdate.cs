@@ -90,6 +90,7 @@ namespace SuperNewRoles.Patch
                     else if (ModeHandler.isMode(ModeId.Default))
                     {
                         SabotageManager.Update();
+                        Map.Data.Update();
                         SetNameUpdate.Postfix(__instance);
                         Jackal.JackalFixedPatch.Postfix(__instance);
                         if (PlayerControl.LocalPlayer.isAlive())

@@ -58,9 +58,6 @@ namespace SuperNewRoles.Patches
                 if (Patch.DebugMode.DebugManager.IsHide && AmongUsClient.Instance.AmHost)
                 {
                     __instance.gameObject.SetActive(false);
-                } else
-                {
-                    __instance.gameObject.SetActive(true);
                 }
                 if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
                 {

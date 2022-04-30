@@ -78,17 +78,22 @@ namespace SuperNewRoles.Map
                                new Vector2(-10f, 18.5f), new Vector2(-11.65f, 18.5f), new Vector2(-11.65f, 20f), new Vector2(-6.15f, 20f),new Vector2(-6.15f, 9f)
                            };
 
-                    //倉庫階段
+                    //倉庫階段右1
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
                            new Vector2[] {
                                new Vector2(-21.4f,12.55f),new Vector2(-21f,12.55f),new Vector2(-20.2f,12.8f),new Vector2(-20.2f,12.9f),new Vector2(-19f,12.9f)
                            };
-                    //倉庫階段2
+                    //倉庫階段右2
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
                            new Vector2[] {
-                               new Vector2(-21.4f,5f),new Vector2(-21f,5f),new Vector2(-19.9f,5.2f)
+                               new Vector2(-19f,3.35f),new Vector2(-20.2f,3.35f),new Vector2(-20.2f,0f),new Vector2(-20.2f,3.9f),new Vector2(-21f,3.65f),new Vector2(-21.4f,3.65f)
                            };
-                    
+                    //倉庫階段右3
+                    Wall.gameObject.AddComponent<EdgeCollider2D>().points =
+                           new Vector2[] {
+                               new Vector2(-21.4f,4.8f),new Vector2(-21f,4.8f),new Vector2(-20.2f,5.05f),new Vector2(-20.2f,11.6f), new Vector2(-21f,11.3f),new Vector2(-21.4f,11.3f),
+                           };
+
                     SuperNewRolesPlugin.Logger.LogInfo("オールドア:" + ShipStatus.Instance.AllDoors.Length);
 
                     SpriteRenderer CafeteriaWalls = Wall.FindChild("CafeteriaWalls").gameObject.GetComponent<SpriteRenderer>();
@@ -198,7 +203,7 @@ namespace SuperNewRoles.Map
                     SpriteRenderer Walls = ShipStatus.Instantiate(CafeteriaWalls, MiraShip).gameObject.GetComponent<SpriteRenderer>();
                     Walls.name = "WallImages";
                     Walls.sprite = Agartha.ImageManager.AgarthagetSprite("Map");
-                    Walls.transform.position = new Vector3(4.95f, 12.5f, 5.1f);
+                    Walls.transform.position = new Vector3(4.95f, 12.5f, 7f);
                     Walls.transform.localScale = new Vector3(1.81f,1.81f,1.81f);
 
                     GameObject.Destroy(CafeteriaWalls);

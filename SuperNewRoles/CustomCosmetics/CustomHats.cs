@@ -210,10 +210,10 @@ namespace SuperNewRoles.CustomCosmetics
 
             static void Prefix(HatManager __instance)
             {
-                /*
+                
                 if (RUNNING) return;
                 RUNNING = true; // prevent simultanious execution
-                */
+                
                 try
                 {
                     if (!LOADED)

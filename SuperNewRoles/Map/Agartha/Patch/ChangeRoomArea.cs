@@ -9,22 +9,26 @@ namespace SuperNewRoles.Map.Agartha.Patch
     {
         public static void Change(Transform MiraShip)
         {
+            //会議室
             Transform Cafe = MiraShip.FindChild("Cafe");
             PolygonCollider2D CafeCol = Cafe.gameObject.GetComponent<PolygonCollider2D>();
             CafeCol.points = new Vector2[] { new Vector2(1f, 4.9f), new Vector2(3.45f, 4.9f), new Vector2(3.45f, -5.15f), new Vector2(-3.45f, -5.15f), new Vector2(-3.45f, -1.8f), new Vector2(-3.42f, -0.4f), new Vector2(-3.2f, 3.3f), new Vector2(-1.65f, 5f), new Vector2(-0.3f, 5f), new Vector2(1f, 4.9f) };
 
+            //コミュ
             Transform Comms = MiraShip.FindChild("Comms");
             PolygonCollider2D CommsCol = Comms.gameObject.AddComponent<PolygonCollider2D>();
             CommsCol.isTrigger = true;
             CommsCol.points = new Vector2[] {new Vector2(-18.5f,19.5f), new Vector2(-18.5f, 16.7f),new Vector2(-13.5f, 16.7f), new Vector2(-13.5f, 19.5f), new Vector2(-18.5f, 19.5f) };
             Comms.GetComponent<SkeldShipRoom>().roomArea = CommsCol;
 
+            //医務室
             Transform MedBay = MiraShip.FindChild("MedBay");
             PolygonCollider2D MedBayCol = MedBay.gameObject.AddComponent<PolygonCollider2D>();
             MedBayCol.isTrigger = true;
             MedBayCol.points = new Vector2[] { new Vector2(-19f, 15f), new Vector2(-19f, 12.2f), new Vector2(-12.5f, 12.2f), new Vector2(-12.5f, 15f), new Vector2(-19f, 15f) };
             MedBay.GetComponent<SkeldShipRoom>().roomArea = MedBayCol;
 
+            //仕事場
             Transform Reactor = MiraShip.FindChild("Reactor");
             PolygonCollider2D ToolRoomCol = Reactor.gameObject.AddComponent<PolygonCollider2D>();
             ToolRoomCol.isTrigger = true;

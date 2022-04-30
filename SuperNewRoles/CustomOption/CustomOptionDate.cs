@@ -744,9 +744,9 @@ namespace SuperNewRoles.CustomOption
             SurvivorPlayerCount = CustomOption.Create(294, cs(Color.white, "SettingPlayerCountName"), ImpostorPlayers[0], ImpostorPlayers[1], ImpostorPlayers[2], ImpostorPlayers[3], SurvivorOption);
             SurvivorKillCoolTime = CustomOption.Create(295, cs(Color.white, "SurvivorKillCoolTimeSetting"), 15f, 0f, 75f, 2.5f, SurvivorOption);
 
-            MadMayorOption = new CustomRoleOption(301, "MadMayorName", RoleClass.ImpostorRed, 1);
-            MadMayorPlayerCount = CustomOption.Create(302, cs(Color.white, "SettingPlayerCountName"), CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], MadMayorOption);
-            MadMayorVoteCount = CustomOption.Create(303, cs(Color.white, "MadMayorVoteCountSetting"), 2f, 1f, 100f, 1f, MadMayorOption);
+            MadMayorOption = new CustomRoleOption(315, "MadMayorName", RoleClass.ImpostorRed, 1);
+            MadMayorPlayerCount = CustomOption.Create(316, cs(Color.white, "SettingPlayerCountName"), CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], MadMayorOption);
+            MadMayorVoteCount = CustomOption.Create(317, cs(Color.white, "MadMayorVoteCountSetting"), 2f, 1f, 100f, 1f, MadMayorOption);
             MadMayorIsCheckImpostor = CustomOption.Create(304, ModTranslation.getString("MadMayorIsCheckImpostorSetting"), false, MadMayorOption);
             var madmayoroption = SelectTask.TaskSetting(305, 306, 307, MadMayorIsCheckImpostor);
             MadMayorCommonTask = madmayoroption.Item1;
@@ -754,11 +754,10 @@ namespace SuperNewRoles.CustomOption
             MadMayorLongTask = madmayoroption.Item3;
             //MadMayorIsNotTask = madmayoroption.Item4;
             MadMayorCheckImpostorTask = CustomOption.Create(308, ModTranslation.getString("MadMayorCheckImpostorTaskSetting"), rates4, MadMayorIsCheckImpostor);
-            MadMayorIsUseVent = CustomOption.Create(309, ModTranslation.getString("MadMayorUseVentSetting"), false, MadMayorOption);
-            MadMayorIsImpostorLight = CustomOption.Create(310, ModTranslation.getString("MadMayorImpostorLightSetting"), false, MadMayorOption);
-
-            NiceHawkOption = new CustomRoleOption(311, "NiceHawkName", RoleClass.NiceHawk.color, 1);
-            NiceHawkPlayerCount = CustomOption.Create(312, cs(Color.white, "SettingPlayerCountName"), CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], NiceHawkOption);
+            MadMayorIsUseVent = CustomOption.Create(318, ModTranslation.getString("MadMayorUseVentSetting"), false, MadMayorOption);
+            MadMayorIsImpostorLight = CustomOption.Create(319, ModTranslation.getString("MadMayorImpostorLightSetting"), false, MadMayorOption);
+            NiceHawkOption = new CustomRoleOption(320, "NiceHawkName", RoleClass.NiceHawk.color, 1);
+            NiceHawkPlayerCount = CustomOption.Create(321, cs(Color.white, "SettingPlayerCountName"), CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], NiceHawkOption);
             NiceHawkCoolTime = CustomOption.Create(313, ModTranslation.getString("HawkCoolTimeSetting"), 15f, 1f, 120f, 2.5f, NiceHawkOption, format: "unitCouples");
             NiceHawkDurationTime = CustomOption.Create(314, ModTranslation.getString("HawkDurationTimeSetting"), 5f, 1f, 60f, 2.5f, NiceHawkOption, format: "unitCouples");
 

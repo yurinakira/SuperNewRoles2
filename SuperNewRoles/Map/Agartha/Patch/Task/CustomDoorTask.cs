@@ -32,17 +32,29 @@ namespace SuperNewRoles.Map.Agartha.Patch.Task
                 }));
                 Transform ClickObject = __instance.col.transform;
                 DoorBtn.Colliders = new List<Collider2D>() { __instance.col }.ToArray();
-                ClickObject.localScale *= 1.5f;
+                ClickObject.localScale *= 3f;
                 ClickObject.localPosition = new Vector3(0.2f, 0.2f, 0);
                 ClickObject.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("DoorOpenMinigame_ClickObject");
                 __instance.StatusText.transform.localPosition = new Vector3(1.05f, -0.925f, -4f);
-                __instance.transform.FindChild("admin_sliderTop").gameObject.SetActive(false);
                 __instance.transform.FindChild("admin_Wallet").gameObject.SetActive(false);
-                __instance.transform.FindChild("admin_sliderBottom").GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("DoorOpenMinigame_BackGround");
+                Hammer = __instance.transform.FindChild("admin_sliderTop");
+                if (HammerSprite == null)
+                {
+                    HammerSprite = ImageManager.AgarthagetSprite("DoorOpenMinigame_Hammer");
+                }
+                Hammer.GetComponent<SpriteRenderer>().sprite = HammerSprite;
+                Transform sliderbottom = __instance.transform.FindChild("admin_sliderBottom");
+                sliderbottom.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("DoorOpenMinigame_BackGround");
+                sliderbottom.localScale *= 1.5f;
+                sliderbottom.localPosition -= new Vector3(0,0.5f,0);
+                ControllerPosition = new Vector3(0,0,-51);
             }
         }
         public static PassiveButton DoorBtn;
         public static bool IsController;
+        public static Sprite HammerSprite;
+        public static Transform Hammer;
+        private static Vector3 ControllerPosition;
         [HarmonyPatch(typeof(DoorCardSwipeGame), nameof(DoorCardSwipeGame.Update))]
         class DoorUpdatePatch
         {
@@ -54,11 +66,16 @@ namespace SuperNewRoles.Map.Agartha.Patch.Task
                 if (DoorData[__instance.MyDoor.Id] <= 0)
                 {
                     __instance.MyDoor.SetDoorway(true);
+                    Hammer.gameObject.SetActive(false);
                     __instance.StartCoroutine(__instance.CoStartClose(0f));
+                    DoorData[__instance.MyDoor.Id] = 10;
                 }
                 if (Controller.currentTouchType == Controller.TouchType.Joystick)
                 {
                     IsController = true;
+                    Hammer.localPosition = ControllerPosition;
+                    ControllerPosition.x += ConsoleJoystick.player.GetAxis(2);
+                    ControllerPosition.y += ConsoleJoystick.player.GetAxis(3);
                     if (ConsoleJoystick.player.GetButtonDown(6))
                     {
                         SoundManager.Instance.PlaySound(ModHelpers.loadAudioClipFromResources("SuperNewRoles.Resources.Agartha.DoorSound.raw"), false, 1.5f);
@@ -67,6 +84,7 @@ namespace SuperNewRoles.Map.Agartha.Patch.Task
                 }
                 else
                 {
+                    Hammer.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x + 55f, Input.mousePosition.y - 5f, -51f));
                     IsController = false;
                 }
                 return false;
@@ -78,7 +96,6 @@ namespace SuperNewRoles.Map.Agartha.Patch.Task
         {
             public static bool Prefix(DoorConsole __instance)
             {
-                //IL_006f: Unknown result type (might be due to invalid IL or missing references)
                 if (!Data.IsMap(CustomMapNames.Agartha))
                 {
                     return true;
@@ -95,7 +112,7 @@ namespace SuperNewRoles.Map.Agartha.Patch.Task
                     if (DoorData[__instance.MyDoor.Id] <= 0)
                     {
                         __instance.MyDoor.SetDoorway(true);
-                        DoorData[__instance.MyDoor.Id] = 0;
+                        DoorData[__instance.MyDoor.Id] = 10;
                     }
                 } else
                 {
@@ -103,7 +120,7 @@ namespace SuperNewRoles.Map.Agartha.Patch.Task
                     if (DoorData[__instance.MyDoor.Id] <= 0)
                     {
                         __instance.MyDoor.SetDoorway(true);
-                        DoorData[__instance.MyDoor.Id] = 0;
+                        DoorData[__instance.MyDoor.Id] = 10;
                     }
                 }
                 return false;

@@ -1,6 +1,7 @@
 ﻿using BepInEx.IL2CPP.Utils;
 using HarmonyLib;
 using PowerTools;
+using SuperNewRoles.Map.Agartha.Patch.Task;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -185,6 +186,28 @@ namespace SuperNewRoles.Map.Agartha.Patch
                 AirlockParticle.gameObject.SetActive(false);
             }
         }
+        [HarmonyPatch(typeof(Minigame),nameof(Minigame.Begin))]
+        class task
+        {
+            public static void Postfix(Minigame __instance,[HarmonyArgument(0)] PlayerTask task)
+            {
+                SuperNewRolesPlugin.Logger.LogInfo("ミニゲーム名:"+__instance.name);
+                switch (__instance.name)
+                {
+                    case "FossilMinigame(Clone)":
+                        __instance.SetMinigameCond();
+                        Task.FossilMinigame.Start(__instance,task.TryCast<NormalPlayerTask>());
+                        break;
+                }
+            }
+        }
+        public static void SetMinigameCond(this Minigame minigame)
+        {
+            minigame.transform.FindChild("RightWires").gameObject.SetActive(false);
+            minigame.transform.FindChild("LeftWires").gameObject.SetActive(false);
+            minigame.transform.FindChild("RightLights").gameObject.SetActive(false);
+            minigame.transform.FindChild("LeftLights").gameObject.SetActive(false);
+        }
         public static void ShipSetTask()
         {
             List<NormalPlayerTask> CommonTasks = new List<NormalPlayerTask>();
@@ -200,7 +223,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
                         CommonTasks.Add(task);
                         break;
                 }
-                //SuperNewRolesPlugin.Logger.LogInfo("(C)" + task.name);
+                SuperNewRolesPlugin.Logger.LogInfo("(C)" + task.name);
             }
             foreach (NormalPlayerTask task in ShipStatus.Instance.NormalTasks)
             {
@@ -210,7 +233,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
                         NormalTasks.Add(task);
                         break;
                 }
-                //SuperNewRolesPlugin.Logger.LogInfo("(N)" + task.name);
+                SuperNewRolesPlugin.Logger.LogInfo("(N)" + task.name);
             }
             foreach (NormalPlayerTask task in ShipStatus.Instance.LongTasks)
             {
@@ -227,7 +250,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
                         break;
 
                 }
-                //SuperNewRolesPlugin.Logger.LogInfo("(L)" + task.name);
+                SuperNewRolesPlugin.Logger.LogInfo("(L)" + task.name);
             }
             foreach (NormalPlayerTask task in MapLoader.Skeld.LongTasks)
             {
@@ -291,11 +314,10 @@ namespace SuperNewRoles.Map.Agartha.Patch
                 SuperNewRolesPlugin.Logger.LogInfo("(Airship)(N)" + task.name);
             }
             */
-
             List<Console> newconsole = ShipStatus.Instance.AllConsoles.ToList();
-            foreach (Console console in AddConsoles)
+            foreach (Console consolea in AddConsoles)
             {
-                newconsole.Add(console);
+                newconsole.Add(consolea);
             }
             ShipStatus.Instance.AllConsoles = newconsole.ToArray();
 

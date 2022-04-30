@@ -1,11 +1,14 @@
 ﻿using BepInEx.IL2CPP.Utils;
+using HarmonyLib;
 using PowerTools;
+using SuperNewRoles.Sabotage;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using static UnityEngine.UI.Button;
 
 namespace SuperNewRoles.Map.Agartha.Patch
 {
@@ -46,8 +49,41 @@ namespace SuperNewRoles.Map.Agartha.Patch
             var Listed = __instance.allButtons.ToList();
             Listed.RemoveAt(3);
             __instance.allButtons = Listed.ToArray();
+            CustomDoors = new Dictionary<SystemTypes, Dictionary<ButtonBehavior, SpriteRenderer>>();
+            foreach (var data in DoorSabotages)
+            {
+                ButtonBehavior button = InfectedOverlay.Instantiate(__instance.allButtons[0], __instance.allButtons[0].transform.parent);
+                button.name = "DoorButton";
+                 button.transform.localPosition = data.Key;
+                button.spriteRenderer.sprite = Map.ImageManager.GetDoorSabotageButton();
+                button.OnClick = new ButtonClickedEvent();
+
+                button.OnClick.AddListener((Action)(() =>
+                {
+                    SuperNewRolesPlugin.Logger.LogInfo("くりっく");
+                    if (SabotageManager.InfectedOverlayInstance.CanUseDoors && ShipStatus.Instance.Systems[SystemTypes.Doors].TryCast<DoorsSystemType>().GetTimer(data.Value) <= 0)
+                    {
+                        SuperNewRolesPlugin.Logger.LogInfo("つうか");
+                        ShipStatus.Instance.RpcCloseDoorsOfType(data.Value);
+                        ShipStatus.Instance.Systems[SystemTypes.Doors].TryCast<DoorsSystemType>().timers[data.Value] = SabotageManager.SabotageMaxTime;
+                    }
+                }));
+                __instance.allButtons.AddItem(button);
+                var dic = new Dictionary<ButtonBehavior, SpriteRenderer>();
+                dic.Add(button, button.GetComponent<SpriteRenderer>());
+                CustomDoors.Add(data.Value, dic);
+            }
         }
-        public static PlainDoor CreateDoor(Vector3 position,Vector3? scale = null,int id = -1,int index = 3)
+        static Dictionary<Vector3, SystemTypes> DoorSabotages = new Dictionary<Vector3, SystemTypes>() {
+            { new Vector3(-0.65f, 3.2f, 0f), SystemTypes.MeetingRoom },{ new Vector3(-3.12f, 3.675f, 0f), SystemTypes.Comms},
+            { new Vector3(-3.12f, 2.95f, 0f), SystemTypes.MedBay },{ new Vector3(-4.78f, 3.6f, 0f), SystemTypes.Reactor},
+            { new Vector3(-3.13f, 1.2f, 0f), SystemTypes.LifeSupp},{ new Vector3(-3.13f, 0.55f, 0f), SystemTypes.LockerRoom},
+            { new Vector3(-4.78f, 1.15f, 0f), SystemTypes.Launchpad},{ new Vector3(-1.1f, 1.4f, 0f), SystemTypes.Admin},
+            { new Vector3(-0.25f, 1.4f, 0f), SystemTypes.Security},{ new Vector3(0.88f, 1.375f, 0f), SystemTypes.Laboratory}
+        };
+        public static Dictionary<SystemTypes, float> KeepTimes;
+        public static Dictionary<SystemTypes,Dictionary<ButtonBehavior,SpriteRenderer>> CustomDoors;
+        public static PlainDoor CreateDoor(SystemTypes room,Vector3 position,Vector3? scale = null,int id = -1,int index = 3)
         {
             if (id == -1)
             {
@@ -61,19 +97,15 @@ namespace SuperNewRoles.Map.Agartha.Patch
             door.transform.localScale = (Vector3)scale;
             door.transform.position = position;
             door.Id = id;
-            new LateTask(() =>
-            {
-                //door.SetDoorway(false);
-            }, 0.1f, "SetDummyPosition");
+            door.Room = room;
             return door;
         }
-        [HarmonyLib.HarmonyPatch(typeof(PlainDoor),nameof(PlainDoor.Start))]
+        [HarmonyPatch(typeof(PlainDoor),nameof(PlainDoor.Start))]
         class start
         {
             public static void Postfix(PlainDoor __instance)
             {
                 __instance.GetComponent<SpriteRenderer>().sprite = ImageManager.Object_Door_Open;
-                GameObject.Destroy(__instance.animator);
             }
         }
         public static Transform miraship;
@@ -81,18 +113,19 @@ namespace SuperNewRoles.Map.Agartha.Patch
         {
             
             List<PlainDoor> doors = new List<PlainDoor>();
-            doors.Add(CreateDoor(new Vector3(13.5f, 20.55f, 7f),new Vector3(0.85f,0.75f,0.75f),0));
-            doors.Add(CreateDoor(new Vector3(0.03f, 20.5f, 4f),new Vector3(0.95f,0.8f,1f),1));
-            doors.Add(CreateDoor(new Vector3(0.03f, 15.4f, 4f), new Vector3(0.95f, 0.8f, 1f),2));
-            doors.Add(CreateDoor(new Vector3(-6.2f, 17.8f, 4f), new Vector3(1f, 1f, 1f),3,0));
-            doors.Add(CreateDoor(new Vector3(-9.6f, 12f, 4f), new Vector3(0.65f, 0.75f, 0.75f),4));
-            doors.Add(CreateDoor(new Vector3(0.1f, 7.2f, 4f), new Vector3(0.95f, 0.8f, 1f),5));
-            doors.Add(CreateDoor(new Vector3(0.22f, 1.67f, 4f), new Vector3(0.95f, 0.8f, 1f),6));
-            doors.Add(CreateDoor(new Vector3(-6.1f, 4.5f, 4f), new Vector3(0.7f, 0.8f, 1f),7,0));
-            doors.Add(CreateDoor(new Vector3(9.35f, 5.3f, 4f), new Vector3(0.5f, 0.7f, 0.5f), 8, 0));
-            doors.Add(CreateDoor(new Vector3(18.3f, 5.4f, 0.5f), new Vector3(0.8f, 0.8f, 1), 9, 0));
-            doors.Add(CreateDoor(new Vector3(19.2f, 5.4f, 0.5f), new Vector3(0.8f,0.8f,1), 10, 0));
-            doors.Add(CreateDoor(new Vector3(24.1f, 9.7f, 0.5f), new Vector3(0.75f,0.9f,1), 11));
+            doors.Add(CreateDoor(SystemTypes.MeetingRoom,new Vector3(13.5f, 20.55f, 7f),new Vector3(0.85f,0.75f,0.75f),0));
+            doors.Add(CreateDoor(SystemTypes.Comms,new Vector3(0.03f, 20.5f, 4f),new Vector3(0.95f,0.8f,1f),1));
+            doors.Add(CreateDoor(SystemTypes.MedBay,new Vector3(0.03f, 15.4f, 4f), new Vector3(0.95f, 0.8f, 1f),2));
+            doors.Add(CreateDoor(SystemTypes.Reactor,new Vector3(-6.2f, 17.8f, 4f), new Vector3(1f, 1f, 1f),3,0));//作業室
+            doors.Add(CreateDoor(SystemTypes.Reactor,new Vector3(-9.6f, 12f, 4f), new Vector3(0.65f, 0.75f, 0.75f),4));//作業室
+            doors.Add(CreateDoor(SystemTypes.LifeSupp,new Vector3(0.1f, 7.2f, 4f), new Vector3(0.95f, 0.8f, 1f),5));
+            doors.Add(CreateDoor(SystemTypes.LockerRoom,new Vector3(0.22f, 1.67f, 4f), new Vector3(0.95f, 0.8f, 1f),6));//工具室
+            doors.Add(CreateDoor(SystemTypes.Launchpad,new Vector3(-6.1f, 4.5f, 4f), new Vector3(0.7f, 0.8f, 1f),7,0));//倉庫
+            doors.Add(CreateDoor(SystemTypes.Admin,new Vector3(7.95f, 5.33f, 4f), new Vector3(0.64f, 0.64f, 0.64f), 8, 0));
+            doors.Add(CreateDoor(SystemTypes.Admin,new Vector3(7.1f, 6f, 4f), new Vector3(0.75f, 0.75f, 0.75f), 12));
+            doors.Add(CreateDoor(SystemTypes.Security,new Vector3(18.3f, 5.4f, 0.5f), new Vector3(0.8f, 0.8f, 1), 9, 0));
+            doors.Add(CreateDoor(SystemTypes.Security,new Vector3(19.2f, 5.4f, 0.5f), new Vector3(0.8f,0.8f,1), 10, 0));
+            doors.Add(CreateDoor(SystemTypes.Laboratory,new Vector3(24.1f, 9.7f, 0.5f), new Vector3(0.75f,0.9f,1), 11));
             ShipStatus.Instance.AllDoors = doors.ToArray();
         }
         public static int GetDoorAvailableId()

@@ -35,11 +35,21 @@ namespace SuperNewRoles.Map
             if (ThisMap == CustomMapNames.Agartha)
             {
                 Agartha.Patch.Task.CustomDoorTask.DoorData = new Dictionary<int, int>();
+                Agartha.Patch.SetPosition.KeepTimes = new Dictionary<SystemTypes, float>();
             }
         }
         public static bool IsMap(CustomMapNames map)
         {
             return ThisMap == map;
+        }
+        public static void Update()
+        {
+            switch (ThisMap)
+            {
+                case CustomMapNames.Agartha:
+                    Agartha.Patch.Update.FixedUpdate();
+                    break;
+            }
         }
     }
 }

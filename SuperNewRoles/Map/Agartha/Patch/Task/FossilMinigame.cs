@@ -5,15 +5,16 @@ using UnityEngine;
 
 namespace SuperNewRoles.Map.Agartha.Patch.Task
 {
-    public sealed class FossilMinigame : Minigame
+    public static class FossilMinigame
     {
-        private void Start()
+        public static Sprite BackGroundSprite;
+        public static void Start(Minigame minigame,NormalPlayerTask task)
         {
-            SuperNewRolesPlugin.Logger.LogInfo("ミニゲームが呼び出された！");
-        }
-        private void Update()
-        {
-            MyNormTask.NextStep();
+            if (BackGroundSprite == null)
+            {
+                BackGroundSprite = ImageManager.AgarthagetSprite("Task.FossilMinigame_BackGround");
+            }
+            SuperNewRolesPlugin.Logger.LogInfo("すたーと！");
         }
     }
 }
