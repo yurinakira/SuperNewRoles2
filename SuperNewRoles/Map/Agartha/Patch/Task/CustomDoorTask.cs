@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using SuperNewRoles.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -65,7 +66,7 @@ namespace SuperNewRoles.Map.Agartha.Patch.Task
                 }
                 if (DoorData[__instance.MyDoor.Id] <= 0)
                 {
-                    __instance.MyDoor.SetDoorway(true);
+                    __instance.MyDoor.RpcSetDoorway(true);
                     Hammer.gameObject.SetActive(false);
                     __instance.StartCoroutine(__instance.CoStartClose(0f));
                     DoorData[__instance.MyDoor.Id] = 10;

@@ -200,9 +200,21 @@
         "0" : "Preset" ,
         "11" : "プリセット"
         } ,
- "SettingSuperNewRolesSetting" : {
-        "0" : "Super New Roles Setting" ,
-        "11" : "<color=#ffa500>Super</color><color=#ff0000>New</color><color=#00ff00>Roles</color>の設定"
+ "SettingSuperNewRoles" : {
+        "0" : "<color=#ffa500> S u p e r </color><color=#ff0000>N e w </color><color=#00ff00>R o l e s</color> Settings" ,
+        "11" : "<color=#ffa500> S u p e r </color><color=#ff0000>N e w</color><color=#00ff00> R o l e s </color>の設定"
+        } ,
+ "SettingImpostor" : {
+        "0" : "<color=#ff0000>Impostor</color> Settings" ,
+        "11" : "<color=#ff0000>インポスター</color>の設定"
+        } ,
+ "SettingNeutral" : {
+        "0" : "<color=#808080>Neutral</color> Settings" ,
+        "11" : "<color=#808080>第三陣営</color>の設定"
+        } ,
+ "SettingCrewmate" : {
+        "0" : "<color=#a9ceec>Crewmate</color> Settings" ,
+        "11" : "<color=#00ffff>クルーメイト</color>の設定"
         } ,
  "SettingMiniCrewRole" : {
         "0" : "Minimum Crewmate Roles" ,
@@ -2043,6 +2055,42 @@
  "BakeryTitle1" : {
         "0" : "Would you like some breads?" ,
         "11" : "焼きたてのパンはいかが？"
+        } ,
+ "MadStuntManName" : {
+        "0" : "MadStuntman" ,
+        "11" : "マッドスタントマン"
+        } ,
+ "MadStuntManTitle1" : {
+        "0" : "Prevent kills and connect with impostors." ,
+        "11" : "キルを防いでインポスターと繋がろう"
+        } ,
+ "MadStuntManUseVentSetting" : {
+        "0" : "UseVent" ,
+        "11" : "ベントを使える"
+        } ,
+ "MadStuntManImpostorLightSetting" : {
+        "0" : "Impostor Light" ,
+        "11" : "インポスターの視界"
+        } ,
+ "MadHawkName" : {
+        "0" : "MadHawk" ,
+        "11" : "マッドホーク"
+        } ,
+ "MadHawkTitle1" : {
+        "0" : "See it all." ,
+        "11" : "すべてを見渡そう"
+        } ,
+ "BakeryTitle1" : {
+        "0" : "Would you like some breads?" ,
+        "11" : "焼きたてのパンはいかが？"
+        } ,
+ "MadJesterName" : {
+        "0" : "MadJester" ,
+        "11" : "マッドてるてる"
+        } ,
+ "MadJesterTitle1" : {
+        "0" : "Get voted out and win with the Imposters!" ,
+        "11" : "投票で追放されてインポスターと勝利しよう"
         } 
 
 }

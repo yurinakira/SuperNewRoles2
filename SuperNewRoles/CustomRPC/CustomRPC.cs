@@ -87,7 +87,9 @@ namespace SuperNewRoles.CustomRPC
         NiceHawk,
         Bakery,
         Neta,
+        MadJester,
         MadStuntMan,
+        MadHawk,
         //RoleId
     }
 
@@ -136,9 +138,17 @@ namespace SuperNewRoles.CustomRPC
         SetCustomSabotage,
         UseStuntmanCount,
         UseMadStuntmanCount,
+        SetDoorway
     }
     public static class RPCProcedure
     {
+        public static void SetDoorway(byte id,bool Open)
+        {
+            SuperNewRolesPlugin.Logger.LogInfo("Žó‚¯Žæ‚Á‚½:"+Open);
+            PlainDoor door = ShipStatus.Instance.AllDoors.FirstOrDefault((a) => a.Id == id);
+            SuperNewRolesPlugin.Logger.LogInfo(door.Id);
+            door.SetDoorway(Open);
+        }
         public static void UseStuntmanCount(byte playerid)
         {
             var player = ModHelpers.playerById(playerid);
@@ -778,6 +788,9 @@ namespace SuperNewRoles.CustomRPC
                         break;
                     case (byte)CustomRPC.SetCustomSabotage:
                         SabotageManager.SetSabotage(ModHelpers.playerById(reader.ReadByte()),(SabotageManager.CustomSabotage)reader.ReadByte(),reader.ReadBoolean());
+                        break;
+                    case (byte)CustomRPC.SetDoorway:
+                        SetDoorway(reader.ReadByte(),reader.ReadBoolean());
                         break;
                 }
             }

@@ -1,12 +1,25 @@
 ﻿using Hazel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SuperNewRoles.Helpers
 {
     public static class RPCHelper
     {
+        public static void RpcSetDoorway(byte id,bool Open)
+        {
+            ShipStatus.Instance.AllDoors.FirstOrDefault((a) => a.Id == id).RpcSetDoorway(Open);
+        }
+        public static void RpcSetDoorway(this PlainDoor door,bool Open)
+        {
+            door.SetDoorway(Open);
+            MessageWriter writer = StartRPC(CustomRPC.CustomRPC.SetDoorway);
+            writer.Write(door.Id);
+            writer.Write(Open);
+            writer.EndRPC();
+        }
         public static MessageWriter StartRPC(CustomRPC.CustomRPC RPCId, PlayerControl SendTarget = null)
         {
             return StartRPC((byte)RPCId, SendTarget);

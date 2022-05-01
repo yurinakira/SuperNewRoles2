@@ -24,6 +24,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
         }
         public static void FixedUpdate()
         {
+            if (!PlayerControl.LocalPlayer.IsUseSabo()) return;
             if (SabotageManager.InfectedOverlayInstance == null)
             {
                 foreach (var data in SetPosition.KeepTimes)

@@ -108,6 +108,8 @@ namespace SuperNewRoles.Roles
             NiceHawk.ClearAndReload();
             Bakery.ClearAndReload();
             MadStuntMan.ClearAndReload();
+            MadHawk.ClearAndReload();
+            MadJester.ClearAndReload();
             //ロールクリア
             Quarreled.ClearAndReload();
             Lovers.ClearAndReload();
@@ -230,6 +232,7 @@ namespace SuperNewRoles.Roles
             public static bool IsNeutralKill;
             public static bool IsLoversKill;
             public static bool IsMadRoleKill;
+            public static bool MadRoleKill;
             public static float KillMaxCount;
             public static Dictionary<int, int> KillCount;
             public static DateTime ButtonTimer;
@@ -250,6 +253,7 @@ namespace SuperNewRoles.Roles
                 IsNeutralKill = CustomOptions.SheriffNeutralKill.getBool();
                 IsLoversKill = CustomOptions.SheriffLoversKill.getBool();
                 IsMadRoleKill = CustomOptions.SheriffMadRoleKill.getBool();
+                MadRoleKill = CustomOptions.SheriffMadRoleKill.getBool();
                 KillMaxCount = CustomOptions.SheriffKillMaxCount.getFloat();
                 KillCount = new Dictionary<int, int>();
             }
@@ -276,6 +280,7 @@ namespace SuperNewRoles.Roles
             {
                 MeetingSheriffPlayer = new List<PlayerControl>();
                 NeutralKill = CustomOptions.MeetingSheriffNeutralKill.getBool();
+                MadRoleKill = CustomOptions.MeetingSheriffMadRoleKill.getBool();
                 MadRoleKill = CustomOptions.MeetingSheriffMadRoleKill.getBool();
                 KillMaxCount = CustomOptions.MeetingSheriffKillMaxCount.getFloat();
                 OneMeetingMultiKill = CustomOptions.MeetingSheriffOneMeetingMultiKill.getBool();
@@ -374,7 +379,7 @@ namespace SuperNewRoles.Roles
                 SpeedBoosterPlayer = new List<PlayerControl>();
                 CoolTime = CustomOptions.SpeedBoosterCoolTime.getFloat();
                 DurationTime = CustomOptions.SpeedBoosterDurationTime.getFloat();
-                Speed = CustomOptions.SpeedBoosterSpeed.getFloat() / 100f;
+                Speed = CustomOptions.SpeedBoosterSpeed.getFloat();
                 IsSpeedBoost = false;
                 IsBoostPlayers = new Dictionary<int, bool>();
             }
@@ -1386,6 +1391,58 @@ namespace SuperNewRoles.Roles
         }
 
 
+        public static class MadHawk
+        {
+            public static List<PlayerControl> MadHawkPlayer;
+            public static Color32 color = ImpostorRed;
+            public static bool IsUseVent;
+            public static bool IsImpostorLight;
+            public static float CoolTime;
+            public static float DurationTime;
+            public static float Timer;
+            public static DateTime ButtonTimer;
+            public static float Default;
+            public static float CameraDefault;
+            public static Vector3 Postion;
+            public static float timer1;
+            public static DateTime Timer2;
+            public static void ClearAndReload()
+            {
+                MadHawkPlayer = new List<PlayerControl>();
+                IsUseVent = CustomOptions.MadHawkIsUseVent.getBool();
+                IsImpostorLight = CustomOptions.MadHawkIsImpostorLight.getBool();
+                MadHawkPlayer = new List<PlayerControl>();
+                CoolTime = CustomOptions.MadHawkCoolTime.getFloat();
+                DurationTime = CustomOptions.MadHawkDurationTime.getFloat();
+                Timer = 0;
+                ButtonTimer = DateTime.Now;
+                CameraDefault = Camera.main.orthographicSize;
+                Default = HudManager.Instance.UICamera.orthographicSize;
+                Postion = new Vector3(0, 0, 0);
+                timer1 = 0;
+                Timer2 = DateTime.Now;
+            }
+        }
+        public static class MadJester
+        {
+            public static List<PlayerControl> MadJesterPlayer;
+            public static bool IsMadJesterWin;
+            public static Color32 color = ImpostorRed;
+            public static bool IsImpostorCheck;
+            public static int ImpostorCheckTask;
+            public static bool IsUseVent;
+            public static bool IsImpostorLight;
+            public static bool IsMadJesterTaskClearWin;
+            public static void ClearAndReload()
+            {
+                MadJesterPlayer = new List<PlayerControl>();
+
+                IsMadJesterWin = false;
+                IsUseVent = CustomOptions.MadJesterIsUseVent.getBool();
+                IsImpostorLight = CustomOptions.MadJesterIsImpostorLight.getBool();
+                IsMadJesterTaskClearWin = CustomOptions.IsMadJesterTaskClearWin.getBool();
+            }
+        }
         //新ロールクラス
         public static class Quarreled
         {

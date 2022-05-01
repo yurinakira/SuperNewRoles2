@@ -14,7 +14,7 @@ writedate=writedate[:-1]+"\n\n}"
 #.decode('utf-8')
 with open("translatedate.json",mode="w",encoding="utf-8") as f:
     f.write(writedate)
-with open(r"C:\Users\10user\source\repos\SuperNewRoles\SuperNewRoles\Resources\translatedate.json",mode="w",encoding="utf-8") as f:
+with open(r"..\SuperNewRoles\Resources\translatedate.json",mode="w",encoding="utf-8") as f:
     f.write(writedate)
 print("完了")
 time.sleep(2)

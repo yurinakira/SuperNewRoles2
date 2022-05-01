@@ -48,7 +48,10 @@ colorCrasyublue
 colorLightgreen
 Hat_SNR
 SettingpresetSelection
-SettingSuperNewRolesSetting
+SettingSuperNewRoles
+SettingImpostor
+SettingNeutral
+SettingCrewmate
 SettingMiniCrewRole
 SettingMaxCrewRole
 SettingMiniNeutralRole
@@ -509,3 +512,12 @@ NiceHawkTitle1
 NiceHawkTitle2
 BakeryName
 BakeryTitle1
+MadStuntManName
+MadStuntManTitle1
+MadStuntManUseVentSetting
+MadStuntManImpostorLightSetting
+MadHawkName
+MadHawkTitle1
+BakeryTitle1
+MadJesterName
+MadJesterTitle1

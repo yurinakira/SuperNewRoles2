@@ -22,10 +22,13 @@ namespace SuperNewRoles.Roles
             if (roledata == TeamRoleType.Impostor) return true;
             if (Target.isRole(CustomRPC.RoleId.MadMate) && RoleClass.Sheriff.IsMadRoleKill) return true;
             if (Target.isRole(CustomRPC.RoleId.MadMayor) && RoleClass.Sheriff.IsMadRoleKill) return true;
+            if (Target.isRole(CustomRPC.RoleId.MadMate) && RoleClass.Sheriff.MadRoleKill) return true;
+            if (Target.isRole(CustomRPC.RoleId.MadJester) && RoleClass.Sheriff.MadRoleKill) return true;
             if (Target.isNeutral() && RoleClass.Sheriff.IsNeutralKill) return true;
             if (RoleClass.Sheriff.IsLoversKill && Target.IsLovers()) return true;
             if (Target.isRole(CustomRPC.RoleId.MadStuntMan) && RoleClass.Sheriff.IsMadRoleKill) return true;
             if (Target.isRole(CustomRPC.RoleId.MadMayor) && RoleClass.Sheriff.IsMadRoleKill) return true;
+            if (Target.isRole(CustomRPC.RoleId.MadHawk) && RoleClass.Sheriff.IsMadRoleKill) return true;
             return false;
         }
         public static bool IsSheriff(PlayerControl Player)
