@@ -15,9 +15,8 @@ namespace SuperNewRoles.Helpers
         public static void RpcSetDoorway(this PlainDoor door,bool Open)
         {
             door.SetDoorway(Open);
-            MessageWriter writer = StartRPC(CustomRPC.CustomRPC.SetDoorway);
+            MessageWriter writer = StartRPC(CustomRPC.CustomRPC.SetDoorOpen);
             writer.Write(door.Id);
-            writer.Write(Open);
             writer.EndRPC();
         }
         public static MessageWriter StartRPC(CustomRPC.CustomRPC RPCId, PlayerControl SendTarget = null)

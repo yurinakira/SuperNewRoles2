@@ -138,16 +138,15 @@ namespace SuperNewRoles.CustomRPC
         SetCustomSabotage,
         UseStuntmanCount,
         UseMadStuntmanCount,
-        SetDoorway
+        SetDoorOpen
     }
     public static class RPCProcedure
     {
-        public static void SetDoorway(byte id,bool Open)
+        public static void SetDoorOpen(byte id)
         {
-            SuperNewRolesPlugin.Logger.LogInfo("Žó‚¯Žæ‚Á‚½:"+Open);
             PlainDoor door = ShipStatus.Instance.AllDoors.FirstOrDefault((a) => a.Id == id);
             SuperNewRolesPlugin.Logger.LogInfo(door.Id);
-            door.SetDoorway(Open);
+            door.SetDoorway(true);
         }
         public static void UseStuntmanCount(byte playerid)
         {
@@ -789,8 +788,8 @@ namespace SuperNewRoles.CustomRPC
                     case (byte)CustomRPC.SetCustomSabotage:
                         SabotageManager.SetSabotage(ModHelpers.playerById(reader.ReadByte()),(SabotageManager.CustomSabotage)reader.ReadByte(),reader.ReadBoolean());
                         break;
-                    case (byte)CustomRPC.SetDoorway:
-                        SetDoorway(reader.ReadByte(),reader.ReadBoolean());
+                    case (byte)CustomRPC.SetDoorOpen:
+                        SetDoorOpen(reader.ReadByte());
                         break;
                 }
             }
