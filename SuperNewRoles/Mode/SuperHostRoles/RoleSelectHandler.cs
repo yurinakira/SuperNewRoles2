@@ -1,5 +1,7 @@
 ﻿
+using BepInEx.IL2CPP.Utils;
 using SuperNewRoles.CustomRPC;
+using SuperNewRoles.Helpers;
 using SuperNewRoles.Patch;
 using SuperNewRoles.Roles;
 using System;
@@ -12,6 +14,11 @@ namespace SuperNewRoles.Mode.SuperHostRoles
 {
     public static class RoleSelectHandler
     {
+        static IEnumerator SendChat()
+        {
+            yield return new WaitForSeconds(1f);
+            Chat.SendMyRoleChat();
+        }
         public static void RoleSelect()
         {
             if (!AmongUsClient.Instance.AmHost) return;
@@ -22,8 +29,15 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             SyncSetting.CustomSyncSettings();
             ChacheManager.ResetChache();
             FixedUpdate.SetRoleNames();
-            main.SendAllRoleChat();
-            
+            new LateTask(()=> 
+            {
+                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                {
+                    AmongUsClient.Instance.StartRpcImmediately(p.NetId, (byte)RpcCalls.Exiled, Hazel.SendOption.Reliable).EndRPC();
+                }
+                SuperNewRolesPlugin.Logger.LogInfo("ああ");
+            },12f);
+
             //BotHandler.AddBot(3, "キルされるBot");
             new LateTask(() => {
                 if (AmongUsClient.Instance.GameState == AmongUsClient.GameStates.Started)
