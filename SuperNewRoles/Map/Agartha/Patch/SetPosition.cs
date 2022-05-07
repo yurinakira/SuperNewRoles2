@@ -225,7 +225,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             for (int i = 0; i < 5; i++)
             {
                 Transform Cafe_Chair = GameObject.Instantiate(Template, MiraShip);
-                Cafe_Chair.position = new Vector3(i.IsEven() ? 15f : 14.3f, 18.7f - (i * 0.4f), 0.04f);
+                Cafe_Chair.position = new Vector3(i.IsEven() ? 15.2f : 14.3f, 18.7f - (i * 0.4f), 0.04f);
                 Cafe_Chair.Rotate(new Vector3(0, 0, UnityEngine.Random.Range(-10f, 10f)));
                 Cafe_Chair.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Chair1");
                 Cafe_Chair.name = "Object_CafeChair1";
