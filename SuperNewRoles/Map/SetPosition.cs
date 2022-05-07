@@ -222,9 +222,12 @@ namespace SuperNewRoles.Map
                     GameObject.Destroy(CafeObject_Table.GetComponent<BoxCollider2D>());
                     GameObject.Destroy(CafeObject_Table.GetComponent<PolygonCollider2D>());
                     CafeObject_Table.gameObject.AddComponent<PolygonCollider2D>();
-                    CafeObject_Table.transform.position = new Vector3(12.7f, 16f, 0.1f);
-                    CafeObject_Table.transform.localPosition = new Vector3(-0.5f, 0f, 0.1f);
-                    CafeObject_Table.FindChild("EmergencyConsole").transform.localPosition = new Vector3(0.18f, -0.5f, 0);
+                    CafeObject_Table.transform.localPosition = new Vector3(0.25f, -2f, 0.05f);
+                    CafeObject_Table.transform.localScale = new Vector3(1.75f, 1.75f, 1.75f);
+                    var emconsole = CafeObject_Table.FindChild("EmergencyConsole").transform;
+                    emconsole.position = new Vector3(13.55f, 14.15f, 0f);
+                    emconsole.localPosition = new Vector3(0,0,0);
+                    emconsole.localScale = new Vector3(0.9f,0.9f,0.9f);
                     //CafeObject.position = new Vector3(1000, 1000, 1000);
                     Transform SkyBri = MiraShip.FindChild("SkyBridge");
                     GameObject.Destroy(SkyBri.GetComponent<PolygonCollider2D>());
@@ -294,7 +297,7 @@ namespace SuperNewRoles.Map
 
                     if (AmongUsClient.Instance.GameMode == GameModes.FreePlay)
                     {
-                        MiraShip.FindChild("TaskAddConsole").position = new Vector3(12.7f, 13.7f, 0f);
+                        MiraShip.FindChild("TaskAddConsole").position = new Vector3(12.7f, 13.5f, 0f);
                         Agartha.Patch.SetPosition.SetDummy();
                     }
                     Agartha.Patch.ChangeRoomArea.Change(MiraShip);

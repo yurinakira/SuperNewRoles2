@@ -215,6 +215,25 @@ namespace SuperNewRoles.Map.Agartha.Patch
             GameObject.Destroy(Comms_Object_CommsTable.GetComponent<PolygonCollider2D>());
             Comms_Object_CommsTable.gameObject.AddComponent<PolygonCollider2D>();
 
+            Transform Cafe_carpet = GameObject.Instantiate(Template, MiraShip);
+            Cafe_carpet.position = new Vector3(13.5f, 14f, 0.1f);
+            Cafe_carpet.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Cafe_carpet");
+            Cafe_carpet.name = "Object_Cafe_carpet";
+            Cafe_carpet.localScale = new Vector3(1.8f, 1.8f, 1.8f);
+            GameObject.Destroy(Cafe_carpet.GetComponent<PolygonCollider2D>());
+
+            for (int i = 0; i < 5; i++)
+            {
+                Transform Cafe_Chair = GameObject.Instantiate(Template, MiraShip);
+                Cafe_Chair.position = new Vector3(i.IsEven() ? 15f : 14.3f, 18.7f - (i * 0.4f), 0.04f);
+                Cafe_Chair.Rotate(new Vector3(0, 0, UnityEngine.Random.Range(-10f, 10f)));
+                Cafe_Chair.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Chair1");
+                Cafe_Chair.name = "Object_CafeChair1";
+                Cafe_Chair.localScale = new Vector3(1.55f, 1.55f, 1.55f);
+                GameObject.Destroy(Cafe_Chair.GetComponent<PolygonCollider2D>());
+                Cafe_Chair.gameObject.AddComponent<PolygonCollider2D>();
+            }
+
             Transform Object_fence_1 = GameObject.Instantiate(Template,MiraShip);
             Object_fence_1.position = new Vector3(15f, 22f, -2f);
             Object_fence_1.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_fence_1");

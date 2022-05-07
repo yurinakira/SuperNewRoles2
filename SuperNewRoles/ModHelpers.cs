@@ -151,6 +151,10 @@ namespace SuperNewRoles
                 UnityEngine.Object.Destroy(item);
             }
         }
+        public static bool IsEven(this int self)
+        {
+            return self % 2 == 0;
+        }
         public static MurderAttemptResult checkMuderAttempt(PlayerControl killer, PlayerControl target, bool blockRewind = false)
         {
             // Modified vanilla checks
