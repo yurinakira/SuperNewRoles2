@@ -33,15 +33,6 @@ namespace SuperNewRoles.Patch
         public static void SetPlayerNameText(PlayerControl p, string text)
         {
             p.nameText.text = text;
-<<<<<<< HEAD
-            try
-            {
-                foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
-                {
-                    if (player.TargetPlayerId == p.PlayerId)
-                    {
-                        player.NameText.text = text;
-=======
             if (MeetingHud.Instance)
             {
                 if (MeetingHud.Instance)
@@ -53,11 +44,9 @@ namespace SuperNewRoles.Patch
                             player.NameText.text = text;
                             return;
                         }
->>>>>>> master
                     }
                 }
             }
-            catch { }
         }
             public static void resetNameTagsAndColors()
             {

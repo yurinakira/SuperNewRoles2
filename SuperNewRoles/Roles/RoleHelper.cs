@@ -1203,10 +1203,6 @@ namespace SuperNewRoles
                 else if (Roles.RoleClass.MadJester.MadJesterPlayer.IsCheckListPlayerControl(player))
                 {
                     return CustomRPC.RoleId.MadJester;
-<<<<<<< HEAD
-                }
-                //ロールチェック
-=======
                 }
                 else if (Roles.RoleClass.FalseCharges.FalseChargesPlayer.IsCheckListPlayerControl(player))
                 {
@@ -1233,8 +1229,6 @@ namespace SuperNewRoles
                     return CustomRPC.RoleId.Observer;
                 }
                 //ロールチェック
-
->>>>>>> master
             }
             catch (Exception e)
             {

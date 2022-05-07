@@ -96,7 +96,6 @@ namespace SuperNewRoles.Patch
                 // Spawn dummys
                 if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.G))
                 {
-<<<<<<< HEAD
                     var playerControl = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);
                     var i = playerControl.PlayerId = (byte)GameData.Instance.GetAvailableId();
 
@@ -110,7 +109,6 @@ namespace SuperNewRoles.Patch
                     int visor = random.Next(HatManager.Instance.allVisors.Count);
                     int color = random.Next(Palette.PlayerColors.Length);
                     int nameplate = random.Next(HatManager.Instance.allNamePlates.Count);
-=======
                     var id = 0;
                     foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                     {
@@ -135,19 +133,6 @@ namespace SuperNewRoles.Patch
                     bot.RpcSetPet(PlayerControl.LocalPlayer.CurrentOutfit.PetId);
                     bot.RpcSetSkin(PlayerControl.LocalPlayer.CurrentOutfit.SkinId);
                     bot.RpcSetNamePlate(PlayerControl.LocalPlayer.CurrentOutfit.NamePlateId);
->>>>>>> master
-
-                    playerControl.transform.position = PlayerControl.LocalPlayer.transform.position;
-                    playerControl.GetComponent<DummyBehaviour>().enabled = true;
-                    playerControl.NetTransform.enabled = false;
-                    playerControl.SetName(RandomString(10));
-                    playerControl.SetColor(color);
-                    playerControl.SetHat(HatManager.Instance.AllHats[hat].ProductId, color);
-                    playerControl.SetPet(HatManager.Instance.AllPets[pet].ProductId, color);
-                    playerControl.SetVisor(HatManager.Instance.AllVisors[visor].ProductId);
-                    playerControl.SetSkin(HatManager.Instance.allSkins[skin].ProductId,0);
-                    playerControl.SetNamePlate(HatManager.Instance.AllNamePlates[nameplate].ProductId);
-                    GameData.Instance.RpcSetTasks(playerControl.PlayerId, new byte[0]);
                 }
                 
                 if (Input.GetKeyDown(KeyCode.I))

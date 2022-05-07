@@ -143,7 +143,8 @@ namespace SuperNewRoles.CustomRPC
         SetCustomSabotage,
         UseStuntmanCount,
         UseMadStuntmanCount,
-        SetDoorOpen
+        SetDoorOpen,
+        CustomEndGame
     }
     public static class RPCProcedure
     {
@@ -801,16 +802,14 @@ namespace SuperNewRoles.CustomRPC
                     case (byte)CustomRPC.SetCustomSabotage:
                         SabotageManager.SetSabotage(ModHelpers.playerById(reader.ReadByte()),(SabotageManager.CustomSabotage)reader.ReadByte(),reader.ReadBoolean());
                         break;
-<<<<<<< HEAD
                     case (byte)CustomRPC.SetDoorOpen:
                         SetDoorOpen(reader.ReadByte());
-=======
+                        break;
                     case (byte)CustomRPC.CustomEndGame:
                         if (AmongUsClient.Instance.AmHost)
                         {
                             CustomEndGame((GameOverReason)reader.ReadByte(), reader.ReadBoolean());
                         }
->>>>>>> master
                         break;
                 }
             }

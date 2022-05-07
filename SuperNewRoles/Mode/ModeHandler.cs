@@ -213,7 +213,7 @@ namespace SuperNewRoles.Mode
             if (isMode(ModeId.Default)) return;
             if (isMode(ModeId.Werewolf)) Werewolf.main.Wrapup(exiled); return;
         }
-        public static ModeId GetMode(bool IsChache) {
+        public static ModeId GetMode(bool IsChache = true) {
             if (IsChache) return thisMode;
             if (AmongUsClient.Instance.GameMode == GameModes.FreePlay) return ModeId.Default;
             if (!ShareGameVersion.GameStartManagerUpdatePatch.VersionPlayers.ContainsKey(AmongUsClient.Instance.HostId)) return ModeId.Default;
