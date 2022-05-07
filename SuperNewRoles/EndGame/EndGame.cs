@@ -32,6 +32,7 @@ namespace SuperNewRoles.EndGame
         WorkpersonWin,
         LoversWin,
         MadJesterWin,
+        FalseChargesWin,
         BugEnd
     }
     [HarmonyPatch(typeof(ShipStatus))]
@@ -192,16 +193,6 @@ namespace SuperNewRoles.EndGame
                 textRenderer.color = Roles.RoleClass.Quarreled.color;
                 __instance.BackgroundBar.material.SetColor("_Color", Roles.RoleClass.Quarreled.color);
             }
-            else if (AdditionalTempData.gameOverReason == GameOverReason.HumansByTask || AdditionalTempData.gameOverReason == GameOverReason.HumansByVote)
-            {
-                text = "CrewMateName";
-                textRenderer.color = Palette.White;
-            }
-            else if (AdditionalTempData.gameOverReason == GameOverReason.ImpostorByKill || AdditionalTempData.gameOverReason == GameOverReason.ImpostorBySabotage || AdditionalTempData.gameOverReason == GameOverReason.ImpostorByVote)
-            {
-                text = "ImpostorName";
-                textRenderer.color = RoleClass.ImpostorRed;
-            }
             else if (AdditionalTempData.winCondition == WinCondition.JackalWin)
             {
                 text = "JackalName";
@@ -225,6 +216,23 @@ namespace SuperNewRoles.EndGame
                 text = "MadJesterName";
                 textRenderer.color = RoleClass.Workperson.color;
                 __instance.BackgroundBar.material.SetColor("_Color", RoleClass.MadJester.color);
+            }
+            else if(AdditionalTempData.winCondition == WinCondition.FalseChargesWin)
+            {
+                SuperNewRolesPlugin.Logger.LogInfo("テキストぉ");
+                text = "FalseChargesName";
+                textRenderer.color = RoleClass.FalseCharges.color;
+                __instance.BackgroundBar.material.SetColor("_Color", RoleClass.FalseCharges.color);
+            }
+            else if (AdditionalTempData.gameOverReason == GameOverReason.HumansByTask || AdditionalTempData.gameOverReason == GameOverReason.HumansByVote)
+            {
+                text = "CrewMateName";
+                textRenderer.color = Palette.White;
+            }
+            else if (AdditionalTempData.gameOverReason == GameOverReason.ImpostorByKill || AdditionalTempData.gameOverReason == GameOverReason.ImpostorBySabotage || AdditionalTempData.gameOverReason == GameOverReason.ImpostorByVote)
+            {
+                text = "ImpostorName";
+                textRenderer.color = RoleClass.ImpostorRed;
             }
             if (ModeHandler.isMode(ModeId.BattleRoyal)) {
                 foreach (PlayerControl p in PlayerControl.AllPlayerControls) {
@@ -279,6 +287,18 @@ namespace SuperNewRoles.EndGame
                     }
                 }
             }
+            if (ModeHandler.isMode(ModeId.Zombie))
+            {
+                if (AdditionalTempData.winCondition == WinCondition.Default)
+                {
+                    text = ModTranslation.getString("ZombieZombieName");
+                    textRenderer.color = Mode.Zombie.main.Zombiecolor;
+                } else if(AdditionalTempData.winCondition == WinCondition.WorkpersonWin)
+                {
+                    text = ModTranslation.getString("ZombiePoliceName");
+                    textRenderer.color = Mode.Zombie.main.Policecolor;
+                }
+            }
             if (!haison) {
                     textRenderer.text = string.Format(text + " " + ModTranslation.getString("WinName"));
             } else {
@@ -296,13 +316,18 @@ namespace SuperNewRoles.EndGame
                     var roleSummaryText = new StringBuilder();
                     roleSummaryText.AppendLine(ModTranslation.getString("最終結果"));
 
-
                     foreach (var datas in AdditionalTempData.playerRoles)
                     {
                         var taskInfo = datas.TasksTotal > 0 ? $"<color=#FAD934FF>({datas.TasksCompleted}/{datas.TasksTotal})</color>" : "";
                         string aliveDead = "";
                         string Suffix = "";
                         string result = $"{ModHelpers.cs(Palette.PlayerColors[datas.ColorId],datas.PlayerName)}{datas.NameSuffix}{taskInfo} - {GetStatusText(datas.Status)} - {CustomOptions.cs(datas.IntroDate.color, datas.IntroDate.NameKey + "Name")}";
+                        if (ModeHandler.isMode(ModeId.Zombie))
+                        {
+                            var roletext = datas.ColorId == 1 ? CustomOptions.cs(Mode.Zombie.main.Policecolor,"ZombiePoliceName") : CustomOptions.cs(Mode.Zombie.main.Zombiecolor, "ZombieZombieName");
+                            if (datas.ColorId == 2) taskInfo = "";
+                            result = $"{ModHelpers.cs(Palette.PlayerColors[datas.ColorId],datas.PlayerName)}{taskInfo} : {roletext}";
+                        }
                         roleSummaryText.AppendLine(result);
                     }
 
@@ -400,7 +425,7 @@ namespace SuperNewRoles.EndGame
 
         public static void Postfix(AmongUsClient __instance, [HarmonyArgument(0)] ref EndGameResult endGameResult)
         {
-            if (AmongUsClient.Instance.AmHost && ModeHandler.isMode(ModeId.SuperHostRoles))
+            if (AmongUsClient.Instance.AmHost && (ModeHandler.isMode(ModeId.SuperHostRoles) || ModeHandler.isMode(ModeId.Zombie)))
             {
                 PlayerControl.GameOptions = SyncSetting.OptionData.DeepCopy();
                 PlayerControl.LocalPlayer.RpcSyncSettings(PlayerControl.GameOptions);
@@ -460,6 +485,7 @@ namespace SuperNewRoles.EndGame
             notWinners.AddRange(RoleClass.MadStuntMan.MadStuntManPlayer);
             notWinners.AddRange(RoleClass.MadHawk.MadHawkPlayer);
             notWinners.AddRange(RoleClass.MadJester.MadJesterPlayer);
+            notWinners.AddRange(RoleClass.FalseCharges.FalseChargesPlayer);
 
             foreach (PlayerControl p in RoleClass.Survivor.SurvivorPlayer)
             {
@@ -485,12 +511,15 @@ namespace SuperNewRoles.EndGame
             bool HAISON = EndGameManagerSetUpPatch.IsHaison;
             bool EgoistWin = gameOverReason == (GameOverReason)CustomGameOverReason.EgoistWin;
             bool WorkpersonWin = gameOverReason == (GameOverReason)CustomGameOverReason.WorkpersonWin;
+            bool FalseChargesWin = gameOverReason == (GameOverReason)CustomGameOverReason.FalseChargesWin;
             bool BUGEND = gameOverReason == (GameOverReason)CustomGameOverReason.BugEnd;
             if (ModeHandler.isMode(ModeId.SuperHostRoles) && EndData != null)
             {
                 JesterWin = EndData == CustomGameOverReason.JesterWin;
                 EgoistWin = EndData == CustomGameOverReason.EgoistWin;
-
+                WorkpersonWin = EndData == CustomGameOverReason.WorkpersonWin;
+                FalseChargesWin = EndData == CustomGameOverReason.FalseChargesWin;
+                SuperNewRolesPlugin.Logger.LogInfo("いず:"+FalseChargesWin);
             }
 
 
@@ -502,7 +531,7 @@ namespace SuperNewRoles.EndGame
                 TempData.winners.Add(wpd);
                 AdditionalTempData.winCondition = WinCondition.JesterWin;
             }
-            if (MadJesterWin)
+            else if (MadJesterWin)
             {
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
                 WinnerPlayer.Data.IsDead = false;
@@ -550,6 +579,14 @@ namespace SuperNewRoles.EndGame
                 WinningPlayerData wpd = new WinningPlayerData(WinnerPlayer.Data);
                 TempData.winners.Add(wpd);
                 AdditionalTempData.winCondition = WinCondition.WorkpersonWin;
+            }
+            else if (FalseChargesWin)
+            {
+                SuperNewRolesPlugin.Logger.LogInfo("FC勝利！");
+                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+                WinningPlayerData wpd = new WinningPlayerData(WinnerPlayer.Data);
+                TempData.winners.Add(wpd);
+                AdditionalTempData.winCondition = WinCondition.FalseChargesWin;
             }
             if (TempData.winners.ToArray().Any(x => x.IsImpostor))
             {
@@ -709,6 +746,33 @@ namespace SuperNewRoles.EndGame
                     }
                 }
             }
+            if (ModeHandler.isMode(ModeId.Zombie))
+            {
+                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+                if (gameOverReason == GameOverReason.ImpostorByKill)
+                {
+                    AdditionalTempData.winCondition = WinCondition.Default;
+                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                    {
+                        if (p.CurrentOutfit.ColorId == 2)
+                        {
+                            WinningPlayerData wpd = new WinningPlayerData(p.Data);
+                            TempData.winners.Add(wpd);
+                        }
+                    }
+                } else
+                {
+                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                    {
+                        AdditionalTempData.winCondition = WinCondition.WorkpersonWin;
+                        if (p.CurrentOutfit.ColorId == 1)
+                        {
+                            WinningPlayerData wpd = new WinningPlayerData(p.Data);
+                            TempData.winners.Add(wpd);
+                        }
+                    }
+                }
+            }
         }
     }
     [HarmonyPatch(typeof(ExileController), nameof(ExileController.WrapUp))]
@@ -796,6 +860,7 @@ namespace SuperNewRoles.EndGame
         public static void Prefix(GameData.PlayerInfo exiled)
         {
             RoleClass.IsCoolTimeSetted = false;
+            FalseCharges.WrapUp(exiled.Object);
             if (!ModeHandler.isMode(ModeId.Default)) return;
             if (ModeHandler.isMode(ModeId.Default))
             {

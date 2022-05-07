@@ -77,6 +77,7 @@ namespace SuperNewRoles.Patch
             [HarmonyArgument(0)] byte playerId,
             [HarmonyArgument(1)] ref UnhollowerBaseLib.Il2CppStructArray<byte> taskTypeIds)
             {
+                if (taskTypeIds.Length == 0) return;
                 if (ModeHandler.isMode(ModeId.SuperHostRoles) || ModeHandler.isMode(ModeId.Default) && AmongUsClient.Instance.GameMode != GameModes.FreePlay)
                 {
                     if (GetTaskCount(GameData.Instance.GetPlayerById(playerId).Object) == (PlayerControl.GameOptions.NumCommonTasks, PlayerControl.GameOptions.NumShortTasks, PlayerControl.GameOptions.NumLongTasks))

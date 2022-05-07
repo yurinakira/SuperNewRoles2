@@ -258,11 +258,20 @@ namespace SuperNewRoles
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.RPCMurderPlayer, Hazel.SendOption.Reliable, -1);
                 writer.Write(killer.PlayerId);
                 writer.Write(target.PlayerId);
-                writer.Write(showAnimation ? Byte.MaxValue : 0);
+                writer.Write(showAnimation ? byte.MaxValue : 0);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.RPCMurderPlayer(killer.PlayerId, target.PlayerId, showAnimation ? Byte.MaxValue : (byte)0);
             }
             return murder;
+        }
+        public static void UncheckedMurderPlayer(PlayerControl killer, PlayerControl target, bool isMeetingStart = false, bool showAnimation = true)
+        {
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.RPCMurderPlayer, Hazel.SendOption.Reliable, -1);
+            writer.Write(killer.PlayerId);
+            writer.Write(target.PlayerId);
+            writer.Write(showAnimation ? byte.MaxValue : 0);
+            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            RPCProcedure.RPCMurderPlayer(killer.PlayerId, target.PlayerId, showAnimation ? Byte.MaxValue : (byte)0);
         }
         public static void SetPrivateRole(this PlayerControl player, RoleTypes role, PlayerControl seer = null)
         {
@@ -335,6 +344,16 @@ namespace SuperNewRoles
             return null;
         }
 
+        public static bool isCustomServer()
+        {
+            if (DestroyableSingleton<ServerManager>.Instance == null) return false;
+            StringNames n = DestroyableSingleton<ServerManager>.Instance.CurrentRegion.TranslateName;
+            return n != StringNames.ServerNA && n != StringNames.ServerEU && n != StringNames.ServerAS;
+        }
+        public static object TryCast(this Il2CppObjectBase self, Type type)
+        {
+            return AccessTools.Method(self.GetType(), nameof(Il2CppObjectBase.TryCast)).MakeGenericMethod(type).Invoke(self, Array.Empty<object>());
+        }
         internal static string cs(object unityEngine, string v)
         {
             throw new NotImplementedException();

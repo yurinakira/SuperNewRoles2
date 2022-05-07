@@ -62,6 +62,7 @@ namespace SuperNewRoles.Patches
     {
         public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
         {
+            if (ModeHandler.isMode(ModeId.Zombie)) return false;
             if (__instance.isDead()) return false;
             if (__instance.PlayerId == target.PlayerId) { __instance.RpcMurderPlayer(target); return false; }
             if (!RoleClass.IsStart && AmongUsClient.Instance.GameMode != GameModes.FreePlay)
@@ -73,6 +74,13 @@ namespace SuperNewRoles.Patches
             if (ModeHandler.isMode(ModeId.BattleRoyal)) return true;
             if (ModeHandler.isMode(ModeId.SuperHostRoles))
             {
+                if (__instance.isRole(RoleId.FalseCharges))
+                {
+                    target.RpcMurderPlayer(__instance);
+                    RoleClass.FalseCharges.FalseChargePlayers[__instance.PlayerId] = target.PlayerId;
+                    RoleClass.FalseCharges.AllTurns[__instance.PlayerId] = RoleClass.FalseCharges.DefaultTurn;
+                    return false;
+                }
                 if (target.isRole(RoleId.StuntMan) && !__instance.isRole(RoleId.OverKiller))
                 {
                     if (EvilEraser.IsOKAndTryUse(EvilEraser.BlockTypes.StuntmanGuard, __instance))

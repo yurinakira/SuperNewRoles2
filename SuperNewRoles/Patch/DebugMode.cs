@@ -96,6 +96,7 @@ namespace SuperNewRoles.Patch
                 // Spawn dummys
                 if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.G))
                 {
+<<<<<<< HEAD
                     var playerControl = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);
                     var i = playerControl.PlayerId = (byte)GameData.Instance.GetAvailableId();
 
@@ -109,6 +110,32 @@ namespace SuperNewRoles.Patch
                     int visor = random.Next(HatManager.Instance.allVisors.Count);
                     int color = random.Next(Palette.PlayerColors.Length);
                     int nameplate = random.Next(HatManager.Instance.allNamePlates.Count);
+=======
+                    var id = 0;
+                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                    {
+                        SuperNewRolesPlugin.Logger.LogInfo(p.PlayerId);
+                        if (id < p.PlayerId && p.PlayerId != 255)
+                        {
+                            SuperNewRolesPlugin.Logger.LogInfo("idセット:" + id);
+                            id = p.PlayerId;
+                        }
+                    }
+                    id++;
+                    var bot = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);
+                    bot.PlayerId = (byte)id;
+                    GameData.Instance.AddPlayer(bot);
+                    AmongUsClient.Instance.Spawn(bot, -2, SpawnFlags.None);
+                    bot.transform.position = PlayerControl.LocalPlayer.transform.position;
+                    bot.NetTransform.enabled = true;
+                    GameData.Instance.RpcSetTasks(bot.PlayerId, new byte[0]);
+
+                    bot.RpcSetColor((byte)PlayerControl.LocalPlayer.CurrentOutfit.ColorId);
+                    bot.RpcSetName(PlayerControl.LocalPlayer.name);
+                    bot.RpcSetPet(PlayerControl.LocalPlayer.CurrentOutfit.PetId);
+                    bot.RpcSetSkin(PlayerControl.LocalPlayer.CurrentOutfit.SkinId);
+                    bot.RpcSetNamePlate(PlayerControl.LocalPlayer.CurrentOutfit.NamePlateId);
+>>>>>>> master
 
                     playerControl.transform.position = PlayerControl.LocalPlayer.transform.position;
                     playerControl.GetComponent<DummyBehaviour>().enabled = true;

@@ -196,6 +196,10 @@
         "0" : "<color=#ffa500>Super</color><color=#ff0000>New</color><color=#00ff00>Roles</color>Hats" ,
         "11" : "<color=#ffa500>Super</color><color=#ff0000>New</color><color=#00ff00>Roles</color>Hats"
         } ,
+ "enableMirroMap" : {
+        "0" : "enable MirroMap" ,
+        "11" : "反転マップを有効にする"
+        } ,
  "SettingpresetSelection" : {
         "0" : "Preset" ,
         "11" : "プリセット"
@@ -238,7 +242,7 @@
         } ,
  "SettingMaxImpoRole" : {
         "0" : "Maximum Impostor Roles" ,
-        "11" : "インポスター人役職数"
+        "11" : "インポスター役職人数"
         } ,
  "SettingsHideSetting" : {
         "0" : "Hide Setting" ,
@@ -539,6 +543,34 @@
  "ZombieTimerText" : {
         "0" : "Zombies incoming! {0}s" ,
         "11" : "ゾンビがやってくるまで残り{0}秒！"
+        } ,
+ "ZombieStartSecondSetting" : {
+        "0" : "Time until the zombies come." ,
+        "11" : "ゾンビがやってくるまでの時間"
+        } ,
+ "ZombieZombieLightSetting" : {
+        "0" : "Zombie Visibility" ,
+        "11" : "ゾンビの視界"
+        } ,
+ "ZombieZombieSpeedSetting" : {
+        "0" : "Zombie Speed" ,
+        "11" : "ゾンビのスピード"
+        } ,
+ "ZombiePoliceLightSetting" : {
+        "0" : "Police visibility" ,
+        "11" : "警察の視界"
+        } ,
+ "ZombiePoliceSpeedSetting" : {
+        "0" : "Speed of police" ,
+        "11" : "警察のスピード"
+        } ,
+ "ZombieCommingLightSetting" : {
+        "0" : "Light before zombies" ,
+        "11" : "ゾンビがやってくる前の視界"
+        } ,
+ "ZombieCommingSpeedSetting" : {
+        "0" : "Speed before zombies" ,
+        "11" : "ゾンビがやってくる前のスピード"
         } ,
  "RandomColorHideNameSetting" : {
         "0" : "Hide Name" ,
@@ -844,7 +876,7 @@
         "0" : "Sheriff's Kill Cooldown" ,
         "11" : "シェリフのキルクールダウン"
         } ,
- "SheriffIsKillNeutralSetting" : {
+ "SheriffIsKillNewtralSetting" : {
         "0" : "Can Kill a Neutral" ,
         "11" : "第三陣営をキルできる"
         } ,
@@ -852,15 +884,15 @@
         "0" : "Can Kill a Lovers" ,
         "11" : "ラバーズをキルできる"
         } ,
- "SheriffIsKillMadMateSetting" : {
-        "0" : "Can Kill a Madmate" ,
-        "11" : "マッドメイドをキルできる"
+ "SheriffIsKillMadRoleSetting" : {
+        "0" : "Can Kill a MadRole" ,
+        "11" : "マッド系役職をキルできる"
         } ,
- "SheriffIsKillMadMateYes" : {
+ "SheriffYes" : {
         "0" : "Yes" ,
         "11" : "できる"
         } ,
- "SheriffIsKillMadMateNo" : {
+ "SheriffNo" : {
         "0" : "No" ,
         "11" : "できない"
         } ,
@@ -868,7 +900,7 @@
         "0" : "Maximum number of kills for Sheriff" ,
         "11" : "シェリフの最大キル数"
         } ,
- "SherifKillButtonName" : {
+ "SheriffKillButtonName" : {
         "0" : "Kill" ,
         "11" : "キル"
         } ,
@@ -900,9 +932,9 @@
         "0" : "Can Kill a Neutral" ,
         "11" : "第三陣営をキルできる"
         } ,
- "MeetingSheriffIsKillMadMateSetting" : {
+ "MeetingSheriffIsKillMadRoleSetting" : {
         "0" : "Can Kill a Madmate" ,
-        "11" : "マッドメイドをキルできる"
+        "11" : "マッド系役職をキルできる"
         } ,
  "MeetingSheriffYes" : {
         "0" : "Yes" ,
@@ -1192,7 +1224,7 @@
         "0" : "Try to stop everyone and sabotage the task!" ,
         "11" : "みんなを止めてタスクの妨害をしよう"
         } ,
- "FreezerTitle2" : {
+ "FreezerTitle3" : {
         "0" : "Let's put them all on ice." ,
         "11" : "全員を氷漬けにしよう"
         } ,
@@ -2056,6 +2088,10 @@
         "0" : "Would you like some breads?" ,
         "11" : "焼きたてのパンはいかが？"
         } ,
+ "BakeryExileText" : {
+        "0" : "Bakery baked some breads for crewmates." ,
+        "11" : "パン屋によってパンが振舞われました。"
+        } ,
  "MadStuntManName" : {
         "0" : "MadStuntman" ,
         "11" : "マッドスタントマン"
@@ -2080,10 +2116,6 @@
         "0" : "See it all." ,
         "11" : "すべてを見渡そう"
         } ,
- "BakeryTitle1" : {
-        "0" : "Would you like some breads?" ,
-        "11" : "焼きたてのパンはいかが？"
-        } ,
  "MadJesterName" : {
         "0" : "MadJester" ,
         "11" : "マッドてるてる"
@@ -2091,6 +2123,66 @@
  "MadJesterTitle1" : {
         "0" : "Get voted out and win with the Imposters!" ,
         "11" : "投票で追放されてインポスターと勝利しよう"
+        } ,
+ "FalseChargesName" : {
+        "0" : "FalseCharges" ,
+        "11" : "冤罪師"
+        } ,
+ "FalseChargesTitle1" : {
+        "0" : "Let the false accusations win!" ,
+        "11" : "冤罪をさせて勝利しよう"
+        } ,
+ "FalseChargesExileTurn" : {
+        "0" : "Turn of the false accusation range" ,
+        "11" : "冤罪の範囲のターン"
+        } ,
+ "FalseChargesCoolTime" : {
+        "0" : "Cool Time" ,
+        "11" : "クールタイム"
+        } ,
+ "FalseChargesButtonTitle" : {
+        "0" : "False Charge" ,
+        "11" : "冤罪"
+        } ,
+ "NiceTeleporterName" : {
+        "0" : "Nice Teleporter" ,
+        "11" : "ナイステレポーター"
+        } ,
+ "NiceTeleporterTitle1" : {
+        "0" : "Teleport and uncover impostors!" ,
+        "11" : "テレポートしてインポスターを暴こう"
+        } ,
+ "NiceTeleporterCoolDownSetting" : {
+        "0" : "Teleport cool down" ,
+        "11" : "テレポートのクールダウン"
+        } ,
+ "CelebrityName" : {
+        "0" : "Celebrity" ,
+        "11" : "スター"
+        } ,
+ "CelebrityTitle1" : {
+        "0" : "A Celebrity for everyone!" ,
+        "11" : "みんなのスター！！"
+        } ,
+ "CelebrityChangeRoleViewSetting" : {
+        "0" : "Name color will remain Celebrity even if the position changes." ,
+        "11" : "役職が変わっても名前の色がスターのままになる"
+        } ,
+ "NocturnalityName" : {
+        "0" : "Nocturnality" ,
+        "11" : "夜行性"
+        } ,
+ "NocturnalityTitle1" : {
+        "0" : "You live in darkness." ,
+        "11" : "あなたは暗闇の中で生きている"
+        } ,
+ "ObserverName" : {
+        "0" : "Observer" ,
+        "11" : "選挙管理委員"
+        } ,
+ "ObserverTitle1" : {
+        "0" : "Let's monitor everything." ,
+        "11" : "すべてを監視しよう"
         } 
 
 }

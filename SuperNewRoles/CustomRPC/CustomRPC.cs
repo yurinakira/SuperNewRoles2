@@ -90,6 +90,11 @@ namespace SuperNewRoles.CustomRPC
         MadJester,
         MadStuntMan,
         MadHawk,
+        FalseCharges,
+        NiceTeleporter,
+        Celebrity,
+        Nocturnality,
+        Observer,
         //RoleId
     }
 
@@ -148,6 +153,10 @@ namespace SuperNewRoles.CustomRPC
             SuperNewRolesPlugin.Logger.LogInfo(door.Id);
             door.SetDoorway(true);
         }
+        public static void CustomEndGame(GameOverReason reason, bool showAd)
+        {
+            CheckGameEndPatch.CustomEndGame(reason, showAd);
+        }
         public static void UseStuntmanCount(byte playerid)
         {
             var player = ModHelpers.playerById(playerid);
@@ -182,7 +191,7 @@ namespace SuperNewRoles.CustomRPC
         public static void TORVersionShare(int major, int minor, int build, int revision, byte[] guid, int clientId)
         {
             /*
-            SuperNewRolesPlugin.Logger.LogInfo("TORGMÉVÉFÉAÇ†Ç†Ç†ÅI");
+            SuperNewRolesPlugin.Logger.LogInfo("TORGM„Ç∑„Çß„Ç¢„ÅÇ„ÅÇ„ÅÇÔºÅ");
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.TORVersionShare, Hazel.SendOption.Reliable, clientId);
             writer.WritePacked(major);
             writer.WritePacked(minor);
@@ -411,13 +420,13 @@ namespace SuperNewRoles.CustomRPC
             if (sheriff == null || target == null) return;
             if (!PlayerControl.LocalPlayer.isAlive())
             {
-                DestroyableSingleton<HudManager>.Instance.Chat.AddChat(sheriff, sheriff.name + "ÇÕ" + target.name + "ÇÉVÉFÉäÉtÉLÉãÇµÇΩÅI");
+                DestroyableSingleton<HudManager>.Instance.Chat.AddChat(sheriff, sheriff.name + "„ÅØ" + target.name + "„Çí„Ç∑„Çß„É™„Éï„Ç≠„É´„Åó„ÅüÔºÅ");
                 if (MissFire)
                 {
-                    DestroyableSingleton<HudManager>.Instance.Chat.AddChat(sheriff, sheriff.name + "ÇÕåÎîöÇµÇΩÅI");
+                    DestroyableSingleton<HudManager>.Instance.Chat.AddChat(sheriff, sheriff.name + "„ÅØË™§ÁàÜ„Åó„ÅüÔºÅ");
                 } else
                 {
-                    DestroyableSingleton<HudManager>.Instance.Chat.AddChat(sheriff, sheriff.name + "ÇÕê¨å˜ÇµÇΩÅI");
+                    DestroyableSingleton<HudManager>.Instance.Chat.AddChat(sheriff, sheriff.name + "„ÅØÊàêÂäü„Åó„ÅüÔºÅ");
                 }
             }
             if (MissFire)
@@ -443,7 +452,7 @@ namespace SuperNewRoles.CustomRPC
             {
                 foreach (PlayerVoteArea pva in MeetingHud.Instance.playerStates)
                 {
-                    if (pva.TargetPlayerId ==Å@SheriffId && MissFire)
+                    if (pva.TargetPlayerId ==„ÄÄSheriffId && MissFire)
                     {
                         pva.SetDead(pva.DidReport, true);
                         pva.Overlay.gameObject.SetActive(true);
@@ -613,6 +622,10 @@ namespace SuperNewRoles.CustomRPC
         {
             var p = ModHelpers.playerById(playerid);
             PlayerControl.LocalPlayer.transform.position = p.transform.position;
+            if (SubmergedCompatibility.isSubmerged())
+            {
+                SubmergedCompatibility.ChangeFloor(SubmergedCompatibility.GetFloor(p));
+            }
             new CustomMessage(string.Format(ModTranslation.getString("TeleporterTPTextMessage"),p.nameText.text), 3);
         }
         public static void SetWinCond(byte Cond)
@@ -788,8 +801,16 @@ namespace SuperNewRoles.CustomRPC
                     case (byte)CustomRPC.SetCustomSabotage:
                         SabotageManager.SetSabotage(ModHelpers.playerById(reader.ReadByte()),(SabotageManager.CustomSabotage)reader.ReadByte(),reader.ReadBoolean());
                         break;
+<<<<<<< HEAD
                     case (byte)CustomRPC.SetDoorOpen:
                         SetDoorOpen(reader.ReadByte());
+=======
+                    case (byte)CustomRPC.CustomEndGame:
+                        if (AmongUsClient.Instance.AmHost)
+                        {
+                            CustomEndGame((GameOverReason)reader.ReadByte(), reader.ReadBoolean());
+                        }
+>>>>>>> master
                         break;
                 }
             }
