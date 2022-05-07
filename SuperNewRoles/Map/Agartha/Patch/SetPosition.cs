@@ -491,7 +491,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             ToolVentObject.transform.position = new Vector3(2.35f, -0.65f, 0.1f);
             ToolVentObject.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
-            O2VentObject.transform.position = new Vector3(1.95f, 9.1f, 0.1f);
+            O2VentObject.transform.position = new Vector3(2.35f, 7.45f, 0.1f);
             O2VentObject.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
             MedbayVentObject.transform.position = new Vector3(1.95f, 13f, 0.1f);
