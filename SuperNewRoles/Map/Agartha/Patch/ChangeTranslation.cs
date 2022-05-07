@@ -17,7 +17,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
         {
             public static void Postfix(TranslationController __instance,ref string __result, [HarmonyArgument(0)] StringNames name)
             {
-                if (!Data.IsMap(CustomMapNames.Agartha)) return;
+                if (!Data.IsMap(CustomMapNames.Agartha) || (AmongUsClient.Instance.GameState != AmongUsClient.GameStates.Started && AmongUsClient.Instance.GameMode != GameModes.FreePlay)) return;
                 if (name == StringNames.Cafeteria)
                 {
                     __result = __instance.GetString(StringNames.MeetingRoom);
@@ -27,6 +27,12 @@ namespace SuperNewRoles.Map.Agartha.Patch
                 } else if (name == StringNames.Nav)
                 {
                     __result = "全箇所共通";//ModTranslation.getString("Agartha_WorkRoom");
+                } else if (name == StringNames.ConfirmUnlinkAccount)
+                {
+                    __result = "通信室前";
+                } else if(name == StringNames.ContinueOffline)
+                {
+                    __result = "酸素室前";
                 }
             }
         }

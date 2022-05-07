@@ -259,10 +259,10 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Transform newcam = UnityEngine.Object.Instantiate(Sec.FindChild("task_cams"));
             newcam.transform.position = new Vector3(16.3f, 7.3f, 0.1f);
             newcam.gameObject.AddComponent<PolygonCollider2D>();
-            Sec.AddCamera(StringNames.Admin, new Vector3(-0.9f, 19.31f, 0f));
-            Sec.AddCamera(StringNames.Security, new Vector3(-0.2f, 4.5f, 0f));
-            Sec.AddCamera(StringNames.LogNorth, new Vector3(7.3f, 15f, 0f));
-            Sec.AddCamera(StringNames.ExileTextPP, new Vector3(23.8f, 10f, 0f));
+            Sec.AddCamera(StringNames.ConfirmUnlinkAccount, new Vector3(-0.9f, 19.31f, 0f));
+            Sec.AddCamera(StringNames.ContinueOffline, new Vector3(-0.2f, 4.5f, 0f));
+            Sec.AddCamera(StringNames.MeetingRoom, new Vector3(7.3f, 15f, 0f));
+            Sec.AddCamera(StringNames.Laboratory, new Vector3(23.8f, 10f, 0f));
         }
         public static int GetAvailableId()
         {
