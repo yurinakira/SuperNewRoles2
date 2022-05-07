@@ -40,6 +40,7 @@ namespace SuperNewRoles.Patch
         }
         public static bool Prefix(ref float __result, ShipStatus __instance, [HarmonyArgument(0)] GameData.PlayerInfo player)
         {
+            if (AmongUsClient.Instance.GameMode == GameModes.FreePlay) return true;
             if (!__instance.Systems.ContainsKey(SystemTypes.Electrical)) return true;
 
             ISystemType systemType = __instance.Systems.ContainsKey(SystemTypes.Electrical) ? __instance.Systems[SystemTypes.Electrical] : null;

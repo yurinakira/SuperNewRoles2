@@ -398,7 +398,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             LockerVentObject.transform.position = new Vector3(15.3f, 4f, 0.1f);
             LockerVentObject.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
-            ReactorVentObject.transform.position = new Vector3(1.47f, 22.8f, 0.1f);
+            ReactorVentObject.transform.position = new Vector3(1.75f, 21f, 0.1f);
             ReactorVentObject.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
             ToolVentObject.transform.position = new Vector3(2.35f, -0.65f, 0.1f);
