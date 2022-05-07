@@ -26,7 +26,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
 
             Transform FixWiring1 = MiraShip.FindChild("Garden").FindChild("FixWiringConsole");
             //FixWiring1.gameObject.SetActive(true);
-            FixWiring1.position = new Vector3(-2f, 1.55f, 0.1f);
+            FixWiring1.position = new Vector3(-0.9f, 1.65f, 0.1f);
             FixWiring1.localScale *= 0.8f;
             FixWiring1.GetComponent<SpriteRenderer>().sprite = ImageManager.Task_FixWiring1;
 
@@ -50,7 +50,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             FixWiring4.localScale *= 0.8f;
             FixWiring4.GetComponent<SpriteRenderer>().sprite = ImageManager.Task_FixWiring1;
 
-            Transform FixWiring5 = GameObject.Instantiate(MiraShip.FindChild("Locker").FindChild("FixWiringConsole (4)"));
+            Transform FixWiring5 = GameObject.Instantiate(MiraShip.FindChild("Locker").FindChild("FixWiringConsole (4)"), SetPosition.miraship);
             FixWiring5.name = "FixWiringConsole (5)";
             FixWiring5.GetComponent<Console>().ConsoleId = 5;
             //FixWiring5.gameObject.SetActive(true);
@@ -62,44 +62,45 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Transform MedScanner = MiraShip.FindChild("MedBay").FindChild("MedScanner");
             MedScanner.position = new Vector3(-2.2f, 13.1f, 0.1f);
 
-            Transform MedBayConsole = GameObject.Instantiate(MapLoader.SkeldObject.transform.FindChild("Medical").FindChild("Ground").FindChild("MedBayConsole"));
+            Transform MedBayConsole = GameObject.Instantiate(MapLoader.SkeldObject.transform.FindChild("Medical").FindChild("Ground").FindChild("MedBayConsole"), SetPosition.miraship);
             MedBayConsole.gameObject.SetActive(true);
             MedBayConsole.position = new Vector3(2.2f, 14.4f, 0.1f);
             AddConsoles.Add(MedBayConsole.GetComponent<Console>());
 
-            Transform Upload1 = GameObject.Instantiate(MapLoader.Skeld.transform.FindChild("Admin").FindChild("Ground").FindChild("admin_walls").FindChild("UploadDataConsole"));
+            Transform Upload1 = GameObject.Instantiate(MapLoader.Skeld.transform.FindChild("Admin").FindChild("Ground").FindChild("admin_walls").FindChild("UploadDataConsole"), SetPosition.miraship);
             Upload1.GetComponent<Console>().ConsoleId = 0;
             Upload1.position = new Vector3(15.1f, 20.4f, 4f);
             AddConsoles.Add(Upload1.GetComponent<Console>());
 
-            Transform Download_Aisle1 = GameObject.Instantiate(MapLoader.Skeld.transform.FindChild("Cockpit").FindChild("Ground").FindChild("UploadDataConsole"));
+            Transform Download_Aisle1 = GameObject.Instantiate(MapLoader.Skeld.transform.FindChild("Cockpit").FindChild("Ground").FindChild("UploadDataConsole"), SetPosition.miraship);
             Download_Aisle1.GetComponent<Console>().ConsoleId = 1;
             Download_Aisle1.position = new Vector3(14.1f, 0.9f, 4f);
             AddConsoles.Add(Download_Aisle1.GetComponent<Console>());
 
-            Transform Download_Aisle2 = GameObject.Instantiate(Download_Aisle1);
+            Transform Download_Aisle2 = GameObject.Instantiate(Download_Aisle1, SetPosition.miraship); 
             Download_Aisle2.GetComponent<Console>().ConsoleId = 2;
             Download_Aisle2.position = new Vector3(21.6f, 9.4f, 4f);
             AddConsoles.Add(Download_Aisle2.GetComponent<Console>());
 
-            Transform Download_Aisle3 = GameObject.Instantiate(Download_Aisle1);
+            Transform Download_Aisle3 = GameObject.Instantiate(Download_Aisle1, SetPosition.miraship);
             Download_Aisle3.GetComponent<Console>().ConsoleId = 3;
             Download_Aisle3.position = new Vector3(17.7f, 24.3f, 4f);
             AddConsoles.Add(Download_Aisle3.GetComponent<Console>());
 
-            Transform Download_Aisle4 = GameObject.Instantiate(Download_Aisle1);
+            Transform Download_Aisle4 = GameObject.Instantiate(Download_Aisle1, SetPosition.miraship);
             Download_Aisle4.GetComponent<Console>().ConsoleId = 4;
             Download_Aisle4.position = new Vector3(-5, 5.9f, 4f);
             AddConsoles.Add(Download_Aisle4.GetComponent<Console>());
 
-            Transform Download_Aisle5 = GameObject.Instantiate(Download_Aisle1);
+            Transform Download_Aisle5 = GameObject.Instantiate(Download_Aisle1, SetPosition.miraship);
             Download_Aisle5.GetComponent<Console>().ConsoleId = 5;
-            Download_Aisle5.position = new Vector3(2f, 1.5f, 4f);
+            Download_Aisle5.position = new Vector3(1.25f, 1.65f, 4f);
             AddConsoles.Add(Download_Aisle5.GetComponent<Console>());
 
-            Transform Download_Aisle6 = GameObject.Instantiate(Download_Aisle1);
+            Transform Download_Aisle6 = GameObject.Instantiate(Download_Aisle1, SetPosition.miraship);
             Download_Aisle6.GetComponent<Console>().ConsoleId = 6;
-            Download_Aisle6.position = new Vector3(-2.2f, 23.5f, 4f);
+            Download_Aisle6.position = new Vector3(-2.3f, 23.1f, 0f);
+            Download_Aisle6.localScale = new Vector3(1.25f,1.25f,1.25f);
             AddConsoles.Add(Download_Aisle6.GetComponent<Console>());
 
             Transform reactordesc = MiraShip.FindChild("Reactor").FindChild("reactor-desk-elec");
@@ -145,23 +146,23 @@ namespace SuperNewRoles.Map.Agartha.Patch
             DivertPowerConsole6.GetComponent<Console>().ConsoleId = 6;
             DivertPowerConsole6.position = new Vector3(-6.9f, -0.8f, 4f);
 
-            Transform Airlock_O2 = GameObject.Instantiate(MapLoader.Skeld.transform.FindChild("LifeSupport").FindChild("Ground").FindChild("GarbageConsole"));
+            Transform Airlock_O2 = GameObject.Instantiate(MapLoader.Skeld.transform.FindChild("LifeSupport").FindChild("Ground").FindChild("GarbageConsole"), SetPosition.miraship);
             Airlock_O2.GetComponent<Console>().ConsoleId = 2;
             Airlock_O2.position = new Vector3(-3.3f, 9.6f, 4f);
             AddConsoles.Add(Airlock_O2.GetComponent<Console>());
 
-            Transform Airlock_Labo = GameObject.Instantiate(MapLoader.Skeld.transform.FindChild("Cafeteria").FindChild("Ground").FindChild("GarbageConsole"));
+            Transform Airlock_Labo = GameObject.Instantiate(MapLoader.Skeld.transform.FindChild("Cafeteria").FindChild("Ground").FindChild("GarbageConsole"), SetPosition.miraship);
             Airlock_Labo.name = "Labo_GarbageConsole";
             Airlock_Labo.GetComponent<Console>().ConsoleId = 1;
             Airlock_Labo.position = new Vector3(19.4f, 8f, 4f);
             AddConsoles.Add(Airlock_Labo.GetComponent<Console>());
 
-            Transform Airlock_Aisle1 = GameObject.Instantiate(MapLoader.Skeld.transform.FindChild("Storage").FindChild("Ground").FindChild("AirlockConsole"));
+            Transform Airlock_Aisle1 = GameObject.Instantiate(MapLoader.Skeld.transform.FindChild("Storage").FindChild("Ground").FindChild("AirlockConsole"), SetPosition.miraship);
             Airlock_Aisle1.GetComponent<Console>().ConsoleId = 0;
             Airlock_Aisle1.position = new Vector3(22.6f, 0.3f, 4f);
             AddConsoles.Add(Airlock_Aisle1.GetComponent<Console>());
             
-            Transform Airlock_AisleSeeObject1 = GameObject.Instantiate(MapLoader.Skeld.transform.FindChild("HullItems").FindChild("hatch0001"));
+            Transform Airlock_AisleSeeObject1 = GameObject.Instantiate(MapLoader.Skeld.transform.FindChild("HullItems").FindChild("hatch0001"), SetPosition.miraship);
             Airlock_AisleSeeObject1.position = new Vector3(22.78f, 0.3f, 4f);
             AirlockParticle = Airlock_AisleSeeObject1.FindChild("Particles");
             AirlockParticle.position = new Vector3(22.78f, 0.3f, 4f);
@@ -368,7 +369,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
 
             Transform Comms_Comm = Miraship.FindChild("Comms").FindChild("comms-top").FindChild("FixCommsConsole");
             Comms_Comm.gameObject.SetActive(true);
-            Comms_Comm.position = new Vector3(0.6f, 23.5f, 0.1f);
+            Comms_Comm.position = new Vector3(0.6f, 23.15f, 0.1f);
             Comms_Comm.localScale *= 2f;
 
             Transform OfficeMid = Miraship.FindChild("Office").FindChild("office-mid");
@@ -377,7 +378,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             GameObject.Destroy(OfficeMid.GetComponent<SpriteRenderer>());
             Transform Comms_Ofice = OfficeMid.FindChild("FixCommsConsole");
             Comms_Ofice.gameObject.SetActive(true);
-            Comms_Ofice.position = new Vector3(-1.1f, 23.5f, 0.1f);
+            Comms_Ofice.position = new Vector3(-1.4f, 23.15f, 0.1f);
 
             Transform Powerdown = Miraship.FindChild("Office").FindChild("SwitchConsole");
             Powerdown.gameObject.SetActive(true);

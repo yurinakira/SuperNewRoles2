@@ -119,7 +119,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             doors.Add(CreateDoor(SystemTypes.Reactor,new Vector3(-6.2f, 17.8f, 4f), new Vector3(1f, 1f, 1f),3,0));//作業室
             doors.Add(CreateDoor(SystemTypes.Reactor,new Vector3(-9.6f, 12f, 4f), new Vector3(0.65f, 0.75f, 0.75f),4));//作業室
             doors.Add(CreateDoor(SystemTypes.LifeSupp,new Vector3(0.1f, 7.2f, 4f), new Vector3(0.95f, 0.8f, 1f),5));
-            doors.Add(CreateDoor(SystemTypes.LockerRoom,new Vector3(0.22f, 1.67f, 4f), new Vector3(0.95f, 0.8f, 1f),6));//工具室
+            doors.Add(CreateDoor(SystemTypes.LockerRoom,new Vector3(0.085f, 1.75f, 4f), new Vector3(0.69f, 0.8f, 1f),6));//工具室
             doors.Add(CreateDoor(SystemTypes.Launchpad,new Vector3(-6.1f, 4.5f, 4f), new Vector3(0.7f, 0.8f, 1f),7,0));//倉庫
             doors.Add(CreateDoor(SystemTypes.Admin,new Vector3(7.95f, 5.33f, 4f), new Vector3(0.64f, 0.64f, 0.64f), 8, 0));
             doors.Add(CreateDoor(SystemTypes.Admin,new Vector3(7.1f, 6f, 4f), new Vector3(0.75f, 0.75f, 0.75f), 12));
@@ -207,6 +207,14 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Object_Projecter_Animation.Sprites = CustomAnimation.LoadSprites.GetSprites("SuperNewRoles.Resources.Agartha.Animation.pro",32);
             Object_Projecter.localScale *= 2.5f;
 
+            Transform Comms_Object_CommsTable = GameObject.Instantiate(Template, MiraShip);
+            Comms_Object_CommsTable.position = new Vector3(-0.35f, 22.7f, 0.1f);
+            Comms_Object_CommsTable.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Comms_Table");
+            Comms_Object_CommsTable.name = "Object_CommsTable";
+            Comms_Object_CommsTable.localScale = new Vector3(1.8f,1.8f,1.8f);
+            GameObject.Destroy(Comms_Object_CommsTable.GetComponent<PolygonCollider2D>());
+            Comms_Object_CommsTable.gameObject.AddComponent<PolygonCollider2D>();
+
             Transform Object_fence_1 = GameObject.Instantiate(Template,MiraShip);
             Object_fence_1.position = new Vector3(15f, 22f, -2f);
             Object_fence_1.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_fence_1");
@@ -242,7 +250,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Vector3 position = Vector3.zero;
             position.x = BitConverter.ToSingle(buff, 0 * sizeof(float));
             position.y = BitConverter.ToSingle(buff, 1 * sizeof(float));
-            var camera = UnityEngine.Object.Instantiate<SurvCamera>(referenceCamera);
+            var camera = UnityEngine.Object.Instantiate<SurvCamera>(referenceCamera,miraship);
             camera.transform.position = new Vector3(position.x, position.y, referenceCamera.transform.position.z - 1f);
             camera.CamName = $"Security Camera";
             //camera.Offset = new Vector3(0f, 0f, camera.Offset.z);
@@ -256,13 +264,13 @@ namespace SuperNewRoles.Map.Agartha.Patch
         {
             //カメラ生成
             Transform Sec = MapLoader.AirshipObject.transform.FindChild("Security");
-            Transform newcam = UnityEngine.Object.Instantiate(Sec.FindChild("task_cams"));
+            Transform newcam = UnityEngine.Object.Instantiate(Sec.FindChild("task_cams"), miraship);
             newcam.transform.position = new Vector3(16.3f, 7.3f, 0.1f);
             newcam.gameObject.AddComponent<PolygonCollider2D>();
             Sec.AddCamera(StringNames.ConfirmUnlinkAccount, new Vector3(-0.9f, 19.31f, 0f));
             Sec.AddCamera(StringNames.ContinueOffline, new Vector3(-0.2f, 4.5f, 0f));
             Sec.AddCamera(StringNames.MeetingRoom, new Vector3(7.3f, 15f, 0f));
-            Sec.AddCamera(StringNames.Laboratory, new Vector3(23.8f, 10f, 0f));
+            Sec.AddCamera(StringNames.Laboratory, new Vector3(19.55f, 7.5f, 0f));
         }
         public static int GetAvailableId()
         {
@@ -393,7 +401,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             ReactorVentObject.transform.position = new Vector3(1.47f, 22.8f, 0.1f);
             ReactorVentObject.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
-            ToolVentObject.transform.position = new Vector3(2.2f, -0.5f, 0.1f);
+            ToolVentObject.transform.position = new Vector3(2.35f, -0.65f, 0.1f);
             ToolVentObject.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
             O2VentObject.transform.position = new Vector3(1.95f, 9.1f, 0.1f);
