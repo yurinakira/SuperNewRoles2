@@ -359,13 +359,13 @@ namespace SuperNewRoles.Map.Agartha.Patch
         {
             Transform O2_Locker = Miraship.FindChild("Locker").FindChild("NoOxyConsole");
             O2_Locker.gameObject.SetActive(true);
-            O2_Locker.position = new Vector3(-2.5221f, 9.813f, 0.1f);
+            O2_Locker.position = new Vector3(-1.85f, 9.813f, 0.1f);
 
             Transform GardenGreenHousePanel = Miraship.FindChild("Garden").FindChild("greenhousePanel");
             GardenGreenHousePanel.gameObject.SetActive(true);
             GardenGreenHousePanel.gameObject.GetChildren().SetActiveAllObject("NoOxyConsole",false);
             Transform O2_Garden = GardenGreenHousePanel.FindChild("NoOxyConsole");
-            O2_Garden.position = new Vector3(1.8404f, 9.813f, 0.1f);
+            O2_Garden.position = new Vector3(0f, 9.813f, 0.1f);
 
             Transform Comms_Comm = Miraship.FindChild("Comms").FindChild("comms-top").FindChild("FixCommsConsole");
             Comms_Comm.gameObject.SetActive(true);

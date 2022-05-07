@@ -234,6 +234,74 @@ namespace SuperNewRoles.Map.Agartha.Patch
                 Cafe_Chair.gameObject.AddComponent<PolygonCollider2D>();
             }
 
+            for (int i = 1; i <= 4; i++)
+            {
+                Transform O2_bombe01 = GameObject.Instantiate(Template, MiraShip);
+                switch (i)
+                {
+                    case 1:
+                        O2_bombe01.position = new Vector3(-0.8f, 9.5f, 0.03f);
+                        break;
+                    case 2:
+                        O2_bombe01.position = new Vector3(-1f, 8.9f, 0.02f);
+                        break;
+                    case 3:
+                        O2_bombe01.position = new Vector3(-0.75f, 8.5f, 0.01f);
+                        break;
+                    case 4:
+                        O2_bombe01.position = new Vector3(1.6f, 7.6f, 0.01f);
+                        break;
+                }
+                var O2_bombepath = "oxygen.bombe0" + i.ToString();
+                if (i == 4)
+                {
+                    O2_bombepath = "oxygen.bombe01";
+                }
+                O2_bombe01.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite(O2_bombepath);
+                O2_bombe01.name = "object_bombe0" + i.ToString();
+                O2_bombe01.localScale = new Vector3(1.55f, 1.55f, 1.55f);
+                GameObject.Destroy(O2_bombe01.GetComponent<PolygonCollider2D>());
+                O2_bombe01.gameObject.AddComponent<PolygonCollider2D>();
+            }
+
+            for (int i = 1; i <= 4; i++)
+            {
+                Transform O2_can01 = GameObject.Instantiate(Template, MiraShip);
+                switch (i)
+                {
+                    case 1:
+                        O2_can01.position = new Vector3(-3.15f, 9.5f, 0.13f);
+                        break;
+                    case 2:
+                        O2_can01.position = new Vector3(-3.1f, 9.1f, 0.1f);
+                        break;
+                    case 3:
+                        O2_can01.position = new Vector3(-2.8f, 9.15f, 0.09f);
+                        break;
+                    case 4:
+                        O2_can01.position = new Vector3(-2.85f, 8.5f, 0.08f);
+                        break;
+                }
+                var O2_canpath = "oxygen.can0" + i.ToString();
+                if (i == 4)
+                {
+                    O2_canpath = "oxygen.can01";
+                }
+                O2_can01.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite(O2_canpath);
+                O2_can01.name = "object_can0" + i.ToString();
+                O2_can01.localScale = new Vector3(1.55f, 1.55f, 1.55f);
+                GameObject.Destroy(O2_can01.GetComponent<PolygonCollider2D>());
+                O2_can01.gameObject.AddComponent<PolygonCollider2D>();
+            }
+
+            Transform O2_shelf_anything = GameObject.Instantiate(Template, MiraShip);
+            O2_shelf_anything.position = new Vector3(1.9f, 9.5f, 0.1f);
+            O2_shelf_anything.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("oxygen.shelf_anything");
+            O2_shelf_anything.name = "O2_shelf_anything";
+            O2_shelf_anything.localScale *= 3.8f;
+            GameObject.Destroy(O2_shelf_anything.GetComponent<PolygonCollider2D>());
+            O2_shelf_anything.gameObject.AddComponent<PolygonCollider2D>();
+
             Transform Object_fence_1 = GameObject.Instantiate(Template,MiraShip);
             Object_fence_1.position = new Vector3(15f, 22f, -2f);
             Object_fence_1.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_fence_1");
