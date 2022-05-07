@@ -10,55 +10,79 @@ namespace SuperNewRoles
 {
 	public static class MapLoader
 	{
-		private static readonly List<ShipStatus> Maps = new List<ShipStatus>();
-		private static readonly List<GameObject> MapObjects = new List<GameObject>();
+		private static ShipStatus skeld;
+		public static ShipStatus Skeld { get {
+				if (SubmergedCompatibility.Loaded)
+				{
+					return SubmergedCompatibility.GetSkeld();
+				}
+				else
+				{
+					return skeld;
+				}
+			} }
 
-		public static ShipStatus Skeld => Maps[0];
-
-		public static ShipStatus Airship => Maps[1];
-
-		public static ShipStatus Polus => Maps[2];
-
-		public static GameObject SkeldObject => MapObjects[0];
-
-		public static GameObject AirshipObject => MapObjects[1];
-
-		public static GameObject PolusObject => MapObjects[2];
-
-		public static IEnumerator LoadMaps()
+		private static ShipStatus airship;
+		public static ShipStatus Airship
 		{
-			if (Maps.Count == 3)
+			get
 			{
-				yield break;
+				if (SubmergedCompatibility.Loaded)
+				{
+					return SubmergedCompatibility.GetAirship();
+				}
+				else
+				{
+					return airship;
+				}
 			}
+		}
+
+		public static ShipStatus Polus;
+
+		public static GameObject SkeldObject => Skeld.gameObject;
+
+		public static GameObject AirshipObject => Airship.gameObject;
+
+		public static GameObject PolusObject => Polus.gameObject;
+
+		public static IEnumerator LoadPolus()
+		{
 			while ((Object)(object)AmongUsClient.Instance == null)
 			{
 				yield return null;
 			}
-			AssetReference val = AmongUsClient.Instance.ShipPrefabs.ToArray()[0];
-			AssetReference airship = AmongUsClient.Instance.ShipPrefabs.ToArray()[4];
-			AssetReference polus = AmongUsClient.Instance.ShipPrefabs.ToArray()[2];
-			AsyncOperationHandle<GameObject> skeldAsset = val.LoadAsset<GameObject>();
-			while (!skeldAsset.IsDone)
-			{
-				yield return null;
-			}
-			Maps.Add(skeldAsset.Result.GetComponent<ShipStatus>());
-			MapObjects.Add(skeldAsset.Result);
-			AsyncOperationHandle<GameObject> airshipAsset = airship.LoadAsset<GameObject>();
-			while (!airshipAsset.IsDone)
-			{
-				yield return null;
-			}
-			Maps.Add(airshipAsset.Result.GetComponent<ShipStatus>());
-			MapObjects.Add(airshipAsset.Result);
-			AsyncOperationHandle<GameObject> polusAsset = polus.LoadAsset<GameObject>();
+			AsyncOperationHandle<GameObject> polusAsset = AmongUsClient.Instance.ShipPrefabs.ToArray()[2].LoadAsset<GameObject>();
 			while (!polusAsset.IsDone)
 			{
 				yield return null;
 			}
-			Maps.Add(polusAsset.Result.GetComponent<ShipStatus>());
-			MapObjects.Add(polusAsset.Result);
+			Polus = polusAsset.Result.GetComponent<ShipStatus>();
+		}
+		public static IEnumerator LoadMaps()
+		{
+			while ((Object)(object)AmongUsClient.Instance == null)
+			{
+				yield return null;
+			}
+			AsyncOperationHandle<GameObject> skeldAsset = AmongUsClient.Instance.ShipPrefabs.ToArray()[0].LoadAsset<GameObject>();
+			while (!skeldAsset.IsDone)
+			{
+				yield return null;
+			};
+			skeld= skeldAsset.Result.GetComponent<ShipStatus>();
+			AsyncOperationHandle<GameObject> airshipAsset = AmongUsClient.Instance.ShipPrefabs.ToArray()[4].LoadAsset<GameObject>();
+			while (!airshipAsset.IsDone)
+			{
+				yield return null;
+			}
+			airship = airshipAsset.Result.GetComponent<ShipStatus>();
+			AsyncOperationHandle<GameObject> polusAsset = AmongUsClient.Instance.ShipPrefabs.ToArray()[2].LoadAsset<GameObject>();
+			while (!polusAsset.IsDone)
+			{
+				yield return null;
+			}
+			Polus = polusAsset.Result.GetComponent<ShipStatus>();
 		}
 	}
 
@@ -67,13 +91,16 @@ namespace SuperNewRoles
 	public static class AmongUsClient_Awake_Patch
 	{
 		[HarmonyPrefix]
-		[HarmonyPriority(800)]
+		[HarmonyPriority(900)]
 		public static void Prefix(AmongUsClient __instance)
 		{
-			Il2CppSystem.Collections.Generic.List<AssetReference> shipPrefabs = __instance.ShipPrefabs;
-			if (shipPrefabs == null || shipPrefabs.Count < 6)
+			if (!SubmergedCompatibility.Loaded)
 			{
 				((MonoBehaviour)(object)__instance).StartCoroutine(MapLoader.LoadMaps());
+			}
+			else
+			{
+				((MonoBehaviour)(object)__instance).StartCoroutine(MapLoader.LoadPolus());
 			}
 		}
 	}
