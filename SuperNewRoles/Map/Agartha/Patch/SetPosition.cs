@@ -113,19 +113,19 @@ namespace SuperNewRoles.Map.Agartha.Patch
         {
             
             List<PlainDoor> doors = new List<PlainDoor>();
-            doors.Add(CreateDoor(SystemTypes.MeetingRoom,new Vector3(13.5f, 20.55f, 7f),new Vector3(0.85f,0.75f,0.75f),0));
-            doors.Add(CreateDoor(SystemTypes.Comms,new Vector3(0.03f, 20.5f, 4f),new Vector3(0.95f,0.8f,1f),1));
-            doors.Add(CreateDoor(SystemTypes.MedBay,new Vector3(0.03f, 15.4f, 4f), new Vector3(0.95f, 0.8f, 1f),2));
-            doors.Add(CreateDoor(SystemTypes.Reactor,new Vector3(-6.2f, 17.8f, 4f), new Vector3(1f, 1f, 1f),3,0));//作業室
-            doors.Add(CreateDoor(SystemTypes.Reactor,new Vector3(-9.6f, 12f, 4f), new Vector3(0.65f, 0.75f, 0.75f),4));//作業室
-            doors.Add(CreateDoor(SystemTypes.LifeSupp,new Vector3(0.1f, 7.2f, 4f), new Vector3(0.95f, 0.8f, 1f),5));
+            doors.Add(CreateDoor(SystemTypes.MeetingRoom,new Vector3(13.45f, 20.45f, 7f),new Vector3(0.7f,0.75f,0.75f),0));
+            doors.Add(CreateDoor(SystemTypes.Comms,new Vector3(0.1f, 20.2f, 4f),new Vector3(0.7f, 0.8f,1f),1));
+            doors.Add(CreateDoor(SystemTypes.MedBay,new Vector3(0.1f, 15.45f, 4f), new Vector3(0.7f, 0.8f, 1f),2));
+            doors.Add(CreateDoor(SystemTypes.Reactor,new Vector3(-6.215f, 17.8f, 4f), new Vector3(0.75f, 0.75f, 1f),3,0));//作業室
+            doors.Add(CreateDoor(SystemTypes.Reactor,new Vector3(-9.775f, 11.875f, 4f), new Vector3(0.675f, 0.75f, 0.75f),4));//作業室
+            doors.Add(CreateDoor(SystemTypes.LifeSupp,new Vector3(0.075f, 6.36f, 4f), new Vector3(0.69f, 0.8f, 1f),5));
             doors.Add(CreateDoor(SystemTypes.LockerRoom,new Vector3(0.085f, 1.75f, 4f), new Vector3(0.69f, 0.8f, 1f),6));//工具室
-            doors.Add(CreateDoor(SystemTypes.Launchpad,new Vector3(-6.1f, 4.5f, 4f), new Vector3(0.7f, 0.8f, 1f),7,0));//倉庫
-            doors.Add(CreateDoor(SystemTypes.Admin,new Vector3(7.95f, 5.33f, 4f), new Vector3(0.64f, 0.64f, 0.64f), 8, 0));
+            doors.Add(CreateDoor(SystemTypes.Launchpad,new Vector3(-6.2f, 4.75f, 4f), new Vector3(0.75f, 1f, 1f),7,0));//倉庫
+            doors.Add(CreateDoor(SystemTypes.Admin,new Vector3(7.95f, 5.35f, 4f), new Vector3(0.64f, 0.66f, 0.64f), 8, 0));
             doors.Add(CreateDoor(SystemTypes.Admin,new Vector3(7.1f, 6f, 4f), new Vector3(0.75f, 0.75f, 0.75f), 12));
             doors.Add(CreateDoor(SystemTypes.Security,new Vector3(18.3f, 5.4f, 0.5f), new Vector3(0.8f, 0.8f, 1), 9, 0));
             doors.Add(CreateDoor(SystemTypes.Security,new Vector3(19.2f, 5.4f, 0.5f), new Vector3(0.8f,0.8f,1), 10, 0));
-            doors.Add(CreateDoor(SystemTypes.Laboratory,new Vector3(24.1f, 9.7f, 0.5f), new Vector3(0.75f,0.9f,1), 11));
+            doors.Add(CreateDoor(SystemTypes.Laboratory,new Vector3(24.15f, 9.74f, 0.5f), new Vector3(0.7f, 0.9f, 1f), 11));
             ShipStatus.Instance.AllDoors = doors.ToArray();
         }
         public static int GetDoorAvailableId()
