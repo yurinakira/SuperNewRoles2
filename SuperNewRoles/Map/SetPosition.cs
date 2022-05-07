@@ -305,9 +305,21 @@ namespace SuperNewRoles.Map
                     Agartha.Patch.SetPosition.SetDoor();
                     Agartha.Patch.SetTasksClass.ShipSetTask();
 
-                    ShipStatus.Instance.MeetingSpawnCenter = new Vector2(12.8f, 15.6f);
-                    ShipStatus.Instance.InitialSpawnCenter = new Vector2(12.8f, 15.6f);
-                    ShipStatus.Instance.SpawnRadius = 3f;
+                    if (AmongUsClient.Instance.GameMode != GameModes.FreePlay && CustomOptions.enableMirroMap.getBool())
+                    {
+                        SuperNewRolesPlugin.Logger.LogInfo("a");
+                        ShipStatus.Instance.MeetingSpawnCenter = new Vector2(-12.9f, 15.7f);
+                        ShipStatus.Instance.InitialSpawnCenter = new Vector2(-12.9f, 15.7f);
+                        ShipStatus.Instance.transform.localScale = new Vector3(-1f, 1f, 1f);
+                        ShipStatus.Instance.SpawnRadius = 3f;
+
+                    } else
+                    {
+                        SuperNewRolesPlugin.Logger.LogInfo("b");
+                        ShipStatus.Instance.MeetingSpawnCenter = new Vector2(12.8f, 15.6f);
+                        ShipStatus.Instance.InitialSpawnCenter = new Vector2(12.8f, 15.6f);
+                        ShipStatus.Instance.SpawnRadius = 3f;
+                    }
                 }
             }
         }

@@ -23,7 +23,7 @@ namespace SuperNewRoles.Patch
                     SkeldShipStatus.Instance.InitialSpawnCenter = new Vector2(0.8f, 0.6f);
                     SkeldShipStatus.Instance.MeetingSpawnCenter = new Vector2(0.8f, 0.6f);
                 }
-                else if (PlayerControl.GameOptions.MapId == 1)
+                else if (PlayerControl.GameOptions.MapId == 1 && !Map.Data.IsMap(Map.CustomMapNames.Agartha))
                 {
                     mira = GameObject.Find("MiraShip(Clone)");
                     mira.transform.localScale = new Vector3(-1f, 1f, 1f);
