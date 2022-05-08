@@ -83,7 +83,7 @@ namespace SuperNewRoles.Map
                     //倉庫階段右1
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
                            new Vector2[] {
-                               new Vector2(-21.4f,12.55f),new Vector2(-21f,12.55f),new Vector2(-20.2f,12.8f),new Vector2(-20.2f,12.9f),new Vector2(-19f,12.9f)
+                               new Vector2(-21.4f,13f),new Vector2(-21.4f,12.55f),new Vector2(-21f,12.55f),new Vector2(-20.2f,12.8f),new Vector2(-20.2f,12.9f),new Vector2(-19f,12.9f)
                            };
                     //倉庫階段右2
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
@@ -93,7 +93,7 @@ namespace SuperNewRoles.Map
                     //倉庫階段右3
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
                            new Vector2[] {
-                               new Vector2(-21.4f,4.8f),new Vector2(-21f,4.8f),new Vector2(-20.2f,5.05f),new Vector2(-20.2f,11.6f), new Vector2(-21f,11.3f),new Vector2(-21.4f,11.3f),
+                               new Vector2(-21.4f,4.8f),new Vector2(-21f,4.8f),new Vector2(-20.2f,5.05f),new Vector2(-20.2f,11.6f), new Vector2(-21f,11.45f),new Vector2(-21.4f,11.45f),
                            };
 
                     SuperNewRolesPlugin.Logger.LogInfo("オールドア:" + ShipStatus.Instance.AllDoors.Length);
@@ -314,14 +314,14 @@ namespace SuperNewRoles.Map
                         ShipStatus.Instance.MeetingSpawnCenter = new Vector2(-12.9f, 15.7f);
                         ShipStatus.Instance.InitialSpawnCenter = new Vector2(-12.9f, 15.7f);
                         ShipStatus.Instance.transform.localScale = new Vector3(-1f, 1f, 1f);
-                        ShipStatus.Instance.SpawnRadius = 3f;
+                        ShipStatus.Instance.SpawnRadius = 1.5f;
 
                     } else
                     {
                         SuperNewRolesPlugin.Logger.LogInfo("b");
                         ShipStatus.Instance.MeetingSpawnCenter = new Vector2(12.8f, 15.6f);
                         ShipStatus.Instance.InitialSpawnCenter = new Vector2(12.8f, 15.6f);
-                        ShipStatus.Instance.SpawnRadius = 3f;
+                        ShipStatus.Instance.SpawnRadius = 1.5f;
                     }
                 }
             }

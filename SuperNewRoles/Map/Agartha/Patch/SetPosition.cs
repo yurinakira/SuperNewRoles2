@@ -126,6 +126,9 @@ namespace SuperNewRoles.Map.Agartha.Patch
             doors.Add(CreateDoor(SystemTypes.Security,new Vector3(18.3f, 5.4f, 0.5f), new Vector3(0.8f, 0.8f, 1), 9, 0));
             doors.Add(CreateDoor(SystemTypes.Security,new Vector3(19.2f, 5.4f, 0.5f), new Vector3(0.8f,0.8f,1), 10, 0));
             doors.Add(CreateDoor(SystemTypes.Laboratory,new Vector3(24.15f, 9.74f, 0.5f), new Vector3(0.7f, 0.9f, 1f), 11));
+            doors.Add(CreateDoor(SystemTypes.Laboratory, new Vector3(22.24f, 1.625f, 7f), new Vector3(0.7f, 0.75f, 0.75f), 15));
+            doors.Add(CreateDoor(SystemTypes.Electrical, new Vector3(22.9f, 20.45f, 7f), new Vector3(0.7f, 0.75f, 0.75f), 13));
+            doors.Add(CreateDoor(SystemTypes.MeetingRoom, new Vector3(9.61f, 15.3376f, 4f), new Vector3(0.64f, 0.66f, 0.64f), 14, 0));
             ShipStatus.Instance.AllDoors = doors.ToArray();
         }
         public static int GetDoorAvailableId()
@@ -199,7 +202,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Transform Object_Projecter = GameObject.Instantiate(Template, MiraShip);
             Object_Projecter.position = new Vector3(10.6f, 18.1f, 0.1f);
             GameObject.Destroy(Object_Projecter.GetComponent<PolygonCollider2D>());
-            Object_Projecter.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Animation.pro_polygon");
+            Object_Projecter.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("pro_polygon");
             Object_Projecter.gameObject.AddComponent<PolygonCollider2D>();
             Object_Projecter.name = "Object_Projecter";
             CustomAnimation.Animation Object_Projecter_Animation = new CustomAnimation.Animation();
@@ -234,7 +237,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
                 Cafe_Chair.gameObject.AddComponent<PolygonCollider2D>();
             }
 
-            for (int i = 1; i <= 4; i++)
+            for (int i = 1; i <= 5; i++)
             {
                 Transform O2_bombe01 = GameObject.Instantiate(Template, MiraShip);
                 switch (i)
@@ -249,11 +252,18 @@ namespace SuperNewRoles.Map.Agartha.Patch
                         O2_bombe01.position = new Vector3(-0.75f, 8.5f, 0.01f);
                         break;
                     case 4:
-                        O2_bombe01.position = new Vector3(1.6f, 7.6f, 0.01f);
+                        O2_bombe01.position = new Vector3(1.3f, 7.345f, 0.01f);
+                        break;
+                    case 5:
+                        O2_bombe01.position = new Vector3(1.7f, 7.7f, 0.02f);
                         break;
                 }
                 var O2_bombepath = "oxygen.bombe0" + i.ToString();
                 if (i == 4)
+                {
+                    O2_bombepath = "oxygen.bombeup";
+                }
+                else if (i == 5)
                 {
                     O2_bombepath = "oxygen.bombe01";
                 }
@@ -276,10 +286,10 @@ namespace SuperNewRoles.Map.Agartha.Patch
                         O2_can01.position = new Vector3(-3.1f, 9.1f, 0.1f);
                         break;
                     case 3:
-                        O2_can01.position = new Vector3(-2.8f, 9.15f, 0.09f);
+                        O2_can01.position = new Vector3(-2.8f, 8.8f, 0.09f);
                         break;
                     case 4:
-                        O2_can01.position = new Vector3(-2.85f, 8.5f, 0.08f);
+                        O2_can01.position = new Vector3(-2.85f, 8.4f, 0.08f);
                         break;
                 }
                 var O2_canpath = "oxygen.can0" + i.ToString();
@@ -352,8 +362,11 @@ namespace SuperNewRoles.Map.Agartha.Patch
             //カメラ生成
             Transform Sec = MapLoader.AirshipObject.transform.FindChild("Security");
             Transform newcam = UnityEngine.Object.Instantiate(Sec.FindChild("task_cams"), miraship);
-            newcam.transform.position = new Vector3(16.3f, 7.3f, 0.1f);
+            newcam.transform.position = new Vector3(16.3f, 7.8f, 0.1f);
+            newcam.localScale = new Vector3(2.25f, 1.75f, 1.75f);
+            GameObject.Destroy(newcam.GetComponent<PolygonCollider2D>());
             newcam.gameObject.AddComponent<PolygonCollider2D>();
+            newcam.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Security_Camera");
             Sec.AddCamera(StringNames.ConfirmUnlinkAccount, new Vector3(-0.9f, 19.31f, 0f));
             Sec.AddCamera(StringNames.ContinueOffline, new Vector3(-0.2f, 4.5f, 0f));
             Sec.AddCamera(StringNames.MeetingRoom, new Vector3(7.3f, 15f, 0f));
@@ -494,7 +507,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             O2VentObject.transform.position = new Vector3(2.35f, 7.45f, 0.1f);
             O2VentObject.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
-            MedbayVentObject.transform.position = new Vector3(1.95f, 13f, 0.1f);
+            MedbayVentObject.transform.position = new Vector3(2.35f, 12.65f, 0.1f);
             MedbayVentObject.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
             WareHouseVentObject.transform.position = new Vector3(-9.5f, 0.1f, 0.1f);

@@ -112,8 +112,8 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Transform DivertPowerConsole1 = MiraShip.FindChild("Comms").FindChild("DivertPowerConsole (9)");
             DivertPowerConsole1.gameObject.SetActive(true);
             DivertPowerConsole1.GetComponent<Console>().ConsoleId = 1;
-            DivertPowerConsole1.position = new Vector3(1.5f, 23.5f, 1f);
-            //DivertPowerConsole1.position += new Vector3(0,2,0);
+            DivertPowerConsole1.position = new Vector3(1.5f, 23f, 0.1f);
+            DivertPowerConsole1.localScale = new Vector3(1.2f, 1.2f, 0);
             AddConsoles.Add(DivertPowerConsole1.GetComponent<Console>());
 
             Transform DivertPowerConsole2 = MiraShip.FindChild("Cafe").FindChild("DivertPowerConsole (3)");

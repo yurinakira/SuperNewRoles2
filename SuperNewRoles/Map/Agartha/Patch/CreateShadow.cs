@@ -19,9 +19,9 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Cafe.gameObject.SetActive(true);
 
             EdgeCollider2D CafeCol = Cafe.gameObject.AddComponent<EdgeCollider2D>();
-            CafeCol.points = new Vector2[] { new Vector2(1f, 4.95f), new Vector2(3.85f, 4.95f), new Vector2(3.85f, -5.45f), new Vector2(-3.665f, -5.45f), new Vector2(-3.65f, -1.8f) };
+            CafeCol.points = new Vector2[] { new Vector2(0.85f, 4.95f), new Vector2(3.85f, 4.95f), new Vector2(3.85f, -5.45f), new Vector2(-3.665f, -5.45f), new Vector2(-3.65f, -1.4f) };
             EdgeCollider2D CafeCol2 = Cafe.gameObject.AddComponent<EdgeCollider2D>();
-            CafeCol2.points = new Vector2[] { new Vector2(-3.65f, 0.785f), new Vector2(-3.65f, 2.8f), new Vector2(-1.4f, 5f), new Vector2(-0.3f, 5f) };
+            CafeCol2.points = new Vector2[] { new Vector2(-3.65f, 0.2f), new Vector2(-3.65f, 2.8f), new Vector2(-1.4f, 5f), new Vector2(-0.3f, 5f) };
 
             EdgeCollider2D ElecCol = Cafe.gameObject.AddComponent<EdgeCollider2D>();
             ElecCol.points = new Vector2[] { new Vector2(10.5f, 5.1f),new Vector2(10.5f, 4.7f), new Vector2(11.6f, 4.7f), new Vector2(11.6f, -5f),
@@ -31,7 +31,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
 
             EdgeCollider2D LaboCol = Cafe.gameObject.AddComponent<EdgeCollider2D>();
             LaboCol.points = new Vector2[] { new Vector2(8.45f, -13.53f), new Vector2(6f, -13.53f), new Vector2(6f, -11.4f), new Vector2(4.8f, -11.4f), new Vector2(4.8f, -12.7f), new Vector2(1.55f, -12.7f), new Vector2(1.55f, -7.7f), new Vector2(4.45f, -7.7f), new Vector2(5.25f, -8.5f), new Vector2(5.25f, -9.4f), new Vector2(6.025f, -9.4f), new Vector2(6.025f, -5.75f), new Vector2(10.35f, -5.75f), new Vector2(10.35f, -5f) };
-
+            
             //EdgeCollider2D CafeAisleCol1 = Cafe.gameObject.AddComponent<EdgeCollider2D>();
             //CafeAisleCol1.points = new Vector2[] { new Vector2(-3.65f, 0.785f), new Vector2(-5.15f, 0.785f), new Vector2(-5.15f, 5.7f), new Vector2(-0.85f, 5.7f), new Vector2(-0.85f, 5f) };
 
@@ -47,19 +47,19 @@ namespace SuperNewRoles.Map.Agartha.Patch
             //医務室
             EdgeCollider2D MedicalCol = Cafe.gameObject.AddComponent<EdgeCollider2D>();
             MedicalCol.points = new Vector2[] {
-                new Vector2(-14f,0f),new Vector2(-17f,0f),new Vector2(-17f,-4f),new Vector2(-10.15f,-4f),new Vector2(-10.15f,0f),new Vector2(-12.2f,0f)
+                new Vector2(-13.7f,0f),new Vector2(-17f,0f),new Vector2(-17f,-4f),new Vector2(-10.15f,-4f),new Vector2(-10.15f,0f),new Vector2(-12.5f,0f)
             };
 
             //O2
             EdgeCollider2D O2Col = Cafe.gameObject.AddComponent<EdgeCollider2D>();
             O2Col.points = new Vector2[] {
-                new Vector2(-14f,-9.25f),new Vector2(-17f,-9.25f),new Vector2(-17f,-5.4f),new Vector2(-10.15f,-5.4f),new Vector2(-10.15f,-9.25f),new Vector2(-12.2f,-9.25f)
+                new Vector2(-13.7f,-9.25f),new Vector2(-17f,-9.25f),new Vector2(-17f,-5.4f),new Vector2(-10.15f,-5.4f),new Vector2(-10.15f,-9.25f),new Vector2(-12.5f,-9.25f)
             };
 
             //工具室
             EdgeCollider2D ToolCol = Cafe.gameObject.AddComponent<EdgeCollider2D>();
             ToolCol.points = new Vector2[] {
-                new Vector2(-14.05f,-13.68f), new Vector2(-14.05f,-12.9f),new Vector2(-17f,-12.9f),new Vector2(-17f,-17.55f),new Vector2(-9.95f,-17.55f),new Vector2(-9.95f,-13.68f),new Vector2(-9.95f,-12.9f),new Vector2(-12f,-12.9f),new Vector2(-12f,-13.68f)
+                new Vector2(-13.7f,-13.68f),new Vector2(-14.05f,-13.68f), new Vector2(-14.05f,-12.9f),new Vector2(-17f,-12.9f),new Vector2(-17f,-17.55f),new Vector2(-9.95f,-17.55f),new Vector2(-9.95f,-13.68f),new Vector2(-9.95f,-12.9f),new Vector2(-12f,-12.9f),new Vector2(-12f,-13.68f),new Vector2(-12.5f,-13.68f)
             };
 
             //倉庫
@@ -77,7 +77,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             //倉庫&作業(右)
             EdgeCollider2D WorkAndWareCol = Cafe.gameObject.AddComponent<EdgeCollider2D>();
             WorkAndWareCol.points = new Vector2[] {
-                new Vector2(-19.3f,0.5f),new Vector2(-19.3f,-3.75f),new Vector2(-21.9f,-3.75f),new Vector2(-21.9f,-4.625f),new Vector2(-19.3f,-4.625f),new Vector2(-19.3f,-10.1f)
+                new Vector2(-19.3f,0.75f),new Vector2(-19.3f,-3.75f),new Vector2(-21.9f,-3.75f),new Vector2(-21.9f,-4.625f),new Vector2(-19.3f,-4.625f),new Vector2(-19.3f,-10.1f)
             };
         }
     }

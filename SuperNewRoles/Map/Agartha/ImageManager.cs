@@ -171,6 +171,7 @@ namespace SuperNewRoles.Map.Agartha
         public static Sprite AgarthagetSprite(string id)
         {
             //if (Datas.ContainsKey(id)) return Datas[id];
+            //Datas[id] = AssetLoader.GetAgarthaAssets(id);
             Datas[id] = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.Agartha." + id + ".png", 115f);
             return Datas[id];
         }
