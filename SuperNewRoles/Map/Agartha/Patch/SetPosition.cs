@@ -199,6 +199,13 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Object_brigde_front.localScale *= 3.6f;
             GameObject.Destroy(Object_brigde_front.GetComponent<PolygonCollider2D>());
 
+            Transform Object_brigde_download = GameObject.Instantiate(Template, MiraShip);
+            Object_brigde_download.position = new Vector3(14.2f, 1f, 5f);
+            Object_brigde_download.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("bridge_download");
+            Object_brigde_download.name = "Object_brigde_download";
+            Object_brigde_download.localScale *= 3.6f;
+            GameObject.Destroy(Object_brigde_download.GetComponent<PolygonCollider2D>());
+
             Transform Object_Projecter = GameObject.Instantiate(Template, MiraShip);
             Object_Projecter.position = new Vector3(10.6f, 18.1f, 0.1f);
             GameObject.Destroy(Object_Projecter.GetComponent<PolygonCollider2D>());
@@ -258,14 +265,14 @@ namespace SuperNewRoles.Map.Agartha.Patch
                         O2_bombe01.position = new Vector3(1.7f, 7.7f, 0.02f);
                         break;
                 }
-                var O2_bombepath = "bombe0" + i.ToString();
+                var O2_bombepath = "oxygen.bombe0" + i.ToString();
                 if (i == 4)
                 {
-                    O2_bombepath = "bombeup";
+                    O2_bombepath = "oxygen.bombeup";
                 }
                 else if (i == 5)
                 {
-                    O2_bombepath = "bombe01";
+                    O2_bombepath = "oxygen.bombe01";
                 }
                 O2_bombe01.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite(O2_bombepath);
                 O2_bombe01.name = "object_bombe0" + i.ToString();
@@ -292,10 +299,10 @@ namespace SuperNewRoles.Map.Agartha.Patch
                         O2_can01.position = new Vector3(-2.85f, 8.4f, 0.08f);
                         break;
                 }
-                var O2_canpath = "can0" + i.ToString();
+                var O2_canpath = "oxygen.can0" + i.ToString();
                 if (i == 4)
                 {
-                    O2_canpath = "can01";
+                    O2_canpath = "oxygen.can01";
                 }
                 O2_can01.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite(O2_canpath);
                 O2_can01.name = "object_can0" + i.ToString();
@@ -306,7 +313,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
 
             Transform O2_shelf_anything = GameObject.Instantiate(Template, MiraShip);
             O2_shelf_anything.position = new Vector3(1.9f, 9.5f, 0.1f);
-            O2_shelf_anything.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("shelf_anything");
+            O2_shelf_anything.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("oxygen.shelf_anything");
             O2_shelf_anything.name = "O2_shelf_anything";
             O2_shelf_anything.localScale *= 3.8f;
             GameObject.Destroy(O2_shelf_anything.GetComponent<PolygonCollider2D>());

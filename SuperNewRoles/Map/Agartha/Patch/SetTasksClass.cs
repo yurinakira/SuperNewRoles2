@@ -74,7 +74,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
 
             Transform Download_Aisle1 = GameObject.Instantiate(MapLoader.Skeld.transform.FindChild("Cockpit").FindChild("Ground").FindChild("UploadDataConsole"), SetPosition.miraship);
             Download_Aisle1.GetComponent<Console>().ConsoleId = 1;
-            Download_Aisle1.position = new Vector3(14.1f, 0.9f, 4f);
+            Download_Aisle1.position = new Vector3(14.2f, 0.95f, 4f);
             AddConsoles.Add(Download_Aisle1.GetComponent<Console>());
 
             Transform Download_Aisle2 = GameObject.Instantiate(Download_Aisle1, SetPosition.miraship); 
