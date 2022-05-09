@@ -14,16 +14,16 @@ namespace SuperNewRoles.Map
             IsOpen = Open;
             if (IsOpen)
             {
-                render.sprite = Agartha.ImageManager.Object_Door_Open;
+                //render.sprite = Agartha.ImageManager.Object_Door_Open;
             } else
             {
-                render.sprite = Agartha.ImageManager.Object_Door_Open;
+                //render.sprite = Agartha.ImageManager.Object_Door_Open;
             }
         }
         void Start()
         {
             render = new SpriteRenderer();
-            render.sprite = Agartha.ImageManager.Object_Door_Open; 
+            //render.sprite = Agartha.ImageManager.Object_Door_Open; 
         }
     }
 }

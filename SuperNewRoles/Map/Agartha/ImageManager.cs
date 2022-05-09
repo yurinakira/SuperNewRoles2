@@ -157,21 +157,20 @@ namespace SuperNewRoles.Map.Agartha
                 return m_Room_Up;
             }
         }
-        private static Sprite m_Room_Down;
-        public static Sprite Room_Down
+        private static Sprite m_Map;
+        public static Sprite Map
         {
             get
             {
-                if (m_Room_Down != null) return m_Room_Down;
-                m_Room_Down = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.Agartha.Room_Down.png", 115f);
-                return m_Room_Down;
+                if (m_Map != null) return m_Map;
+                m_Map = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.Agartha.Map.png", 115f);
+                return m_Map;
             }
         }
         private static Dictionary<string, Sprite> Datas = new Dictionary<string,Sprite>();
         public static Sprite AgarthagetSprite(string id)
         {
             //if (Datas.ContainsKey(id)) return Datas[id];
-            //Datas[id] = AssetLoader.GetAgarthaAssets(id);
             Datas[id] = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.Agartha." + id + ".png", 115f);
             return Datas[id];
         }

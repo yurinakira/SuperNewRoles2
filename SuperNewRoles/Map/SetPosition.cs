@@ -99,7 +99,7 @@ namespace SuperNewRoles.Map
                     SuperNewRolesPlugin.Logger.LogInfo("オールドア:" + ShipStatus.Instance.AllDoors.Length);
 
                     SpriteRenderer CafeteriaWalls = Wall.FindChild("CafeteriaWalls").gameObject.GetComponent<SpriteRenderer>();
-                    CafeteriaWalls.sprite = Agartha.ImageManager.Room_Meeting;
+                    //CafeteriaWalls.sprite = Agartha.ImageManager.Room_Meeting;
                     CafeteriaWalls.transform.position = new Vector3(13.15f, 16f, 4f);
                     CafeteriaWalls.transform.localScale *= 1.5f;
                     /*
@@ -204,7 +204,7 @@ namespace SuperNewRoles.Map
                     
                     SpriteRenderer Walls = ShipStatus.Instantiate(CafeteriaWalls, MiraShip).gameObject.GetComponent<SpriteRenderer>();
                     Walls.name = "WallImages";
-                    Walls.sprite = Agartha.ImageManager.AgarthagetSprite("Map");
+                    Walls.sprite = Agartha.ImageManager.Map;
                     Walls.transform.position = new Vector3(4.95f, 12.5f, 7f);
                     Walls.transform.localScale = new Vector3(1.81f,1.81f,1.81f);
 

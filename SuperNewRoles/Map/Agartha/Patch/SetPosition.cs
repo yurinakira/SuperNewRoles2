@@ -105,7 +105,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
         {
             public static void Postfix(PlainDoor __instance)
             {
-                __instance.GetComponent<SpriteRenderer>().sprite = ImageManager.Object_Door_Open;
+                //__instance.GetComponent<SpriteRenderer>().sprite = ImageManager.Object_Door_Open;
             }
         }
         public static Transform miraship;
@@ -202,12 +202,12 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Transform Object_Projecter = GameObject.Instantiate(Template, MiraShip);
             Object_Projecter.position = new Vector3(10.6f, 18.1f, 0.1f);
             GameObject.Destroy(Object_Projecter.GetComponent<PolygonCollider2D>());
-            Object_Projecter.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("pro_polygon");
+            Object_Projecter.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Animation.pro_polygon");
             Object_Projecter.gameObject.AddComponent<PolygonCollider2D>();
             Object_Projecter.name = "Object_Projecter";
             CustomAnimation.Animation Object_Projecter_Animation = new CustomAnimation.Animation();
             Object_Projecter_Animation.Start(8, Object_Projecter);
-            Object_Projecter_Animation.Sprites = CustomAnimation.LoadSprites.GetSprites("SuperNewRoles.Resources.Agartha.Animation.pro",32);
+            Object_Projecter_Animation.Sprites = CustomAnimation.LoadSprites.GetSpritesAgartha("SuperNewRoles.Resources.Agartha.Animation.pro", 32);
             Object_Projecter.localScale *= 2.5f;
 
             Transform Comms_Object_CommsTable = GameObject.Instantiate(Template, MiraShip);
@@ -258,14 +258,14 @@ namespace SuperNewRoles.Map.Agartha.Patch
                         O2_bombe01.position = new Vector3(1.7f, 7.7f, 0.02f);
                         break;
                 }
-                var O2_bombepath = "oxygen.bombe0" + i.ToString();
+                var O2_bombepath = "bombe0" + i.ToString();
                 if (i == 4)
                 {
-                    O2_bombepath = "oxygen.bombeup";
+                    O2_bombepath = "bombeup";
                 }
                 else if (i == 5)
                 {
-                    O2_bombepath = "oxygen.bombe01";
+                    O2_bombepath = "bombe01";
                 }
                 O2_bombe01.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite(O2_bombepath);
                 O2_bombe01.name = "object_bombe0" + i.ToString();
@@ -292,10 +292,10 @@ namespace SuperNewRoles.Map.Agartha.Patch
                         O2_can01.position = new Vector3(-2.85f, 8.4f, 0.08f);
                         break;
                 }
-                var O2_canpath = "oxygen.can0" + i.ToString();
+                var O2_canpath = "can0" + i.ToString();
                 if (i == 4)
                 {
-                    O2_canpath = "oxygen.can01";
+                    O2_canpath = "can01";
                 }
                 O2_can01.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite(O2_canpath);
                 O2_can01.name = "object_can0" + i.ToString();
@@ -306,7 +306,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
 
             Transform O2_shelf_anything = GameObject.Instantiate(Template, MiraShip);
             O2_shelf_anything.position = new Vector3(1.9f, 9.5f, 0.1f);
-            O2_shelf_anything.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("oxygen.shelf_anything");
+            O2_shelf_anything.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("shelf_anything");
             O2_shelf_anything.name = "O2_shelf_anything";
             O2_shelf_anything.localScale *= 3.8f;
             GameObject.Destroy(O2_shelf_anything.GetComponent<PolygonCollider2D>());
