@@ -1,9 +1,12 @@
-﻿using SuperNewRoles.CustomOption;
+﻿using InnerNet;
+using SuperNewRoles.CustomOption;
+using SuperNewRoles.CustomRPC;
 using SuperNewRoles.EndGame;
 using SuperNewRoles.Helpers;
 using SuperNewRoles.Patch;
 using SuperNewRoles.Roles;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -143,6 +146,61 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             }
             return text;
         }
+        public static void SetWinnerBot(GameOverReason reason)
+        {
+            SuperNewRolesPlugin.Logger.LogInfo("\n\n\n\n");
+            SuperNewRolesPlugin.Logger.LogInfo("スポーンスタート");
+            CustomGameOverReason? enddata = OnGameEndPatch.EndData;
+            if (enddata != null)
+            {
+                if (enddata == CustomGameOverReason.GodWin)
+                {
+
+                }
+            }
+            if (reason == GameOverReason.ImpostorByKill || 
+                reason == GameOverReason.ImpostorBySabotage || 
+                reason == GameOverReason.ImpostorByVote || 
+                reason == GameOverReason.ImpostorDisconnect)
+            {
+                SuperNewRolesPlugin.Logger.LogInfo("インポスターウィン");
+                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                {
+                    if (!p.Data.Disconnected && (p.isRole(RoleId.MadJester) || p.isRole(RoleId.MadMate) || p.isRole(RoleId.MadMayor) || p.isRole(RoleId.MadStuntMan)))
+                    {
+                        SuperNewRolesPlugin.Logger.LogInfo("スポーン");
+                        SpawnBot(p);
+                        SuperNewRolesPlugin.Logger.LogInfo("スポーンﾖｼ!");
+                    }
+                }
+            }
+            SuperNewRolesPlugin.Logger.LogInfo("\n\n\n\n");
+        }
+        static PlayerControl bot;
+        public static void SpawnBot(PlayerControl outfitplayer)
+        {
+            if (bot == null)
+            {
+                bot = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);
+                bot.PlayerId = 15;
+                GameData.Instance.AddPlayer(bot);
+                AmongUsClient.Instance.Spawn(bot, -2, SpawnFlags.None);
+                bot.transform.position = PlayerControl.LocalPlayer.transform.position;
+                bot.NetTransform.enabled = true;
+                GameData.Instance.RpcSetTasks(bot.PlayerId, new byte[0]);
+            }
+
+            bot.RpcSetColor((byte)outfitplayer.CurrentOutfit.ColorId);
+            bot.RpcSetName(outfitplayer.name);
+            bot.RpcSetPet(outfitplayer.CurrentOutfit.PetId);
+            bot.RpcSetSkin(outfitplayer.CurrentOutfit.SkinId);
+            bot.RpcSetNamePlate(outfitplayer.CurrentOutfit.NamePlateId);
+
+            //new LateTask(() => { SuperNewRolesPlugin.Logger.LogInfo("k"); ;SuperNewRolesPlugin.Logger.LogInfo("n"); }, 0.2f, "Bot TP Task");
+            //new LateTask(() => { SuperNewRolesPlugin.Logger.LogInfo("d");  SuperNewRolesPlugin.Logger.LogInfo("s"); }, 0.4f, "Bot Set Role Task");
+            //new LateTask(() => { foreach (var pc in PlayerControl.AllPlayerControls) pc.RpcMurderPlayer(bot); }, 0.6f, "Bot Kill Task");
+            //new LateTask(() => bot.Despawn(), 3f, "Bot Despawn Task");
+        }
         public static void SetWinnerText(GameOverReason reason)
         {
             SuperNewRolesPlugin.Logger.LogInfo("セットうぃなーてきすと");
@@ -198,6 +256,13 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                         }
                     }
                 }
+            }
+            try
+            {
+                SetWinnerBot(reason);
+            } catch(Exception e)
+            {
+                SuperNewRolesPlugin.Logger.LogError("ERROR:"+e);
             }
         }
     }
