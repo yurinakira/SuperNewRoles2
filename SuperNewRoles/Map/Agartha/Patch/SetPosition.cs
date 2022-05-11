@@ -206,6 +206,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Object_brigde_download.localScale *= 3.6f;
             GameObject.Destroy(Object_brigde_download.GetComponent<PolygonCollider2D>());
 
+
             Transform Object_Projecter = GameObject.Instantiate(Template, MiraShip);
             Object_Projecter.position = new Vector3(10.6f, 18.1f, 0.1f);
             GameObject.Destroy(Object_Projecter.GetComponent<PolygonCollider2D>());
@@ -320,11 +321,32 @@ namespace SuperNewRoles.Map.Agartha.Patch
             O2_shelf_anything.gameObject.AddComponent<PolygonCollider2D>();
 
             Transform Object_fence_1 = GameObject.Instantiate(Template,MiraShip);
-            Object_fence_1.position = new Vector3(15f, 22f, -2f);
+            Object_fence_1.position = new Vector3(14.85f, 22.03f, -2f);
             Object_fence_1.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_fence_1");
             Object_fence_1.name = "Object_fence_1";
-            Object_fence_1.localScale *= 3.8f;
+            Object_fence_1.localScale = new Vector3(1.81f,1.81f,1.81f);
             GameObject.Destroy(Object_fence_1.GetComponent<PolygonCollider2D>());
+
+            Transform Object_fence_2 = GameObject.Instantiate(Template, MiraShip);
+            Object_fence_2.position = new Vector3(21.45f, -0.4f, -2f);
+            Object_fence_2.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_fence_2");
+            Object_fence_2.name = "Object_fence_2";
+            Object_fence_2.localScale = new Vector3(1.8f,1.8f,1.8f);
+            GameObject.Destroy(Object_fence_2.GetComponent<PolygonCollider2D>());
+
+            Transform Object_fence_3 = GameObject.Instantiate(Template, MiraShip);
+            Object_fence_3.position = new Vector3(7.05f, -0.4f, -2f);
+            Object_fence_3.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_fence_3");
+            Object_fence_3.name = "Object_fence_3";
+            Object_fence_3.localScale *= 3.8f;
+            GameObject.Destroy(Object_fence_3.GetComponent<PolygonCollider2D>());
+
+            Transform Object_fence_4 = GameObject.Instantiate(Template, MiraShip);
+            Object_fence_4.position = new Vector3(0.425f, 16.56f, -2f);
+            Object_fence_4.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Object_fence_4");
+            Object_fence_4.name = "Object_fence_4";
+            Object_fence_4.localScale = new Vector3(1.81f, 1.81f, 1.81f);
+            GameObject.Destroy(Object_fence_4.GetComponent<PolygonCollider2D>());
 
             GameObject.Destroy(Template.gameObject);
             Template = null;

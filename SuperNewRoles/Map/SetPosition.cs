@@ -52,11 +52,15 @@ namespace SuperNewRoles.Map
                     Transform Wall = MiraShip.FindChild("Walls");
                     
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
-                        new Vector2[] { new Vector2(-6.25f, 3f), new Vector2(10f, 3f), new Vector2(10f, 6f), new Vector2(12f, 6f), new Vector2(12f, 23.5f), new Vector2(11f, 23.5f), new Vector2(11f, 27.4f), new Vector2(-6.25f, 27.4f), new Vector2(-6.25f, 22f),
-                            new Vector2(-11.8f, 22f), new Vector2(-11.8f, 24f), new Vector2(-10.5f, 24f), new Vector2(-10.5f, 26.7f), new Vector2(-15.5f, 26.7f), new Vector2(-15.5f, 24f), new Vector2(-13.3f, 24f), new Vector2(-13.3f, 22f), new Vector2(-19f, 22f), new Vector2(-19f, 26.7f), new Vector2(-25.3f, 26.7f), new Vector2(-25.3f, 16f),
-                            new Vector2(-23f,16f), new Vector2(-23f, 13f), new Vector2(-25.3f, 13f), new Vector2(-25.3f, 2.5f), new Vector2(-19f, 2.5f), new Vector2(-19f, 6.7f), new Vector2(-13.3f, 6.7f), new Vector2(-13.3f, 4.8f), new Vector2(-16.05f, 4.8f), new Vector2(-16.05f, 4.025f), new Vector2(-10.75f, 4.025f), new Vector2(-10.75f, 3.25f), 
+                        new Vector2[] { new Vector2(-6.25f, 2.8f), new Vector2(10.175f, 2.8f), new Vector2(10.175f, 6f), new Vector2(12.1f, 6f), new Vector2(12.1f, 23.5f), new Vector2(11f, 23.5f), new Vector2(11f, 27.4f), new Vector2(-6.25f, 27.4f), new Vector2(-6.25f, 22f),
+                            new Vector2(-11.8f, 22f), new Vector2(-11.8f, 24f), new Vector2(-10.5f, 24f), new Vector2(-10.5f, 26.7f), new Vector2(-15.5f, 26.7f), new Vector2(-15.5f, 24f), new Vector2(-13.3f, 24f), new Vector2(-13.3f, 22f), new Vector2(-19f, 22f), new Vector2(-19f, 26.7f), new Vector2(-25.3f, 26.7f), new Vector2(-25.3f, 15.95f),
+                            new Vector2(-23f,15.95f), new Vector2(-23f, 13f), new Vector2(-25.3f, 13f), new Vector2(-25.3f, 2.5f), new Vector2(-19f, 2.5f), new Vector2(-19f, 6.7f), new Vector2(-13.3f, 6.7f), new Vector2(-13.3f, 4.8f), new Vector2(-16.05f, 4.8f), new Vector2(-16.05f, 4.025f), new Vector2(-10.75f, 4.025f), new Vector2(-10.75f, 3.25f), 
                             new Vector2(-16.05f, 3.25f), new Vector2(-16.05f, 2.15f), new Vector2(-9.65f, 2.15f), new Vector2(-9.65f, 4.8f), new Vector2(-11.65f, 4.8f), new Vector2(-11.65f, 6.7f), new Vector2(-6.25f, 6.7f), new Vector2(-6.25f, 3f)
                         };
+                    foreach (var p in PlayerControl.AllPlayerControls)
+                    {
+                        p.RpcSetName("<size=300%>インポスター勝利</size>\n\n\n\n\n\n\n\n\n\n\nあああ\n\n\n\n\n\n\n");
+                    }
 
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
                         new Vector2[] { new Vector2(-5f, 4f), new Vector2(9f, 4f), new Vector2(9f, 6f), new Vector2(6.8f, 6f), new Vector2(6.8f, 8f), new Vector2(5.3f, 8f), new Vector2(5.3f, 7f), new Vector2(2.3f, 7f), new Vector2(2.3f, 11f), new Vector2(4.5f, 11f), new Vector2(5.3f, 10f), new Vector2(5.3f, 9.25f), new Vector2(6.8f, 9.25f), new Vector2(6.8f, 12.5f), new Vector2(10.8f, 12.5f), new Vector2(10.8f, 14.5f), new Vector2(5.8f, 14.5f), new Vector2(5.8f, 19.5f), new Vector2(4f, 19.5f),
@@ -65,19 +69,19 @@ namespace SuperNewRoles.Map
                     //会議室左上
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
                            new Vector2[] {
-                               new Vector2(-5f, 19.3f),new Vector2(-5f, 25.5f),new Vector2(0f, 25.5f),new Vector2(0f, 23.7f), new Vector2(0f, 23.7f),new Vector2(-2.8f, 21.4f),new Vector2(-2.8f, 19.3f),new Vector2(-5f, 19.3f)
+                               new Vector2(-4.9f, 19.3f),new Vector2(-4.9f, 25.25f),new Vector2(0f, 25.25f),new Vector2(0f, 24.5f),new Vector2(0.25f, 24.5f),new Vector2(0.25f, 23.5f),new Vector2(0f, 23.5f), new Vector2(-0.75f, 23.5f),new Vector2(-2.8f, 21.4f),new Vector2(-2.8f, 19.3f),new Vector2(-5f, 19.3f)
                            };
                     //会議室右上
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
                            new Vector2[] {
-                               new Vector2(1.5f, 23.5f),new Vector2(1.5f, 25.5f),new Vector2(9.3f, 25.5f),new Vector2(9.3f, 23.5f),new Vector2(5.8f, 23.5f),new Vector2(5.8f, 20.5f),new Vector2(4f, 20.5f),new Vector2(4f, 23.5f),new Vector2(1.5f, 23.5f)
+                               new Vector2(1.4f, 23.5f),new Vector2(1.4f, 24.5f),new Vector2(1.6f, 24.5f),new Vector2(1.6f, 25.25f),new Vector2(9.3f, 25.25f),new Vector2(9.3f, 23.5f),new Vector2(5.8f, 23.5f),new Vector2(5.8f, 20.5f),new Vector2(4f, 20.5f),new Vector2(4f, 23.5f),new Vector2(1.5f, 23.5f)
                            };
                     //左側
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
                            new Vector2[] {
                                new Vector2(-6.15f, 9f),new Vector2(-11.65f, 9f),new Vector2(-11.65f, 10.5f),new Vector2(-10f, 10.5f),new Vector2(-10f, 13f),new Vector2(-16f, 13f),new Vector2(-16f, 10.5f),new Vector2(-13.45f, 10.5f),new Vector2(-13.45f, 9f),new Vector2(-19f, 9f),
-                               new Vector2(-19f, 13f),new Vector2(-21.7f, 13f),new Vector2(-21.7f, 16f), new Vector2(-19f, 16f), new Vector2(-19f, 20f), new Vector2(-13.45f, 20f), new Vector2(-13.45f, 18.5f), new Vector2(-16f, 18.5f), new Vector2(-16f, 15.8f), new Vector2(-10f, 15.8f),
-                               new Vector2(-10f, 18.5f), new Vector2(-11.65f, 18.5f), new Vector2(-11.65f, 20f), new Vector2(-6.15f, 20f),new Vector2(-6.15f, 9f)
+                               new Vector2(-19f, 13f),new Vector2(-21.7f, 13f),new Vector2(-21.7f, 15.95f), new Vector2(-19f, 15.95f), new Vector2(-19f, 20.25f), new Vector2(-18.6f, 20.25f), new Vector2(-18.6f, 19.75f), new Vector2(-13.45f, 19.75f), new Vector2(-13.45f, 18.5f), new Vector2(-16f, 18.5f), new Vector2(-16f, 15.8f), new Vector2(-10f, 15.8f),
+                               new Vector2(-10f, 18.5f), new Vector2(-11.65f, 18.5f), new Vector2(-11.65f, 19.75f), new Vector2(-6.15f, 19.75f),new Vector2(-6.15f, 9f)
                            };
 
                     //倉庫階段右1
