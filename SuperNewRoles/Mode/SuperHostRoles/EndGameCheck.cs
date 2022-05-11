@@ -95,6 +95,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     }
                 }
             */
+            WinnerText.SetWinnerText(reason);
                     __instance.enabled = false;
                     ShipStatus.RpcEndGame(reason, showAd);
 
