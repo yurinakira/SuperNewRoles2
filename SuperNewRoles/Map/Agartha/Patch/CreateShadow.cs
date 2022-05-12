@@ -24,13 +24,13 @@ namespace SuperNewRoles.Map.Agartha.Patch
             CafeCol2.points = new Vector2[] { new Vector2(-3.65f, 0.2f), new Vector2(-3.65f, 2.8f), new Vector2(-1.4f, 5f), new Vector2(-0.3f, 5f) };
 
             EdgeCollider2D ElecCol = Cafe.gameObject.AddComponent<EdgeCollider2D>();
-            ElecCol.points = new Vector2[] { new Vector2(10.5f, 5.1f),new Vector2(10.5f, 4.7f), new Vector2(11.6f, 4.7f), new Vector2(11.6f, -5f),
-                new Vector2(11.6f, -13.625f), new Vector2(9.65f, -13.625f) };
+            ElecCol.points = new Vector2[] { new Vector2(10.275f, 5.05f), new Vector2(11.85f, 5.05f),
+                new Vector2(11.85f, -13.625f), new Vector2(9.65f, -13.625f) };
             EdgeCollider2D ElecCol2 = Cafe.gameObject.AddComponent<EdgeCollider2D>();
-            ElecCol2.points = new Vector2[] { new Vector2(10.2f, -5f), new Vector2(5.05f, -5f), new Vector2(5.05f, 4.75f), new Vector2(8.725f, 4.75f), new Vector2(8.725f, 5.1f) };
+            ElecCol2.points = new Vector2[] { new Vector2(10f, -5.25f), new Vector2(4.9f, -5.25f), new Vector2(4.9f, 5.05f), new Vector2(9.1f, 5.05f) };
 
             EdgeCollider2D LaboCol = Cafe.gameObject.AddComponent<EdgeCollider2D>();
-            LaboCol.points = new Vector2[] { new Vector2(8.45f, -13.625f), new Vector2(6f, -13.625f), new Vector2(6f, -11.4f), new Vector2(4.8f, -11.4f), new Vector2(4.8f, -12.7f), new Vector2(1.55f, -12.7f), new Vector2(1.55f, -7.7f), new Vector2(4.45f, -7.7f), new Vector2(5.25f, -8.5f), new Vector2(5.25f, -9.4f), new Vector2(6.025f, -9.4f), new Vector2(6.025f, -5.75f), new Vector2(10.2f, -5.75f), new Vector2(10.2f, -5f) };
+            LaboCol.points = new Vector2[] { new Vector2(8.45f, -13.625f), new Vector2(6f, -13.625f), new Vector2(6f, -11.4f), new Vector2(4.8f, -11.4f), new Vector2(4.8f, -12.7f), new Vector2(1.55f, -12.7f), new Vector2(1.55f, -7.7f), new Vector2(4.45f, -7.7f), new Vector2(5.25f, -8.5f), new Vector2(5.25f, -9.4f), new Vector2(6.025f, -9.4f), new Vector2(6.025f, -5.75f), new Vector2(10f, -5.75f), new Vector2(10f, -5.25f) };
             
             //EdgeCollider2D CafeAisleCol1 = Cafe.gameObject.AddComponent<EdgeCollider2D>();
             //CafeAisleCol1.points = new Vector2[] { new Vector2(-3.65f, 0.785f), new Vector2(-5.15f, 0.785f), new Vector2(-5.15f, 5.7f), new Vector2(-0.85f, 5.7f), new Vector2(-0.85f, 5f) };
