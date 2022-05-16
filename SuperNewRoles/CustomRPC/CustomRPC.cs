@@ -104,6 +104,7 @@ namespace SuperNewRoles.CustomRPC
         EvilSeer,
         RemoteSheriff,
         TeleportingJackal,
+        Camouflager,
         //RoleId
     }
 
@@ -154,7 +155,8 @@ namespace SuperNewRoles.CustomRPC
         UseMadStuntmanCount,
         CustomEndGame,
         UncheckedProtect,
-        SetBot
+        SetBot,
+        CamouflagerCamouflage,
     }
     public static class RPCProcedure
     {
@@ -685,6 +687,16 @@ namespace SuperNewRoles.CustomRPC
             }
             new CustomMessage(string.Format(ModTranslation.getString("TeleporterTPTextMessage"),p.nameText.text), 3);
         }
+
+        public static void CamouflagerCamouflage()
+        {
+            if (RoleClass.Camouflager.CamouflagerPlayer == null) return;
+
+            RoleClass.Camouflager.CamouflageTimer = RoleClass.Camouflager.DurationTime;
+            foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+                player.resetChange("", 6, "", "", "", "");
+        }
+
         public static void SetWinCond(byte Cond)
         {
             OnGameEndPatch.EndData = (CustomGameOverReason)Cond;
