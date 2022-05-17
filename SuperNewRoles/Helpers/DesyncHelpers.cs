@@ -16,5 +16,14 @@ namespace SuperNewRoles.Helpers
             MessageExtensions.WriteNetObject(MurderWriter, target);
             AmongUsClient.Instance.FinishRpcImmediately(MurderWriter);
         }
+        public static void RpcShapeShiftPrivate(this PlayerControl source, PlayerControl target, bool IsAnimation, PlayerControl see = null)
+        {
+            PlayerControl SeePlayer = see;
+            if (see == null) SeePlayer = source;
+            MessageWriter val = AmongUsClient.Instance.StartRpcImmediately(source.NetId, 46, (SendOption)1, targetClientId:SeePlayer.getClientId());
+            val.WriteNetObject(target);
+            val.Write(IsAnimation);
+            AmongUsClient.Instance.FinishRpcImmediately(val);
+        }
     }
 }

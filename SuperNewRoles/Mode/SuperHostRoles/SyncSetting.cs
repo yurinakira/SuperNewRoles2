@@ -213,6 +213,10 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     }
                     optdata.KillCooldown = KillCoolSet(RoleClass.Jackal.KillCoolDown);
                     break;
+                case RoleId.Camouflager:
+                    optdata.RoleOptions.ShapeshifterCooldown = RoleClass.Camouflager.CoolTime;
+                    optdata.RoleOptions.ShapeshifterDuration = RoleClass.Camouflager.DurationTime - 1.1f;
+                    break;
             }
             if (player.isDead()) optdata.AnonymousVotes = false;
             optdata.RoleOptions.ShapeshifterLeaveSkin = false;

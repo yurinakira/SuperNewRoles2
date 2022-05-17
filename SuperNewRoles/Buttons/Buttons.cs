@@ -824,7 +824,7 @@ namespace SuperNewRoles.Buttons
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.CamouflagerCamouflage();
                 },
-                () => { return PlayerControl.LocalPlayer.isRole(RoleId.Camouflager) && PlayerControl.LocalPlayer.isAlive(); },
+                () => { return ModeHandler.isMode(ModeId.Default) && PlayerControl.LocalPlayer.isRole(RoleId.Camouflager) && PlayerControl.LocalPlayer.isAlive(); },
                 () => { return PlayerControl.LocalPlayer.CanMove; },
                 () =>
                 {

@@ -254,17 +254,17 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     }
                     if (!p.IsMod())
                     {
-                        p.RpcSetNamePrivate(NewName);
-                    }
-                    if (IsCamo)
-                    {
-                        foreach (PlayerControl p2 in PlayerControl.AllPlayerControls)
+                        if (IsCamo)
                         {
-                            if (p2.PlayerId != p.PlayerId)
+                            foreach (PlayerControl p2 in PlayerControl.AllPlayerControls)
                             {
-                                p.RpcSetNamePrivate("　", p2);
+                                if (p2.PlayerId != p.PlayerId)
+                                {
+                                    p2.RpcSetNamePrivate("　", p);
+                                }
                             }
                         }
+                        p.RpcSetNamePrivate(NewName);
                     }
                     foreach (PlayerControl p2 in DiePlayers)
                     {

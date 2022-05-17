@@ -8,6 +8,8 @@ using UnityEngine;
 using SuperNewRoles.Buttons;
 using SuperNewRoles.CustomOption;
 using SuperNewRoles.Helpers;
+using SuperNewRoles.Mode;
+using SuperNewRoles.Mode.SuperHostRoles;
 
 namespace SuperNewRoles.Roles
 {
@@ -45,7 +47,29 @@ namespace SuperNewRoles.Roles
             // Everyone but morphling reset
             if (oldCamouflageTimer > 0f && RoleClass.Camouflager.CamouflageTimer <= 0f)
             {
-                RoleClass.Camouflager.ResetCamouflage();
+                if (ModeHandler.isMode(ModeId.Default))
+                {
+                    RoleClass.Camouflager.ResetCamouflage();
+                } else if (ModeHandler.isMode(ModeId.SuperHostRoles))
+                {
+                    var starter = RoleClass.Camouflager.Started;
+                    RoleClass.Camouflager.Started = 255;
+                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                    {
+                        if (p.IsPlayer())
+                        {
+                            p.RpcShapeshift(p, false);
+                            if (p.PlayerId == starter)
+                            {
+                                new LateTask(() =>
+                                {
+                                    p.RpcShapeshift(p, true);
+                                }, 0.25f);
+                            }
+                        }
+                        p.RpcSetName(p.getDefaultName());
+                    }
+                }
             }
         }
     }

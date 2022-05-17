@@ -83,6 +83,7 @@ namespace SuperNewRoles.Patch
                     setBasePlayerOutlines();
                     VentAndSabo.VentButtonVisibilityPatch.Postfix(__instance);
                     SerialKiller.FixedUpdate();
+                    Camouflager.Update();
                     if (ModeHandler.isMode(ModeId.NotImpostorCheck))
                     {
                         Mode.NotImpostorCheck.NameSet.Postfix();
@@ -97,7 +98,6 @@ namespace SuperNewRoles.Patch
                         SabotageManager.Update();
                         SetNameUpdate.Postfix(__instance);
                         Jackal.JackalFixedPatch.Postfix(__instance);
-                        Camouflager.Update();
                         if (PlayerControl.LocalPlayer.isAlive())
                         {
                             if (PlayerControl.LocalPlayer.isImpostor()) {SetTarget.ImpostorSetTarget(); }

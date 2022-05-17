@@ -42,11 +42,11 @@ namespace SuperNewRoles.Mode.SuperHostRoles
         {
             if (!ModeHandler.isMode(ModeId.SuperHostRoles)) return;
 
-            bool IsJackalSpawned = false;
+            bool IsSpawned = false;
             //ジャッカルがいるなら
             if (CustomOptions.JackalOption.getSelection() != 0)
             {
-                IsJackalSpawned = true;
+                IsSpawned = true;
                 for (int i = 0; i < (1 * PlayerControl.GameOptions.NumImpostors + 2); i++)
                 {
                     PlayerControl bot = BotManager.Spawn("暗転対策BOT"+ (i + 1));
@@ -60,7 +60,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                 }
             } else
             {
-                bool flag = !IsJackalSpawned && (
+                bool flag = !IsSpawned && (
                     CustomOptions.EgoistOption.getSelection() != 0 ||
                     CustomOptions.SheriffOption.getSelection() != 0 ||
                     CustomOptions.trueloverOption.getSelection() != 0 ||
@@ -69,6 +69,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     );
                 if (flag)
                 {
+                    IsSpawned = false;
                     PlayerControl bot1 = BotManager.Spawn("暗転対策BOT1");
                     bot1.RpcSetRole(RoleTypes.Impostor);
 
@@ -77,6 +78,11 @@ namespace SuperNewRoles.Mode.SuperHostRoles
 
                     PlayerControl bot3 = BotManager.Spawn("暗転対策BOT3");
                     bot3.RpcSetRole(RoleTypes.Crewmate);
+                } else if (!IsSpawned && CustomOptions.CamouflagerOption.getSelection() != 0 )
+                {
+                    IsSpawned = true;
+                    PlayerControl bot1 = BotManager.Spawn("カモフラージュ用BOT");
+                    bot1.RpcSetRole(RoleTypes.Crewmate);
                 }
             }
         }
