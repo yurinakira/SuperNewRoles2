@@ -29,7 +29,22 @@ namespace SuperNewRoles.Patches
             if (target.IsBot()) return true;
             if (__instance.PlayerId == target.PlayerId)
             {
-                if (ModeHandler.isMode(ModeId.SuperHostRoles) && AmongUsClient.Instance.AmHost)
+                if (__instance.isRole(RoleId.Camouflager) && RoleClass.Camouflager.CamouflageTimer > 0 && RoleClass.Camouflager.Started == __instance.PlayerId && !RoleClass.IsMeeting)
+                {
+                    PlayerControl bot = null;
+                    foreach (PlayerControl p in BotManager.AllBots)
+                    {
+                        if (!p.isImpostor())
+                        {
+                            bot = p;
+                        }
+                    }
+                    if (bot == null) return true;
+                    new LateTask(() =>
+                    {
+                        __instance.RpcShapeshift(bot, true);
+                    }, 0.1f);
+                } else if (ModeHandler.isMode(ModeId.SuperHostRoles) && AmongUsClient.Instance.AmHost)
                 {
                     if (__instance.isRole(RoleId.RemoteSheriff))
                     {
@@ -46,6 +61,35 @@ namespace SuperNewRoles.Patches
             {
                 switch (__instance.getRole())
                 {
+                    case RoleId.Camouflager:
+                        if (AmongUsClient.Instance.AmHost)
+                        {
+                            if (RoleClass.Camouflager.Started != __instance.PlayerId)
+                            {
+                                RoleClass.Camouflager.Started = __instance.PlayerId;
+
+                                PlayerControl bot = null;
+                                foreach (PlayerControl p in BotManager.AllBots)
+                                {
+                                    if (!p.isImpostor())
+                                    {
+                                        bot = p;
+                                    }
+                                }
+                                if (bot == null) return true;
+
+                                new LateTask(() =>
+                                {
+                                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                                    {
+                                        SuperNewRolesPlugin.Logger.LogInfo(p.PlayerId + ":" + p.name);
+                                        p.RpcShapeshift(bot, __instance.PlayerId == p.PlayerId);
+                                    }
+                                }, 0f);
+                                RoleClass.Camouflager.CamouflageTimer = RoleClass.Camouflager.DurationTime;
+                            }
+                        }
+                        return true;
                     case RoleId.RemoteSheriff:
                         if (AmongUsClient.Instance.AmHost)
                         {

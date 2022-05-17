@@ -1733,6 +1733,7 @@ namespace SuperNewRoles.Roles
             public static bool RandomSkins;
             public static bool RandomPets;
             public static bool RandomVisors;
+            public static byte Started;
             public static DateTime ButtonTimer;
             public static GameData.PlayerOutfit camoData;
 
@@ -1814,6 +1815,7 @@ namespace SuperNewRoles.Roles
                     RandomPets = false;
                     RandomVisors = false;
                 }
+                Started = 255;
 
                 camoData = new GameData.PlayerOutfit();
                 camoData.PlayerName = "";

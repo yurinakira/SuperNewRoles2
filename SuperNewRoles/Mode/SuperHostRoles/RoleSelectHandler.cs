@@ -272,6 +272,10 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             {
                 p.RpcSetRole(RoleTypes.Shapeshifter);
             }
+            foreach (PlayerControl p in RoleClass.Camouflager.CamouflagerPlayer)
+            {
+                p.RpcSetRole(RoleTypes.Shapeshifter);
+            }
             /*
             foreach (PlayerControl p in PlayerControl.AllPlayerControls)
             {
@@ -807,6 +811,22 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     for (int i = 1; i <= OptionDate; i++)
                     {
                         Crewnotonepar.Add(ThisRoleId);
+                    }
+                }
+            }
+            if (!(CustomOption.CustomOptions.CamouflagerOption.getString().Replace("0%", "") == ""))
+            {
+                int OptionDate = int.Parse(CustomOption.CustomOptions.CamouflagerOption.getString().Replace("0%", ""));
+                RoleId ThisRoleId = RoleId.Camouflager;
+                if (OptionDate == 10)
+                {
+                    Impoonepar.Add(ThisRoleId);
+                }
+                else
+                {
+                    for (int i = 1; i <= OptionDate; i++)
+                    {
+                        Imponotonepar.Add(ThisRoleId);
                     }
                 }
             }

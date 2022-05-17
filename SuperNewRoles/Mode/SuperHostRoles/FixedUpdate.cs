@@ -237,17 +237,34 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                         }
                     }
                     string NewName = "";
+                    string playername = "";
+                    bool IsCamo = true;
+                    if (RoleClass.Camouflager.CamouflageTimer <= 0)
+                    {
+                        playername = p.getDefaultName();
+                        IsCamo = false;
+                    }
                     if ((p.isDead() || p.isRole(RoleId.God)) && !IsUnchecked)
                     {
-                        NewName = "(<size=75%>" + ModHelpers.cs(introdate.color, introdate.Name) + TaskText + GetRoleTextClass.GetRoleTextPostfix(p) + "</size>)" + ModHelpers.cs(introdate.color, p.getDefaultName() + Suffix);
+                        NewName = "(<size=75%>" + ModHelpers.cs(introdate.color, introdate.Name) + TaskText + GetRoleTextClass.GetRoleTextPostfix(p) + "</size>)" + ModHelpers.cs(introdate.color, playername + Suffix);
                     }
                     else if (p.isAlive() || IsUnchecked)
                     {
-                        NewName = "<size=75%>" + ModHelpers.cs(introdate.color, introdate.Name) + TaskText + GetRoleTextClass.GetRoleTextPostfix(p) + "</size>\n" + ModHelpers.cs(introdate.color, p.getDefaultName() + Suffix);
+                        NewName = "<size=75%>" + ModHelpers.cs(introdate.color, introdate.Name) + TaskText + GetRoleTextClass.GetRoleTextPostfix(p) + "</size>\n" + ModHelpers.cs(introdate.color, playername + Suffix);
                     }
                     if (!p.IsMod())
                     {
                         p.RpcSetNamePrivate(NewName);
+                    }
+                    if (IsCamo)
+                    {
+                        foreach (PlayerControl p2 in PlayerControl.AllPlayerControls)
+                        {
+                            if (p2.PlayerId != p.PlayerId)
+                            {
+                                p.RpcSetNamePrivate("　", p2);
+                            }
+                        }
                     }
                     foreach (PlayerControl p2 in DiePlayers)
                     {
