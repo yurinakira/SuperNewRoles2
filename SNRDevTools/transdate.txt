@@ -576,3 +576,14 @@ RemoteSheriffTitle1,Let's do a Remote Sheriff kill!,遠隔でシェリフキル�
 RemoteSheriffIsKillTeleportSetting,Kill Teleport,キルテレポート
 TeleportingJackalName,TeleportingJackal,テレポートジャッカル
 TeleportingJackalTitle1,Teleport and kill all crewmates and impostors!,テレポートして全員ぶち殺そう
+CamouflagerName,Camouflager,カモフラージャー
+CamouflagerTitle1,Let's camouflage and kill!,カモフラージュをしてキルしよう
+CamouflagerButtonName,Camouflage,カモフラーシュ
+CamouflagerCoolDownSetting,Cool Time,クールタイム
+CamouflagerDurationSetting,Duration,継続時間
+CamouflagerRandomOutfitSetting,Random Camouflage figure,カモフラージュ姿がランダム
+CamouflagerRandomColorsSetting,Random Colors,ランダムカラー
+CamouflagerRandomHatsSetting,Random Hats,ランダムハット
+CamouflagerRandomSkinsSetting,Random Skins,ランダムスキン
+CamouflagerRandomPetsSetting,Random Pets,ランダムペット
+CamouflagerRandomVisorsSetting,Random Visors,ランダムバイザー

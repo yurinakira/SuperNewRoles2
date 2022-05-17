@@ -156,7 +156,7 @@ namespace SuperNewRoles.CustomRPC
         CustomEndGame,
         UncheckedProtect,
         SetBot,
-        CamouflagerCamouflage,
+        CamouflagerCamouflage
     }
     public static class RPCProcedure
     {
@@ -690,11 +690,7 @@ namespace SuperNewRoles.CustomRPC
 
         public static void CamouflagerCamouflage()
         {
-            if (RoleClass.Camouflager.CamouflagerPlayer == null) return;
-
-            RoleClass.Camouflager.CamouflageTimer = RoleClass.Camouflager.DurationTime;
-            foreach (PlayerControl player in PlayerControl.AllPlayerControls)
-                player.resetChange("", 6, "", "", "", "");
+            RoleClass.Camouflager.startCamouflage();
         }
 
         public static void SetWinCond(byte Cond)
@@ -881,6 +877,9 @@ namespace SuperNewRoles.CustomRPC
                         break;
                     case (byte)CustomRPC.SetBot:
                         SetBot(reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.CamouflagerCamouflage:
+                        CamouflagerCamouflage();
                         break;
                 }
             }

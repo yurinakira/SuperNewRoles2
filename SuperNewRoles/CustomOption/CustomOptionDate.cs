@@ -472,6 +472,12 @@ namespace SuperNewRoles.CustomOption
         public static CustomOption CamouflagerPlayerCount;
         public static CustomOption CamouflagerCoolTime;
         public static CustomOption CamouflagerDurationTime;
+        public static CustomOption CamouflagerRandomOutfit;
+        public static CustomOption CamouflagerRandomColors;
+        public static CustomOption CamouflagerRandomHats;
+        public static CustomOption CamouflagerRandomSkins;
+        public static CustomOption CamouflagerRandomPets;
+        public static CustomOption CamouflagerRandomVisors;
 
         public static CustomOption QuarreledOption;
         public static CustomOption QuarreledTeamCount;
@@ -966,12 +972,17 @@ namespace SuperNewRoles.CustomOption
             TeleportingJackalUseSabo = CustomOption.Create(408, false, CustomOptionType.Neutral, "JackalUseSaboSetting", false, TeleportingJackalOption);
             TeleportingJackalCoolTime = CustomOption.Create(409, false, CustomOptionType.Neutral, "TeleporterCoolDownSetting", 30f, 2.5f, 60f, 2.5f, TeleportingJackalOption, format: "unitSeconds");
             TeleportingJackalDurationTime = CustomOption.Create(410, false, CustomOptionType.Neutral, "TeleporterTeleportTimeSetting", 10f, 1f, 20f, 0.5f, TeleportingJackalOption, format: "unitSeconds");
-
-            CamouflagerOption = new CustomRoleOption(382, false, CustomOptionType.Impostor, "CamouflagerName", RoleClass.Camouflager.color, 1);
-            CamouflagerPlayerCount = CustomOption.Create(383, false, CustomOptionType.Impostor, "SettingPlayerCountName", ImpostorPlayers[0], ImpostorPlayers[1], ImpostorPlayers[2], ImpostorPlayers[3], CamouflagerOption);
-            CamouflagerCoolTime = CustomOption.Create(409, false, CustomOptionType.Impostor, "CamouflagerCoolDownSetting", 30f, 2.5f, 60f, 2.5f, CamouflagerOption, format: "unitSeconds");
-            CamouflagerDurationTime = CustomOption.Create(410, false, CustomOptionType.Impostor, "CamouflageDurationSetting", 10f, 1f, 20f, 0.5f, CamouflagerOption, format: "unitSeconds");
-
+            
+            CamouflagerOption = new CustomRoleOption(411, false, CustomOptionType.Impostor, "CamouflagerName", RoleClass.Camouflager.color, 1);
+            CamouflagerPlayerCount = CustomOption.Create(412, false, CustomOptionType.Impostor, "SettingPlayerCountName", ImpostorPlayers[0], ImpostorPlayers[1], ImpostorPlayers[2], ImpostorPlayers[3], CamouflagerOption);
+            CamouflagerCoolTime = CustomOption.Create(413, false, CustomOptionType.Impostor, "CamouflagerCoolDownSetting", 30f, 2.5f, 60f, 2.5f, CamouflagerOption, format: "unitSeconds");
+            CamouflagerDurationTime = CustomOption.Create(414, false, CustomOptionType.Impostor, "CamouflagerDurationSetting", 10f, 1f, 20f, 0.5f, CamouflagerOption, format: "unitSeconds");
+            CamouflagerRandomOutfit = CustomOption.Create(415, false, CustomOptionType.Impostor, "CamouflagerRandomOutfitSetting", false, CamouflagerOption);
+            CamouflagerRandomColors = CustomOption.Create(416, false, CustomOptionType.Impostor, "CamouflagerRandomColorsSetting", false, CamouflagerRandomOutfit);
+            CamouflagerRandomHats = CustomOption.Create(417, false, CustomOptionType.Impostor, "CamouflagerRandomHatsSetting", false, CamouflagerRandomOutfit);
+            CamouflagerRandomSkins = CustomOption.Create(418, false, CustomOptionType.Impostor, "CamouflagerRandomSkinsSetting", false, CamouflagerRandomOutfit);
+            CamouflagerRandomPets = CustomOption.Create(419, false, CustomOptionType.Impostor, "CamouflagerRandomPetsSetting", false, CamouflagerRandomOutfit);
+            CamouflagerRandomVisors = CustomOption.Create(420, false, CustomOptionType.Impostor, "CamouflagerRandomVisorsSetting", false, CamouflagerRandomOutfit);
 
             QuarreledOption = CustomOption.Create(122, false, CustomOptionType.Neutral, cs(RoleClass.Quarreled.color, "QuarreledName"), false, null, isHeader: true);
             QuarreledTeamCount = CustomOption.Create(124, false, CustomOptionType.Neutral, "QuarreledTeamCountSetting", QuarreledPlayers[0], QuarreledPlayers[1], QuarreledPlayers[2], QuarreledPlayers[3], QuarreledOption);

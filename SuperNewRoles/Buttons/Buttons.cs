@@ -818,14 +818,18 @@ namespace SuperNewRoles.Buttons
             SideKillerSidekickButton.showButtonText = true;
 
             CamouflageButton = new CustomButton(
-                () => {
-                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CamouflagerCamouflage, Hazel.SendOption.Reliable, -1);
+                () =>
+                {
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.CamouflagerCamouflage, Hazel.SendOption.Reliable, -1);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.CamouflagerCamouflage();
                 },
-                () => { return RoleHelpers.isAlive(PlayerControl.LocalPlayer) && Camouflager.isCamouflager(PlayerControl.LocalPlayer); },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleId.Camouflager) && PlayerControl.LocalPlayer.isAlive(); },
                 () => { return PlayerControl.LocalPlayer.CanMove; },
-                () => {
+                () =>
+                {
+                    CamouflageButton.MaxTimer = RoleClass.Camouflager.CoolTime;
+                    CamouflageButton.EffectDuration = RoleClass.Camouflager.DurationTime;
                     CamouflageButton.Timer = CamouflageButton.MaxTimer;
                     CamouflageButton.isEffectActive = false;
                     CamouflageButton.actionButton.cooldownTimerText.color = Palette.EnabledColor;
@@ -833,13 +837,20 @@ namespace SuperNewRoles.Buttons
                 RoleClass.Camouflager.GetButtonSprite(),
                 new Vector3(-1.8f, -0.06f, 0),
                 __instance,
+                __instance.AbilityButton,
                 KeyCode.F,
+                49,
                 true,
                 RoleClass.Camouflager.DurationTime,
-                () => { CamouflageButton.Timer = CamouflageButton.MaxTimer; }
+                () => {
+                    CamouflageButton.MaxTimer = RoleClass.Camouflager.CoolTime;
+                    CamouflageButton.EffectDuration = RoleClass.Camouflager.DurationTime;
+                    CamouflageButton.Timer = CamouflageButton.MaxTimer; 
+                }
             );
 
-
+            CamouflageButton.buttonText = ModTranslation.getString("CamouflagerButtonName");
+            CamouflageButton.showButtonText = true;
 
             RoleClass.SerialKiller.SuicideKillText = GameObject.Instantiate(HudManager.Instance.KillButton.cooldownTimerText, HudManager.Instance.KillButton.cooldownTimerText.transform.parent);
             RoleClass.SerialKiller.SuicideKillText.text = "";

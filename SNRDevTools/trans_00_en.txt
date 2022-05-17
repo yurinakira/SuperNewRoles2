@@ -575,3 +575,14 @@ Let's do a Remote Sheriff kill!
 Kill Teleport
 TeleportingJackal
 Teleport and kill all crewmates and impostors!
+Camouflager
+Let's camouflage and kill!
+Camouflage
+Cool Time
+Duration
+Random Camouflage figure
+Random Colors
+Random Hats
+Random Skins
+Random Pets
+Random Visors

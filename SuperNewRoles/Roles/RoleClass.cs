@@ -1725,10 +1725,16 @@ namespace SuperNewRoles.Roles
         {
             public static List<PlayerControl> CamouflagerPlayer;
             public static Color32 color = ImpostorRed;
-            public static float CoolTime = 30f;
-            public static float DurationTime = 10f;
-            public static float CamouflageTimer = 0f;
+            public static float CoolTime;
+            public static float DurationTime;
+            public static float CamouflageTimer;
+            public static bool RandomColors;
+            public static bool RandomHats;
+            public static bool RandomSkins;
+            public static bool RandomPets;
+            public static bool RandomVisors;
             public static DateTime ButtonTimer;
+            public static GameData.PlayerOutfit camoData;
 
             private static Sprite buttonSprite;
             public static Sprite GetButtonSprite()
@@ -1737,21 +1743,87 @@ namespace SuperNewRoles.Roles
                 buttonSprite = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.SpeedUpButton", 115f);
                 return buttonSprite;
             }
+            public static void startCamouflage()
+            {
+                CamouflageTimer = DurationTime;
+
+                if (RandomColors)
+                    camoData.ColorId = (byte)rnd.Next(0, Palette.PlayerColors.Length);
+                else
+                    camoData.ColorId = 6;
+
+                if (RandomHats)
+                    camoData.HatId = HatManager.Instance.allHats[rnd.Next(0, HatManager.Instance.allHats.Count)].ProductId;
+                else
+                    camoData.HatId = "";
+
+                if (RandomPets)
+                    camoData.PetId = HatManager.Instance.allPets[rnd.Next(0, HatManager.Instance.allPets.Count)].ProductId;
+                else
+                    camoData.PetId = "";
+
+                if (RandomSkins)
+                    camoData.SkinId = HatManager.Instance.allSkins[rnd.Next(0, HatManager.Instance.allSkins.Count)].ProductId;
+                else
+                    camoData.SkinId = "";
+
+                if (RandomVisors)
+                    camoData.VisorId = HatManager.Instance.allVisors[rnd.Next(0, HatManager.Instance.allVisors.Count)].ProductId;
+                else
+                    camoData.VisorId = "";
+
+                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                {
+                    if (p == null) continue;
+                    p.setLook(camoData.PlayerName, camoData.ColorId, camoData.HatId, camoData.VisorId, camoData.SkinId, camoData.PetId);
+                }
+                SuperNewRolesPlugin.Logger.LogInfo("c");
+            }
 
             public static void ResetCamouflage()
             {
                 CamouflageTimer = 0f;
                 foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                {
+                    if (p == null) continue;
+
                     p.resetChange();
+                    
+                }
             }
 
             public static void ClearAndReload()
             {
-                ResetCamouflage();
-                camouflager = null;
+                CamouflagerPlayer = new List<PlayerControl>();
                 CamouflageTimer = 0f;
                 CoolTime = CustomOptions.CamouflagerCoolTime.getFloat();
                 DurationTime = CustomOptions.CamouflagerDurationTime.getFloat();
+                
+                if (CustomOptions.CamouflagerRandomOutfit.getBool())
+                {
+                    RandomColors = CustomOptions.CamouflagerRandomColors.getBool();
+                    RandomHats = CustomOptions.CamouflagerRandomHats.getBool();
+                    RandomSkins = CustomOptions.CamouflagerRandomSkins.getBool();
+                    RandomPets = CustomOptions.CamouflagerRandomPets.getBool();
+                    RandomVisors = CustomOptions.CamouflagerRandomVisors.getBool();
+                } else
+                {
+                    RandomColors = false;
+                    RandomHats = false;
+                    RandomSkins = false;
+                    RandomPets = false;
+                    RandomVisors = false;
+                }
+
+                camoData = new GameData.PlayerOutfit();
+                camoData.PlayerName = "";
+                camoData.HatId = "";
+                camoData.ColorId = 6;
+                camoData.SkinId = "";
+                camoData.PetId = "";
+                camoData.VisorId = "";
+                camoData.NamePlateId = "";
+                //ResetCamouflage();
             }
         }
         //新ロールクラス

@@ -97,6 +97,7 @@ namespace SuperNewRoles.Patch
                         SabotageManager.Update();
                         SetNameUpdate.Postfix(__instance);
                         Jackal.JackalFixedPatch.Postfix(__instance);
+                        Camouflager.Update();
                         if (PlayerControl.LocalPlayer.isAlive())
                         {
                             if (PlayerControl.LocalPlayer.isImpostor()) {SetTarget.ImpostorSetTarget(); }

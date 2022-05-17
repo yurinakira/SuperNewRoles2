@@ -35,5 +35,18 @@ namespace SuperNewRoles.Roles
             HudManagerStartPatch.CamouflageButton.MaxTimer = RoleClass.Camouflager.CoolTime;
             RoleClass.Camouflager.ButtonTimer = DateTime.Now;
         }
+
+        public static void Update()
+        {
+            float oldCamouflageTimer = RoleClass.Camouflager.CamouflageTimer;
+
+            RoleClass.Camouflager.CamouflageTimer -= Time.deltaTime;
+
+            // Everyone but morphling reset
+            if (oldCamouflageTimer > 0f && RoleClass.Camouflager.CamouflageTimer <= 0f)
+            {
+                RoleClass.Camouflager.ResetCamouflage();
+            }
+        }
     }
 }
