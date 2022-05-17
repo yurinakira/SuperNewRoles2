@@ -41,8 +41,10 @@ namespace SuperNewRoles.Roles
         public static void Update()
         {
             float oldCamouflageTimer = RoleClass.Camouflager.CamouflageTimer;
-
-            RoleClass.Camouflager.CamouflageTimer -= Time.deltaTime;
+            if (!RoleClass.IsMeeting)
+            {
+                RoleClass.Camouflager.CamouflageTimer -= Time.deltaTime;
+            }
 
             // Everyone but morphling reset
             if (oldCamouflageTimer > 0f && RoleClass.Camouflager.CamouflageTimer <= 0f)
@@ -56,12 +58,20 @@ namespace SuperNewRoles.Roles
                     RoleClass.Camouflager.Started = 255;
                     foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                     {
-                        if (p.IsPlayer())
+                        if (p.IsPlayer() && p.isAlive())
                         {
                             p.RpcShapeshift(p, true);
                         }
                         p.RpcSetName(p.getDefaultName());
                     }
+                }
+            } else if(ModeHandler.isMode(ModeId.SuperHostRoles) && oldCamouflageTimer > 0f && RoleClass.IsMeeting)
+            {
+                RoleClass.Camouflager.CamouflageTimer = 5f;
+                RoleClass.Camouflager.Started = 255;
+                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                {
+                    p.RpcSetName(p.getDefaultName());
                 }
             }
         }

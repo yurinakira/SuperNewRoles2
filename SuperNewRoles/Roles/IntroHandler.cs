@@ -36,6 +36,17 @@ namespace SuperNewRoles.Roles
             if (Mode.ModeHandler.isMode(Mode.ModeId.SuperHostRoles))
             {
                 Mode.SuperHostRoles.FixedUpdate.SetRoleNames();
+                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                {
+                    p.RpcProtectPlayer(p,0);
+                }
+                new LateTask(() =>
+                {
+                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                    {
+                        p.RpcMurderPlayer(p);
+                    }
+                }, 0.5f);
             }
             if (Mode.ModeHandler.isMode(Mode.ModeId.Werewolf))
             {

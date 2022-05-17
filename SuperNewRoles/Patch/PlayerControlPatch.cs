@@ -25,6 +25,7 @@ namespace SuperNewRoles.Patches
     {
         public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target, [HarmonyArgument(1)] bool shouldAnimate)
         {
+            if (RoleClass.IsMeeting) return true;
             SyncSetting.CustomSyncSettings();
             if (target.IsBot()) return true;
             if (__instance.PlayerId == target.PlayerId)
@@ -44,7 +45,8 @@ namespace SuperNewRoles.Patches
                     {
                         //__instance.RpcShapeshift(bot, true);
                     }, 0.1f);
-                } else */if (ModeHandler.isMode(ModeId.SuperHostRoles) && AmongUsClient.Instance.AmHost)
+                } else */
+                if (ModeHandler.isMode(ModeId.SuperHostRoles) && AmongUsClient.Instance.AmHost)
                 {
                     if (__instance.isRole(RoleId.RemoteSheriff))
                     {
@@ -82,7 +84,7 @@ namespace SuperNewRoles.Patches
                                 {
                                     foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                                     {
-                                        if (p.IsPlayer())
+                                        if (p.IsPlayer() && p.isAlive())
                                         {
                                             SuperNewRolesPlugin.Logger.LogInfo(p.PlayerId + ":" + p.name);
                                             p.RpcShapeshift(bot, true);
