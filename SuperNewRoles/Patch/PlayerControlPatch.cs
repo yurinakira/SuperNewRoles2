@@ -28,7 +28,7 @@ namespace SuperNewRoles.Patches
             SyncSetting.CustomSyncSettings();
             if (target.IsBot()) return true;
             if (__instance.PlayerId == target.PlayerId)
-            {
+            {/*
                 if (__instance.isRole(RoleId.Camouflager) && RoleClass.Camouflager.CamouflageTimer > 0 && RoleClass.Camouflager.Started != 255 && !RoleClass.IsMeeting)
                 {
                     PlayerControl bot = null;
@@ -44,7 +44,7 @@ namespace SuperNewRoles.Patches
                     {
                         //__instance.RpcShapeshift(bot, true);
                     }, 0.1f);
-                } else if (ModeHandler.isMode(ModeId.SuperHostRoles) && AmongUsClient.Instance.AmHost)
+                } else */if (ModeHandler.isMode(ModeId.SuperHostRoles) && AmongUsClient.Instance.AmHost)
                 {
                     if (__instance.isRole(RoleId.RemoteSheriff))
                     {

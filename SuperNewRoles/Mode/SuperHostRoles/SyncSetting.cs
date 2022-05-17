@@ -215,7 +215,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     break;
                 case RoleId.Camouflager:
                     optdata.RoleOptions.ShapeshifterCooldown = RoleClass.Camouflager.CoolTime;
-                    optdata.RoleOptions.ShapeshifterDuration = RoleClass.Camouflager.DurationTime - 1.1f;
+                    optdata.RoleOptions.ShapeshifterDuration = RoleClass.Camouflager.DurationTime - 1.05f;
                     break;
             }
             if (player.isDead()) optdata.AnonymousVotes = false;
