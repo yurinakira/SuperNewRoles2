@@ -121,6 +121,7 @@ namespace SuperNewRoles.Roles
             EvilSeer.ClearAndReload();
             RemoteSheriff.ClearAndReload();
             TeleportingJackal.ClearAndReload();
+            SchrodingerCat.ClearAndReload();
             //ロールクリア
             Quarreled.ClearAndReload();
             Lovers.ClearAndReload();
@@ -1718,6 +1719,15 @@ namespace SuperNewRoles.Roles
                 IsImpostorLight = CustomOptions.TeleportingJackalIsImpostorLight.getBool();
                 CoolTime = CustomOptions.TeleportingJackalCoolTime.getFloat();
                 DurationTime = CustomOptions.TeleportingJackalDurationTime.getFloat();
+            }
+        }
+        public static class SchrodingerCat
+        {
+            public static List<PlayerControl> SchrodingerCatPlayer;
+            public static Color32 color = new Color32(0, 255, 0, byte.MaxValue);
+            public static void ClearAndReload()
+            {
+                SchrodingerCatPlayer = new List<PlayerControl>();
             }
         }
         //新ロールクラス

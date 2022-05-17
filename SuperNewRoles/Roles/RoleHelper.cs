@@ -502,6 +502,9 @@ namespace SuperNewRoles
                 case (CustomRPC.RoleId.TeleportingJackal):
                     Roles.RoleClass.TeleportingJackal.TeleportingJackalPlayer.Add(player);
                     break;
+                case (CustomRPC.RoleId.SchrodingerCat):
+                    Roles.RoleClass.SchrodingerCat.SchrodingerCatPlayer.Add(player);
+                    break;
                 //ロールアド
                 default:
                     SuperNewRolesPlugin.Logger.LogError("setRole: no method found for role type {role}");
@@ -760,6 +763,9 @@ namespace SuperNewRoles
                 case (CustomRPC.RoleId.RemoteSheriff):
                     Roles.RoleClass.RemoteSheriff.RemoteSheriffPlayer.RemoveAll(ClearRemove);
                     break;
+                case (CustomRPC.RoleId.SchrodingerCat):
+                    Roles.RoleClass.SchrodingerCat.SchrodingerCatPlayer.RemoveAll(ClearRemove);
+                    break;
                 //ロールリモベ
 
             }
@@ -841,6 +847,9 @@ namespace SuperNewRoles
                     IsTaskClear = true;
                     break; 
                 case (RoleId.TeleportingJackal):
+                    IsTaskClear = true;
+                    break; 
+                case (RoleId.SchrodingerCat):
                     IsTaskClear = true;
                     break; 
                 //タスククリアか
@@ -972,6 +981,9 @@ namespace SuperNewRoles
                     IsNeutral = true;
                     break;
                 case (RoleId.TeleportingJackal):
+                    IsNeutral = true;
+                    break;
+                case (RoleId.SchrodingerCat):
                     IsNeutral = true;
                     break;
                 //第三か
@@ -1383,6 +1395,10 @@ namespace SuperNewRoles
             else if (Roles.RoleClass.TeleportingJackal.TeleportingJackalPlayer.IsCheckListPlayerControl(player))
             {
                 return CustomRPC.RoleId.TeleportingJackal;
+            }
+            else if (Roles.RoleClass.SchrodingerCat.SchrodingerCatPlayer.IsCheckListPlayerControl(player))
+            {
+                return CustomRPC.RoleId.SchrodingerCat;
             }
             //ロールチェック
             }
