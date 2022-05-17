@@ -42,7 +42,7 @@ namespace SuperNewRoles.Patches
                     if (bot == null) return true;
                     new LateTask(() =>
                     {
-                        __instance.RpcShapeshift(bot, true);
+                        //__instance.RpcShapeshift(bot, true);
                     }, 0.1f);
                 } else if (ModeHandler.isMode(ModeId.SuperHostRoles) && AmongUsClient.Instance.AmHost)
                 {
