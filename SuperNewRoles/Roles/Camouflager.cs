@@ -58,14 +58,7 @@ namespace SuperNewRoles.Roles
                     {
                         if (p.IsPlayer())
                         {
-                            p.RpcShapeshift(p, false);
-                            if (p.PlayerId == starter)
-                            {
-                                new LateTask(() =>
-                                {
-                                    p.RpcShapeshift(p, true);
-                                }, 0.25f);
-                            }
+                            p.RpcShapeshift(p, true);
                         }
                         p.RpcSetName(p.getDefaultName());
                     }

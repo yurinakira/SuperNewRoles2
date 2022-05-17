@@ -29,7 +29,7 @@ namespace SuperNewRoles.Patches
             if (target.IsBot()) return true;
             if (__instance.PlayerId == target.PlayerId)
             {
-                if (__instance.isRole(RoleId.Camouflager) && RoleClass.Camouflager.CamouflageTimer > 0 && RoleClass.Camouflager.Started != 255 && RoleClass.Camouflager.Started == __instance.PlayerId && !RoleClass.IsMeeting)
+                if (__instance.isRole(RoleId.Camouflager) && RoleClass.Camouflager.CamouflageTimer > 0 && RoleClass.Camouflager.Started != 255 && !RoleClass.IsMeeting)
                 {
                     PlayerControl bot = null;
                     foreach (PlayerControl p in BotManager.AllBots)
