@@ -155,10 +155,15 @@ namespace SuperNewRoles.CustomRPC
         UseMadStuntmanCount,
         CustomEndGame,
         UncheckedProtect,
-        SetBot
+        SetBot,
+        SetSchrodingerCatType
     }
     public static class RPCProcedure
     {
+        public static void SetSchrodingerCatType(byte playerid,byte type)
+        {
+            RoleClass.SchrodingerCat.MyTypes[playerid] = (RoleClass.SchrodingerCat.SchrodingerCatType)type;
+        }
         public static void SetBot(byte playerid)
         {
             PlayerControl player = ModHelpers.playerById(playerid);
@@ -870,6 +875,9 @@ namespace SuperNewRoles.CustomRPC
                         break;
                     case (byte)CustomRPC.SetBot:
                         SetBot(reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.SetSchrodingerCatType:
+                        SetSchrodingerCatType(reader.ReadByte(),reader.ReadByte());
                         break;
                 }
             }

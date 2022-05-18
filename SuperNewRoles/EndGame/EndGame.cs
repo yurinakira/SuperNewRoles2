@@ -1235,7 +1235,7 @@ namespace SuperNewRoles.EndGame
                         if (playerInfo.Object.isAlive())
                         {
                             numTotalAlive++;
-                            if (playerInfo.Object.isRole(RoleId.Jackal) || playerInfo.Object.isRole(CustomRPC.RoleId.Sidekick))
+                            if (playerInfo.Object.isRole(RoleId.Jackal) || playerInfo.Object.isRole(CustomRPC.RoleId.Sidekick) || !RoleClass.SchrodingerCat.IsChangeToJackalFriends && RoleClass.SchrodingerCat.Get(playerInfo.Object) == RoleClass.SchrodingerCat.SchrodingerCatType.Jackal)
                             {
                                 numTotalJackalTeam++;
                             }

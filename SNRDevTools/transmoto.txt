@@ -575,3 +575,9 @@ RemoteSheriffTitle1
 RemoteSheriffIsKillTeleportSetting
 TeleportingJackalName
 TeleportingJackalTitle1
+SchrodingerCatName
+SchrodingerCatTitle1
+SchrodingerCatImpostorModeSetting
+SchrodingerCatJackalModeSetting
+SchrodingerCatSheriffModeSetting
+SchrodingerCatOverKillerOKSetting

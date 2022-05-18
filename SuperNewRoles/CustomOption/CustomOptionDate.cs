@@ -468,6 +468,13 @@ namespace SuperNewRoles.CustomOption
         public static CustomOption TeleportingJackalCoolTime;
         public static CustomOption TeleportingJackalDurationTime;
 
+        public static CustomRoleOption SchrodingerCatOption;
+        public static CustomOption SchrodingerCatPlayerCount;
+        public static CustomOption SchrodingerCatImpostorMode;
+        public static CustomOption SchrodingerCatJackalMode;
+        public static CustomOption SchrodingerCatSheriffMode;
+        public static CustomOption SchrodingerCatOverKillerKillGuard;
+
         public static CustomOption QuarreledOption;
         public static CustomOption QuarreledTeamCount;
         public static CustomOption QuarreledOnlyCrewMate;
@@ -961,6 +968,13 @@ namespace SuperNewRoles.CustomOption
             TeleportingJackalUseSabo = CustomOption.Create(408, false, CustomOptionType.Neutral, "JackalUseSaboSetting", false, TeleportingJackalOption);
             TeleportingJackalCoolTime = CustomOption.Create(409, false, CustomOptionType.Neutral, "TeleporterCoolDownSetting", 30f, 2.5f, 60f, 2.5f, TeleportingJackalOption, format: "unitSeconds");
             TeleportingJackalDurationTime = CustomOption.Create(410, false, CustomOptionType.Neutral, "TeleporterTeleportTimeSetting", 10f, 1f, 20f, 0.5f, TeleportingJackalOption, format: "unitSeconds");
+
+            SchrodingerCatOption = new CustomRoleOption(403, false, CustomOptionType.Neutral, "SchrodingerCatName", RoleClass.SchrodingerCat.color, 1);
+            SchrodingerCatPlayerCount = CustomOption.Create(404, false, CustomOptionType.Neutral, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], SchrodingerCatOption);
+            SchrodingerCatImpostorMode = CustomOption.Create(405, false, CustomOptionType.Neutral, "SchrodingerCatImpostorModeSetting", new string[2] { "MadMateName", "ImpostorName"}, SchrodingerCatOption);
+            SchrodingerCatJackalMode = CustomOption.Create(406, false, CustomOptionType.Neutral, "SchrodingerCatJackalModeSetting", new string[2] { "JackalName", "JackalFriendsName" }, SchrodingerCatOption);
+            SchrodingerCatSheriffMode = CustomOption.Create(407, false, CustomOptionType.Neutral, "SchrodingerCatSheriffModeSetting", new string[2] { "CrewMateName", "SheriffName" }, SchrodingerCatOption);
+            SchrodingerCatOverKillerKillGuard = CustomOption.Create(408, false, CustomOptionType.Neutral, "SchrodingerCatOverKillerOKSetting", false, SchrodingerCatOption);
 
             QuarreledOption = CustomOption.Create(122, false, CustomOptionType.Neutral, cs(RoleClass.Quarreled.color, "QuarreledName"), false, null, isHeader: true);
             QuarreledTeamCount = CustomOption.Create(124, false, CustomOptionType.Neutral, "QuarreledTeamCountSetting", QuarreledPlayers[0], QuarreledPlayers[1], QuarreledPlayers[2], QuarreledPlayers[3], QuarreledOption);

@@ -575,3 +575,9 @@ Let's do a Remote Sheriff kill!
 Kill Teleport
 TeleportingJackal
 Teleport and kill all crewmates and impostors!
+Schrodingers Cat
+Get killed and join killer team
+When Killed by Imposter
+When Killed by a Jackal
+When Killed by a sheriff
+Can withstand overkill kills.

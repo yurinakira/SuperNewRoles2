@@ -1723,11 +1723,38 @@ namespace SuperNewRoles.Roles
         }
         public static class SchrodingerCat
         {
+            public enum SchrodingerCatType
+            {
+                Default,
+                Impostor,
+                Jackal,
+                Crewmate,
+                VoteDead
+            }
             public static List<PlayerControl> SchrodingerCatPlayer;
-            public static Color32 color = new Color32(0, 255, 0, byte.MaxValue);
+            public static bool IsChangeToMadmate;
+            public static bool IsChangeToJackalFriends;
+            public static bool IsChangeToSheriff;
+            public static bool IsOverKillerGuard;
+            public static Dictionary<byte,SchrodingerCatType> MyTypes;
+            public static Color32 color = new Color32(192, 192, 192, byte.MaxValue);
+            public static SchrodingerCatType Get(PlayerControl player = null)
+            {
+                if (player == null) player = PlayerControl.LocalPlayer;
+                if (MyTypes.ContainsKey(player.PlayerId))
+                {
+                    return MyTypes[player.PlayerId];
+                }
+                return SchrodingerCatType.Default;
+            }
             public static void ClearAndReload()
             {
                 SchrodingerCatPlayer = new List<PlayerControl>();
+                IsChangeToMadmate = CustomOptions.SchrodingerCatImpostorMode.getSelection() == 1;
+                IsChangeToJackalFriends = CustomOptions.SchrodingerCatJackalMode.getSelection() == 1;
+                IsChangeToSheriff = CustomOptions.SchrodingerCatSheriffMode.getSelection() == 1;
+                IsOverKillerGuard = CustomOptions.SchrodingerCatOverKillerKillGuard.getBool();
+                MyTypes = new Dictionary<byte, SchrodingerCatType>();
             }
         }
         //新ロールクラス

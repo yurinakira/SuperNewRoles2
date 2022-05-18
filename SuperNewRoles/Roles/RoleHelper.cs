@@ -28,6 +28,7 @@ namespace SuperNewRoles
         {
             if (player.isRole(RoleId.Sheriff)) return false;
             if (player.isRole(RoleId.Jackal)) return false;
+            if (player.isRole(RoleId.SchrodingerCat) && !RoleClass.SchrodingerCat.IsChangeToMadmate && RoleClass.SchrodingerCat.Get(player) == RoleClass.SchrodingerCat.SchrodingerCatType.Impostor) return true;
             return player != null && player.Data.Role.IsImpostor;
         }
 
@@ -984,7 +985,11 @@ namespace SuperNewRoles
                     IsNeutral = true;
                     break;
                 case (RoleId.SchrodingerCat):
-                    IsNeutral = true;
+                    var type = RoleClass.SchrodingerCat.Get(player);
+                    if (type == RoleClass.SchrodingerCat.SchrodingerCatType.Default || (!RoleClass.SchrodingerCat.IsChangeToJackalFriends && type == RoleClass.SchrodingerCat.SchrodingerCatType.Jackal))
+                    {
+                        IsNeutral = true;
+                    }
                     break;
                 //第三か
             }

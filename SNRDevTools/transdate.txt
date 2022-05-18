@@ -576,3 +576,9 @@ RemoteSheriffTitle1,Let's do a Remote Sheriff kill!,遠隔でシェリフキル�
 RemoteSheriffIsKillTeleportSetting,Kill Teleport,キルテレポート
 TeleportingJackalName,TeleportingJackal,テレポートジャッカル
 TeleportingJackalTitle1,Teleport and kill all crewmates and impostors!,テレポートして全員ぶち殺そう
+SchrodingerCatName,Schrodingers Cat,シュレディンガーの猫
+SchrodingerCatTitle1,Get killed and join killer team,キルされて陣営に所属しろ
+SchrodingerCatImpostorModeSetting,When Killed by Imposter,インポスターにキルされた場合
+SchrodingerCatJackalModeSetting,When Killed by a Jackal,ジャッカルにキルされた場合
+SchrodingerCatSheriffModeSetting,When Killed by a sheriff,シェリフにキルされた場合
+SchrodingerCatOverKillerOKSetting,Can withstand overkill kills.,オーバーキラーのキルに耐えれる

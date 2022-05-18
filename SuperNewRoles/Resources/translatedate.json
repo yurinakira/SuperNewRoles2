@@ -2308,5 +2308,29 @@
         "0" : "Teleport and kill all crewmates and impostors!" ,
         "11" : "\u30c6\u30ec\u30dd\u30fc\u30c8\u3057\u3066\u5168\u54e1\u3076\u3061\u6bba\u305d\u3046"
         } ,
+ "SchrodingerCatName" : {
+        "0" : "Schrodingers Cat" ,
+        "11" : "\u30b7\u30e5\u30ec\u30c7\u30a3\u30f3\u30ac\u30fc\u306e\u732b"
+        } ,
+ "SchrodingerCatTitle1" : {
+        "0" : "Get killed and join killer team" ,
+        "11" : "\u30ad\u30eb\u3055\u308c\u3066\u9663\u55b6\u306b\u6240\u5c5e\u3057\u308d"
+        } ,
+ "SchrodingerCatImpostorModeSetting" : {
+        "0" : "When Killed by Imposter" ,
+        "11" : "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u306b\u30ad\u30eb\u3055\u308c\u305f\u5834\u5408"
+        } ,
+ "SchrodingerCatJackalModeSetting" : {
+        "0" : "When Killed by a Jackal" ,
+        "11" : "\u30b8\u30e3\u30c3\u30ab\u30eb\u306b\u30ad\u30eb\u3055\u308c\u305f\u5834\u5408"
+        } ,
+ "SchrodingerCatSheriffModeSetting" : {
+        "0" : "When Killed by a sheriff" ,
+        "11" : "\u30b7\u30a7\u30ea\u30d5\u306b\u30ad\u30eb\u3055\u308c\u305f\u5834\u5408"
+        } ,
+ "SchrodingerCatOverKillerOKSetting" : {
+        "0" : "Can withstand overkill kills." ,
+        "11" : "\u30aa\u30fc\u30d0\u30fc\u30ad\u30e9\u30fc\u306e\u30ad\u30eb\u306b\u8010\u3048\u308c\u308b"
+        } 
 
 }

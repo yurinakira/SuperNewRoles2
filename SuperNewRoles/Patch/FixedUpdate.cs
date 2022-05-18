@@ -94,6 +94,7 @@ namespace SuperNewRoles.Patch
                     }
                     else if (ModeHandler.isMode(ModeId.Default))
                     {
+                        SchrodingersCat.Update();
                         SabotageManager.Update();
                         SetNameUpdate.Postfix(__instance);
                         Jackal.JackalFixedPatch.Postfix(__instance);
