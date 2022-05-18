@@ -122,6 +122,7 @@ namespace SuperNewRoles.Roles
             RemoteSheriff.ClearAndReload();
             TeleportingJackal.ClearAndReload();
             MadMaker.ClearAndReload();
+            TimeMaster.ClearAndReload();
             //ロールクリア
             Quarreled.ClearAndReload();
             Lovers.ClearAndReload();
@@ -1736,6 +1737,39 @@ namespace SuperNewRoles.Roles
                 IsImpostorLight = CustomOptions.MadMakerIsImpostorLight.getBool();
                 IsCreateMadmate = false;
                 CreatePlayers = new List<int>();
+            }
+        }
+        public static class TimeMaster
+        {
+            public static List<PlayerControl> TimeMasterPlayer;
+            public static Color32 color = new Color32(112, 142, 239, byte.MaxValue);
+
+            public static bool ReviveDuringRewind = false;
+            public static float RewindTime;
+            public static float ShieldDuration;
+            public static float Cooldown;
+
+            public static bool ShieldActive = false;
+            public static bool IsRewinding = false;
+
+            public static DateTime ButtonTimer;
+            private static Sprite ButtonSprite;
+            public static Sprite GetButtonSprite()
+            {
+                if (ButtonSprite) return ButtonSprite;
+                ButtonSprite = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.TimeShieldButton.png", 115f);
+                return ButtonSprite;
+            }
+
+            public static void ClearAndReload()
+            {
+                TimeMasterPlayer = new List<PlayerControl>();
+                ReviveDuringRewind = false;
+                IsRewinding = false;
+                ShieldActive = false;
+                RewindTime = CustomOptions.TimeMasterRewindTime.getFloat();
+                ShieldDuration = CustomOptions.TimeMasterShieldDuration.getFloat();
+                Cooldown = CustomOptions.TimeMasterCooldown.getFloat();
             }
         }
         //新ロールクラス
