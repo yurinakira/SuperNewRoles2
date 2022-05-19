@@ -927,7 +927,8 @@ namespace SuperNewRoles
             if (player.Data.Role.IsImpostor) return true;
             if (Roles.RoleClass.Jester.JesterPlayer.IsCheckListPlayerControl(player) && Roles.RoleClass.Jester.IsUseSabo && !ModeHandler.isMode(ModeId.SuperHostRoles)) return true;
             if ((RoleClass.Jackal.JackalPlayer.IsCheckListPlayerControl(player) ||
-                RoleClass.Jackal.SidekickPlayer.IsCheckListPlayerControl(player)) && Roles.RoleClass.Jackal.IsUseSabo) return true;
+                RoleClass.Jackal.SidekickPlayer.IsCheckListPlayerControl(player) ||
+                RoleClass.SchrodingerCat.IsJackal()) && Roles.RoleClass.Jackal.IsUseSabo) return true;
             if (player.isRole(RoleId.Egoist) && RoleClass.Egoist.UseSabo) return true;
             if (RoleClass.TeleportingJackal.TeleportingJackalPlayer.IsCheckListPlayerControl(player) && Roles.RoleClass.TeleportingJackal.IsUseSabo) return true;
             return false;

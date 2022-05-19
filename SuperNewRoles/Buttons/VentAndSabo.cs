@@ -38,7 +38,7 @@ namespace SuperNewRoles.Buttons
             static bool Prefix3(MapBehaviour __instance)
             {
                 if (!MeetingHud.Instance) {
-                    if (PlayerControl.LocalPlayer.IsUseSabo() && !ModHelpers.ShowButtons && !__instance.IsOpen)
+                    if (PlayerControl.LocalPlayer.IsUseSabo() && !__instance.IsOpen)
                     {
                         __instance.Close();
                         DestroyableSingleton<HudManager>.Instance.ShowMap((Il2CppSystem.Action<MapBehaviour>)((m) => { m.ShowSabotageMap(); }));
@@ -47,11 +47,14 @@ namespace SuperNewRoles.Buttons
                     return true;
                 }  // Only run in meetings and when the map is closed
                 if (__instance.IsOpen) return true;
-                PlayerControl.LocalPlayer.SetPlayerMaterialColors(__instance.HerePoint);
-                __instance.GenericShow();
-                __instance.taskOverlay.Show();
-                __instance.ColorControl.SetColor(new Color(0.05f, 0.2f, 1f, 1f));
-                DestroyableSingleton<HudManager>.Instance.SetHudActive(false);
+                if (Mode.ModeHandler.isMode(Mode.ModeId.Default))
+                {
+                    PlayerControl.LocalPlayer.SetPlayerMaterialColors(__instance.HerePoint);
+                    __instance.GenericShow();
+                    __instance.taskOverlay.Show();
+                    __instance.ColorControl.SetColor(new Color(0.05f, 0.2f, 1f, 1f));
+                    DestroyableSingleton<HudManager>.Instance.SetHudActive(false);
+                }
                 return false;
             }
         }
@@ -67,7 +70,6 @@ namespace SuperNewRoles.Buttons
                 bool roleCouldUse = @object.IsUseVent();
 
                 var usableDistance = __instance.UsableDistance;
-
 
                 if (SubmergedCompatibility.isSubmerged())
                 {

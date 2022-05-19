@@ -94,6 +94,7 @@ namespace SuperNewRoles.Patch
                     }
                     else if (ModeHandler.isMode(ModeId.Default))
                     {
+                        SuperNewRolesPlugin.Logger.LogInfo(RoleClass.SchrodingerCat.IsJackal());
                         SchrodingersCat.Update();
                         SabotageManager.Update();
                         SetNameUpdate.Postfix(__instance);

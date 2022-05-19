@@ -23,13 +23,9 @@ namespace SuperNewRoles.Roles
         }
         public static void DeathPlayer(PlayerControl __instance,PlayerControl target)
         {
-            SuperNewRolesPlugin.Logger.LogInfo("シュレメLP");
             if (PlayerControl.LocalPlayer.isRole(RoleId.SchrodingerCat) && target.PlayerId == PlayerControl.LocalPlayer.PlayerId && RoleClass.SchrodingerCat.Get() == RoleClass.SchrodingerCat.SchrodingerCatType.Default)
             {
-                SuperNewRolesPlugin.Logger.LogInfo("通過");
                 SetType(RoleClass.SchrodingerCat.SchrodingerCatType.VoteDead);
-                SuperNewRolesPlugin.Logger.LogInfo("dead");
-                SuperNewRolesPlugin.Logger.LogInfo("死亡通過");
                 switch (__instance.getRole())
                 {
                     case RoleId.Sheriff:
@@ -51,9 +47,7 @@ namespace SuperNewRoles.Roles
                 var Writer = RPCHelper.StartRPC(CustomRPC.CustomRPC.ReviveRPC);
                 Writer.Write(PlayerControl.LocalPlayer.PlayerId);
                 Writer.EndRPC();
-                //RPCProcedure.ReviveRPC(PlayerControl.LocalPlayer.PlayerId);
                 PlayerControl.LocalPlayer.Revive();
-                SuperNewRolesPlugin.Logger.LogInfo("リバイブ");
                 Writer = RPCHelper.StartRPC(CustomRPC.CustomRPC.CleanBody);
                 Writer.Write(PlayerControl.LocalPlayer.PlayerId);
                 Writer.EndRPC();

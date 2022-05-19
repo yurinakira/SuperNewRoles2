@@ -48,7 +48,7 @@ namespace SuperNewRoles.Roles
                 for (int i = 0; i < allPlayers.Count; i++)
                 {
                     GameData.PlayerInfo playerInfo = allPlayers[i];
-                    if (!playerInfo.Disconnected && playerInfo.PlayerId != targetingPlayer.PlayerId && playerInfo.Object.isAlive() && (!playerInfo.Object.isRole(RoleId.Jackal) && !playerInfo.Object.isRole(RoleId.Sidekick) && RoleClass.SchrodingerCat.IsJackal(playerInfo.Object)))
+                    if (!playerInfo.Disconnected && playerInfo.PlayerId != targetingPlayer.PlayerId && playerInfo.Object.isAlive() && (!playerInfo.Object.isRole(RoleId.Jackal) && !playerInfo.Object.isRole(RoleId.Sidekick) && !RoleClass.SchrodingerCat.IsJackal(playerInfo.Object)))
                     {
                         PlayerControl @object = playerInfo.Object;
                         if (untargetablePlayers.Any(x => x == @object))
@@ -86,6 +86,21 @@ namespace SuperNewRoles.Roles
                                 upflag = false;
                             }
                         }
+                        foreach (PlayerControl p in RoleClass.TeleportingJackal.TeleportingJackalPlayer)
+                        {
+                            if (p.isAlive())
+                            {
+                                upflag = false;
+                            }
+                        }
+
+                        foreach (PlayerControl p in RoleClass.SchrodingerCat.SchrodingerCatPlayer)
+                        {
+                            if (p.isAlive() && RoleClass.SchrodingerCat.IsJackal(p))
+                            {
+                                upflag = false;
+                            }
+                        }
                         if (upflag)
                         {
                             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SidekickPromotes, Hazel.SendOption.Reliable, -1);
@@ -94,7 +109,7 @@ namespace SuperNewRoles.Roles
                         }
                     }
                 }
-                if (PlayerControl.LocalPlayer.isRole(RoleId.Jackal)) {
+                if (PlayerControl.LocalPlayer.isRole(RoleId.Jackal) || PlayerControl.LocalPlayer.isRole(RoleId.TeleportingJackal) || RoleClass.SchrodingerCat.IsJackal()) {
                     JackalPlayerOutLineTarget();
                 }
             }

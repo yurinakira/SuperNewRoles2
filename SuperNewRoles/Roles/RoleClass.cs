@@ -1769,7 +1769,7 @@ namespace SuperNewRoles.Roles
             {
                 SchrodingerCatPlayer = new List<PlayerControl>();
                 IsChangeToMadmate = CustomOptions.SchrodingerCatImpostorMode.getSelection() == 1;
-                IsChangeToJackalFriends = CustomOptions.SchrodingerCatJackalMode.getSelection() == 0;
+                IsChangeToJackalFriends = CustomOptions.SchrodingerCatJackalMode.getSelection() == 1;
                 IsChangeToSheriff = CustomOptions.SchrodingerCatSheriffMode.getSelection() == 1;
                 IsOverKillerGuard = CustomOptions.SchrodingerCatOverKillerKillGuard.getBool();
                 MyTypes = new Dictionary<byte, SchrodingerCatType>();

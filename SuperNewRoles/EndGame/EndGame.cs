@@ -1146,6 +1146,14 @@ namespace SuperNewRoles.EndGame
                         endReason = GameOverReason.ImpostorByVote;
                         break;
                 }
+                foreach(PlayerControl player in RoleClass.SchrodingerCat.SchrodingerCatPlayer)
+                {
+                    DeadPlayer deadPlayer = DeadPlayer.deadPlayers?.Where(x => x.player?.PlayerId == player.PlayerId)?.FirstOrDefault();
+                    if (player.isDead() && deadPlayer != null && deadPlayer.killerIfExisting != null && RoleClass.SchrodingerCat.Get() == RoleClass.SchrodingerCat.SchrodingerCatType.Default)
+                    {
+                        return false;
+                    }
+                }
 
                 CustomEndGame(endReason, false);
                 return true;
@@ -1174,6 +1182,14 @@ namespace SuperNewRoles.EndGame
                         return false;
                     }
                 }
+                foreach (PlayerControl player in RoleClass.SchrodingerCat.SchrodingerCatPlayer)
+                {
+                    DeadPlayer deadPlayer = DeadPlayer.deadPlayers?.Where(x => x.player?.PlayerId == player.PlayerId)?.FirstOrDefault();
+                    if (player.isDead() && deadPlayer != null && deadPlayer.killerIfExisting != null && RoleClass.SchrodingerCat.Get() == RoleClass.SchrodingerCat.SchrodingerCatType.Default)
+                    {
+                        return false;
+                    }
+                }
                 __instance.enabled = false;
                 CustomEndGame((GameOverReason)CustomGameOverReason.JackalWin, false);
                 return true;
@@ -1189,6 +1205,14 @@ namespace SuperNewRoles.EndGame
                 foreach (PlayerControl p in RoleClass.SideKiller.MadKillerPlayer)
                 {
                     if (!p.isImpostor() && !p.Data.Disconnected)
+                    {
+                        return false;
+                    }
+                }
+                foreach (PlayerControl player in RoleClass.SchrodingerCat.SchrodingerCatPlayer)
+                {
+                    DeadPlayer deadPlayer = DeadPlayer.deadPlayers?.Where(x => x.player?.PlayerId == player.PlayerId)?.FirstOrDefault();
+                    if (player.isDead() && deadPlayer != null && deadPlayer.killerIfExisting != null && RoleClass.SchrodingerCat.Get() == RoleClass.SchrodingerCat.SchrodingerCatType.Default)
                     {
                         return false;
                     }
@@ -1257,7 +1281,7 @@ namespace SuperNewRoles.EndGame
                         if (playerInfo.Object.isAlive())
                         {
                             numTotalAlive++;
-                            if (playerInfo.Object.isRole(RoleId.Jackal) || playerInfo.Object.isRole(CustomRPC.RoleId.Sidekick) || !RoleClass.SchrodingerCat.IsChangeToJackalFriends && RoleClass.SchrodingerCat.Get(playerInfo.Object) == RoleClass.SchrodingerCat.SchrodingerCatType.Jackal)
+                            if (playerInfo.Object.isRole(RoleId.Jackal) || playerInfo.Object.isRole(CustomRPC.RoleId.Sidekick) || RoleClass.SchrodingerCat.IsJackal(playerInfo.Object))
                             {
                                 numTotalJackalTeam++;
                             }

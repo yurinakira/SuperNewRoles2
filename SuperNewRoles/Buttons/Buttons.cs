@@ -400,11 +400,12 @@ namespace SuperNewRoles.Buttons
                         ModHelpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Jackal.JackalFixedPatch.JackalsetTarget());
                         Jackal.resetCoolDown();
                     }
+                    /*
                     if (TeleportingJackal.JackalFixedPatch.TeleportingJackalsetTarget() && RoleHelpers.isAlive(PlayerControl.LocalPlayer) && PlayerControl.LocalPlayer.CanMove)
                     {
                         ModHelpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, TeleportingJackal.JackalFixedPatch.TeleportingJackalsetTarget());
                         TeleportingJackal.resetCoolDown();
-                    }
+                    }*/
                 },
                 () => { return ModeHandler.isMode(ModeId.Default) && RoleHelpers.isAlive(PlayerControl.LocalPlayer) && (PlayerControl.LocalPlayer.isRole(RoleId.Jackal) || PlayerControl.LocalPlayer.isRole(RoleId.TeleportingJackal) || RoleClass.SchrodingerCat.IsJackal()); },
                 () =>
