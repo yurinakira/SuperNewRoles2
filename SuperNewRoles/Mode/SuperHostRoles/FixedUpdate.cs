@@ -296,7 +296,9 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                 PlayerControl.LocalPlayer.Data.Role.CanUseKillButton = true;
                 DestroyableSingleton<HudManager>.Instance.KillButton.SetTarget(PlayerControlFixedUpdatePatch.setTarget());
             }
-            else if (PlayerControl.LocalPlayer.isRole(RoleId.Jackal))
+            else if (PlayerControl.LocalPlayer.isRole(RoleId.Jackal) ||
+                RoleClass.SchrodingerCat.IsImpostor() ||
+                RoleClass.SchrodingerCat.IsJackal())
             {
                 HudManager.Instance.KillButton.gameObject.SetActive(true);
                 PlayerControl.LocalPlayer.Data.Role.CanUseKillButton = true;

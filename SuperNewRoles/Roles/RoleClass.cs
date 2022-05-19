@@ -1756,6 +1756,13 @@ namespace SuperNewRoles.Roles
                 if (player == null) player = PlayerControl.LocalPlayer;
                 return IsChangeToSheriff && Get(player) == SchrodingerCatType.Crewmate;
             }
+
+            public static bool IsImpostor(PlayerControl player = null)
+            {
+                if (player == null) player = PlayerControl.LocalPlayer;
+                return !IsChangeToMadmate && Get(player) == SchrodingerCatType.Impostor;
+            }
+
             public static SchrodingerCatType Get(PlayerControl player = null)
             {
                 if (player == null) player = PlayerControl.LocalPlayer;
@@ -1768,7 +1775,7 @@ namespace SuperNewRoles.Roles
             public static void ClearAndReload()
             {
                 SchrodingerCatPlayer = new List<PlayerControl>();
-                IsChangeToMadmate = CustomOptions.SchrodingerCatImpostorMode.getSelection() == 1;
+                IsChangeToMadmate = CustomOptions.SchrodingerCatImpostorMode.getSelection() == 0;
                 IsChangeToJackalFriends = CustomOptions.SchrodingerCatJackalMode.getSelection() == 1;
                 IsChangeToSheriff = CustomOptions.SchrodingerCatSheriffMode.getSelection() == 1;
                 IsOverKillerGuard = CustomOptions.SchrodingerCatOverKillerKillGuard.getBool();

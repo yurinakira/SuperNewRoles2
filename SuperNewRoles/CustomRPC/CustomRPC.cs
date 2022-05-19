@@ -164,14 +164,15 @@ namespace SuperNewRoles.CustomRPC
         {
             var type = (RoleClass.SchrodingerCat.SchrodingerCatType)typebyte;
             RoleClass.SchrodingerCat.MyTypes[playerid] = type;
-            SuperNewRolesPlugin.Logger.LogInfo("セット:"+ !RoleClass.SchrodingerCat.IsChangeToMadmate +"、"+ (type == RoleClass.SchrodingerCat.SchrodingerCatType.Impostor));
-            if (!RoleClass.SchrodingerCat.IsChangeToMadmate && type == RoleClass.SchrodingerCat.SchrodingerCatType.Impostor)
+            SuperNewRolesPlugin.Logger.LogInfo("毎タイプにセットしました！:"+playerid+"、"+type);
+            if (ModeHandler.isMode(ModeId.Default))
             {
-                SuperNewRolesPlugin.Logger.LogInfo("マッド通過");
-                PlayerControl player = ModHelpers.playerById(playerid);
-                if (player == null) return;
-                SuperNewRolesPlugin.Logger.LogInfo("セット");
-                DestroyableSingleton<RoleManager>.Instance.SetRole(player,RoleTypes.Impostor);
+                if (!RoleClass.SchrodingerCat.IsChangeToMadmate && type == RoleClass.SchrodingerCat.SchrodingerCatType.Impostor)
+                {
+                    PlayerControl player = ModHelpers.playerById(playerid);
+                    if (player == null) return;
+                    DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Impostor);
+                }
             }
         }
         public static void SetBot(byte playerid)

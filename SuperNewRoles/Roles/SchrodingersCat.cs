@@ -12,7 +12,28 @@ namespace SuperNewRoles.Roles
 {
     public static class SchrodingersCat
     {
-        static void SetType(RoleClass.SchrodingerCat.SchrodingerCatType type)
+        public static void Sets(PlayerControl __instance,PlayerControl target)
+        {
+            switch (__instance.getRole())
+            {
+                case RoleId.Sheriff:
+                case RoleId.MeetingSheriff:
+                case RoleId.RemoteSheriff:
+                    SetType(RoleClass.SchrodingerCat.SchrodingerCatType.Crewmate);
+                    break;
+                case RoleId.Jackal:
+                case RoleId.TeleportingJackal:
+                    SetType(RoleClass.SchrodingerCat.SchrodingerCatType.Jackal);
+                    break;
+                default:
+                    if (__instance.isImpostor())
+                    {
+                        SetType(RoleClass.SchrodingerCat.SchrodingerCatType.Impostor);
+                    }
+                    break;
+            }
+        }
+        public static void SetType(RoleClass.SchrodingerCat.SchrodingerCatType type)
         {
             SuperNewRolesPlugin.Logger.LogInfo("セットするタイプ:"+type);
             MessageWriter writer = RPCHelper.StartRPC(CustomRPC.CustomRPC.SetSchrodingerCatType);
@@ -26,24 +47,7 @@ namespace SuperNewRoles.Roles
             if (PlayerControl.LocalPlayer.isRole(RoleId.SchrodingerCat) && target.PlayerId == PlayerControl.LocalPlayer.PlayerId && RoleClass.SchrodingerCat.Get() == RoleClass.SchrodingerCat.SchrodingerCatType.Default)
             {
                 SetType(RoleClass.SchrodingerCat.SchrodingerCatType.VoteDead);
-                switch (__instance.getRole())
-                {
-                    case RoleId.Sheriff:
-                    case RoleId.MeetingSheriff:
-                    case RoleId.RemoteSheriff:
-                        SetType(RoleClass.SchrodingerCat.SchrodingerCatType.Crewmate);
-                        break;
-                    case RoleId.Jackal:
-                    case RoleId.TeleportingJackal:
-                        SetType(RoleClass.SchrodingerCat.SchrodingerCatType.Jackal);
-                        break;
-                    default:
-                        if (__instance.isImpostor())
-                        {
-                            SetType(RoleClass.SchrodingerCat.SchrodingerCatType.Impostor);
-                        }
-                        break;
-                }
+                Sets(__instance,target);
                 var Writer = RPCHelper.StartRPC(CustomRPC.CustomRPC.ReviveRPC);
                 Writer.Write(PlayerControl.LocalPlayer.PlayerId);
                 Writer.EndRPC();

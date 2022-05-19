@@ -312,6 +312,7 @@ namespace SuperNewRoles.Patches
                     return false;
                 }
             }
+            SuperNewRolesPlugin.Logger.LogInfo("情報:" + RoleClass.SchrodingerCat.Get(__instance));
             if (ModeHandler.isMode(ModeId.Zombie)) return false;
             if (ModeHandler.isMode(ModeId.SuperHostRoles))
             {
@@ -440,9 +441,52 @@ namespace SuperNewRoles.Patches
                         }
                     }
                 }
-                else if (__instance.isRole(RoleId.Jackal))
+                else if (__instance.isRole(RoleId.Jackal) || RoleClass.SchrodingerCat.IsJackal(__instance))
                 {
                     __instance.RpcMurderPlayer(target);
+                    return false;
+                }
+            }
+            if (__instance.isRole(RoleId.SchrodingerCat) && RoleClass.SchrodingerCat.IsImpostor(__instance))
+            {
+                SuperNewRolesPlugin.Logger.LogInfo("Is通過");
+                __instance.RpcMurderPlayer(target);
+                return false;
+            }
+            if (__instance.isRole(RoleId.SchrodingerCat) && RoleClass.SchrodingerCat.Get(__instance) == RoleClass.SchrodingerCat.SchrodingerCatType.Default)
+            {
+                return false;
+            }
+            if (target.isRole(RoleId.SchrodingerCat) && target.isAlive() && RoleClass.SchrodingerCat.Get(target) == RoleClass.SchrodingerCat.SchrodingerCatType.Default)
+            {
+                SuperNewRolesPlugin.Logger.LogInfo("シュレ猫");
+                if (RoleClass.SchrodingerCat.IsOverKillerGuard || !__instance.isRole(RoleId.OverKiller))
+                {
+                    SuperNewRolesPlugin.Logger.LogInfo("オーバーキラー通過");
+                    SchrodingersCat.Sets(__instance,target);
+                    SuperNewRolesPlugin.Logger.LogInfo("Sets");
+                    target.RpcProtectPlayer(target,0);
+                    new LateTask(() =>
+                    {
+                        __instance.RpcMurderPlayer(target);
+                    }, 0.25f);
+                    if (__instance.isImpostor())
+                    {
+                        foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+                        {
+                            if (player.isImpostor() && target.PlayerId != player.PlayerId && player.IsPlayer())
+                            {
+                                if (player.PlayerId != 0)
+                                {
+                                    target.RpcSetRoleDesync(RoleTypes.GuardianAngel, player);
+                                }
+                                if (target.PlayerId != 0)
+                                {
+                                    player.RpcSetRoleDesync(RoleTypes.GuardianAngel, target);
+                                }
+                            }
+                        }
+                    }
                     return false;
                 }
             }

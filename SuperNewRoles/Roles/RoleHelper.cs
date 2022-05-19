@@ -879,7 +879,7 @@ namespace SuperNewRoles
         public static bool IsUseVent(this PlayerControl player)
         {
             if (!RoleClass.Minimalist.UseVent && player.isRole(RoleId.Minimalist)) return false;
-            if (player.Data.Role.IsImpostor) return true; 
+            if (player.isImpostor()) return true; 
             if ((RoleClass.Jackal.JackalPlayer.IsCheckListPlayerControl(player) ||
                  RoleClass.Jackal.SidekickPlayer.IsCheckListPlayerControl(player) ||
                  RoleClass.SchrodingerCat.IsJackal()) && Roles.RoleClass.Jackal.IsUseVent) return true;
@@ -924,7 +924,7 @@ namespace SuperNewRoles
         public static bool IsUseSabo(this PlayerControl player)
         {
             if (!RoleClass.Minimalist.UseSabo && player.isRole(RoleId.Minimalist)) return false;
-            if (player.Data.Role.IsImpostor) return true;
+            if (player.isImpostor()) return true;
             if (Roles.RoleClass.Jester.JesterPlayer.IsCheckListPlayerControl(player) && Roles.RoleClass.Jester.IsUseSabo && !ModeHandler.isMode(ModeId.SuperHostRoles)) return true;
             if ((RoleClass.Jackal.JackalPlayer.IsCheckListPlayerControl(player) ||
                 RoleClass.Jackal.SidekickPlayer.IsCheckListPlayerControl(player) ||

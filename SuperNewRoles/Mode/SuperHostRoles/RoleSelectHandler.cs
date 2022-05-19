@@ -42,12 +42,17 @@ namespace SuperNewRoles.Mode.SuperHostRoles
         {
             if (!ModeHandler.isMode(ModeId.SuperHostRoles)) return;
 
-            bool IsJackalSpawned = false;
+            bool IsSpawned = false;
             //ジャッカルがいるなら
             if (CustomOptions.JackalOption.getSelection() != 0)
             {
-                IsJackalSpawned = true;
-                for (int i = 0; i < (1 * PlayerControl.GameOptions.NumImpostors + 2); i++)
+                IsSpawned = true;
+                int numImpostors = PlayerControl.GameOptions.NumImpostors;
+                if (CustomOptions.SchrodingerCatOption.getSelection() != 0)
+                {
+                    numImpostors += (int)CustomOptions.SchrodingerCatPlayerCount.getFloat();
+                }
+                for (int i = 0; i < (numImpostors + 2); i++)
                 {
                     PlayerControl bot = BotManager.Spawn("暗転対策BOT"+ (i + 1));
                     if (i == 0)
@@ -58,9 +63,26 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                         bot.RpcSetRole(RoleTypes.Crewmate);
                     }
                 }
-            } else
+            } else if (CustomOptions.SchrodingerCatOption.getSelection() != 0)
             {
-                bool flag = !IsJackalSpawned && (
+                IsSpawned = true;
+                
+                for (int i = 0; i < ((int)CustomOptions.SchrodingerCatPlayerCount.getFloat() + 2); i++)
+                {
+                    PlayerControl bot = BotManager.Spawn("暗転対策BOT" + (i + 1));
+                    if (i == 0)
+                    {
+                        bot.RpcSetRole(RoleTypes.Impostor);
+                    }
+                    if (i > 0)
+                    {
+                        bot.RpcSetRole(RoleTypes.Crewmate);
+                    }
+                }
+            }
+            else
+            {
+                bool flag = !IsSpawned && (
                     CustomOptions.EgoistOption.getSelection() != 0 ||
                     CustomOptions.SheriffOption.getSelection() != 0 ||
                     CustomOptions.trueloverOption.getSelection() != 0 ||
@@ -121,6 +143,26 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                 }
                 //SheriffPlayer.Data.IsDead = true;
             }
+            foreach (PlayerControl SchrodingerCatPlayer in RoleClass.SchrodingerCat.SchrodingerCatPlayer)
+            {
+                if (!SchrodingerCatPlayer.IsMod())
+                {
+                    SchrodingerCatPlayer.RpcSetRoleDesync(RoleTypes.Impostor);
+                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                    {
+                        if (p.PlayerId != SchrodingerCatPlayer.PlayerId && p.IsPlayer())
+                        {
+                            SchrodingerCatPlayer.RpcSetRoleDesync(RoleTypes.Scientist, p);
+                            p.RpcSetRoleDesync(RoleTypes.Scientist, SchrodingerCatPlayer);
+                        }
+                    }
+                }
+                else
+                {
+                    SchrodingerCatPlayer.RpcSetRole(RoleTypes.Crewmate);
+                }
+            }
+
             foreach (PlayerControl RemoteSheriffPlayer in RoleClass.RemoteSheriff.RemoteSheriffPlayer)
             {
                 if (!RemoteSheriffPlayer.IsMod())
@@ -807,6 +849,22 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     for (int i = 1; i <= OptionDate; i++)
                     {
                         Crewnotonepar.Add(ThisRoleId);
+                    }
+                }
+            }
+            if (!(CustomOption.CustomOptions.SchrodingerCatOption.getString().Replace("0%", "") == ""))
+            {
+                int OptionDate = int.Parse(CustomOption.CustomOptions.SchrodingerCatOption.getString().Replace("0%", ""));
+                RoleId ThisRoleId = RoleId.SchrodingerCat;
+                if (OptionDate == 10)
+                {
+                    Neutonepar.Add(ThisRoleId);
+                }
+                else
+                {
+                    for (int i = 1; i <= OptionDate; i++)
+                    {
+                        Neutonepar.Add(ThisRoleId);
                     }
                 }
             }

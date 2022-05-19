@@ -28,6 +28,5 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             writer.Write((ushort)role);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
-
     }
 }
