@@ -27,6 +27,7 @@ namespace SuperNewRoles
         public static bool isImpostor(this PlayerControl player)
         {
             if (player.isRole(RoleId.Sheriff)) return false;
+            if (RoleClass.SchrodingerCat.IsSheriff(player)) return false;
             if (player.isRole(RoleId.Jackal)) return false;
             if (player.isRole(RoleId.SchrodingerCat) && !RoleClass.SchrodingerCat.IsChangeToMadmate && RoleClass.SchrodingerCat.Get(player) == RoleClass.SchrodingerCat.SchrodingerCatType.Impostor) return true;
             return player != null && player.Data.Role.IsImpostor;
@@ -851,7 +852,13 @@ namespace SuperNewRoles
                     IsTaskClear = true;
                     break; 
                 case (RoleId.SchrodingerCat):
-                    IsTaskClear = true;
+                    if (ModeHandler.isMode(ModeId.Default))
+                    {
+                        IsTaskClear = player.isNeutral();
+                    } else
+                    {
+                        IsTaskClear = true;
+                    }
                     break; 
                 //タスククリアか
             }
@@ -872,8 +879,10 @@ namespace SuperNewRoles
         public static bool IsUseVent(this PlayerControl player)
         {
             if (!RoleClass.Minimalist.UseVent && player.isRole(RoleId.Minimalist)) return false;
-            if (player.Data.Role.IsImpostor) return true; if ((RoleClass.Jackal.JackalPlayer.IsCheckListPlayerControl(player) ||
-                 RoleClass.Jackal.SidekickPlayer.IsCheckListPlayerControl(player)) && Roles.RoleClass.Jackal.IsUseVent) return true;
+            if (player.Data.Role.IsImpostor) return true; 
+            if ((RoleClass.Jackal.JackalPlayer.IsCheckListPlayerControl(player) ||
+                 RoleClass.Jackal.SidekickPlayer.IsCheckListPlayerControl(player) ||
+                 RoleClass.SchrodingerCat.IsJackal()) && Roles.RoleClass.Jackal.IsUseVent) return true;
             if (ModeHandler.isMode(ModeId.SuperHostRoles) && IsComms()) return false;
             if (RoleClass.Jester.JesterPlayer.IsCheckListPlayerControl(player) && Roles.RoleClass.Jester.IsUseVent) return true;
             if (RoleClass.MadMate.MadMatePlayer.IsCheckListPlayerControl(player) && Roles.RoleClass.MadMate.IsUseVent) return true;

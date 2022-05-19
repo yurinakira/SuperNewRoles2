@@ -501,6 +501,8 @@ namespace SuperNewRoles.EndGame
             notWinners.AddRange(RoleClass.MadSeer.MadSeerPlayer);
             notWinners.AddRange(RoleClass.FalseCharges.FalseChargesPlayer);
             notWinners.AddRange(RoleClass.Fox.FoxPlayer);
+            notWinners.AddRange(RoleClass.SchrodingerCat.SchrodingerCatPlayer);
+
             notWinners.AddRange(BotManager.AllBots);
 
             foreach (PlayerControl p in RoleClass.Survivor.SurvivorPlayer)
@@ -529,6 +531,7 @@ namespace SuperNewRoles.EndGame
             bool WorkpersonWin = gameOverReason == (GameOverReason)CustomGameOverReason.WorkpersonWin;
             bool FalseChargesWin = gameOverReason == (GameOverReason)CustomGameOverReason.FalseChargesWin;
             bool FoxWin = gameOverReason == (GameOverReason)CustomGameOverReason.FoxWin;
+            bool CrewmateWin = gameOverReason == GameOverReason.HumansByTask || gameOverReason == GameOverReason.HumansByVote || gameOverReason == GameOverReason.HumansDisconnect;
             bool BUGEND = gameOverReason == (GameOverReason)CustomGameOverReason.BugEnd;
             if (ModeHandler.isMode(ModeId.SuperHostRoles) && EndData != null)
             {
@@ -581,6 +584,14 @@ namespace SuperNewRoles.EndGame
                     WinningPlayerData wpd = new WinningPlayerData(p.Data);
                     TempData.winners.Add(wpd);
                 }
+                foreach (PlayerControl p in RoleClass.SchrodingerCat.SchrodingerCatPlayer)
+                {
+                    if (RoleClass.SchrodingerCat.IsJackal(p))
+                    {
+                        WinningPlayerData wpd = new WinningPlayerData(p.Data);
+                        TempData.winners.Add(wpd);
+                    }
+                }
 
                 AdditionalTempData.winCondition = WinCondition.JackalWin;
             }
@@ -610,6 +621,17 @@ namespace SuperNewRoles.EndGame
                 WinningPlayerData wpd = new WinningPlayerData(WinnerPlayer.Data);
                 TempData.winners.Add(wpd);
                 AdditionalTempData.winCondition = WinCondition.FalseChargesWin;
+            }
+            else if (CrewmateWin)
+            {
+                foreach (PlayerControl p in RoleClass.SchrodingerCat.SchrodingerCatPlayer)
+                {
+                    if (RoleClass.SchrodingerCat.IsCrewTeam(p))
+                    {
+                        WinningPlayerData wpd = new WinningPlayerData(WinnerPlayer.Data);
+                        TempData.winners.Add(wpd);
+                    }
+                }
             }
             if (TempData.winners.ToArray().Any(x => x.IsImpostor))
             {

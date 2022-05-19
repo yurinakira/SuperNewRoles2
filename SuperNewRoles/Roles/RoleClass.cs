@@ -1738,6 +1738,24 @@ namespace SuperNewRoles.Roles
             public static bool IsOverKillerGuard;
             public static Dictionary<byte,SchrodingerCatType> MyTypes;
             public static Color32 color = new Color32(192, 192, 192, byte.MaxValue);
+
+            public static bool IsCrewTeam(PlayerControl player = null)
+            {
+                if (player == null) player = PlayerControl.LocalPlayer;
+                return Get(player) == SchrodingerCatType.Crewmate;
+            }
+
+            public static bool IsJackal(PlayerControl player = null)
+            {
+                if (player == null) player = PlayerControl.LocalPlayer;
+                return !IsChangeToJackalFriends && Get(player) == SchrodingerCatType.Jackal;
+            }
+
+            public static bool IsSheriff(PlayerControl player = null)
+            {
+                if (player == null) player = PlayerControl.LocalPlayer;
+                return IsChangeToSheriff && Get(player) == SchrodingerCatType.Crewmate;
+            }
             public static SchrodingerCatType Get(PlayerControl player = null)
             {
                 if (player == null) player = PlayerControl.LocalPlayer;
@@ -1751,7 +1769,7 @@ namespace SuperNewRoles.Roles
             {
                 SchrodingerCatPlayer = new List<PlayerControl>();
                 IsChangeToMadmate = CustomOptions.SchrodingerCatImpostorMode.getSelection() == 1;
-                IsChangeToJackalFriends = CustomOptions.SchrodingerCatJackalMode.getSelection() == 1;
+                IsChangeToJackalFriends = CustomOptions.SchrodingerCatJackalMode.getSelection() == 0;
                 IsChangeToSheriff = CustomOptions.SchrodingerCatSheriffMode.getSelection() == 1;
                 IsOverKillerGuard = CustomOptions.SchrodingerCatOverKillerKillGuard.getBool();
                 MyTypes = new Dictionary<byte, SchrodingerCatType>();

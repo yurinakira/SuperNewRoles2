@@ -160,9 +160,19 @@ namespace SuperNewRoles.CustomRPC
     }
     public static class RPCProcedure
     {
-        public static void SetSchrodingerCatType(byte playerid,byte type)
+        public static void SetSchrodingerCatType(byte playerid,byte typebyte)
         {
-            RoleClass.SchrodingerCat.MyTypes[playerid] = (RoleClass.SchrodingerCat.SchrodingerCatType)type;
+            var type = (RoleClass.SchrodingerCat.SchrodingerCatType)typebyte;
+            RoleClass.SchrodingerCat.MyTypes[playerid] = type;
+            SuperNewRolesPlugin.Logger.LogInfo("セット:"+ !RoleClass.SchrodingerCat.IsChangeToMadmate +"、"+ (type == RoleClass.SchrodingerCat.SchrodingerCatType.Impostor));
+            if (!RoleClass.SchrodingerCat.IsChangeToMadmate && type == RoleClass.SchrodingerCat.SchrodingerCatType.Impostor)
+            {
+                SuperNewRolesPlugin.Logger.LogInfo("マッド通過");
+                PlayerControl player = ModHelpers.playerById(playerid);
+                if (player == null) return;
+                SuperNewRolesPlugin.Logger.LogInfo("セット");
+                DestroyableSingleton<RoleManager>.Instance.SetRole(player,RoleTypes.Impostor);
+            }
         }
         public static void SetBot(byte playerid)
         {
@@ -583,7 +593,7 @@ namespace SuperNewRoles.CustomRPC
             {
                 if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == playerId)
                 {
-                    UnityEngine.Object.Destroy(array[i].gameObject);
+                    array[i].gameObject.active = false;
                 }
             }
         }

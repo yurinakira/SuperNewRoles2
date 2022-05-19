@@ -344,7 +344,7 @@ namespace SuperNewRoles.Patches
                     }
                     return false;
                 }
-                else if (__instance.isRole(RoleId.Sheriff))
+                else if (__instance.isRole(RoleId.Sheriff) || RoleClass.SchrodingerCat.IsSheriff())
                 {
                     if (!RoleClass.Sheriff.KillCount.ContainsKey(__instance.PlayerId) || RoleClass.Sheriff.KillCount[__instance.PlayerId] >= 1)
                     {
@@ -492,9 +492,6 @@ namespace SuperNewRoles.Patches
                     target.RpcSetRoleDesync(RoleTypes.GuardianAngel);
                 }
             }
-            else
-            {
-            }
         }
     }
 
@@ -558,6 +555,7 @@ namespace SuperNewRoles.Patches
             DeadPlayer deadPlayer = new DeadPlayer(target, DateTime.UtcNow, DeathReason.Kill, __instance);
             DeadPlayer.deadPlayers.Add(deadPlayer);
             FinalStatusPatch.FinalStatusData.FinalStatuses[target.PlayerId] = FinalStatus.Kill;
+            SchrodingersCat.DeathPlayer(__instance,target);
 
             SerialKiller.MurderPlayer(__instance,target);
 

@@ -69,7 +69,7 @@ namespace SuperNewRoles.Roles
         }
         public static bool IsSheriffButton(PlayerControl Player)
         {
-            if (Player.isRole(CustomRPC.RoleId.Sheriff))
+            if (Player.isRole(CustomRPC.RoleId.Sheriff) || RoleClass.SchrodingerCat.IsSheriff())
             {
                 if (RoleClass.Sheriff.KillMaxCount > 0)
                 {

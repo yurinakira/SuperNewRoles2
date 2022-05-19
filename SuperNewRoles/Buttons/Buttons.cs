@@ -374,7 +374,7 @@ namespace SuperNewRoles.Buttons
                         Jackal.resetCoolDown();
                     }
                 },
-                () => { return ModeHandler.isMode(ModeId.Default) && RoleHelpers.isAlive(PlayerControl.LocalPlayer) && PlayerControl.LocalPlayer.isRole(CustomRPC.RoleId.Jackal) && RoleClass.Jackal.IsCreateSidekick; },
+                () => { return ModeHandler.isMode(ModeId.Default) && RoleHelpers.isAlive(PlayerControl.LocalPlayer) && (PlayerControl.LocalPlayer.isRole(RoleId.Jackal) || RoleClass.SchrodingerCat.IsJackal()) && RoleClass.Jackal.IsCreateSidekick; },
                 () =>
                 {
                     return Jackal.JackalFixedPatch.JackalsetTarget() && PlayerControl.LocalPlayer.CanMove;
@@ -406,11 +406,10 @@ namespace SuperNewRoles.Buttons
                         TeleportingJackal.resetCoolDown();
                     }
                 },
-                () => { return ModeHandler.isMode(ModeId.Default) && RoleHelpers.isAlive(PlayerControl.LocalPlayer) && RoleClass.Jackal.JackalPlayer.IsCheckListPlayerControl(PlayerControl.LocalPlayer) || RoleHelpers.isAlive(PlayerControl.LocalPlayer) && RoleClass.TeleportingJackal.TeleportingJackalPlayer.IsCheckListPlayerControl(PlayerControl.LocalPlayer); },
+                () => { return ModeHandler.isMode(ModeId.Default) && RoleHelpers.isAlive(PlayerControl.LocalPlayer) && (PlayerControl.LocalPlayer.isRole(RoleId.Jackal) || PlayerControl.LocalPlayer.isRole(RoleId.TeleportingJackal) || RoleClass.SchrodingerCat.IsJackal()); },
                 () =>
                 {
                     return Jackal.JackalFixedPatch.JackalsetTarget() && PlayerControl.LocalPlayer.CanMove;
-                    return TeleportingJackal.JackalFixedPatch.TeleportingJackalsetTarget() && PlayerControl.LocalPlayer.CanMove;
                 },
                 () => { Jackal.EndMeeting(); },
                 __instance.KillButton.graphic.sprite,
@@ -574,7 +573,7 @@ namespace SuperNewRoles.Buttons
                         }
                         DestroyableSingleton<RoleManager>.Instance.SetRole(PlayerControl.LocalPlayer, RoleTypes.Crewmate);
                     }
-                    else if (PlayerControl.LocalPlayer.isRole(RoleId.Sheriff))
+                    else if (PlayerControl.LocalPlayer.isRole(RoleId.Sheriff) || RoleClass.SchrodingerCat.IsSheriff())
                     {
                         if (RoleClass.Sheriff.KillMaxCount >= 1 && setTarget())
                         {
@@ -604,7 +603,7 @@ namespace SuperNewRoles.Buttons
                     {
                         killcount = RoleClass.RemoteSheriff.KillMaxCount;
                         flag = true;
-                    } else if (PlayerControl.LocalPlayer.isRole(RoleId.Sheriff))
+                    } else if (PlayerControl.LocalPlayer.isRole(RoleId.Sheriff) || RoleClass.SchrodingerCat.IsSheriff())
                     {
                         killcount = RoleClass.Sheriff.KillMaxCount;
                         flag = PlayerControlFixedUpdatePatch.setTarget() && PlayerControl.LocalPlayer.CanMove;

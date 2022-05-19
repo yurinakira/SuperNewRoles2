@@ -201,7 +201,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     {
                         Suffix += ModHelpers.cs(RoleClass.Quarreled.color, "○");
                     }
-                    if (p.isRole(RoleId.Sheriff))
+                    if (p.isRole(RoleId.Sheriff) || RoleClass.SchrodingerCat.IsSheriff(p))
                     {
                         if (RoleClass.Sheriff.KillCount.ContainsKey(p.PlayerId))
                         {
@@ -261,7 +261,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
         }
         public static void Update()
         {
-            if (PlayerControl.LocalPlayer.isRole(RoleId.Sheriff))
+            if (PlayerControl.LocalPlayer.isRole(RoleId.Sheriff) || RoleClass.SchrodingerCat.IsSheriff())
             {
                 if (RoleClass.Sheriff.KillMaxCount >= 1)
                 {
