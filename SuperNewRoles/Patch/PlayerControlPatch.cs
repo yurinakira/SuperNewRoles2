@@ -25,9 +25,9 @@ namespace SuperNewRoles.Patches
     {
         public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target, [HarmonyArgument(1)] bool shouldAnimate)
         {
+            SuperNewRolesPlugin.Logger.LogInfo("[シェイプシフト]"+__instance+" => "+target+":"+shouldAnimate);
             if (RoleClass.IsMeeting) return true;
             SyncSetting.CustomSyncSettings();
-            if (target.IsBot()) return true;
             if (__instance.PlayerId == target.PlayerId)
             {/*
                 if (__instance.isRole(RoleId.Camouflager) && RoleClass.Camouflager.CamouflageTimer > 0 && RoleClass.Camouflager.Started != 255 && !RoleClass.IsMeeting)
@@ -66,7 +66,7 @@ namespace SuperNewRoles.Patches
                     case RoleId.Camouflager:
                         if (AmongUsClient.Instance.AmHost)
                         {
-                            if (RoleClass.Camouflager.Started != __instance.PlayerId)
+                            if (RoleClass.Camouflager.Started != __instance.PlayerId && target.IsPlayer())
                             {
                                 RoleClass.Camouflager.Started = __instance.PlayerId;
 
@@ -80,7 +80,21 @@ namespace SuperNewRoles.Patches
                                 }
                                 if (bot == null) return true;
 
-                                new LateTask(() =>
+                                if (__instance.PlayerId == 0)
+                                {
+                                    new LateTask(()=>
+                                    {
+                                        foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                                        {
+                                            if (p.IsPlayer() && p.isAlive())
+                                            {
+                                                SuperNewRolesPlugin.Logger.LogInfo(p.PlayerId + ":" + p.name);
+                                                p.RpcShapeshift(bot, true);
+                                            }
+                                        }
+                                    },0f);
+                                }
+                                else
                                 {
                                     foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                                     {
@@ -90,12 +104,13 @@ namespace SuperNewRoles.Patches
                                             p.RpcShapeshift(bot, true);
                                         }
                                     }
-                                }, 0f);
+                                }
                                 RoleClass.Camouflager.CamouflageTimer = RoleClass.Camouflager.DurationTime;
                             }
                         }
                         return true;
                     case RoleId.RemoteSheriff:
+                        if (target.IsBot()) return true;
                         if (AmongUsClient.Instance.AmHost)
                         {
                             if (target.isDead()) return true;
@@ -225,11 +240,16 @@ namespace SuperNewRoles.Patches
                 } 
                 __instance.Close();
                 return false;
+            } else if (PlayerControl.LocalPlayer.isRole(RoleId.Camouflager) && AmongUsClient.Instance.AmHost)
+            {
+                PlayerControl.LocalPlayer.Shapeshift(player, false);
+                __instance.Close();
+                return false;
             }
             PlayerControl.LocalPlayer.RpcShapeshift(player,true);
             __instance.Close();
             return false;
-            
+
         }
     }
     [HarmonyPatch(typeof(KillButton), nameof(KillButton.DoClick))]
