@@ -441,7 +441,7 @@ namespace SuperNewRoles.Patches
                         }
                     }
                 }
-                else if (__instance.isRole(RoleId.Jackal) || RoleClass.SchrodingerCat.IsJackal(__instance))
+                if (__instance.isRole(RoleId.Jackal) || RoleClass.SchrodingerCat.IsJackal(__instance))
                 {
                     __instance.RpcMurderPlayer(target);
                     return false;
@@ -449,7 +449,6 @@ namespace SuperNewRoles.Patches
             }
             if (__instance.isRole(RoleId.SchrodingerCat) && RoleClass.SchrodingerCat.IsImpostor(__instance))
             {
-                SuperNewRolesPlugin.Logger.LogInfo("Is通過");
                 __instance.RpcMurderPlayer(target);
                 return false;
             }
@@ -475,6 +474,22 @@ namespace SuperNewRoles.Patches
                         foreach (PlayerControl player in PlayerControl.AllPlayerControls)
                         {
                             if (player.isImpostor() && target.PlayerId != player.PlayerId && player.IsPlayer())
+                            {
+                                if (player.PlayerId != 0)
+                                {
+                                    target.RpcSetRoleDesync(RoleTypes.GuardianAngel, player);
+                                }
+                                if (target.PlayerId != 0)
+                                {
+                                    player.RpcSetRoleDesync(RoleTypes.GuardianAngel, target);
+                                }
+                            }
+                        }
+                    } else if(__instance.isRole(RoleId.Jackal) || RoleClass.SchrodingerCat.IsJackal(__instance))
+                    {
+                        foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+                        {
+                            if ((player.isRole(RoleId.Jackal) || RoleClass.SchrodingerCat.IsJackal(player)) && target.PlayerId != player.PlayerId && player.IsPlayer())
                             {
                                 if (player.PlayerId != 0)
                                 {

@@ -1766,10 +1766,13 @@ namespace SuperNewRoles.Roles
             public static SchrodingerCatType Get(PlayerControl player = null)
             {
                 if (player == null) player = PlayerControl.LocalPlayer;
+                SuperNewRolesPlugin.Logger.LogInfo(player.name+"の情報を取得しました");
                 if (MyTypes.ContainsKey(player.PlayerId))
                 {
+                    SuperNewRolesPlugin.Logger.LogInfo(player.name + "のContains通過");
                     return MyTypes[player.PlayerId];
                 }
+                SuperNewRolesPlugin.Logger.LogInfo(player.name + "はDefaultです");
                 return SchrodingerCatType.Default;
             }
             public static void ClearAndReload()

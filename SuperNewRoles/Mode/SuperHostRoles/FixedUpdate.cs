@@ -237,17 +237,56 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                         }
                     }
                     string NewName = "";
+                    Color color = introdate.color;
+
+                    if (p.isRole(RoleId.SchrodingerCat))
+                    {
+                        if (RoleClass.SchrodingerCat.IsJackal())
+                        {
+                            color = RoleClass.Jackal.color;
+                        } else if (RoleClass.SchrodingerCat.IsImpostor())
+                        {
+                            color = RoleClass.ImpostorRed;
+                        } else if (RoleClass.SchrodingerCat.IsSheriff())
+                        {
+                            color = RoleClass.Sheriff.color;
+                        } else if (RoleClass.SchrodingerCat.IsCrewTeam())
+                        {
+                            color = Color.white;
+                        }
+                    }
+
                     if ((p.isDead() || p.isRole(RoleId.God)) && !IsUnchecked)
                     {
-                        NewName = "(<size=75%>" + ModHelpers.cs(introdate.color, introdate.Name) + TaskText + GetRoleTextClass.GetRoleTextPostfix(p) + "</size>)" + ModHelpers.cs(introdate.color, p.getDefaultName() + Suffix);
+                        NewName = "(<size=75%>" + ModHelpers.cs(color, introdate.Name) + TaskText + GetRoleTextClass.GetRoleTextPostfix(p) + "</size>)" + ModHelpers.cs(color, p.getDefaultName() + Suffix);
                     }
                     else if (p.isAlive() || IsUnchecked)
                     {
-                        NewName = "<size=75%>" + ModHelpers.cs(introdate.color, introdate.Name) + TaskText + GetRoleTextClass.GetRoleTextPostfix(p) + "</size>\n" + ModHelpers.cs(introdate.color, p.getDefaultName() + Suffix);
+                        NewName = "<size=75%>" + ModHelpers.cs(color, introdate.Name) + TaskText + GetRoleTextClass.GetRoleTextPostfix(p) + "</size>\n" + ModHelpers.cs(color, p.getDefaultName() + Suffix);
                     }
                     if (!p.IsMod())
                     {
                         p.RpcSetNamePrivate(NewName);
+                    }
+                    if (p.isRole(RoleId.Jackal) || RoleClass.SchrodingerCat.IsJackal(p))
+                    {
+                        foreach(PlayerControl player in RoleClass.SchrodingerCat.SchrodingerCatPlayer)
+                        {
+                            if (RoleClass.SchrodingerCat.IsJackal(player) && p.PlayerId != player.PlayerId)
+                            {
+                                player.RpcSetNamePrivate(ModHelpers.cs(RoleClass.Jackal.color,player.getDefaultName()),p);
+                            }
+                        }
+                    }
+                    if (p.isImpostor() || RoleClass.SchrodingerCat.IsImpostor(p))
+                    {
+                        foreach (PlayerControl player in RoleClass.SchrodingerCat.SchrodingerCatPlayer)
+                        {
+                            if (RoleClass.SchrodingerCat.IsImpostor(player) && p.PlayerId != player.PlayerId)
+                            {
+                                player.RpcSetNamePrivate(ModHelpers.cs(RoleClass.ImpostorRed, player.getDefaultName()), p);
+                            }
+                        }
                     }
                     foreach (PlayerControl p2 in DiePlayers)
                     {
