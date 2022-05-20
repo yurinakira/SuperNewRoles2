@@ -66,7 +66,7 @@ namespace SuperNewRoles.Patches
                     case RoleId.Camouflager:
                         if (AmongUsClient.Instance.AmHost)
                         {
-                            if (RoleClass.Camouflager.Started != __instance.PlayerId && target.IsPlayer())
+                            if (RoleClass.Camouflager.Started != __instance.PlayerId)
                             {
                                 RoleClass.Camouflager.Started = __instance.PlayerId;
 
@@ -80,21 +80,7 @@ namespace SuperNewRoles.Patches
                                 }
                                 if (bot == null) return true;
 
-                                if (__instance.PlayerId == 0)
-                                {
-                                    new LateTask(()=>
-                                    {
-                                        foreach (PlayerControl p in PlayerControl.AllPlayerControls)
-                                        {
-                                            if (p.IsPlayer() && p.isAlive())
-                                            {
-                                                SuperNewRolesPlugin.Logger.LogInfo(p.PlayerId + ":" + p.name);
-                                                p.RpcShapeshift(bot, true);
-                                            }
-                                        }
-                                    },0f);
-                                }
-                                else
+                                new LateTask(() =>
                                 {
                                     foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                                     {
@@ -104,7 +90,7 @@ namespace SuperNewRoles.Patches
                                             p.RpcShapeshift(bot, true);
                                         }
                                     }
-                                }
+                                }, 0f);
                                 RoleClass.Camouflager.CamouflageTimer = RoleClass.Camouflager.DurationTime;
                             }
                         }

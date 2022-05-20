@@ -426,6 +426,14 @@ namespace SuperNewRoles.Patch
                 }
             }
             catch { }
+            foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+            {
+                if (ModHelpers.hidePlayerName(PlayerControl.LocalPlayer, p))
+                {
+                    SuperNewRolesPlugin.Logger.LogInfo("ハイドネーム:"+ RoleClass.Camouflager.CamouflageTimer);
+                    SetNamesClass.SetPlayerNameText(p, "");
+                }
+            }
         }
     }
 }

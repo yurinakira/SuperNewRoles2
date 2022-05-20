@@ -57,6 +57,15 @@ namespace SuperNewRoles.Mode.SuperHostRoles
         public static void SetRoleNames(bool IsUnchecked = false)
         {
             if (!AmongUsClient.Instance.AmHost) return;
+            if (RoleClass.Camouflager.CamouflageTimer > 0 && !IsUnchecked)
+            {
+                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                {
+                    p.RpcSetName("　");
+                }
+                return;
+            }
+
             bool commsActive = false;
             if (RoleClass.Technician.TechnicianPlayer.Count != 0)
             {
@@ -250,7 +259,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     }
                     else if (p.isAlive() || IsUnchecked)
                     {
-                        NewName = "<size=75%>" + ModHelpers.cs(introdate.color, introdate.Name) + TaskText + GetRoleTextClass.GetRoleTextPostfix(p) + "</size>\n" + ModHelpers.cs(introdate.color, playername + Suffix);
+                        NewName = "<size=75%>" + ModHelpers.cs(introdate.color, introdate.Name) + TaskText + GetRoleTextClass.GetRoleTextPostfix(p) + "</size>\n" + ModHelpers.cs(introdate.color,  p.getDefaultName() + Suffix);
                     }
                     if (!p.IsMod())
                     {
