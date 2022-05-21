@@ -2226,7 +2226,23 @@ namespace SuperNewRoles
                     }
                 }
             }
-            //セットクラス
+            if (!(CustomOption.CustomOptions.TimeMasterOption.getString().Replace("0%", "") == ""))
+            {
+                int OptionDate = int.Parse(CustomOption.CustomOptions.TimeMasterOption.getString().Replace("0%", ""));
+                RoleId ThisRoleId = RoleId.TimeMaster;
+                if (OptionDate == 10)
+                {
+                    Crewonepar.Add(ThisRoleId);
+                }
+                else
+                {
+                    for (int i = 1; i <= OptionDate; i++)
+                    {
+                        Crewnotonepar.Add(ThisRoleId);
+                    }
+                }
+            }
+        //セットクラス
         }
     }
 }

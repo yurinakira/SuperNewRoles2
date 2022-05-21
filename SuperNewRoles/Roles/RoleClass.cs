@@ -1772,6 +1772,7 @@ namespace SuperNewRoles.Roles
                 Cooldown = CustomOptions.TimeMasterCooldown.getFloat();
             }
         }
+
         //新ロールクラス
         public static class Quarreled
         {

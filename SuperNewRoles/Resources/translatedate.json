@@ -2315,6 +2315,30 @@
  "MadMakerTitle1" : {
         "0" : "Let's get more lunatics!" ,
         "11" : "\u72c2\u4eba\u3092\u5897\u3084\u305d\u3046\uff01"
+        } ,
+ "TimeMasterName" : {
+        "0" : "TimeMaster" ,
+        "11" : "\u30bf\u30a4\u30e0\u30de\u30b9\u30bf\u30fc"
+        } ,
+ "TimeMasterTitle1" : {
+        "0" : "Let's control the time" ,
+        "11" : "\u6642\u3092\u53f8\u308d\u3046"
+        } ,
+ "TimeMasterCooldown" : {
+        "0" : "Shield Cooldown" ,
+        "11" : "\u30bf\u30a4\u30e0\u30b7\u30fc\u30eb\u30c9\u30af\u30fc\u30eb\u30c0\u30a6\u30f3"
+        } ,
+ "TimeMasterRewindTime" : {
+        "0" : "Rewind Time" ,
+        "11" : "\u5dfb\u304d\u623b\u3059\u6642\u9593"
+        } ,
+ "TimeMasterShieldDuration" : {
+        "0" : "Shield Duration" ,
+        "11" : "\u30b7\u30fc\u30eb\u30c9\u6301\u7d9a\u6642\u9593"
+        } ,
+ "TimeMasterShieldButtonName" : {
+        "0" : "TimeShield!" ,
+        "11" : "\u30bf\u30a4\u30e0\u30b7\u30fc\u30eb\u30c9!"
         } 
 
 }

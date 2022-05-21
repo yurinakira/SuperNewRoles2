@@ -577,3 +577,9 @@ TeleportingJackal
 Teleport and kill all crewmates and impostors!
 MadMaker
 Let's get more lunatics!
+TimeMaster
+Let's control the time
+Shield Cooldown
+Rewind Time
+Shield Duration
+TimeShield!

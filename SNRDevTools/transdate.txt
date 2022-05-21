@@ -578,3 +578,9 @@ TeleportingJackalName,TeleportingJackal,テレポートジャッカル
 TeleportingJackalTitle1,Teleport and kill all crewmates and impostors!,テレポートして全員ぶち殺そう
 MadMakerName,MadMaker,マッドメーカー
 MadMakerTitle1,Let's get more lunatics!,狂人を増やそう！
+TimeMasterName,TimeMaster,タイムマスター
+TimeMasterTitle1,Let's control the time,時を司ろう
+TimeMasterCooldown,Shield Cooldown,タイムシールドクールダウン
+TimeMasterRewindTime,Rewind Time,巻き戻す時間
+TimeMasterShieldDuration,Shield Duration,シールド持続時間
+TimeMasterShieldButtonName,TimeShield!,タイムシールド!

@@ -1406,6 +1406,10 @@ namespace SuperNewRoles
             {
                 return CustomRPC.RoleId.TimeMaster;
             }
+            else if (Roles.RoleClass.TimeMaster.TimeMasterPlayer.IsCheckListPlayerControl(player))
+            {
+                return CustomRPC.RoleId.TimeMaster;
+            }
             //ロールチェック
             }
             catch (Exception e)

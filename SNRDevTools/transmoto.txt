@@ -577,3 +577,9 @@ TeleportingJackalName
 TeleportingJackalTitle1
 MadMakerName
 MadMakerTitle1
+TimeMasterName
+TimeMasterTitle1
+TimeMasterCooldown
+TimeMasterRewindTime
+TimeMasterShieldDuration
+TimeMasterShieldButtonName

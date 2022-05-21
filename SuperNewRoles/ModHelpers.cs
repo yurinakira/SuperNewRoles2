@@ -284,7 +284,7 @@ namespace SuperNewRoles
                 }
             }
             // Block Time Master with time shield kill
-            if (target.isRole(RoleId.TimeMaster) && RoleClass.TimeMaster.TimeMasterPlayer != null && RoleClass.TimeMaster.ShieldActive)
+            if (target.isRole(RoleId.TimeMaster) && RoleClass.TimeMaster.TimeMasterPlayer != null && RoleClass.TimeMaster.ShieldActive )
             //else if (TimeMaster.shieldActive && TimeMaster.timeMaster != null && TimeMaster.timeMaster == target) _Ver.TOR
             {
                 if (!blockRewind)
