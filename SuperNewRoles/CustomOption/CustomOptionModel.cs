@@ -601,13 +601,15 @@ namespace SuperNewRoles.CustomOption
         {
             if (option.isHidden) return true;
             if (option.isSHROn) { return false; }
-            else { return ModeHandler.isMode(ModeId.SuperHostRoles,false); }
-            return false;
+            else { 
+                return ModeHandler.isMode(ModeId.SuperHostRoles, false); 
+            }
         }
         public static void Postfix(GameOptionsMenu __instance)
         {
             var gameSettingMenu = UnityEngine.Object.FindObjectsOfType<GameSettingMenu>().FirstOrDefault();
             if (gameSettingMenu.RegularGameSettings.active || gameSettingMenu.RolesSettings.gameObject.active) return;
+
             timer += Time.deltaTime;
             if (timer < 0.1f) return;
             timer = 0f;
@@ -618,7 +620,6 @@ namespace SuperNewRoles.CustomOption
             CustomOptionType type = getCustomOptionType(__instance.name);
             foreach (CustomOption option in CustomOption.options)
             {
-                //SuperNewRolesPlugin.Logger.LogInfo(option.type);
                 if (option.type != type) continue;
                 if (option?.optionBehaviour != null && option.optionBehaviour.gameObject != null)
                 {
@@ -675,18 +676,8 @@ namespace SuperNewRoles.CustomOption
             // Setup mapNameTransform
             var mapNameTransform = __instance.AllItems.FirstOrDefault(x => x.name.Equals("MapName", StringComparison.OrdinalIgnoreCase));
             if (mapNameTransform == null) return;
-
-            var options = new Il2CppSystem.Collections.Generic.List<Il2CppSystem.Collections.Generic.KeyValuePair<string, int>>();
-            for (int i = 0; i < Constants.MapNames.Length; i++)
-            {
-                if (i == 3) continue; // ignore dleks
-                var kvp = new Il2CppSystem.Collections.Generic.KeyValuePair<string, int>();
-                kvp.key = Constants.MapNames[i];
-                kvp.value = i;
-                options.Add(kvp);
-            }
-            mapNameTransform.GetComponent<KeyValueOption>().Values = options;
             mapNameTransform.gameObject.active = true;
+
             foreach (Transform i in __instance.AllItems.ToList())
             {
                 float num = -0.5f;

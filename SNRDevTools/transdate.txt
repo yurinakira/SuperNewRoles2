@@ -124,12 +124,17 @@ DetectiveModeIsNotDetectiveVoteSetting,Non-Detective cannot vote,探偵以外は
 DetectiveModeIsNotDetectiveMeetingButtonSetting,Non-Detective cannot press the conference button,探偵以外が会議ボタンを押せない
 DetectiveName,Detective,探偵
 DetectiveTitle1,Guess and win over your crewmates!,推理してクルーメイトを勝利させよう
+BattleRoyalIsViewAlivePlayer,You can see how many player are left alive.,残り生存人数がわかる
+BattleRoyalIsTeamBattle,Team competition,チーム戦
+BattleRoyalTeamAmount,Number of teams,チーム数
+BattleRoyalStartSeconds,Seconds to be able to make a kill,キルができるようになるまでの秒数
 CrewMateName,Crewmate,クルーメイト
 CrewMateTitle1,Use Task,タスクを行う
 CrewMateDescription,Default Crewmate.,通常のクルーメイトです。
 ImpostorName,Impostor,インポスター
 ImpostorTitle1,Use Sabotage & Vent,サボタージュ＆ベントを行う
 ImpostorDescription,Default Impostor.,通常のインポスターです。
+LevelUpModeName,Level Up,レベルアップ
 ZombieZombieName,Zombie,ゾンビ
 ZombieZombieTitle1,Infect other players!,他のプレイヤーを感染させよう
 ZombiePoliceName,Police,警察
@@ -217,13 +222,13 @@ EvilScientistDurationSetting,Evil Scientist's Invisibility Duration,イビルサ
 SheriffName,Sheriff,シェリフ
 SheriffTitle1,Kill the outsider!,人外をキルしよう
 SheriffTitle2,Kill the outsider and lead your crewmates to victory!,人外をキルしてクルーメイトを勝利に導こう
-SheriffCoolDownSetting,Sheriff's Kill Cooldown,シェリフのキルクールダウン
+SheriffCoolDownSetting,Kill Cooldown,キルクールダウン
 SheriffIsKillNewtralSetting,Can Kill a Neutral,第三陣営をキルできる
 SheriffIsKillLoversSetting,Can Kill a Lovers,ラバーズをキルできる
 SheriffIsKillMadRoleSetting,Can Kill a MadRole,マッド系役職をキルできる
 SheriffYes,Yes,できる
 SheriffNo,No,できない
-SheriffMaxKillCountSetting,Maximum number of kills for Sheriff,シェリフの最大キル数
+SheriffMaxKillCountSetting,Maximum number of kills,最大キル数
 SheriffKillButtonName,Kill,キル
 SheriffNumTextName,{0} shots remaining.,残り{0}発
 MeetingSheriffName,Meeting Sheriff,ミーティング シェリフ
@@ -331,6 +336,7 @@ NiceScientistTitle1,Turn invisible and find the bodies!,透明になって死体
 NiceScientistTitle2,Use the power of science to win!,科学の力で勝利しよう
 NiceScientistCoolDownSetting,Cool Time,クールタイム
 NiceScientistDurationSetting,Duration Time,継続時間
+ScientistButtonName,Hide,隠れる
 ClergymanName,Clergyman,聖職者
 ClergymanTitle1,Let's sabotage the outsider.,人外の妨害をしよう
 ClergymanTitle2,Let's obstruct the outsider's view.,人外の視界を妨害しよう
@@ -453,6 +459,7 @@ EvilEraserTitle1,Let's wipe out their abilities.,能力を消し去ろう
 EvilEraserMaxCountSetting,Max Erase Count,最大削除回数
 WorkpersonName,Work person,仕事人
 WorkpersonTitle1,Let's do the work and win!,仕事をして勝利しよう
+WorkpersonIsAliveWinSetting,You have to be alive to win,生存していないと勝利できない
 MagazinerName,Magaziner,マガジナー
 MagazinerTitle1,Save your kills!,キルを貯めよう
 MagazinerSetTimeSetting,Kill cool time after magazine use,マガジン使用後のキルクールタイム
@@ -545,3 +552,36 @@ NocturnalityName,Nocturnality,夜行性
 NocturnalityTitle1,You live in darkness.,あなたは暗闇の中で生きている
 ObserverName,Observer,選挙管理委員
 ObserverTitle1,Let's monitor everything.,すべてを監視しよう
+VampireName,Vampire,ヴァンパイア
+VampireTitle1,Let's do a delayed kill.,遅延キルしよう
+VampireKillDelay,Kill Delay,キル遅延
+DarkKillerName,DarkKiller,ダークキラー
+DarkKillerTitle1,Let's kill in the dark,闇に紛れて殺そう
+DarkKillerKillCoolSetting,Dark Killer's Kill Cool Time,ダークキラーのキルクールタイム
+FoxName,Fox,妖狐
+FoxTitle1,I am Fox!,私は狐です!
+SeerName,Seer,シーア
+SeerTitle1,You will see players die,船員の気配を感じ取ろう
+SeerMode,Mode,モード
+SeerModeBoth,Show Death Flash + Souls,死の点滅＆幽霊が見える
+SeerModeFlash,Show Death Flash,死の点滅が見える
+SeerModeSouls,Show Souls,幽霊が見える
+SeerLimitSoulDuration,Limit Soul Duration,時間経過で幽霊が消える
+SeerSoulDuration,Soul Duration,幽霊が見える時間
+MadSeerName,MadSeer,マッドシーア
+MadSeerTitle1,Feel the success of your husband,ご主人の活躍を感じ取ろう
+EvilSeerName,EvilSeer,イビルシーア
+EvilSeerTitle1,You will see players die,船員の気配を感じ取ろう
+RemoteSheriffName,Remote Sheriff,リモートシェリフ
+RemoteSheriffTitle1,Let's do a Remote Sheriff kill!,遠隔でシェリフキルをしよう
+RemoteSheriffIsKillTeleportSetting,Kill Teleport,キルテレポート
+TeleportingJackalName,TeleportingJackal,テレポートジャッカル
+TeleportingJackalTitle1,Teleport and kill all crewmates and impostors!,テレポートして全員ぶち殺そう
+MadMakerName,MadMaker,マッドメーカー
+MadMakerTitle1,Let's get more lunatics!,狂人を増やそう！
+DemonName,Demon,悪魔
+DemonTitle1,Curse the Crew and Help the Imposter!,クルーを呪いながらインポスターを手助けせよ
+DemonIsAliveWinSetting,You have to be alive to win.,生存していないと勝利できない
+DemonButtonName,Curse,呪う
+TaskManagerName,TaskManager,タスクマネージャー
+TaskManagerTitle1,Finish the task and mount up!,タスクを終わらせ、マウントを取ろう

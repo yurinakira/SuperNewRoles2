@@ -50,7 +50,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     {
                         optdata.RoleOptions.EngineerCooldown = 0f;
                         optdata.RoleOptions.EngineerInVentMaxTime = 0f;
-                    }                    
+                    }
                     if (RoleClass.MadMate.IsImpostorLight)
                     {
                         optdata.CrewLightMod = optdata.ImpostorLightMod;
@@ -109,6 +109,41 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                         }
                     }
                     break;
+                case RoleId.MadMaker:
+                    if (!RoleClass.MadMaker.IsImpostorLight)
+                    {
+                        optdata.ImpostorLightMod = optdata.CrewLightMod;
+                        var switchSystemMadMaker = ShipStatus.Instance.Systems[SystemTypes.Electrical].Cast<SwitchSystem>();
+                        if (switchSystemMadMaker != null && switchSystemMadMaker.IsActive)
+                        {
+                            optdata.ImpostorLightMod /= 5;
+                        }
+                    }
+                    if (RoleClass.MadMaker.CreatePlayers.Contains(player.PlayerId))
+                    {
+                        optdata.KillCooldown = -1f;
+                    }
+                    else
+                    {
+                        optdata.KillCooldown = 0.001f;
+                    }
+                    break;
+                case RoleId.Fox:
+                    if (RoleClass.Fox.IsUseVent)
+                    {
+                        optdata.RoleOptions.EngineerCooldown = 0f;
+                        optdata.RoleOptions.EngineerInVentMaxTime = 0f;
+                    }
+                    if (RoleClass.Fox.IsImpostorLight)
+                    {
+                        optdata.CrewLightMod = optdata.ImpostorLightMod;
+                        var switchSystem2 = ShipStatus.Instance.Systems[SystemTypes.Electrical].Cast<SwitchSystem>();
+                        if (switchSystem2 != null && switchSystem2.IsActive)
+                        {
+                            optdata.CrewLightMod = optdata.ImpostorLightMod * 15;
+                        }
+                    }
+                    break;
                 case RoleId.truelover:
                     optdata.ImpostorLightMod = optdata.CrewLightMod;
                     var switchSystemtruelover = ShipStatus.Instance.Systems[SystemTypes.Electrical].Cast<SwitchSystem>();
@@ -144,15 +179,62 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     }
                     optdata.killCooldown = KillCoolSet(RoleClass.FalseCharges.CoolTime);
                     break;
+                case RoleId.RemoteSheriff:
+                    optdata.ImpostorLightMod = optdata.CrewLightMod;
+                    var switchSystemRemoteSheriff = ShipStatus.Instance.Systems[SystemTypes.Electrical].Cast<SwitchSystem>();
+                    if (switchSystemRemoteSheriff != null && switchSystemRemoteSheriff.IsActive)
+                    {
+                        optdata.ImpostorLightMod /= 5;
+                    }
+                    optdata.RoleOptions.ShapeshifterDuration = 1f;
+                    optdata.RoleOptions.ShapeshifterCooldown = KillCoolSet(RoleClass.RemoteSheriff.KillCoolTime);
+                    if (RoleClass.RemoteSheriff.KillCount.ContainsKey(player.PlayerId) && RoleClass.RemoteSheriff.KillCount[player.PlayerId] < 1)
+                    {
+                        optdata.RoleOptions.ShapeshifterDuration = 1f;
+                        optdata.RoleOptions.ShapeshifterCooldown = -1f;
+                    }
+                    if (player.IsMod())
+                    {
+                        optdata.killCooldown = KillCoolSet(RoleClass.RemoteSheriff.KillCoolTime);
+                    }
+                    else
+                    {
+                        optdata.killCooldown = -1f;
+                    }
+                    break;
                 case RoleId.Nocturnality:
                     var switchSystemNocturnality = ShipStatus.Instance.Systems[SystemTypes.Electrical].Cast<SwitchSystem>();
                     if (switchSystemNocturnality == null || !switchSystemNocturnality.IsActive)
                     {
                         optdata.CrewLightMod /= 5;
                     }
+                    else
+                    {
+                        optdata.CrewLightMod *= 5;
+                    }
+                    break;
+                case RoleId.SelfBomber:
+                    optdata.RoleOptions.ShapeshifterCooldown = 0.000001f;
+                    optdata.RoleOptions.ShapeshifterDuration = 0.000001f;
+                    break;
+                case RoleId.Survivor:
+                    optdata.killCooldown = KillCoolSet(RoleClass.Survivor.KillCoolTime);
+                    break;
+                case RoleId.Jackal:
+                    optdata.ImpostorLightMod = optdata.CrewLightMod;
+                    var switchSystemJackal = ShipStatus.Instance.Systems[SystemTypes.Electrical].Cast<SwitchSystem>();
+                    if (switchSystemJackal != null && switchSystemJackal.IsActive)
+                    {
+                        optdata.ImpostorLightMod /= 5;
+                    }
+                    optdata.KillCooldown = KillCoolSet(RoleClass.Jackal.KillCoolDown);
+                    break;
+                case RoleId.Demon:
+                    optdata.KillCooldown = KillCoolSet(RoleClass.Demon.CoolTime);
                     break;
             }
             if (player.isDead()) optdata.AnonymousVotes = false;
+            optdata.RoleOptions.ShapeshifterLeaveSkin = false;
             if (player.AmOwner) PlayerControl.GameOptions = optdata;
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)RpcCalls.SyncSettings, SendOption.Reliable, player.getClientId());
             writer.WriteBytesAndSize(optdata.ToBytes(5));
@@ -167,6 +249,27 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             {
                 return cool;
             }
+        }
+        public static void MurderSyncSetting(PlayerControl player)
+        {
+            if (!AmongUsClient.Instance.AmHost) return;
+            if (!ModeHandler.isMode(ModeId.SuperHostRoles)) return;
+            var role = player.getRole();
+            var optdata = OptionData.DeepCopy();
+            switch (role)
+            {
+                case RoleId.Demon:
+                    optdata.KillCooldown = KillCoolSet(RoleClass.Demon.CoolTime) * 2;
+                    break;
+                default:
+                    return;
+            }
+            if (player.isDead()) optdata.AnonymousVotes = false;
+            optdata.RoleOptions.ShapeshifterLeaveSkin = false;
+            if (player.AmOwner) PlayerControl.GameOptions = optdata;
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)RpcCalls.SyncSettings, SendOption.Reliable, player.getClientId());
+            writer.WriteBytesAndSize(optdata.ToBytes(5));
+            AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
         public static void GamblersetCool(PlayerControl p)
         {
@@ -189,7 +292,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
         {
             foreach (PlayerControl p in PlayerControl.AllPlayerControls)
             {
-                if (!p.Data.Disconnected)
+                if (!p.Data.Disconnected && p.IsPlayer())
                 {
                     CustomSyncSettings(p);
                 }
