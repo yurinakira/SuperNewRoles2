@@ -500,6 +500,22 @@
         "0" : "Guess and win over your crewmates!" ,
         "11" : "推理してクルーメイトを勝利させよう"
         } ,
+ "BattleRoyalIsViewAlivePlayer" : {
+        "0" : "You can see how many player are left alive." ,
+        "11" : "残り生存人数がわかる"
+        } ,
+ "BattleRoyalIsTeamBattle" : {
+        "0" : "Team competition" ,
+        "11" : "チーム戦"
+        } ,
+ "BattleRoyalTeamAmount" : {
+        "0" : "Number of teams" ,
+        "11" : "チーム数"
+        } ,
+ "BattleRoyalStartSeconds" : {
+        "0" : "Seconds to be able to make a kill" ,
+        "11" : "キルができるようになるまでの秒数"
+        } ,
  "CrewMateName" : {
         "0" : "Crewmate" ,
         "11" : "クルーメイト"
@@ -523,6 +539,10 @@
  "ImpostorDescription" : {
         "0" : "Default Impostor." ,
         "11" : "通常のインポスターです。"
+        } ,
+ "LevelUpModeName" : {
+        "0" : "Level Up" ,
+        "11" : "レベルアップ"
         } ,
  "ZombieZombieName" : {
         "0" : "Zombie" ,
@@ -873,8 +893,8 @@
         "11" : "人外をキルしてクルーメイトを勝利に導こう"
         } ,
  "SheriffCoolDownSetting" : {
-        "0" : "Sheriff's Kill Cooldown" ,
-        "11" : "シェリフのキルクールダウン"
+        "0" : "Kill Cooldown" ,
+        "11" : "キルクールダウン"
         } ,
  "SheriffIsKillNewtralSetting" : {
         "0" : "Can Kill a Neutral" ,
@@ -897,8 +917,8 @@
         "11" : "できない"
         } ,
  "SheriffMaxKillCountSetting" : {
-        "0" : "Maximum number of kills for Sheriff" ,
-        "11" : "シェリフの最大キル数"
+        "0" : "Maximum number of kills" ,
+        "11" : "最大キル数"
         } ,
  "SheriffKillButtonName" : {
         "0" : "Kill" ,
@@ -1327,6 +1347,10 @@
  "NiceScientistDurationSetting" : {
         "0" : "Duration Time" ,
         "11" : "継続時間"
+        } ,
+ "ScientistButtonName" : {
+        "0" : "Hide" ,
+        "11" : "隠れる"
         } ,
  "ClergymanName" : {
         "0" : "Clergyman" ,
@@ -1816,6 +1840,10 @@
         "0" : "Let's do the work and win!" ,
         "11" : "仕事をして勝利しよう"
         } ,
+ "WorkpersonIsAliveWinSetting" : {
+        "0" : "You have to be alive to win" ,
+        "11" : "生存していないと勝利できない"
+        } ,
  "MagazinerName" : {
         "0" : "Magaziner" ,
         "11" : "マガジナー"
@@ -2183,6 +2211,138 @@
  "ObserverTitle1" : {
         "0" : "Let's monitor everything." ,
         "11" : "すべてを監視しよう"
+        } ,
+ "VampireName" : {
+        "0" : "Vampire" ,
+        "11" : "ヴァンパイア"
+        } ,
+ "VampireTitle1" : {
+        "0" : "Let's do a delayed kill." ,
+        "11" : "遅延キルしよう"
+        } ,
+ "VampireKillDelay" : {
+        "0" : "Kill Delay" ,
+        "11" : "キル遅延"
+        } ,
+ "DarkKillerName" : {
+        "0" : "DarkKiller" ,
+        "11" : "ダークキラー"
+        } ,
+ "DarkKillerTitle1" : {
+        "0" : "Let's kill in the dark" ,
+        "11" : "闇に紛れて殺そう"
+        } ,
+ "DarkKillerKillCoolSetting" : {
+        "0" : "Dark Killer's Kill Cool Time" ,
+        "11" : "ダークキラーのキルクールタイム"
+        } ,
+ "FoxName" : {
+        "0" : "Fox" ,
+        "11" : "妖狐"
+        } ,
+ "FoxTitle1" : {
+        "0" : "I am Fox!" ,
+        "11" : "私は狐です!"
+        } ,
+ "SeerName" : {
+        "0" : "Seer" ,
+        "11" : "シーア"
+        } ,
+ "SeerTitle1" : {
+        "0" : "You will see players die" ,
+        "11" : "船員の気配を感じ取ろう"
+        } ,
+ "SeerMode" : {
+        "0" : "Mode" ,
+        "11" : "モード"
+        } ,
+ "SeerModeBoth" : {
+        "0" : "Show Death Flash + Souls" ,
+        "11" : "死の点滅＆幽霊が見える"
+        } ,
+ "SeerModeFlash" : {
+        "0" : "Show Death Flash" ,
+        "11" : "死の点滅が見える"
+        } ,
+ "SeerModeSouls" : {
+        "0" : "Show Souls" ,
+        "11" : "幽霊が見える"
+        } ,
+ "SeerLimitSoulDuration" : {
+        "0" : "Limit Soul Duration" ,
+        "11" : "時間経過で幽霊が消える"
+        } ,
+ "SeerSoulDuration" : {
+        "0" : "Soul Duration" ,
+        "11" : "幽霊が見える時間"
+        } ,
+ "MadSeerName" : {
+        "0" : "MadSeer" ,
+        "11" : "マッドシーア"
+        } ,
+ "MadSeerTitle1" : {
+        "0" : "Feel the success of your husband" ,
+        "11" : "ご主人の活躍を感じ取ろう"
+        } ,
+ "EvilSeerName" : {
+        "0" : "EvilSeer" ,
+        "11" : "イビルシーア"
+        } ,
+ "EvilSeerTitle1" : {
+        "0" : "You will see players die" ,
+        "11" : "船員の気配を感じ取ろう"
+        } ,
+ "RemoteSheriffName" : {
+        "0" : "Remote Sheriff" ,
+        "11" : "リモートシェリフ"
+        } ,
+ "RemoteSheriffTitle1" : {
+        "0" : "Let's do a Remote Sheriff kill!" ,
+        "11" : "遠隔でシェリフキルをしよう"
+        } ,
+ "RemoteSheriffIsKillTeleportSetting" : {
+        "0" : "Kill Teleport" ,
+        "11" : "キルテレポート"
+        } ,
+ "TeleportingJackalName" : {
+        "0" : "TeleportingJackal" ,
+        "11" : "テレポートジャッカル"
+        } ,
+ "TeleportingJackalTitle1" : {
+        "0" : "Teleport and kill all crewmates and impostors!" ,
+        "11" : "テレポートして全員ぶち殺そう"
+        } ,
+ "MadMakerName" : {
+        "0" : "MadMaker" ,
+        "11" : "マッドメーカー"
+        } ,
+ "MadMakerTitle1" : {
+        "0" : "Let's get more lunatics!" ,
+        "11" : "狂人を増やそう！"
+        } ,
+ "DemonName" : {
+        "0" : "Demon" ,
+        "11" : "悪魔"
+        } ,
+ "DemonTitle1" : {
+        "0" : "Curse the Crew and Help the Imposter!" ,
+        "11" : "クルーを呪いながらインポスターを手助けせよ"
+        } ,
+ "DemonIsAliveWinSetting" : {
+        "0" : "You have to be alive to win." ,
+        "11" : "生存していないと勝利できない"
+        } ,
+ "DemonButtonName" : {
+        "0" : "Curse" ,
+        "11" : "呪う"
+        } ,
+ "TaskManagerName" : {
+        "0" : "TaskManager" ,
+        "11" : "タスクマネージャー"
+        } ,
+ "TaskManagerTitle1" : {
+        "0" : "Finish the task and mount up!" ,
+        "11" : "タスクを終わらせ、マウントを取ろう"
         } 
 
 }

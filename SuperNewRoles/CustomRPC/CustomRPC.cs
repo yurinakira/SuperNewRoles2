@@ -15,6 +15,7 @@ using static SuperNewRoles.EndGame.FinalStatusPatch;
 using SuperNewRoles.Helpers;
 using SuperNewRoles.Mode.SuperHostRoles;
 using SuperNewRoles.Sabotage;
+using SuperNewRoles.Mode;
 
 namespace SuperNewRoles.CustomRPC
 {
@@ -95,6 +96,17 @@ namespace SuperNewRoles.CustomRPC
         Celebrity,
         Nocturnality,
         Observer,
+        Vampire,
+        DarkKiller,
+        Fox,
+        Seer,
+        MadSeer,
+        EvilSeer,
+        RemoteSheriff,
+        TeleportingJackal,
+        MadMaker,
+        Demon,
+        TaskManager,
         //RoleId
     }
 
@@ -144,7 +156,10 @@ namespace SuperNewRoles.CustomRPC
         UseStuntmanCount,
         UseMadStuntmanCount,
         SetDoorOpen,
-        CustomEndGame
+        CustomEndGame,
+        UncheckedProtect,
+        SetBot,
+        DemonCurse
     }
     public static class RPCProcedure
     {
@@ -154,6 +169,37 @@ namespace SuperNewRoles.CustomRPC
             SuperNewRolesPlugin.Logger.LogInfo(door.Id);
             door.SetDoorway(true);
         }
+        public static void DemonCurse(byte source, byte target)
+        {
+            PlayerControl TargetPlayer = ModHelpers.playerById(target);
+            PlayerControl SourcePlayer = ModHelpers.playerById(source);
+            if (TargetPlayer == null || SourcePlayer == null) return;
+            if (!RoleClass.Demon.CurseDatas.ContainsKey(source)) RoleClass.Demon.CurseDatas[source] = new List<PlayerControl>();
+            if (!Demon.IsCursed(SourcePlayer, TargetPlayer))
+            {
+                RoleClass.Demon.CurseDatas[source].Add(TargetPlayer);
+            }
+        }
+        public static void SetBot(byte playerid)
+        {
+            SuperNewRolesPlugin.Logger.LogInfo("セットボット！！！！！！！！！");
+            PlayerControl player = ModHelpers.playerById(playerid);
+            if (player == null) {
+                SuperNewRolesPlugin.Logger.LogInfo("nullなのでreturn");
+                return;
+            }
+            SuperNewRolesPlugin.Logger.LogInfo("通過:"+player.name);
+            if (BotManager.AllBots == null) BotManager.AllBots = new List<PlayerControl>();
+            BotManager.AllBots.Add(player);
+
+        }
+        public static void UncheckedProtect(byte sourceid, byte playerid,byte colorid)
+        {
+            PlayerControl player = ModHelpers.playerById(playerid);
+            PlayerControl source = ModHelpers.playerById(sourceid);
+            if (player == null || source == null) return;
+            source.ProtectPlayer(player,colorid);
+        }
         public static void CustomEndGame(GameOverReason reason, bool showAd)
         {
             CheckGameEndPatch.CustomEndGame(reason, showAd);
@@ -162,12 +208,27 @@ namespace SuperNewRoles.CustomRPC
         {
             var player = ModHelpers.playerById(playerid);
             if (player == null) return;
-            if (!RoleClass.StuntMan.GuardCount.ContainsKey(playerid))
+            if (player.isRole(RoleId.MadStuntMan))
             {
-                RoleClass.StuntMan.GuardCount[playerid] = ((int)CustomOptions.StuntManMaxGuardCount.getFloat())-1;
-            } else
+                if (!RoleClass.MadStuntMan.GuardCount.ContainsKey(playerid))
+                {
+                    RoleClass.MadStuntMan.GuardCount[playerid] = ((int)CustomOptions.MadStuntManMaxGuardCount.getFloat()) - 1;
+                }
+                else
+                {
+                    RoleClass.MadStuntMan.GuardCount[playerid]--;
+                }
+            }
+            else if (player.isRole(RoleId.StuntMan))
             {
-                RoleClass.StuntMan.GuardCount[playerid]--;
+                if (!RoleClass.StuntMan.GuardCount.ContainsKey(playerid))
+                {
+                    RoleClass.StuntMan.GuardCount[playerid] = ((int)CustomOptions.StuntManMaxGuardCount.getFloat()) - 1;
+                }
+                else
+                {
+                    RoleClass.StuntMan.GuardCount[playerid]--;
+                }
             }
         }
         public static void SetMadKiller(byte sourceid,byte targetid)
@@ -398,9 +459,11 @@ namespace SuperNewRoles.CustomRPC
         }
         public static void SheriffKill(byte SheriffId,byte TargetId,bool MissFire)
         {
+            SuperNewRolesPlugin.Logger.LogInfo("シェリフ");
             PlayerControl sheriff = ModHelpers.playerById(SheriffId);
             PlayerControl target = ModHelpers.playerById(TargetId);
             if (sheriff == null || target == null) return;
+            SuperNewRolesPlugin.Logger.LogInfo("通過");
 
             if (MissFire)
             {
@@ -408,7 +471,20 @@ namespace SuperNewRoles.CustomRPC
                 FinalStatusData.FinalStatuses[sheriff.PlayerId] = FinalStatus.SheriffMisFire;
             } else
             {
-                sheriff.MurderPlayer(target);
+                if (sheriff.isRole(RoleId.RemoteSheriff) && !RoleClass.RemoteSheriff.IsKillTeleport)
+                {
+                    if (PlayerControl.LocalPlayer.PlayerId == SheriffId)
+                    {
+                        target.MurderPlayer(target);
+                    } else
+                    {
+                        sheriff.MurderPlayer(target);
+                    }
+                }
+                else
+                {
+                    sheriff.MurderPlayer(target);
+                }
                 FinalStatusData.FinalStatuses[sheriff.PlayerId] = FinalStatus.SheriffKill;
             }
 
@@ -617,7 +693,14 @@ namespace SuperNewRoles.CustomRPC
         public static void ShareWinner(byte playerid)
         {
             PlayerControl player = ModHelpers.playerById(playerid);
-            EndGame.OnGameEndPatch.WinnerPlayer = player;
+            if (ModeHandler.isMode(ModeId.BattleRoyal))
+            {
+                Mode.BattleRoyal.main.Winners.Add(player);
+            }
+            else
+            {
+                EndGame.OnGameEndPatch.WinnerPlayer = player;
+            }
         }
         public static void TeleporterTP(byte playerid)
         {
@@ -810,6 +893,15 @@ namespace SuperNewRoles.CustomRPC
                         {
                             CustomEndGame((GameOverReason)reader.ReadByte(), reader.ReadBoolean());
                         }
+                        break;
+                    case (byte)CustomRPC.UncheckedProtect:
+                        UncheckedProtect(reader.ReadByte(),reader.ReadByte(),reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.SetBot:
+                        SetBot(reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.DemonCurse:
+                        DemonCurse(reader.ReadByte(), reader.ReadByte());
                         break;
                 }
             }

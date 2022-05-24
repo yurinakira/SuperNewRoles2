@@ -159,6 +159,14 @@ namespace SuperNewRoles.Patch
                     Camera.main.orthographicSize = Default;
                     HudManager.Instance.UICamera.orthographicSize = Default;
                 }
+                if (Input.GetKeyDown(KeyCode.F10))
+                {
+                    BotManager.Spawn($"bot{(byte)GameData.Instance.GetAvailableId()}");                
+                }
+                if (Input.GetKeyDown(KeyCode.F11))
+                {
+                    BotManager.AllBotDespawn();
+                }
             }
             public static float Default = 0;
             public static string RandomString(int length)

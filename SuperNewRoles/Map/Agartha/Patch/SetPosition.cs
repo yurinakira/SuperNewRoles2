@@ -218,6 +218,17 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Object_Projecter_Animation.Sprites = CustomAnimation.LoadSprites.GetSpritesAgartha("SuperNewRoles.Resources.Agartha.Animation.pro", 32);
             Object_Projecter.localScale *= 2.5f;
 
+            Transform Object_Electric = GameObject.Instantiate(Template, MiraShip);
+            Object_Electric.position = new Vector3(21.35f, 15.47f, 0.1f);
+            GameObject.Destroy(Object_Electric.GetComponent<PolygonCollider2D>());
+            Object_Electric.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Animation.electric_0001");
+            Object_Electric.gameObject.AddComponent<PolygonCollider2D>();
+            Object_Electric.name = "Object_Electric";
+            CustomAnimation.Animation Object_Electric_Animation = new CustomAnimation.Animation();
+            Object_Electric_Animation.Start(8, Object_Electric);
+            Object_Electric_Animation.Sprites = CustomAnimation.LoadSprites.GetSpritesAgartha("SuperNewRoles.Resources.Agartha.Animation.electric", 8);
+            Object_Electric.localScale = new Vector3(1.75f, 1.75f, 1.75f);
+
             Transform Comms_Object_CommsTable = GameObject.Instantiate(Template, MiraShip);
             Comms_Object_CommsTable.position = new Vector3(-0.35f, 22.7f, 0.1f);
             Comms_Object_CommsTable.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Comms_Table");
@@ -551,7 +562,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             MeetingRoomVentObject.transform.position = new Vector3(15.8f, 11.5f, 0.1f);
             MeetingRoomVentObject.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
-            ElecRoomVentObject.transform.position = new Vector3(19.6f, 11.8f, 0.1f);
+            ElecRoomVentObject.transform.position = new Vector3(18.9f, 11.65f, 0.1f);
             ElecRoomVentObject.localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
             LaboVentObject.transform.position = new Vector3(24.3f, 8.6f, 0.1f);
