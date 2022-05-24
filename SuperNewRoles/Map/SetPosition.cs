@@ -59,7 +59,7 @@ namespace SuperNewRoles.Map
                         };
 
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
-                       new Vector2[] { new Vector2(-5f, 4f), new Vector2(9f, 4f), new Vector2(9f, 6f), new Vector2(6.8f, 6f), new Vector2(6.8f, 8f), new Vector2(5.3f, 8f), new Vector2(5.3f, 7f), new Vector2(2.3f, 7f), new Vector2(2.3f, 11f), new Vector2(4.5f, 11f), new Vector2(5.3f, 10f), new Vector2(5.3f, 9.25f), new Vector2(6.8f, 9.25f), new Vector2(6.8f, 12.5f), new Vector2(10.8f, 12.5f), new Vector2(10.8f, 14.5f), new Vector2(5.8f, 14.5f), new Vector2(5.8f, 19.5f), new Vector2(4f, 19.5f),
+                       new Vector2[] { new Vector2(-5f, 4f), new Vector2(9f, 4f), new Vector2(9f, 6f), new Vector2(6.8f, 6f), new Vector2(6.8f, 8f), new Vector2(5.3f, 8f), new Vector2(5.3f, 7f), new Vector2(2.3f, 7f), new Vector2(2.3f, 11f), new Vector2(4.5f, 11f), new Vector2(5.3f, 10f), new Vector2(5.3f, 9.25f), new Vector2(6.8f, 9.25f), new Vector2(6.8f, 12.5f), new Vector2(10.8f, 12.5f), new Vector2(10.8f, 13.675f), new Vector2(6.875f, 13.675f), new Vector2(6.875f, 14.4f), new Vector2(5.8f, 14.4f), new Vector2(5.8f, 14.4f), new Vector2(5.8f, 19.5f), new Vector2(4f, 19.5f),
                             new Vector2(4f, 14.3f), new Vector2(-2.8f, 14.3f), new Vector2(-2.8f, 17.8f), new Vector2(-5f, 17.8f), new Vector2(-5f, 9.2f), new Vector2(-3f, 9.2f), new Vector2(-3f, 10.2f), new Vector2(-2.5f, 11f), new Vector2(0f, 11f), new Vector2(0f, 7f), new Vector2(-3f, 7f), new Vector2(-3f, 8f), new Vector2(-5f, 8f), new Vector2(-5f, 4f)
                         };
                     //会議室左上
