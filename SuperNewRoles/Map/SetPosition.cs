@@ -70,7 +70,7 @@ namespace SuperNewRoles.Map
                     //会議室右上
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
                            new Vector2[] {
-                               new Vector2(1.4f, 23.5f),new Vector2(1.4f, 24.5f),new Vector2(1.6f, 24.5f),new Vector2(1.6f, 25.25f),new Vector2(9.3f, 25.25f),new Vector2(9.5f, 25.25f),new Vector2(9.5f, 23.5f),new Vector2(5.8f, 23.5f),new Vector2(5.8f, 20.5f),new Vector2(4f, 20.5f),new Vector2(4f, 23.5f),new Vector2(1.5f, 23.5f)
+                               new Vector2(1.4f, 23.5f),new Vector2(1.4f, 24.5f),new Vector2(1.6f, 24.5f),new Vector2(1.6f, 25.25f),new Vector2(9.3f, 25.25f),new Vector2(9.5f, 25.25f),new Vector2(9.5f, 23.5f),new Vector2(5.8f, 23.5f),new Vector2(5.8f, 20f),new Vector2(7f, 20f),new Vector2(7f, 19f),new Vector2(4f, 19f),new Vector2(4f, 19f),new Vector2(4f, 23.5f),new Vector2(1.5f, 23.5f)
                            };
                     //左側
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
