@@ -52,14 +52,14 @@ namespace SuperNewRoles.Map
                     Transform Wall = MiraShip.FindChild("Walls");
                     
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
-                        new Vector2[] { new Vector2(-6.25f, 2.8f), new Vector2(10.175f, 2.8f), new Vector2(10.175f, 6f), new Vector2(12.1f, 6f), new Vector2(12.1f, 23.5f), new Vector2(10.825f, 23.5f), new Vector2(10.825f, 27.4f), new Vector2(-6.25f, 27.4f), new Vector2(-6.25f, 22f),
+                        new Vector2[] { new Vector2(-6.25f, 2.8f), new Vector2(10.175f, 2.8f), new Vector2(10.175f, 6f), new Vector2(12.1f, 6f), new Vector2(12.1f, 22.55f), new Vector2(10.825f, 22.55f), new Vector2(10.825f, 24.5f), new Vector2(11.2f, 24.5f), new Vector2(11.2f, 27.4f), new Vector2(-6.25f, 27.4f), new Vector2(-6.25f, 22f),
                             new Vector2(-11.8f, 22f), new Vector2(-11.8f, 24f), new Vector2(-10.5f, 24f), new Vector2(-10.5f, 26.7f), new Vector2(-15.5f, 26.7f), new Vector2(-15.5f, 24f), new Vector2(-13.3f, 24f), new Vector2(-13.3f, 22f), new Vector2(-19f, 22f), new Vector2(-19f, 26.7f), new Vector2(-25.3f, 26.7f), new Vector2(-25.3f, 15.95f),
                             new Vector2(-23f,15.95f), new Vector2(-23f, 13f), new Vector2(-25.3f, 13f), new Vector2(-25.3f, 2.5f), new Vector2(-19f, 2.5f), new Vector2(-19f, 6.7f), new Vector2(-13.3f, 6.7f), new Vector2(-13.3f, 4.8f), new Vector2(-16.05f, 4.8f), new Vector2(-16.05f, 4.025f), new Vector2(-10.75f, 4.025f), new Vector2(-10.75f, 3.25f), 
                             new Vector2(-16.05f, 3.25f), new Vector2(-16.05f, 2.15f), new Vector2(-9.65f, 2.15f), new Vector2(-9.65f, 4.8f), new Vector2(-11.65f, 4.8f), new Vector2(-11.65f, 6.7f), new Vector2(-6.25f, 6.7f), new Vector2(-6.25f, 3f)
                         };
 
                     Wall.gameObject.AddComponent<EdgeCollider2D>().points =
-                        new Vector2[] { new Vector2(-5f, 4f), new Vector2(9f, 4f), new Vector2(9f, 6f), new Vector2(6.8f, 6f), new Vector2(6.8f, 8f), new Vector2(5.3f, 8f), new Vector2(5.3f, 7f), new Vector2(2.3f, 7f), new Vector2(2.3f, 11f), new Vector2(4.5f, 11f), new Vector2(5.3f, 10f), new Vector2(5.3f, 9.25f), new Vector2(6.8f, 9.25f), new Vector2(6.8f, 12.5f), new Vector2(10.8f, 12.5f), new Vector2(10.8f, 14.5f), new Vector2(5.8f, 14.5f), new Vector2(5.8f, 19.5f), new Vector2(4f, 19.5f),
+                       new Vector2[] { new Vector2(-5f, 4f), new Vector2(9f, 4f), new Vector2(9f, 6f), new Vector2(6.8f, 6f), new Vector2(6.8f, 8f), new Vector2(5.3f, 8f), new Vector2(5.3f, 7f), new Vector2(2.3f, 7f), new Vector2(2.3f, 11f), new Vector2(4.5f, 11f), new Vector2(5.3f, 10f), new Vector2(5.3f, 9.25f), new Vector2(6.8f, 9.25f), new Vector2(6.8f, 12.5f), new Vector2(10.8f, 12.5f), new Vector2(10.8f, 14.5f), new Vector2(5.8f, 14.5f), new Vector2(5.8f, 19.5f), new Vector2(4f, 19.5f),
                             new Vector2(4f, 14.3f), new Vector2(-2.8f, 14.3f), new Vector2(-2.8f, 17.8f), new Vector2(-5f, 17.8f), new Vector2(-5f, 9.2f), new Vector2(-3f, 9.2f), new Vector2(-3f, 10.2f), new Vector2(-2.5f, 11f), new Vector2(0f, 11f), new Vector2(0f, 7f), new Vector2(-3f, 7f), new Vector2(-3f, 8f), new Vector2(-5f, 8f), new Vector2(-5f, 4f)
                         };
                     //会議室左上
