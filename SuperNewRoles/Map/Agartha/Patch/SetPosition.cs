@@ -225,7 +225,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Object_Electric.gameObject.AddComponent<PolygonCollider2D>();
             Object_Electric.name = "Object_Electric";
             CustomAnimation.Animation Object_Electric_Animation = new CustomAnimation.Animation();
-            Object_Electric_Animation.Start(8, Object_Electric);
+            Object_Electric_Animation.Start(10, Object_Electric);
             Object_Electric_Animation.Sprites = CustomAnimation.LoadSprites.GetSpritesAgartha("SuperNewRoles.Resources.Agartha.Animation.electric", 8);
             Transform Elec_Breaker = GameObject.Instantiate(Template, Object_Electric);
             Elec_Breaker.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Elec_breaker");
