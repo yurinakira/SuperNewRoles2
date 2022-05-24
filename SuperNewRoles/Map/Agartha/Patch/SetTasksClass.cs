@@ -382,7 +382,8 @@ namespace SuperNewRoles.Map.Agartha.Patch
 
             Transform Powerdown = Miraship.FindChild("Office").FindChild("SwitchConsole");
             Powerdown.gameObject.SetActive(true);
-            Powerdown.position = new Vector3(19.8f, 14.7f, 0.1f);
+            Powerdown.position = new Vector3(19f, 19.25f, 0.1f);
+            Powerdown.localScale = new Vector3(1.25f, 1.25f, 1.25f);
         }
         [HarmonyPatch(typeof(ShipStatus),nameof(ShipStatus.OnEnable))]
         class EnablePatch
