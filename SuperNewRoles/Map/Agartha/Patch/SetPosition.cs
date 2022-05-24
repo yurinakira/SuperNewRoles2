@@ -225,7 +225,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Object_Electric.gameObject.AddComponent<PolygonCollider2D>();
             Object_Electric.name = "Object_Electric";
             CustomAnimation.Animation Object_Electric_Animation = new CustomAnimation.Animation();
-            Object_Electric_Animation.Start(8, Object_Electric);
+            Object_Electric_Animation.Start(10, Object_Electric);
             Object_Electric_Animation.Sprites = CustomAnimation.LoadSprites.GetSpritesAgartha("SuperNewRoles.Resources.Agartha.Animation.electric", 8);
             Object_Electric.localScale = new Vector3(1.75f, 1.75f, 1.75f);
 
