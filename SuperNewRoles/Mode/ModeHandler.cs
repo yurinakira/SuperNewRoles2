@@ -167,7 +167,11 @@ namespace SuperNewRoles.Mode
 
         public static void YouAreIntroHandler(IntroCutscene __instance)
         {
-            if (isMode(ModeId.Zombie))
+            if (isMode(ModeId.HideAndSeek))
+            {
+                HideAndSeek.Intro.YouAreHandle(__instance);
+            }
+            else if (isMode(ModeId.Zombie))
             {
                 Zombie.Intro.YouAreHandle(__instance);
             }
@@ -184,7 +188,7 @@ namespace SuperNewRoles.Mode
             Mode = new CustomOptionBlank(null);
             ModeSetting = CustomOption.CustomOption.Create(132, true, CustomOptionType.Generic, "ModeSetting", false, Mode, isHeader: true);
             ThisModeSetting = CustomOption.CustomOption.Create(133, true, CustomOptionType.Generic, "SettingMode", modes , ModeSetting);
-            HideAndSeek.ZombieOptions.Load();
+            HideAndSeek.Options.Load();
             BattleRoyal.BROption.Load();
             Zombie.ZombieOptions.Load();
             RandomColor.RandomColorOptions.Load();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuperNewRoles.Roles;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -19,6 +20,22 @@ namespace SuperNewRoles.Mode.HideAndSeek
                 }
             }
             return ImpostorTeams;
+        }
+        public static void YouAreHandle(IntroCutscene __instance)
+        {
+            string text;
+            string desc;
+            if (PlayerControl.LocalPlayer.isImpostor())
+            {
+                text = "鬼";
+                desc = "逃げている人を追いかけて勝利しよう";
+            } else
+            {
+                text = "逃げる";
+                desc = "鬼から逃げて仕事をしよう";
+            }
+            __instance.RoleText.text = text;
+            __instance.RoleBlurbText.text = desc;
         }
         public static void IntroHandler(IntroCutscene __instance) {
             Il2CppSystem.Collections.Generic.List<PlayerControl> ImpostorTeams = new Il2CppSystem.Collections.Generic.List<PlayerControl>();

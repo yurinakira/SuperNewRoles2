@@ -118,6 +118,21 @@ namespace SuperNewRoles.Mode.BattleRoyal
                         }, 0.5f, "Anti Vent");
                         return false;
                     }
+                    else if(ModeHandler.isMode(ModeId.HideAndSeek) && !HideAndSeek.main.UseVent)
+                    {
+                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(__instance.NetId, (byte)RpcCalls.BootFromVent, SendOption.Reliable, -1);
+                        writer.WritePacked(127);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        new LateTask(() =>
+                        {
+                            int clientId = __instance.myPlayer.getClientId();
+                            MessageWriter writer2 = AmongUsClient.Instance.StartRpcImmediately(__instance.NetId, (byte)RpcCalls.BootFromVent, SendOption.Reliable, clientId);
+                            writer2.Write(id);
+                            AmongUsClient.Instance.FinishRpcImmediately(writer2);
+                            __instance.myPlayer.inVent = false;
+                        }, 0.5f, "Anti Vent");
+                        return false;
+                    }
                     else if (ModeHandler.isMode(ModeId.SuperHostRoles))
                     {
                         bool data = CoEnterVent.Prefix(__instance, id);
@@ -145,7 +160,7 @@ namespace SuperNewRoles.Mode.BattleRoyal
                 {
                     return false;
                 }
-                if ((ModeHandler.isMode(ModeId.BattleRoyal) || ModeHandler.isMode(ModeId.Zombie) || ModeHandler.isMode(ModeId.HideAndSeek)) && (systemType == SystemTypes.Sabotage || systemType == SystemTypes.Doors)) return false;
+                if ((ModeHandler.isMode(ModeId.BattleRoyal) || ModeHandler.isMode(ModeId.Zombie) || (ModeHandler.isMode(ModeId.HideAndSeek) && !HideAndSeek.main.UseSabo)) && (systemType == SystemTypes.Sabotage || systemType == SystemTypes.Doors)) return false;
                 if (systemType == SystemTypes.Electrical && 0 <= amount && amount <= 4 && player.isRole(CustomRPC.RoleId.MadMate))
                 {
                     return false;
