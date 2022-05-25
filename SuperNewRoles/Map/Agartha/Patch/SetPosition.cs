@@ -227,6 +227,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             CustomAnimation.Animation Object_Electric_Animation = new CustomAnimation.Animation();
             Object_Electric_Animation.Start(10, Object_Electric);
             Object_Electric_Animation.Sprites = CustomAnimation.LoadSprites.GetSpritesAgartha("SuperNewRoles.Resources.Agartha.Animation.electric", 8);
+            Object_Electric.localScale = new Vector3(1.75f, 1.75f, 1.75f);
 
             Transform Elec_Breaker = GameObject.Instantiate(Template, Object_Electric);
             Elec_Breaker.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Elec_breaker");
@@ -235,7 +236,20 @@ namespace SuperNewRoles.Map.Agartha.Patch
             GameObject.Destroy(Elec_Breaker.GetComponent<PolygonCollider2D>());
             Elec_Breaker.gameObject.AddComponent<PolygonCollider2D>();
             Elec_Breaker.name = "Elec_Breaker";
-            Object_Electric.localScale = new Vector3(1.75f, 1.75f, 1.75f);
+
+            Transform Elec_Stair_1 = GameObject.Instantiate(Template, Object_Electric);
+            Elec_Stair_1.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Elec_Stair_1");
+            Elec_Stair_1.localScale = new Vector3(1f, 1f, 1f);
+            Elec_Stair_1.localPosition = new Vector3(0.4675f, -1.65f, 3.9f);
+            GameObject.Destroy(Elec_Stair_1.GetComponent<PolygonCollider2D>());
+            Elec_Stair_1.name = "Elec_Stair_1";
+
+            Transform Elec_Stair_2 = GameObject.Instantiate(Template, Object_Electric);
+            Elec_Stair_2.GetComponent<SpriteRenderer>().sprite = ImageManager.AgarthagetSprite("Elec_Stair_1");
+            Elec_Stair_2.localScale = new Vector3(1f, 1f, 1f);
+            Elec_Stair_2.localPosition = new Vector3(-0.25f, 1.675f, 3.9f);
+            GameObject.Destroy(Elec_Stair_2.GetComponent<PolygonCollider2D>());
+            Elec_Stair_2.name = "Elec_Stair_2";
 
             Transform Comms_Object_CommsTable = GameObject.Instantiate(Template, MiraShip);
             Comms_Object_CommsTable.position = new Vector3(-0.35f, 22.7f, 0.1f);
@@ -372,7 +386,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Template = null;
 
         }
-        private static List<Vector3> DummyPositions = new List<Vector3>() { new Vector3(10.7f, 7.1f, 0f),new Vector3(11.8f, 15.6f, 0f),new Vector3(-0.2f, 8.5f, 0f),new Vector3(13.7f, 0.38f, 0f),new Vector3(21.7f, 15.6f, 0f),new Vector3(-10.7f, 16f, 0f) };
+        private static List<Vector3> DummyPositions = new List<Vector3>() { new Vector3(10.7f, 7.1f, 0f),new Vector3(11.8f, 15.6f, 0f),new Vector3(-0.2f, 8.5f, 0f),new Vector3(13.7f, 0.38f, 0f),new Vector3(20.6f, 13.1f, 0f),new Vector3(-10.7f, 16f, 0f) };
         public static void SetDummy()
         {
             new LateTask(() =>
