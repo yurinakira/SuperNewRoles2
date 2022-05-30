@@ -36,16 +36,23 @@ namespace SuperNewRoles.Mode.SuperHostRoles.MeetingAbility
         {
             MeetingAbilityData = new Dictionary<byte, bool>();
         }
-        public static void VoteHandle(PlayerControl player,PlayerControl target)
+        //trueを返すと通常の投票になります。
+        public static bool VoteHandle(PlayerControl player,PlayerControl target)
         {
             if (!MeetingAbilityData.ContainsKey(player.PlayerId)) MeetingAbilityData.Add(player.PlayerId, false);
             RoleId role = player.getRole();
-            if (!CanUseAbilityRole(role)) return;
+            if (!CanUseAbilityRole(role)) return true;
             if (target.IsBot())
             {
                 player.SetAbilityMode(player.IsVoteMode());
-                return;
+                MeetingHud.Instance.RpcClearVote(player.getClientId());
+                return false;
             }
+            else if (player.IsVoteMode())
+            {
+                return true;
+            }
+            return true;
         }
         public static bool CanUseAbility(PlayerControl player)
         {
@@ -53,9 +60,11 @@ namespace SuperNewRoles.Mode.SuperHostRoles.MeetingAbility
         }
         public static bool CanUseAbilityRole(RoleId role)
         {
+            return true;
             switch (role)
             {
-
+                case RoleId.MeetingSheriff:
+                    return true;
             }
             return false;
         }

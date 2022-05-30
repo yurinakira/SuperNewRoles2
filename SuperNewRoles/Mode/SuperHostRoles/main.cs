@@ -13,6 +13,8 @@ namespace SuperNewRoles.Mode.SuperHostRoles
     {
         public static void ClearAndReloads()
         {
+            MeetingAbility.MeetingAbilityHandler.MeetingAbilityData = new Dictionary<byte, bool>();
+
             Chat.WinCond = null;
            // FixedUpdate.UpdateTime = new Dictionary<byte, float>();
             EndGame.OnGameEndPatch.EndData = null;
