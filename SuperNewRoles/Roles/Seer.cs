@@ -15,6 +15,8 @@ using System.Reflection;
 using SuperNewRoles.Roles;
 using System.Text;
 using SuperNewRoles.CustomRPC;
+using SuperNewRoles.Mode;
+
 
 namespace SuperNewRoles.Roles
 {
@@ -138,19 +140,85 @@ namespace SuperNewRoles.Roles
                                 ModeFlag = RoleClass.JackalSeer.mode <= 1;
                                 break;
                         }
-                        if (PlayerControl.LocalPlayer.isAlive() && PlayerControl.LocalPlayer.PlayerId != target.PlayerId && ModeFlag)
+                        if (ModeHandler.isMode(ModeId.Default))
                         {
-                            RoleHelpers.ShowFlash(new Color(42f / 255f, 187f / 255f, 245f / 255f));
+                            if (PlayerControl.LocalPlayer.isAlive() && PlayerControl.LocalPlayer.PlayerId != target.PlayerId && ModeFlag)
+                            {
+                                RoleHelpers.ShowFlash(new Color(42f / 255f, 187f / 255f, 245f / 255f));
+                            }
+                        }
+                        if (ModeHandler.isMode(ModeId.SuperHostRoles))
+                        {
+                            if (role == RoleId.Seer  || role == RoleId.EvilSeer )
+                            {
+                                switch (role)
+                                {
+                                    case RoleId.Seer:
+                                        if (PlayerControl.LocalPlayer.isAlive() && PlayerControl.LocalPlayer.PlayerId != target.PlayerId && ModeFlag)
+                                            RoleClass.Seer.ShiNoTenmetsu = true;
+                                        break;
+                                    case RoleId.EvilSeer:
+                                        if (PlayerControl.LocalPlayer.isAlive() && PlayerControl.LocalPlayer.PlayerId != target.PlayerId && ModeFlag)
+                                            RoleClass.EvilSeer.ShiNoTenmetsu = true;
+                                        break;
+
+                                }
+                            }
+
                         }
                     }
                 }
+
+
             }
+
+        }
+        public static List<byte> DeathFlashList;
+        public static bool DeathFlash(PlayerControl p)
+        {
+            if (ModeHandler.isMode(ModeId.SuperHostRoles))
+            {
+
+                if (!p.isRole(RoleId.Seer) || !p.isRole(RoleId.EvilSeer)) return false;
+                if (DeathFlashList.Contains(p.PlayerId)) return true;
+
+                if (p.isRole(RoleId.Seer))
+                {
+                    if (RoleClass.Seer.ShiNoTenmetsu)
+                    {
+                        DeathFlashList.Add(p.PlayerId);
+                        SuperNewRolesPlugin.Logger.LogInfo("—LŒø‚©(Seer):" + (RoleClass.Seer.ShiNoTenmetsu == true));
+                        if (RoleClass.Seer.ShiNoTenmetsu == true)
+                        {
+                            SuperNewRolesPlugin.Logger.LogInfo("—LŒø‚ð•Ô‚µ‚Ü‚µ‚½(EvilSeer.cs)");
+                            return true;
+                        }
+                        return true;
+                    }
+                }
+
+                if (p.isRole(RoleId.EvilSeer))
+                {
+                    if (RoleClass.EvilSeer.ShiNoTenmetsu)
+                    {
+                        DeathFlashList.Add(p.PlayerId);
+                        SuperNewRolesPlugin.Logger.LogInfo("—LŒø‚ð•Ô‚µ‚Ü‚µ‚½(EvilSeer)");
+                        return true;
+                    }
+                }
+
+            }
+            return false;
+
+
 
         }
 
     }
 
-
 }
+
+
+
 
 

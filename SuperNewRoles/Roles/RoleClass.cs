@@ -43,6 +43,8 @@ namespace SuperNewRoles.Roles
             Roles.MadSeer.CheckedImpostor = new List<byte>();
             Roles.JackalFriends.CheckedJackal = new List<byte>();
             Roles.SeerFriends.CheckedJackal = new List<byte>();
+            Roles.Seer.DeathFlashList = new List<byte>();
+            Roles.EvilSeer.DeathFlashList = new List<byte>();
             Mode.BattleRoyal.main.VentData = new Dictionary<byte, int?>();
             EndGame.FinalStatusPatch.FinalStatusData.ClearFinalStatusData();
             Mode.ModeHandler.ClearAndReload();
@@ -1620,6 +1622,9 @@ namespace SuperNewRoles.Roles
             public static bool limitSoulDuration;
             public static int mode;
 
+            public static bool ShiNoTenmetsu;
+            public static Dictionary<byte, string> DeathFlashNameChange;
+
             public static void ClearAndReload()
             {
                 SeerPlayer = new List<PlayerControl>();
@@ -1627,6 +1632,8 @@ namespace SuperNewRoles.Roles
                 limitSoulDuration = CustomOptions.SeerLimitSoulDuration.getBool();
                 soulDuration = CustomOptions.SeerSoulDuration.getFloat();
                 mode = CustomOptions.SeerMode.getSelection();
+                ShiNoTenmetsu = false;
+                DeathFlashNameChange = new Dictionary<byte, string>();
             }
 
         }
@@ -1639,6 +1646,7 @@ namespace SuperNewRoles.Roles
             public static float soulDuration;
             public static bool limitSoulDuration;
             public static int mode;
+            public static bool ShiNoTenmetsu;
 
             public static bool IsUseVent;
             public static bool IsImpostorLight;
@@ -1653,6 +1661,7 @@ namespace SuperNewRoles.Roles
                 limitSoulDuration = CustomOptions.MadSeerLimitSoulDuration.getBool();
                 soulDuration = CustomOptions.MadSeerSoulDuration.getFloat();
                 mode = CustomOptions.MadSeerMode.getSelection();
+                ShiNoTenmetsu = false;
 
                 IsImpostorCheck = CustomOptions.MadSeerIsCheckImpostor.getBool();
                 IsUseVent = CustomOptions.MadSeerIsUseVent.getBool();
@@ -1681,6 +1690,9 @@ namespace SuperNewRoles.Roles
             public static float soulDuration;
             public static bool limitSoulDuration;
             public static int mode;
+
+            public static bool ShiNoTenmetsu;
+            public static Dictionary<byte, string> DeathFlashNameChange;
             public static void ClearAndReload()
             {
                 EvilSeerPlayer = new List<PlayerControl>();
@@ -1820,6 +1832,7 @@ namespace SuperNewRoles.Roles
             public static float soulDuration;
             public static bool limitSoulDuration;
             public static int mode;
+            public static bool ShiNoTenmetsu;
 
             public static bool IsUseVent;
             public static bool IsImpostorLight;
@@ -1863,6 +1876,7 @@ namespace SuperNewRoles.Roles
             public static float soulDuration;
             public static bool limitSoulDuration;
             public static int mode;
+            public static bool ShiNoTenmetsu;
 
             public static float KillCoolDown;
             public static bool IsUseVent;
