@@ -173,30 +173,34 @@ namespace SuperNewRoles.Roles
             }
 
         }
+
         public static List<byte> DeathFlashList;
         public static bool DeathFlash(PlayerControl p)
         {
-            if (DeathFlashList.Contains(p.PlayerId)) return true;
-            bool DeathFlashbool = false;
-            switch (p.getRole())
+            if (ModeHandler.isMode(ModeId.SuperHostRoles))
             {
-                case RoleId.Seer:
-                    if (!RoleClass.Seer.ShiNoTenmetsu) return false;
-                    DeathFlashbool = true;
-                    break;
-                case RoleId.EvilSeer:
-                    if (!RoleClass.EvilSeer.ShiNoTenmetsu) return false;
-                    DeathFlashbool = true;
-                    break;
-            }
-            if (DeathFlashbool == true)
-            {
-                DeathFlashList.Add(p.PlayerId);
-                return true;
+                if (DeathFlashList.Contains(p.PlayerId)) return true;
+                bool DeathFlashbool = false;
+                switch (p.getRole())
+                {
+                    case RoleId.Seer:
+                        if (!RoleClass.Seer.ShiNoTenmetsu) return false;
+                        DeathFlashbool = true;
+                        break;
+                    case RoleId.EvilSeer:
+                        if (!RoleClass.EvilSeer.ShiNoTenmetsu) return false;
+                        DeathFlashbool = true;
+                        break;
+                }
+                if (DeathFlashbool == true)
+                {
+                    DeathFlashList.Add(p.PlayerId);
+                    return true;
+                }
+                return false;
             }
             return false;
         }
-
     }
 
 }
