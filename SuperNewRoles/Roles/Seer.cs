@@ -149,7 +149,7 @@ namespace SuperNewRoles.Roles
                         }
                         if (ModeHandler.isMode(ModeId.SuperHostRoles))
                         {
-                            if (role == RoleId.Seer  || role == RoleId.EvilSeer )
+                            if (role == RoleId.Seer || role == RoleId.EvilSeer)
                             {
                                 switch (role)
                                 {
@@ -176,42 +176,25 @@ namespace SuperNewRoles.Roles
         public static List<byte> DeathFlashList;
         public static bool DeathFlash(PlayerControl p)
         {
-            if (ModeHandler.isMode(ModeId.SuperHostRoles))
+            if (DeathFlashList.Contains(p.PlayerId)) return true;
+            bool DeathFlashbool = false;
+            switch (p.getRole())
             {
-
-                if (!p.isRole(RoleId.Seer) || !p.isRole(RoleId.EvilSeer)) return false;
-                if (DeathFlashList.Contains(p.PlayerId)) return true;
-
-                if (p.isRole(RoleId.Seer))
-                {
-                    if (RoleClass.Seer.ShiNoTenmetsu)
-                    {
-                        DeathFlashList.Add(p.PlayerId);
-                        SuperNewRolesPlugin.Logger.LogInfo("—LŒø‚©(Seer):" + (RoleClass.Seer.ShiNoTenmetsu == true));
-                        if (RoleClass.Seer.ShiNoTenmetsu == true)
-                        {
-                            SuperNewRolesPlugin.Logger.LogInfo("—LŒø‚ð•Ô‚µ‚Ü‚µ‚½(EvilSeer.cs)");
-                            return true;
-                        }
-                        return true;
-                    }
-                }
-
-                if (p.isRole(RoleId.EvilSeer))
-                {
-                    if (RoleClass.EvilSeer.ShiNoTenmetsu)
-                    {
-                        DeathFlashList.Add(p.PlayerId);
-                        SuperNewRolesPlugin.Logger.LogInfo("—LŒø‚ð•Ô‚µ‚Ü‚µ‚½(EvilSeer)");
-                        return true;
-                    }
-                }
-
+                case RoleId.Seer:
+                    if (!RoleClass.Seer.ShiNoTenmetsu) return false;
+                    DeathFlashbool = true;
+                    break;
+                case RoleId.EvilSeer:
+                    if (!RoleClass.EvilSeer.ShiNoTenmetsu) return false;
+                    DeathFlashbool = true;
+                    break;
+            }
+            if (DeathFlashbool == true)
+            {
+                DeathFlashList.Add(p.PlayerId);
+                return true;
             }
             return false;
-
-
-
         }
 
     }
