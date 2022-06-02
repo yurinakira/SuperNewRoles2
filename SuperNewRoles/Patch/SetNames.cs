@@ -141,7 +141,8 @@ namespace SuperNewRoles.Patch
             string roleNames;
             Color roleColors;
             var role = p.getRole();
-            if (role == RoleId.DefaultRole || (role == RoleId.Bestfalsecharge && p.isAlive())) {
+            if (role == RoleId.DefaultRole || (role == RoleId.Bestfalsecharge && p.isAlive()))
+            {
                 if (p.isImpostor())
                 {
                     roleNames = "ImpostorName";
@@ -152,7 +153,8 @@ namespace SuperNewRoles.Patch
                     roleNames = "CrewMateName";
                     roleColors = RoleClass.CrewmateWhite;
                 }
-            } else
+            }
+            else
             {
                 var introdate = Intro.IntroDate.GetIntroDate(role);
                 roleNames = introdate.Name;
@@ -184,7 +186,8 @@ namespace SuperNewRoles.Patch
             }
             if (!PlayerControl.LocalPlayer.isAlive() && RoleClass.Quarreled.QuarreledPlayer != new List<List<PlayerControl>>())
             {
-                foreach (List<PlayerControl> ps in RoleClass.Quarreled.QuarreledPlayer) {
+                foreach (List<PlayerControl> ps in RoleClass.Quarreled.QuarreledPlayer)
+                {
                     foreach (PlayerControl p in ps)
                     {
                         if (!p.Data.Disconnected)
@@ -207,7 +210,7 @@ namespace SuperNewRoles.Patch
                     SetPlayerNameText(side, side.nameText.text + suffix);
                 }
             }
-            if ((PlayerControl.LocalPlayer.isDead() || PlayerControl.LocalPlayer.isRole(RoleId.God))&& RoleClass.Lovers.LoversPlayer != new List<List<PlayerControl>>())
+            if ((PlayerControl.LocalPlayer.isDead() || PlayerControl.LocalPlayer.isRole(RoleId.God)) && RoleClass.Lovers.LoversPlayer != new List<List<PlayerControl>>())
             {
                 foreach (List<PlayerControl> ps in RoleClass.Lovers.LoversPlayer)
                 {
@@ -245,7 +248,8 @@ namespace SuperNewRoles.Patch
                 {
                     SetPlayerNameColor(p, RoleClass.Celebrity.color);
                 }
-            } else
+            }
+            else
             {
                 foreach (PlayerControl p in RoleClass.Celebrity.CelebrityPlayer)
                 {
@@ -327,6 +331,20 @@ namespace SuperNewRoles.Patch
                         {
                             SetNamesClass.SetPlayerNameColor(p, RoleClass.Jackal.color);
                             SetNamesClass.SetPlayerRoleInfoView(p, RoleClass.Jackal.color, Intro.IntroDate.SidekickIntro.NameKey + "Name");
+                        }
+                    }
+                }
+                if (Seer.DeathFlash(PlayerControl.LocalPlayer))
+                {
+                    List<PlayerControl> Sets = RoleClass.Seer.SeerPlayer;
+                    Sets.AddRange(RoleClass.EvilSeer.EvilSeerPlayer);
+                    foreach (PlayerControl p in Sets)
+                    {
+                        if (p != PlayerControl.LocalPlayer)
+                        {
+
+                            SetNamesClass.SetPlayerNameColor(p, RoleClass.Jackal.color);
+
                         }
                     }
                 }
