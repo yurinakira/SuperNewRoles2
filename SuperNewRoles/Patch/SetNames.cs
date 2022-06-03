@@ -336,17 +336,14 @@ namespace SuperNewRoles.Patch
                 }
                 if (Seer.DeathFlash(PlayerControl.LocalPlayer))
                 {
-                    List<PlayerControl> Sets = RoleClass.Seer.SeerPlayer;
-                    Sets.AddRange(RoleClass.EvilSeer.EvilSeerPlayer);
-                    foreach (PlayerControl p in Sets)
-                    {
-                        if (p != PlayerControl.LocalPlayer)
+                    List<PlayerControl> Seer = RoleClass.Seer.SeerPlayer;
+                    Seer.AddRange(RoleClass.EvilSeer.EvilSeerPlayer);
+
+                    foreach (PlayerControl p in Seer)
+                        if (p != PlayerControl.LocalPlayer.AmOwner)
                         {
-
                             SetNamesClass.SetPlayerNameColor(p, RoleClass.Jackal.color);
-
                         }
-                    }
                 }
                 SetNamesClass.SetPlayerRoleNames(PlayerControl.LocalPlayer);
                 SetNamesClass.SetPlayerNameColors(PlayerControl.LocalPlayer);
