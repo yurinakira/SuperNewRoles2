@@ -63,7 +63,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             string callerMethodName = callerMethod.Name;
             string callerClassName = callerMethod.DeclaringType.FullName;
             SuperNewRolesPlugin.Logger.LogInfo(player.name + "への(IsCommsなしの)SetRoleNameが" + callerClassName + "." + callerMethodName + "から呼び出されました。");
-            SetRoleName(player, RoleHelpers.IsComms() , IsUnchecked);
+            SetRoleName(player, RoleHelpers.IsComms(), IsUnchecked);
         }
 
         //短時間で何回も呼ばれると重くなるため更新可能までの時間を指定
@@ -77,7 +77,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             var callerMethod = caller.GetMethod();
             string callerMethodName = callerMethod.Name;
             string callerClassName = callerMethod.DeclaringType.FullName;
-            SuperNewRolesPlugin.Logger.LogInfo(player.name+"へのSetRoleNameが" + callerClassName + "." + callerMethodName + "から呼び出されました。");
+            SuperNewRolesPlugin.Logger.LogInfo(player.name + "へのSetRoleNameが" + callerClassName + "." + callerMethodName + "から呼び出されました。");
 
             //if (UpdateTime.ContainsKey(player.PlayerId) && UpdateTime[player.PlayerId] > 0) return;
 
@@ -86,7 +86,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             List<PlayerControl> DiePlayers = new List<PlayerControl>();
             foreach (PlayerControl p in PlayerControl.AllPlayerControls)
             {
-                if (p.PlayerId != 0 && p.PlayerId != player.PlayerId  && p.IsPlayer())
+                if (p.PlayerId != 0 && p.PlayerId != player.PlayerId && p.IsPlayer())
                 {
                     if (p.isDead() || p.isRole(RoleId.God))
                     {
@@ -184,7 +184,31 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     }
                 }
             }
-            
+            else if (Seer.DeathFlash(player))
+            {
+
+                {
+                    List<PlayerControl> Seer = RoleClass.Seer.SeerPlayer;
+                    Seer.AddRange(RoleClass.EvilSeer.EvilSeerPlayer);
+
+                    foreach (PlayerControl p in Seer)
+
+                        if (PlayerControl.LocalPlayer.AmOwner)
+                        {
+                            if (!ChangePlayers.ContainsKey(PlayerControl.LocalPlayer.PlayerId))
+                            {
+                                ChangePlayers.Add(PlayerControl.LocalPlayer.PlayerId, ModHelpers.cs(RoleClass.Jackal.color, PlayerControl.LocalPlayer.getDefaultName()));
+                            }
+                            else
+                            {
+                                ChangePlayers[PlayerControl.LocalPlayer.PlayerId] = ModHelpers.cs(RoleClass.Jackal.color, ChangePlayers[PlayerControl.LocalPlayer.PlayerId]);
+                            }
+                        }
+
+                }
+
+            }
+
             if (player.IsLovers())
             {
                 var suffix = ModHelpers.cs(RoleClass.Lovers.color, " ♥");
