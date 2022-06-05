@@ -135,6 +135,7 @@ namespace SuperNewRoles.Roles
             JackalSeer.ClearAndReload();
             Arsonist.ClearAndReload();
             Chief.ClearAndReload();
+            OverLoader.ClearAndReload();
             //ロールクリア
             Quarreled.ClearAndReload();
             Lovers.ClearAndReload();
@@ -1996,6 +1997,15 @@ namespace SuperNewRoles.Roles
             {
                 ChiefPlayer = new List<PlayerControl>();
                 IsCreateSheriff = false;
+            }
+        }
+        public static class OverLoader
+        {
+            public static List<PlayerControl> OverLoaderPlayer;
+            public static Color32 color = ImpostorRed;
+            public static void ClearAndReload()
+            {
+                OverLoaderPlayer = new List<PlayerControl>();
             }
         }
         //新ロールクラス

@@ -2502,5 +2502,13 @@
   "ChiefTitle1": {
     "0": "Appoint a sheriff to help your crew.",
     "11": "\u30b7\u30a7\u30ea\u30d5\u3092\u4efb\u547d\u3057\u3066\u30af\u30eb\u30fc\u3092\u52a9\u3051\u3088\u3046"
+  },
+  "OverLoaderName": {
+    "0": "OverLoader",
+    "11": "\u30aa\u30fc\u30d0\u30fc\u30ed\u30fc\u30c0\u30fc"
+  },
+  "OverLoaderTitle1": {
+    "0": "OverLoaderTitel_1",
+    "11": "\u304a\u30fc\u3070\u30fc\u308d\u30fc\u3060\u30fc\u305f\u3044\u3068\u308b\u3044\u3061"
   }
 }

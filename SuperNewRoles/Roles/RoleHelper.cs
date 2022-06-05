@@ -533,6 +533,9 @@ namespace SuperNewRoles
                 case (CustomRPC.RoleId.Chief):
                     Roles.RoleClass.Chief.ChiefPlayer.Add(player);
                     break;
+                case (CustomRPC.RoleId.OverLoader):
+                    Roles.RoleClass.OverLoader.OverLoaderPlayer.Add(player);
+                    break;
                 //ロールアド
                 default:
                     SuperNewRolesPlugin.Logger.LogError("setRole: no method found for role type {role}");
@@ -815,7 +818,10 @@ namespace SuperNewRoles
                 case (CustomRPC.RoleId.Chief):
                     Roles.RoleClass.Chief.ChiefPlayer.RemoveAll(ClearRemove);
                     break;
-                    //ロールリモベ
+                    case (CustomRPC.RoleId.OverLoader):
+                    Roles.RoleClass.OverLoader.OverLoaderPlayer.RemoveAll(ClearRemove);
+                    break;
+                //ロールリモベ
 
             }
             ChacheManager.ResetMyRoleChache();
@@ -1594,7 +1600,11 @@ namespace SuperNewRoles
                 {
                     return CustomRPC.RoleId.Chief;
                 }
-                //ロールチェック
+                else if (Roles.RoleClass.OverLoader.OverLoaderPlayer.IsCheckListPlayerControl(player))
+            {
+                return CustomRPC.RoleId.OverLoader;
+            }
+            //ロールチェック
             }
             catch (Exception e)
             {

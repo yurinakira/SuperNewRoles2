@@ -626,3 +626,5 @@ ArsonistIgniteButtonName
 ArsonistDescription
 ChiefName
 ChiefTitle1
+OverLoaderName
+OverLoaderTitle1
