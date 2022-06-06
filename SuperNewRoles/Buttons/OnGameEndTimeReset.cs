@@ -20,6 +20,7 @@ namespace SuperNewRoles.Buttons
         {
             Roles.SpeedBooster.ResetSpeed();
             Roles.EvilSpeedBooster.ResetSpeed();
+            Roles.OverLoader.ResetSpeed();
             Roles.Lighter.LightOutEnd();
             Camera.main.orthographicSize = RoleClass.Hawk.Default;
             HudManager.Instance.UICamera.orthographicSize = RoleClass.Hawk.Default;

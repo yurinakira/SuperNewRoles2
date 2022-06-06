@@ -17,7 +17,7 @@ namespace SuperNewRoles.Buttons
             {
                 ClergymanDuration();
             }
-            catch {}
+            catch { }
             SpeedBoosterButton();
             EvilSpeedBoosterButton();
             SheriffKillButton();
@@ -28,6 +28,7 @@ namespace SuperNewRoles.Buttons
             TeleporterButton();
             HawkDuration();
             ScientistButton();
+            OverLoaderButton();
         }
         public static void ScientistButton()
         {
@@ -166,13 +167,13 @@ namespace SuperNewRoles.Buttons
         }
         public static void ClergymanButton()
         {
-                if (Roles.RoleClass.Clergyman.ButtonTimer == null)
-                {
-                    Roles.RoleClass.Clergyman.ButtonTimer = DateTime.Now;
-                }
-                var TimeSpanDate = new TimeSpan(0, 0, 0, (int)Roles.RoleClass.Clergyman.CoolTime);
-                Buttons.HudManagerStartPatch.ClergymanLightOutButton.Timer = (float)((Roles.RoleClass.Clergyman.ButtonTimer + TimeSpanDate) - DateTime.Now).TotalSeconds;
-                if (Buttons.HudManagerStartPatch.ClergymanLightOutButton.Timer <= 0f) Buttons.HudManagerStartPatch.ClergymanLightOutButton.Timer = 0f; return;
+            if (Roles.RoleClass.Clergyman.ButtonTimer == null)
+            {
+                Roles.RoleClass.Clergyman.ButtonTimer = DateTime.Now;
+            }
+            var TimeSpanDate = new TimeSpan(0, 0, 0, (int)Roles.RoleClass.Clergyman.CoolTime);
+            Buttons.HudManagerStartPatch.ClergymanLightOutButton.Timer = (float)((Roles.RoleClass.Clergyman.ButtonTimer + TimeSpanDate) - DateTime.Now).TotalSeconds;
+            if (Buttons.HudManagerStartPatch.ClergymanLightOutButton.Timer <= 0f) Buttons.HudManagerStartPatch.ClergymanLightOutButton.Timer = 0f; return;
         }
         public static void SheriffKillButton()
         {
@@ -202,7 +203,8 @@ namespace SuperNewRoles.Buttons
                     Buttons.HudManagerStartPatch.SpeedBoosterBoostButton.actionButton.cooldownTimerText.color = Color.white;
                     Roles.RoleClass.SpeedBooster.ButtonTimer = DateTime.Now;
                 }
-            } else
+            }
+            else
             {
                 if (Roles.RoleClass.SpeedBooster.ButtonTimer == null)
                 {
@@ -240,6 +242,35 @@ namespace SuperNewRoles.Buttons
                 var TimeSpanDate = new TimeSpan(0, 0, 0, (int)Roles.RoleClass.EvilSpeedBooster.CoolTime);
                 Buttons.HudManagerStartPatch.EvilSpeedBoosterBoostButton.Timer = (float)((Roles.RoleClass.EvilSpeedBooster.ButtonTimer + TimeSpanDate) - DateTime.Now).TotalSeconds;
                 if (Buttons.HudManagerStartPatch.EvilSpeedBoosterBoostButton.Timer <= 0f) Buttons.HudManagerStartPatch.EvilSpeedBoosterBoostButton.Timer = 0f; return;
+            }
+        }
+        public static void OverLoaderButton()
+        {
+
+            if (Roles.RoleClass.OverLoader.IsOverLoad)
+            {
+                var TimeSpanDate = new TimeSpan(0, 0, 0, (int)Roles.RoleClass.OverLoader.DurationTime);
+                Buttons.HudManagerStartPatch.OverLoaderOverLoadButton.MaxTimer = Roles.RoleClass.OverLoader.DurationTime;
+                Buttons.HudManagerStartPatch.OverLoaderOverLoadButton.Timer = (float)((Roles.RoleClass.OverLoader.ButtonTimer + TimeSpanDate) - DateTime.Now).TotalSeconds;
+                if (Buttons.HudManagerStartPatch.OverLoaderOverLoadButton.Timer <= 0f)
+                {
+                    Roles.OverLoader.SpeedBoostEnd();
+                    Roles.OverLoader.ResetCoolDown();
+                    Buttons.HudManagerStartPatch.OverLoaderOverLoadButton.MaxTimer = Roles.RoleClass.OverLoader.CoolTime;
+                    Roles.RoleClass.OverLoader.IsOverLoad = false;
+                    Buttons.HudManagerStartPatch.OverLoaderOverLoadButton.actionButton.cooldownTimerText.color = Color.white;
+                    Roles.RoleClass.OverLoader.ButtonTimer = DateTime.Now;
+                }
+            }
+            else
+            {
+                if (Roles.RoleClass.OverLoader.ButtonTimer == null)
+                {
+                    Roles.RoleClass.OverLoader.ButtonTimer = DateTime.Now;
+                }
+                var TimeSpanDate = new TimeSpan(0, 0, 0, (int)Roles.RoleClass.OverLoader.CoolTime);
+                Buttons.HudManagerStartPatch.OverLoaderOverLoadButton.Timer = (float)((Roles.RoleClass.OverLoader.ButtonTimer + TimeSpanDate) - DateTime.Now).TotalSeconds;
+                if (Buttons.HudManagerStartPatch.OverLoaderOverLoadButton.Timer <= 0f) Buttons.HudManagerStartPatch.OverLoaderOverLoadButton.Timer = 0f; return;
             }
         }
     }

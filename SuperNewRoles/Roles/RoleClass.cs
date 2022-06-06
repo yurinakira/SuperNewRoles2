@@ -2071,7 +2071,7 @@ namespace SuperNewRoles.Roles
                 OverLoadbuttonSprite = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.ArsonistDouse.png", 115f);
                 return OverLoadbuttonSprite;
             }
-            public static Sprite getIgniteButtonSprite()
+            public static Sprite getUninstallButtonSprite()
             {
                 if (UninstallbuttonSprite) return UninstallbuttonSprite;
                 UninstallbuttonSprite = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.ArsonistIgnite.png", 115f);

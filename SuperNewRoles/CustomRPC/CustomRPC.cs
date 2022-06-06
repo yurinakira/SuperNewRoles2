@@ -140,6 +140,7 @@ namespace SuperNewRoles.CustomRPC
         CreateSidekick,
         CreateSidekickSeer,
         SetSpeedBoost,
+        SetSpeedBoostOL,
         ShareCosmetics,
         SetShareNamePlate,
         AutoCreateRoom,
@@ -613,6 +614,15 @@ namespace SuperNewRoles.CustomRPC
                 RoleClass.SpeedBooster.IsBoostPlayers[id] = Is;
             }
         }
+        public static void SetSpeedBoostOL(bool Is, byte id)
+        {
+            var player = ModHelpers.playerById(id);
+            if (player == null) return;
+            if (player.Data.Role.IsImpostor)
+            {
+                RoleClass.OverLoader.IsBoostPlayers[id] = Is;
+            }
+        }        
         public static void ReviveRPC(byte playerid)
         {
             var player = ModHelpers.playerById(playerid);
@@ -903,6 +913,9 @@ namespace SuperNewRoles.CustomRPC
                     case (byte)CustomRPC.SetSpeedBoost:
                         RPCProcedure.SetSpeedBoost(reader.ReadBoolean(), reader.ReadByte());
                         break;
+                    case (byte)CustomRPC.SetSpeedBoostOL:
+                        RPCProcedure.SetSpeedBoostOL(reader.ReadBoolean(), reader.ReadByte());
+                        break;                        
                     case (byte)CustomRPC.ShareCosmetics:
                         RPCProcedure.ShareCosmetics(reader.ReadByte(), reader.ReadString());
                         break;

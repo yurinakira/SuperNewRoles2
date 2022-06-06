@@ -56,6 +56,8 @@ namespace SuperNewRoles.Buttons
         public static CustomButton CleanerButton;
         public static CustomButton MadCleanerButton;
         public static CustomButton FreezerButton;
+        public static CustomButton OverLoaderOverLoadButton;
+        public static CustomButton OverLoaderUninstallbutton;
 
         public static TMPro.TMP_Text sheriffNumShotsText;
         public static TMPro.TMP_Text CleanerNumCleanText;
@@ -1322,6 +1324,35 @@ namespace SuperNewRoles.Buttons
             FreezerButton.buttonText = ModTranslation.getString("FreezerButtonName");
             FreezerButton.showButtonText = true;
             FreezerButton.HasEffect = true;
+
+            OverLoaderOverLoadButton = new Buttons.CustomButton(
+            () =>
+            {
+                Roles.RoleClass.OverLoader.ButtonTimer = DateTime.Now;
+                OverLoaderOverLoadButton.actionButton.cooldownTimerText.color = new Color(0F, 0.8F, 0F);
+                OverLoader.BoostStart();
+            },
+            () => { return RoleHelpers.isAlive(PlayerControl.LocalPlayer) && (OverLoader.IsOverLoader(PlayerControl.LocalPlayer) || RoleClass.Levelinger.IsPower(RoleClass.Levelinger.LevelPowerTypes.SpeedBooster)); },
+            () =>
+            {
+                if (OverLoaderOverLoadButton.Timer <= 0)
+                {
+                    return true;
+                }
+                return false;
+            },
+            () => { OverLoader.EndMeeting(); },
+            RoleClass.OverLoader.getOverLoadButtonSprite(),
+            new Vector3(-1.8f, -0.06f, 0),
+            __instance,
+            __instance.AbilityButton,
+            KeyCode.F,
+            49
+
+            );
+
+            OverLoaderOverLoadButton.buttonText = ModTranslation.getString("OverLoaderOverLoadButtonName");
+            OverLoaderOverLoadButton.showButtonText = true;
 
             setCustomButtonCooldowns();
 
