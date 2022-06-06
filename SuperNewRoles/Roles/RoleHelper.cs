@@ -533,6 +533,12 @@ namespace SuperNewRoles
                 case (CustomRPC.RoleId.Chief):
                     Roles.RoleClass.Chief.ChiefPlayer.Add(player);
                     break;
+                case (CustomRPC.RoleId.Cleaner):
+                    Roles.RoleClass.Cleaner.CleanerPlayer.Add(player);
+                    break;
+                case (CustomRPC.RoleId.MadCleaner):
+                    Roles.RoleClass.MadCleaner.MadCleanerPlayer.Add(player);
+                    break;
                 case (CustomRPC.RoleId.OverLoader):
                     Roles.RoleClass.OverLoader.OverLoaderPlayer.Add(player);
                     break;
@@ -818,10 +824,16 @@ namespace SuperNewRoles
                 case (CustomRPC.RoleId.Chief):
                     Roles.RoleClass.Chief.ChiefPlayer.RemoveAll(ClearRemove);
                     break;
-                    case (CustomRPC.RoleId.OverLoader):
+                case (CustomRPC.RoleId.Cleaner):
+                    Roles.RoleClass.Cleaner.CleanerPlayer.RemoveAll(ClearRemove);
+                    break;
+                case (CustomRPC.RoleId.MadCleaner):
+                    Roles.RoleClass.MadCleaner.MadCleanerPlayer.RemoveAll(ClearRemove);
+                    break;
+                case (CustomRPC.RoleId.OverLoader):
                     Roles.RoleClass.OverLoader.OverLoaderPlayer.RemoveAll(ClearRemove);
                     break;
-                //ロールリモベ
+                    //ロールリモベ
 
             }
             ChacheManager.ResetMyRoleChache();
@@ -923,6 +935,9 @@ namespace SuperNewRoles
                 case (RoleId.MadMaker):
                     IsTaskClear = true;
                     break;
+                case (RoleId.MadCleaner):
+                    IsTaskClear = true;
+                    break;
                     //タスククリアか
             }
             if (!IsTaskClear && ModeHandler.isMode(ModeId.SuperHostRoles) && (player.isRole(RoleId.Sheriff) || player.isRole(RoleId.RemoteSheriff)))
@@ -982,6 +997,8 @@ namespace SuperNewRoles
                 case RoleId.SidekickSeer:
                 case RoleId.JackalSeer:
                     return RoleClass.Jackal.IsUseVent;
+                case RoleId.MadCleaner:
+                    return RoleClass.MadCleaner.IsUseVent;
                 /*
                 case RoleId.Scavenger:
                     return RoleClass.Scavenger.IsUseVent;
@@ -1072,6 +1089,8 @@ namespace SuperNewRoles
                 case RoleId.JackalSeer:
                 case RoleId.SidekickSeer:
                     return RoleClass.Jackal.IsImpostorLight;
+                case RoleId.MadCleaner:
+                    return RoleClass.MadCleaner.IsImpostorLight;
             }
             return false;
         }
@@ -1194,6 +1213,9 @@ namespace SuperNewRoles
                     case RoleId.DarkKiller:
                         addition = RoleClass.DarkKiller.KillCoolTime;
                         break;
+                    case RoleId.Cleaner:
+                        addition = RoleClass.Cleaner.KillCoolTime;
+                        break;
                 }
             }
             return addition;
@@ -1209,6 +1231,7 @@ namespace SuperNewRoles
                 case RoleId.MadKiller:
                 case RoleId.OverKiller:
                 case RoleId.SerialKiller:
+                case RoleId.Cleaner:
                     return getCoolTime(p);
             }
             return PlayerControl.GameOptions.killCooldown;
@@ -1600,11 +1623,19 @@ namespace SuperNewRoles
                 {
                     return CustomRPC.RoleId.Chief;
                 }
+                else if (Roles.RoleClass.Cleaner.CleanerPlayer.IsCheckListPlayerControl(player))
+                {
+                    return CustomRPC.RoleId.Cleaner;
+                }
+                else if (Roles.RoleClass.MadCleaner.MadCleanerPlayer.IsCheckListPlayerControl(player))
+                {
+                    return CustomRPC.RoleId.MadCleaner;
+                }
                 else if (Roles.RoleClass.OverLoader.OverLoaderPlayer.IsCheckListPlayerControl(player))
-            {
-                return CustomRPC.RoleId.OverLoader;
-            }
-            //ロールチェック
+                {
+                    return CustomRPC.RoleId.OverLoader;
+                }
+                //ロールチェック
             }
             catch (Exception e)
             {
