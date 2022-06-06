@@ -2054,9 +2054,37 @@ namespace SuperNewRoles.Roles
         {
             public static List<PlayerControl> OverLoaderPlayer;
             public static Color32 color = ImpostorRed;
+            public static float CoolTime;
+            public static float DurationTime;
+            public static float Speed { get { return CustomOptions.OverLoaderSpeed.getFloat(); } }
+            public static bool IsOverLoad;
+            public static float KillTime;
+            public static DateTime ButtonTimer;
+            public static Dictionary<int, bool> IsBoostPlayers;
+            private static Sprite OverLoadbuttonSprite;
+            private static Sprite UninstallbuttonSprite;
+            public static Sprite getOverLoadButtonSprite()
+            {
+                if (OverLoadbuttonSprite) return OverLoadbuttonSprite;
+                OverLoadbuttonSprite = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.ArsonistDouse.png", 115f);
+                return OverLoadbuttonSprite;
+            }
+            public static Sprite getIgniteButtonSprite()
+            {
+                if (UninstallbuttonSprite) return UninstallbuttonSprite;
+                UninstallbuttonSprite = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.ArsonistIgnite.png", 115f);
+                return UninstallbuttonSprite;
+            }
             public static void ClearAndReload()
             {
                 OverLoaderPlayer = new List<PlayerControl>();
+
+                ButtonTimer = DateTime.Now;
+                CoolTime = CustomOptions.OverLoaderCoolTime.getFloat();
+                DurationTime = CustomOptions.OverLoaderDurationTime.getFloat();
+                IsOverLoad = false;
+                IsBoostPlayers = new Dictionary<int, bool>();
+
             }
         }
         //新ロールクラス
