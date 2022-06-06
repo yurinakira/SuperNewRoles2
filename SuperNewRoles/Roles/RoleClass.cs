@@ -2059,6 +2059,8 @@ namespace SuperNewRoles.Roles
             public static float Speed { get { return CustomOptions.OverLoaderSpeed.getFloat(); } }
             public static bool IsOverLoad;
             public static float KillTime;
+            public static bool ChangeRoleView;
+            public static List<PlayerControl> ViewPlayers;
             public static DateTime ButtonTimer;
             public static Dictionary<int, bool> IsBoostPlayers;
             private static Sprite OverLoadbuttonSprite;
@@ -2084,6 +2086,8 @@ namespace SuperNewRoles.Roles
                 DurationTime = CustomOptions.OverLoaderDurationTime.getFloat();
                 IsOverLoad = false;
                 IsBoostPlayers = new Dictionary<int, bool>();
+
+                ViewPlayers = new List<PlayerControl>();
 
             }
         }
