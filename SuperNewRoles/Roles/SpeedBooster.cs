@@ -73,6 +73,10 @@ namespace SuperNewRoles.Roles
                     {
                         __instance.body.velocity = __instance.body.velocity * RoleClass.EvilSpeedBooster.Speed;
                     }
+                    else if (__instance.AmOwner && RoleClass.OverLoader.IsBoostPlayers.ContainsKey(__instance.myPlayer.PlayerId) && __instance.myPlayer.CanMove && GameData.Instance && RoleClass.OverLoader.IsBoostPlayers[__instance.myPlayer.PlayerId])
+                    {
+                        __instance.body.velocity = __instance.body.velocity * RoleClass.OverLoader.Speed;
+                    }                    
                 }
             }
         }
