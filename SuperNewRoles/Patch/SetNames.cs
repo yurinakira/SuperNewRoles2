@@ -273,22 +273,22 @@ namespace SuperNewRoles.Patch
                 }
             }
         }
-        public static void OverLoaderSet()
+        public static void OverLoaderNameSet()
         {
-            if (RoleClass.OverLoader.IsOverLoad)
+            if (RoleClass.OverLoader.IsOverLoad_Name)
             {
                 if (RoleClass.OverLoader.ChangeRoleView)
                 {
                     foreach (PlayerControl p in RoleClass.OverLoader.ViewPlayers)
                     {
-                        SetPlayerNameColor(p, RoleClass.OverLoader.color);
+                        SetPlayerNameColor(p, RoleClass.Jackal.color);
                     }
                 }
                 else
                 {
                     foreach (PlayerControl p in RoleClass.OverLoader.OverLoaderPlayer)
                     {
-                        SetPlayerNameColor(p, RoleClass.OverLoader.color);
+                        SetPlayerNameColor(p, RoleClass.Jackal.color);
                     }
                 }
             }
@@ -376,7 +376,7 @@ namespace SuperNewRoles.Patch
             SetNamesClass.ArsonistSet();
             SetNamesClass.DemonSet();
             SetNamesClass.CelebritySet();
-            SetNamesClass.OverLoaderSet();
+            SetNamesClass.OverLoaderNameSet();
             SetNamesClass.QuarreledSet();
             SetNamesClass.LoversSet();
             if (ModeHandler.isMode(ModeId.Default))

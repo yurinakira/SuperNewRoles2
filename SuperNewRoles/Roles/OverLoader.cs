@@ -9,7 +9,8 @@ using SuperNewRoles.CustomOption;
 
 namespace SuperNewRoles.Roles
 {
-    class OverLoader { 
+    class OverLoader
+    {
         public static void ResetCoolDown()
         {
             HudManagerStartPatch.OverLoaderOverLoadButton.MaxTimer = RoleClass.OverLoader.CoolTime;
@@ -25,6 +26,10 @@ namespace SuperNewRoles.Roles
             RoleClass.OverLoader.IsOverLoad = true;
             OverLoader.ResetCoolDown();
         }
+        public static void RPCOverLoad_NameStart()
+        {
+            CustomRPC.RPCProcedure.RPCOverLoad_Name();
+        }
         public static void ResetSpeed()
         {
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetSpeedBoostOL, Hazel.SendOption.Reliable, -1);
@@ -33,7 +38,12 @@ namespace SuperNewRoles.Roles
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             CustomRPC.RPCProcedure.SetSpeedBoostOL(false, PlayerControl.LocalPlayer.PlayerId);
             RoleClass.OverLoader.IsOverLoad = false;
+            CustomRPC.RPCProcedure.RPCOverLoad_Name();
         }
+        public static void RPCOverLoad_NameEnd()
+        {
+            CustomRPC.RPCProcedure.RPCOverLoad_Name();
+        }        
 
         public static void SpeedBoostCheck()
         {
@@ -62,6 +72,7 @@ namespace SuperNewRoles.Roles
             HudManagerStartPatch.OverLoaderOverLoadButton.MaxTimer = RoleClass.OverLoader.CoolTime;
             RoleClass.OverLoader.ButtonTimer = DateTime.Now;
             ResetSpeed();
+            RPCOverLoad_NameEnd();
 
         }
     }
