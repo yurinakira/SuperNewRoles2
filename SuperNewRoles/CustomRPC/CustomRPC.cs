@@ -622,11 +622,9 @@ namespace SuperNewRoles.CustomRPC
             if (player.Data.Role.IsImpostor)
             {
                 RoleClass.OverLoader.IsBoostPlayers[id] = Is;
+                RoleClass.OverLoader.IsOverLoad_Name = Is;
+                SuperNewRoles.Patch.SetNamesClass.OverLoaderNameSet();
             }
-        }
-        public static void RPCOverLoad_Name()
-        {
-            RoleClass.OverLoader.IsOverLoad_Name = RoleClass.OverLoader.IsOverLoad;
         }
         public static void ReviveRPC(byte playerid)
         {
@@ -920,9 +918,6 @@ namespace SuperNewRoles.CustomRPC
                         break;
                     case (byte)CustomRPC.SetSpeedBoostOL:
                         RPCProcedure.SetSpeedBoostOL(reader.ReadBoolean(), reader.ReadByte());
-                        break;
-                    case (byte)CustomRPC.RPCOverLoad_Name:
-                        RPCProcedure.RPCOverLoad_Name();
                         break;
                     case (byte)CustomRPC.ShareCosmetics:
                         RPCProcedure.ShareCosmetics(reader.ReadByte(), reader.ReadString());

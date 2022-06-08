@@ -541,7 +541,6 @@ namespace SuperNewRoles
                     break;
                 case (CustomRPC.RoleId.OverLoader):
                     Roles.RoleClass.OverLoader.OverLoaderPlayer.Add(player);
-                    Roles.RoleClass.OverLoader.ViewPlayers.Add(player);
                     break;
                 //ロールアド
                 default:

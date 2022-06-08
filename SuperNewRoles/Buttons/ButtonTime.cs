@@ -256,7 +256,6 @@ namespace SuperNewRoles.Buttons
                 {
                     Roles.OverLoader.SpeedBoostEnd();
                     Roles.OverLoader.ResetCoolDown();
-                    Roles.OverLoader.RPCOverLoad_NameEnd();
                     Buttons.HudManagerStartPatch.OverLoaderOverLoadButton.MaxTimer = Roles.RoleClass.OverLoader.CoolTime;
                     Roles.RoleClass.OverLoader.IsOverLoad = false;
                     Buttons.HudManagerStartPatch.OverLoaderOverLoadButton.actionButton.cooldownTimerText.color = Color.white;

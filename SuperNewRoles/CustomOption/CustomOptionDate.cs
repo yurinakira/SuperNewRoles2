@@ -1128,7 +1128,7 @@ namespace SuperNewRoles.CustomOption
             OverLoaderPlayerCount = CustomOption.Create(901, false, CustomOptionType.Impostor, "SettingPlayerCountName", ImpostorPlayers[0], ImpostorPlayers[1], ImpostorPlayers[2], ImpostorPlayers[3], OverLoaderOption);
             OverLoaderCoolTime = CustomOption.Create(902, false, CustomOptionType.Impostor, "OverLoaderCoolDownSetting", 30f, 2.5f, 60f, 2.5f, OverLoaderOption, format: "unitSeconds");
             OverLoaderDurationTime = CustomOption.Create(903, false, CustomOptionType.Impostor, "OverLoaderDurationSetting", 15f, 2.5f, 60f, 2.5f, OverLoaderOption, format: "unitSeconds");
-            OverLoaderKillCoolTime = CustomOption.Create(904, false, CustomOptionType.Impostor, "OverLoaderCoolTimeSetting", 15f, 0f, 60f, 2.5f, OverLoaderOption, format: "unitSeconds");
+            OverLoaderKillCoolTime = CustomOption.Create(904, false, CustomOptionType.Impostor, "SerialKillerKillTimeSetting", 15f, 0f, 60f, 2.5f, OverLoaderOption, format: "unitSeconds");
             OverLoaderSpeed = CustomOption.Create(905, false, CustomOptionType.Impostor, "EvilSpeedBoosterPlusSpeedSetting", 0.5f, 0.0f, 5f, 0.25f, OverLoaderOption, format: "unitSeconds");
 
             QuarreledOption = CustomOption.Create(122, true, CustomOptionType.Neutral, cs(RoleClass.Quarreled.color, "QuarreledName"), false, null, isHeader: true);

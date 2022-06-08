@@ -277,20 +277,12 @@ namespace SuperNewRoles.Patch
         {
             if (RoleClass.OverLoader.IsOverLoad_Name)
             {
-                if (RoleClass.OverLoader.ChangeRoleView)
+
+                foreach (PlayerControl p in RoleClass.OverLoader.OverLoaderPlayer)
                 {
-                    foreach (PlayerControl p in RoleClass.OverLoader.ViewPlayers)
-                    {
-                        SetPlayerNameColor(p, RoleClass.Jackal.color);
-                    }
+                    SetPlayerNameColor(p, RoleClass.Jackal.color);
                 }
-                else
-                {
-                    foreach (PlayerControl p in RoleClass.OverLoader.OverLoaderPlayer)
-                    {
-                        SetPlayerNameColor(p, RoleClass.Jackal.color);
-                    }
-                }
+
             }
         }
     }

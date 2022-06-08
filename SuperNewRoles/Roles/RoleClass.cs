@@ -2060,8 +2060,6 @@ namespace SuperNewRoles.Roles
             public static bool IsOverLoad;
             public static bool IsOverLoad_Name;
             public static float KillTime;
-            public static bool ChangeRoleView;
-            public static List<PlayerControl> ViewPlayers;
             public static DateTime ButtonTimer;
             public static Dictionary<int, bool> IsBoostPlayers;
             private static Sprite OverLoadbuttonSprite;
@@ -2088,8 +2086,6 @@ namespace SuperNewRoles.Roles
                 IsOverLoad = false;
                 IsOverLoad_Name = false;
                 IsBoostPlayers = new Dictionary<int, bool>();
-
-                ViewPlayers = new List<PlayerControl>();
 
             }
         }
