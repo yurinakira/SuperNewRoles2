@@ -18,21 +18,21 @@ namespace SuperNewRoles.Roles
         }
         public static void BoostStart()
         {
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetSpeedBoostOL, Hazel.SendOption.Reliable, -1);
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetOverLoad, Hazel.SendOption.Reliable, -1);
             writer.Write(true);
             writer.Write(PlayerControl.LocalPlayer.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
-            CustomRPC.RPCProcedure.SetSpeedBoostOL(true, PlayerControl.LocalPlayer.PlayerId);
+            CustomRPC.RPCProcedure.SetOverLoad(true, PlayerControl.LocalPlayer.PlayerId);
             RoleClass.OverLoader.IsOverLoad = true;
             OverLoader.ResetCoolDown();
         }
         public static void ResetSpeed()
         {
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetSpeedBoostOL, Hazel.SendOption.Reliable, -1);
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetOverLoad, Hazel.SendOption.Reliable, -1);
             writer.Write(false);
             writer.Write(PlayerControl.LocalPlayer.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
-            CustomRPC.RPCProcedure.SetSpeedBoostOL(false, PlayerControl.LocalPlayer.PlayerId);
+            CustomRPC.RPCProcedure.SetOverLoad(false, PlayerControl.LocalPlayer.PlayerId);
             RoleClass.OverLoader.IsOverLoad = false;
         }
 

@@ -278,7 +278,7 @@ namespace SuperNewRoles.Patch
             if (RoleClass.OverLoader.IsOverLoad_Name)
             {
 
-                foreach (PlayerControl p in RoleClass.OverLoader.OverLoaderPlayer)
+                foreach (PlayerControl p in RoleClass.OverLoader.OverLoadedPlayer)
                 {
                     SetPlayerNameColor(p, RoleClass.Jackal.color);
                 }

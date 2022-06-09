@@ -2059,6 +2059,7 @@ namespace SuperNewRoles.Roles
             public static float Speed { get { return CustomOptions.OverLoaderSpeed.getFloat(); } }
             public static bool IsOverLoad;
             public static bool IsOverLoad_Name;
+            public static List<PlayerControl> OverLoadedPlayer;
             public static float KillTime;
             public static DateTime ButtonTimer;
             public static Dictionary<int, bool> IsBoostPlayers;
@@ -2085,8 +2086,8 @@ namespace SuperNewRoles.Roles
                 DurationTime = CustomOptions.OverLoaderDurationTime.getFloat();
                 IsOverLoad = false;
                 IsOverLoad_Name = false;
+                OverLoadedPlayer = new List<PlayerControl>();
                 IsBoostPlayers = new Dictionary<int, bool>();
-
             }
         }
         //新ロールクラス

@@ -140,7 +140,7 @@ namespace SuperNewRoles.CustomRPC
         CreateSidekick,
         CreateSidekickSeer,
         SetSpeedBoost,
-        SetSpeedBoostOL,
+        SetOverLoad,
         RPCOverLoad_Name,
         ShareCosmetics,
         SetShareNamePlate,
@@ -615,7 +615,7 @@ namespace SuperNewRoles.CustomRPC
                 RoleClass.SpeedBooster.IsBoostPlayers[id] = Is;
             }
         }
-        public static void SetSpeedBoostOL(bool Is, byte id)
+        public static void SetOverLoad(bool Is, byte id)
         {
             var player = ModHelpers.playerById(id);
             if (player == null) return;
@@ -623,9 +623,17 @@ namespace SuperNewRoles.CustomRPC
             {
                 RoleClass.OverLoader.IsBoostPlayers[id] = Is;
                 RoleClass.OverLoader.IsOverLoad_Name = Is;
-                SuperNewRoles.Patch.SetNamesClass.OverLoaderNameSet();
+                if (RoleClass.OverLoader.IsOverLoad_Name)
+                {
+                    RoleClass.OverLoader.OverLoadedPlayer.Add(player);
+                }
+                else
+                {
+                    RoleClass.OverLoader.OverLoadedPlayer.Remove(player);
+                }
             }
         }
+
         public static void ReviveRPC(byte playerid)
         {
             var player = ModHelpers.playerById(playerid);
@@ -916,8 +924,8 @@ namespace SuperNewRoles.CustomRPC
                     case (byte)CustomRPC.SetSpeedBoost:
                         RPCProcedure.SetSpeedBoost(reader.ReadBoolean(), reader.ReadByte());
                         break;
-                    case (byte)CustomRPC.SetSpeedBoostOL:
-                        RPCProcedure.SetSpeedBoostOL(reader.ReadBoolean(), reader.ReadByte());
+                    case (byte)CustomRPC.SetOverLoad:
+                        RPCProcedure.SetOverLoad(reader.ReadBoolean(), reader.ReadByte());
                         break;
                     case (byte)CustomRPC.ShareCosmetics:
                         RPCProcedure.ShareCosmetics(reader.ReadByte(), reader.ReadString());
