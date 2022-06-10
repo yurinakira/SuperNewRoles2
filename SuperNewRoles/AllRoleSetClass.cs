@@ -81,6 +81,7 @@ namespace SuperNewRoles
         public static bool IsNotDesync = false;
         public static bool Prefix()
         {
+            AllRoleSetClass.SetPlayerNum();
             IsNotPrefix = false;
             IsSetRoleRpc = false;
             IsRPCSetRoleOK = true;
@@ -116,16 +117,16 @@ namespace SuperNewRoles
                         SelectPlayers.RemoveAll(a => a.PlayerId == newimpostor.PlayerId);
                     }
                 }
-                Mode.SuperHostRoles.RoleSelectHandler.RoleSelect();
+                var crs = RoleSelectHandler.RoleSelect();
                 foreach (PlayerControl player in AllRoleSetClass.impostors)
                 {
-                    player.RpcSetRole(RoleTypes.Impostor);
+                    player.RpcSetRole(crs, RoleTypes.Impostor);
                 }
                 foreach (PlayerControl player in PlayerControl.AllPlayerControls)
                 {
                     if (!player.Data.Disconnected && !AllRoleSetClass.impostors.IsCheckListPlayerControl(player))
                     {
-                        player.RpcSetRole(RoleTypes.Crewmate);
+                        player.RpcSetRole(crs, RoleTypes.Crewmate);
                     }
                 }
 
@@ -146,11 +147,19 @@ namespace SuperNewRoles
                 {
                     SuperNewRolesPlugin.Logger.LogInfo("RoleSelectError:" + e);
                 }
+                FixedUpdate.SetRoleNames();
+                crs.SendMessage();
+                SuperNewRolesPlugin.Logger.LogInfo(false);
                 return false;
             }
             else if (ModeHandler.isMode(ModeId.BattleRoyal))
             {
                 Mode.BattleRoyal.main.ChangeRole.Postfix();
+                return false;
+            }
+            else if (ModeHandler.isMode(ModeId.CopsRobbers))
+            {
+                Mode.CopsRobbers.RoleSelectHandler.Handler();
                 return false;
             }
             return true;
@@ -162,7 +171,6 @@ namespace SuperNewRoles
             IsNotPrefix = true;
             if (ModeHandler.isMode(ModeId.Default))
             {
-                AllRoleSetClass.OneOrNotListSet();
                 AllRoleSetClass.AllRoleSet();
             }
             else if (ModeHandler.isMode(ModeId.Werewolf))
@@ -213,16 +221,19 @@ namespace SuperNewRoles
         public static List<PlayerControl> ImpostorPlayers;
 
         public static int ImpostorPlayerNum;
+        public static int ImpostorGhostRolePlayerNum;
         public static int NeutralPlayerNum;
+        public static int NeutralGhostRolePlayerNum;
         public static int CrewMatePlayerNum;
+        public static int CrewMateGhostRolePlayerNum;
 
         public static void AllRoleSet()
         {
             if (!AmongUsClient.Instance.AmHost) return;
-            SetPlayerNum();
             if (!ModeHandler.isMode(ModeId.SuperHostRoles))
             {
                 CrewOrImpostorSet();
+                OneOrNotListSet();
             }
             try
             {
@@ -384,9 +395,12 @@ namespace SuperNewRoles
         }
         public static void SetPlayerNum()
         {
-            ImpostorPlayerNum = (int)CustomOption.CustomOptions.impostorRolesCountMax.getFloat();
-            NeutralPlayerNum = (int)CustomOption.CustomOptions.neutralRolesCountMax.getFloat();
-            CrewMatePlayerNum = (int)CustomOption.CustomOptions.crewmateRolesCountMax.getFloat();
+            ImpostorPlayerNum = (int)CustomOptions.impostorRolesCountMax.getFloat();
+            ImpostorGhostRolePlayerNum = (int)CustomOptions.impostorGhostRolesCountMax.getFloat();
+            NeutralPlayerNum = (int)CustomOptions.neutralRolesCountMax.getFloat();
+            NeutralGhostRolePlayerNum = (int)CustomOptions.neutralGhostRolesCountMax.getFloat();
+            CrewMatePlayerNum = (int)CustomOptions.crewmateRolesCountMax.getFloat();
+            CrewMateGhostRolePlayerNum = (int)CustomOptions.crewmateGhostRolesCountMax.getFloat();
         }
         public static void ImpostorRandomSelect()
         {
@@ -394,6 +408,7 @@ namespace SuperNewRoles
             {
                 return;
             }
+            bool IsAssassinAssigned = false;
             bool IsNotEndRandomSelect = true;
             while (IsNotEndRandomSelect)
             {
@@ -422,6 +437,10 @@ namespace SuperNewRoles
                         {
 
                         }
+                    }
+                    else if (SelectRoleDate == RoleId.Assassin)
+                    {
+                        IsAssassinAssigned = true;
                     }
 
                     int PlayerCount = (int)GetPlayerCount(SelectRoleDate);
@@ -500,6 +519,41 @@ namespace SuperNewRoles
                                 Imponotonepar.RemoveAt(i - 1);
                             }
                         }
+                    }
+                }
+            }
+
+            //マーリンを選ぶ
+            if (IsAssassinAssigned)
+            {
+                int PlayerCount = (int)GetPlayerCount(RoleId.Marine);
+                SuperNewRolesPlugin.Logger.LogInfo("DATA:\n" + PlayerCount + "\n" + CrewMatePlayerNum + "\n" + CrewMatePlayers.Count);
+                if (PlayerCount >= CrewMatePlayerNum)
+                {
+                    for (int i = 1; i <= CrewMatePlayerNum; i++)
+                    {
+                        PlayerControl p = ModHelpers.GetRandom(CrewMatePlayers);
+                        p.setRoleRPC(RoleId.Marine);
+                        CrewMatePlayers.Remove(p);
+                    }
+                    CrewMatePlayerNum = 0;
+                }
+                else if (PlayerCount >= CrewMatePlayers.Count)
+                {
+                    foreach (PlayerControl Player in CrewMatePlayers)
+                    {
+                        Player.setRoleRPC(RoleId.Marine);
+                    }
+                    CrewMatePlayerNum = 0;
+                }
+                else
+                {
+                    for (int i = 1; i <= PlayerCount; i++)
+                    {
+                        CrewMatePlayerNum--;
+                        PlayerControl p = ModHelpers.GetRandom(CrewMatePlayers);
+                        p.setRoleRPC(RoleId.Marine);
+                        CrewMatePlayers.Remove(p);
                     }
                 }
             }
@@ -860,6 +914,10 @@ namespace SuperNewRoles
                     return CustomOption.CustomOptions.SeerFriendsPlayerCount.getFloat();
                 case (RoleId.JackalSeer):
                     return CustomOption.CustomOptions.JackalSeerPlayerCount.getFloat();
+                case (RoleId.Assassin):
+                    return CustomOption.CustomOptions.AssassinPlayerCount.getFloat();
+                case (RoleId.Marine):
+                    return CustomOption.CustomOptions.MarinePlayerCount.getFloat();
                 case (RoleId.Arsonist):
                     return CustomOption.CustomOptions.ArsonistPlayerCount.getFloat();
                 case (RoleId.Chief):
@@ -868,6 +926,16 @@ namespace SuperNewRoles
                     return CustomOption.CustomOptions.CleanerPlayerCount.getFloat();
                 case (RoleId.MadCleaner):
                     return CustomOption.CustomOptions.MadCleanerPlayerCount.getFloat();
+                case (RoleId.Samurai):
+                    return CustomOption.CustomOptions.SamuraiPlayerCount.getFloat();
+                case (RoleId.MayorFriends):
+                    return CustomOption.CustomOptions.MayorFriendsPlayerCount.getFloat();
+                case (RoleId.VentMaker):
+                    return CustomOption.CustomOptions.VentMakerPlayerCount.getFloat();
+                case (RoleId.GhostMechanic):
+                    return CustomOption.CustomOptions.GhostMechanicPlayerCount.getFloat();
+                case (RoleId.EvilHacker):
+                    return CustomOption.CustomOptions.EvilHackerPlayerCount.getFloat();
                 case (RoleId.OverLoader):
                     return CustomOption.CustomOptions.OverLoaderPlayerCount.getFloat();
                     //プレイヤーカウント
@@ -903,7 +971,7 @@ namespace SuperNewRoles
             Crewnotonepar = new List<RoleId>();
             foreach (IntroDate intro in IntroDate.IntroDatas)
             {
-                if (intro.RoleId != RoleId.DefaultRole)
+                if (intro.RoleId != RoleId.DefaultRole && !intro.IsGhostRole)
                 {
                     var option = IntroDate.GetOption(intro.RoleId);
                     if (option == null) continue;
@@ -932,21 +1000,39 @@ namespace SuperNewRoles
                                 switch (intro.Team)
                                 {
                                     case TeamRoleType.Crewmate:
-                                        Crewonepar.Add(intro.RoleId);
+                                        Crewnotonepar.Add(intro.RoleId);
                                         break;
                                     case TeamRoleType.Impostor:
-                                        Impoonepar.Add(intro.RoleId);
+                                        Imponotonepar.Add(intro.RoleId);
                                         break;
                                     case TeamRoleType.Neutral:
-                                        Neutonepar.Add(intro.RoleId);
+                                        Neutnotonepar.Add(intro.RoleId);
                                         break;
                                 }
                             }
                         }
                     }
                 }
+
             }
 
+            var Assassinselection = CustomOptions.AssassinAndMarineOption.getSelection();
+            SuperNewRolesPlugin.Logger.LogInfo("アサイン情報:" + Assassinselection + "、" + CrewMatePlayerNum + "、" + CrewMatePlayers.Count);
+            if (Assassinselection != 0 && CrewMatePlayerNum > 0 && CrewMatePlayers.Count > 0)
+            {
+                if (Assassinselection == 10)
+                {
+                    Impoonepar.Add(RoleId.Assassin);
+                }
+                else
+                {
+                    for (int i = 1; i <= Assassinselection; i++)
+                    {
+                        Imponotonepar.Add(RoleId.Assassin);
+                    }
+                }
+            }
+        //セットクラス
         }
     }
 }

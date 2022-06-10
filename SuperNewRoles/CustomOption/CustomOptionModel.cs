@@ -352,13 +352,11 @@ namespace SuperNewRoles.CustomOption
             var gameSettings = GameObject.Find("Game Settings");
             var gameSettingMenu = UnityEngine.Object.FindObjectsOfType<GameSettingMenu>().FirstOrDefault();
 
-            SuperNewRolesPlugin.Logger.LogInfo("a");
             var snrSettings = UnityEngine.Object.Instantiate(gameSettings, gameSettings.transform.parent);
             var snrMenu = snrSettings.transform.FindChild("GameGroup").FindChild("SliderInner").GetComponent<GameOptionsMenu>();
             snrSettings.name = "SNRSettings";
             snrSettings.transform.FindChild("GameGroup").FindChild("SliderInner").name = "GenericSetting";
 
-            SuperNewRolesPlugin.Logger.LogInfo("a");
             var impostorSettings = UnityEngine.Object.Instantiate(gameSettings, gameSettings.transform.parent);
             var impostorMenu = impostorSettings.transform.FindChild("GameGroup").FindChild("SliderInner").GetComponent<GameOptionsMenu>();
             impostorSettings.name = "ImpostorSettings";
@@ -374,7 +372,6 @@ namespace SuperNewRoles.CustomOption
             crewmateSettings.name = "CrewmateSettings";
             crewmateSettings.transform.FindChild("GameGroup").FindChild("SliderInner").name = "CrewmateSetting";
 
-            SuperNewRolesPlugin.Logger.LogInfo("a");
             var roleTab = GameObject.Find("RoleTab");
             var gameTab = GameObject.Find("GameTab");
 
@@ -397,7 +394,6 @@ namespace SuperNewRoles.CustomOption
             crewmateTab.transform.FindChild("Hat Button").FindChild("Icon").GetComponent<SpriteRenderer>().sprite = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.Setting_Crewmate.png", 100f);
             crewmateTab.name = "CrewmateTab";
 
-            SuperNewRolesPlugin.Logger.LogInfo("a");
             // Position of Tab Icons
             gameTab.transform.position += Vector3.left * 3f;
             roleTab.transform.position += Vector3.left * 3f;
@@ -406,17 +402,12 @@ namespace SuperNewRoles.CustomOption
             neutralTab.transform.localPosition = Vector3.right * 1f;
             crewmateTab.transform.localPosition = Vector3.right * 0.95f;
 
-            SuperNewRolesPlugin.Logger.LogInfo("a");
             var tabs = new GameObject[] { gameTab, roleTab, snrTab, impostorTab, neutralTab, crewmateTab};
             for (int i = 0; i < tabs.Length; i++)
             {
-                SuperNewRolesPlugin.Logger.LogInfo("a");
                 var button = tabs[i].GetComponentInChildren<PassiveButton>();
-                SuperNewRolesPlugin.Logger.LogInfo("c");
                 int copiedIndex = i;
-                SuperNewRolesPlugin.Logger.LogInfo("d");
                 button.OnClick = new UnityEngine.UI.Button.ButtonClickedEvent();
-                SuperNewRolesPlugin.Logger.LogInfo("e");
                 button.OnClick.AddListener((UnityAction)(() => {
                     gameSettingMenu.RegularGameSettings.SetActive(false);
                     gameSettingMenu.RolesSettings.gameObject.SetActive(false);
@@ -457,7 +448,6 @@ namespace SuperNewRoles.CustomOption
                     }
                     else if (copiedIndex == 5)
                     {
-                        SuperNewRolesPlugin.Logger.LogInfo("a");
                         crewmateSettings.gameObject.SetActive(true);
                         crewmateTabHighlight.enabled = true;
                     }
@@ -470,7 +460,6 @@ namespace SuperNewRoles.CustomOption
                     */
                 }));
             }
-            SuperNewRolesPlugin.Logger.LogInfo("a");
 
 
             foreach (OptionBehaviour option in snrMenu.GetComponentsInChildren<OptionBehaviour>())
@@ -486,11 +475,9 @@ namespace SuperNewRoles.CustomOption
             List<OptionBehaviour> neutralOptions = new List<OptionBehaviour>();
             List<OptionBehaviour> crewmateOptions = new List<OptionBehaviour>();
 
-            SuperNewRolesPlugin.Logger.LogInfo("b");
             List<Transform> menus = new List<Transform>() { snrMenu.transform, impostorMenu.transform, neutralMenu.transform, crewmateMenu.transform };
             List<List<OptionBehaviour>> optionBehaviours = new List<List<OptionBehaviour>>() { snrOptions, impostorOptions, neutralOptions, crewmateOptions };
 
-            SuperNewRolesPlugin.Logger.LogInfo("a");
             for (int i = 0; i < CustomOption.options.Count; i++)
             {
                 CustomOption option = CustomOption.options[i];
@@ -522,6 +509,9 @@ namespace SuperNewRoles.CustomOption
 
             var numImpostorsOption = __instance.Children.FirstOrDefault(x => x.name == "NumImpostors").TryCast<NumberOption>();
             if (numImpostorsOption != null) numImpostorsOption.ValidRange = new FloatRange(0f, 15f);
+
+            var PlayerSpeedModOption = __instance.Children.FirstOrDefault(x => x.name == "PlayerSpeed").TryCast<NumberOption>();
+            if (PlayerSpeedModOption != null) PlayerSpeedModOption.ValidRange = new FloatRange(-5.5f, 5.5f);
 
             var killCoolOption = __instance.Children.FirstOrDefault(x => x.name == "KillCooldown").TryCast<NumberOption>();
             if (killCoolOption != null) killCoolOption.ValidRange = new FloatRange(2.5f, 60f);
@@ -599,6 +589,18 @@ namespace SuperNewRoles.CustomOption
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSyncSettings))]
     public class RpcSyncSettingsPatch
     {
+        public static bool Prefix(PlayerControl __instance,[HarmonyArgument(0)] GameOptionsData gameOptions)
+        {
+            if (AmongUsClient.Instance.AmHost && !DestroyableSingleton<TutorialManager>.InstanceExists)
+            {
+                PlayerControl.GameOptions = gameOptions;
+                SaveManager.GameHostOptions = gameOptions;
+                MessageWriter obj = AmongUsClient.Instance.StartRpc(__instance.NetId, 2, SendOption.Reliable);
+                obj.WriteBytesAndSize(gameOptions.ToBytes(6));
+                obj.EndMessage();
+            }
+            return false;
+        }
         public static void Postfix()
         {
             CustomOption.ShareOptionSelections();
@@ -891,6 +893,13 @@ namespace SuperNewRoles.CustomOption
             var optionValue = (min == max) ? $"{max}" : $"{min} - {max}";
             entry.AppendLine($"{optionName}: {optionValue}");
 
+            optionName = CustomOptions.cs(new Color(204f / 255f, 204f / 255f, 0, 1f), tl("SettingCrewmateGhostRoles"));
+            min = CustomOptions.crewmateGhostRolesCountMax.getSelection();
+            max = CustomOptions.crewmateGhostRolesCountMax.getSelection();
+            if (min > max) min = max;
+            optionValue = (min == max) ? $"{max}" : $"{min} - {max}";
+            entry.AppendLine($"{optionName}: {optionValue}");
+
             optionName = CustomOptions.cs(new Color(204f / 255f, 204f / 255f, 0, 1f), tl("SettingNeutralRoles"));
             min = CustomOptions.neutralRolesCountMax.getSelection();
             max = CustomOptions.neutralRolesCountMax.getSelection();
@@ -898,9 +907,23 @@ namespace SuperNewRoles.CustomOption
             optionValue = (min == max) ? $"{max}" : $"{min} - {max}";
             entry.AppendLine($"{optionName}: {optionValue}");
 
+            optionName = CustomOptions.cs(new Color(204f / 255f, 204f / 255f, 0, 1f), tl("SettingNeutralGhostRoles"));
+            min = CustomOptions.neutralGhostRolesCountMax.getSelection();
+            max = CustomOptions.neutralGhostRolesCountMax.getSelection();
+            if (min > max) min = max;
+            optionValue = (min == max) ? $"{max}" : $"{min} - {max}";
+            entry.AppendLine($"{optionName}: {optionValue}");
+
             optionName = CustomOptions.cs(new Color(204f / 255f, 204f / 255f, 0, 1f), tl("SettingImpostorRoles"));
             min = CustomOptions.impostorRolesCountMax.getSelection();
             max = CustomOptions.impostorRolesCountMax.getSelection();
+            if (min > max) min = max;
+            optionValue = (min == max) ? $"{max}" : $"{min} - {max}";
+            entry.AppendLine($"{optionName}: {optionValue}");
+
+            optionName = CustomOptions.cs(new Color(204f / 255f, 204f / 255f, 0, 1f), tl("SettingImpostorGhostRoles"));
+            min = CustomOptions.impostorGhostRolesCountMax.getSelection();
+            max = CustomOptions.impostorGhostRolesCountMax.getSelection();
             if (min > max) min = max;
             optionValue = (min == max) ? $"{max}" : $"{min} - {max}";
             entry.AppendLine($"{optionName}: {optionValue}");
@@ -923,8 +946,11 @@ namespace SuperNewRoles.CustomOption
             {
                 if ((option == CustomOptions.presetSelection) ||
                     (option == CustomOptions.crewmateRolesCountMax) ||
+                    (option == CustomOptions.crewmateGhostRolesCountMax) ||
                     (option == CustomOptions.neutralRolesCountMax) ||
+                    (option == CustomOptions.neutralGhostRolesCountMax) ||
                     (option == CustomOptions.impostorRolesCountMax) ||
+                    (option == CustomOptions.impostorGhostRolesCountMax) ||
                     (option == CustomOptions.hideSettings))
                 {
                     continue;

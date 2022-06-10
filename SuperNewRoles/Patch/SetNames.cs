@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using SuperNewRoles.CustomOption;
 using SuperNewRoles.CustomRPC;
+using SuperNewRoles.Intro;
 using SuperNewRoles.Mode;
 using SuperNewRoles.Roles;
 using System;
@@ -62,7 +63,7 @@ namespace SuperNewRoles.Patch
 
             foreach (PlayerControl player in PlayerControl.AllPlayerControls)
             {
-                player.nameText.text = player.CurrentOutfit.PlayerName;
+                player.nameText.text =  ModHelpers.hidePlayerName(PlayerControl.LocalPlayer, player) ? "" : player.CurrentOutfit.PlayerName;
                 if (PlayerControl.LocalPlayer.isImpostor() && (player.isImpostor() || player.isRole(RoleId.Egoist)))
                 {
                     SetPlayerNameColor(player, RoleClass.ImpostorRed);
@@ -73,10 +74,10 @@ namespace SuperNewRoles.Patch
                 }
             }
         }
-        public static Dictionary<byte, TMPro.TextMeshPro> PlayerInfos = new Dictionary<byte, TMPro.TextMeshPro>();
-        public static Dictionary<byte, TMPro.TextMeshPro> MeetingPlayerInfos = new Dictionary<byte, TMPro.TextMeshPro>();
+        public static Dictionary<byte, TextMeshPro> PlayerInfos = new Dictionary<byte, TextMeshPro>();
+        public static Dictionary<byte, TextMeshPro> MeetingPlayerInfos = new Dictionary<byte, TextMeshPro>();
 
-        public static void SetPlayerRoleInfoView(PlayerControl p, Color roleColors, string roleNames)
+        public static void SetPlayerRoleInfoView(PlayerControl p, Color roleColors, string roleNames, Color? GhostRoleColor = null, string GhostRoleNames = "")
         {
             if (p.IsBot()) return;
             bool commsActive = RoleHelpers.IsComms();
@@ -129,8 +130,13 @@ namespace SuperNewRoles.Patch
             catch { }
             string playerInfoText = "";
             string meetingInfoText = "";
-            playerInfoText = $"{CustomOptions.cs(roleColors, roleNames)}{TaskText}";
-            meetingInfoText = $"{CustomOptions.cs(roleColors, roleNames)}{TaskText}".Trim();
+            playerInfoText = $"{CustomOptions.cs(roleColors, roleNames)}";
+            if (GhostRoleNames != "")
+            {
+                playerInfoText = $"{CustomOptions.cs((Color)GhostRoleColor, GhostRoleNames)}({playerInfoText})";
+            }
+            playerInfoText += TaskText;
+            meetingInfoText = playerInfoText.Trim();
             playerInfo.text = playerInfoText;
             playerInfo.gameObject.SetActive(p.Visible);
             if (meetingInfo != null) meetingInfo.text = MeetingHud.Instance.state == MeetingHud.VoteStates.Results ? "" : meetingInfoText; p.nameText.color = roleColors;
@@ -140,6 +146,8 @@ namespace SuperNewRoles.Patch
             if (p.IsBot()) return;
             string roleNames;
             Color roleColors;
+            string GhostroleNames = "";
+            Color? GhostroleColors = null;
             var role = p.getRole();
             if (role == RoleId.DefaultRole || (role == RoleId.Bestfalsecharge && p.isAlive()))
             {
@@ -160,7 +168,13 @@ namespace SuperNewRoles.Patch
                 roleNames = introdate.Name;
                 roleColors = introdate.color;
             }
-            SetPlayerRoleInfoView(p, roleColors, roleNames);
+            var GhostRole = p.getGhostRole();
+            if (GhostRole != RoleId.DefaultRole) {
+                var GhostIntro = IntroDate.GetIntroDate(GhostRole);
+                GhostroleNames = GhostIntro.Name;
+                GhostroleColors = GhostIntro.color;
+            }
+            SetPlayerRoleInfoView(p, roleColors, roleNames, GhostroleColors, GhostroleNames);
         }
         public static void SetPlayerNameColors(PlayerControl player)
         {
@@ -315,6 +329,7 @@ namespace SuperNewRoles.Patch
             {
                 if (Madmate.CheckImpostor(PlayerControl.LocalPlayer) ||
                     LocalRole == RoleId.MadKiller ||
+                    LocalRole == RoleId.Marine ||
                     (RoleClass.Demon.IsCheckImpostor && LocalRole == RoleId.Demon)
                     )
                 {

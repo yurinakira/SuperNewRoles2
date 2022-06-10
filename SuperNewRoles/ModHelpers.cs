@@ -406,7 +406,7 @@ namespace SuperNewRoles
             else if (source.PlayerId == target.PlayerId) return false; // Player sees his own name
             else if (source.isImpostor() && target.isImpostor()) return false;
             else if ((target.isRole(RoleId.NiceScientist) || target.isRole(RoleId.EvilScientist))  && GameData.Instance && RoleClass.NiceScientist.IsScientistPlayers[target.PlayerId]) return true;
-            return true;
+            return false;
         }
         public static Sprite loadSpriteFromResources(string path, float pixelsPerUnit)
         {
@@ -524,6 +524,17 @@ namespace SuperNewRoles
                     return true;
                 }
             }
+            return false;
+        }
+        public static bool IsPosition(Vector3 pos,Vector2 pos2)
+        {
+            if (pos.x == pos2.x && pos.y == pos2.y) return true;
+            return false;
+        }
+        public static bool IsPositionDistance(Vector2 pos, Vector2 pos2,float distance)
+        {
+            float dis = Vector2.Distance(pos,pos2);
+            if (dis <= distance) return true;
             return false;
         }
     }

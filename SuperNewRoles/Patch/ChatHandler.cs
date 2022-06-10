@@ -1,10 +1,12 @@
-﻿using HarmonyLib;
+﻿using BepInEx.IL2CPP.Utils;
+using HarmonyLib;
 using SuperNewRoles.CustomOption;
 using SuperNewRoles.Helpers;
 using SuperNewRoles.Intro;
 using SuperNewRoles.Mode.SuperHostRoles;
 using SuperNewRoles.Roles;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,6 +51,12 @@ namespace SuperNewRoles.Patch
         public static void Postfix(PlayerControl sourcePlayer, string chatText)
         {
             if (!AmongUsClient.Instance.AmHost) return;
+
+            if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
+            {
+                Assassin.AddChat(sourcePlayer, chatText);
+            }
+
             var Commands = chatText.Split(" ");
             if (Commands[0].Equals("/version", StringComparison.OrdinalIgnoreCase) ||
                 Commands[0].Equals("/v", StringComparison.OrdinalIgnoreCase))
@@ -264,30 +272,12 @@ namespace SuperNewRoles.Patch
                 if (target == null)
                 {
                     string name = PlayerControl.LocalPlayer.getDefaultName();
-                    PlayerControl.LocalPlayer.RpcSetName(SNRCommander);
-                    new LateTask(() =>
-                    {
-                        PlayerControl.LocalPlayer.RpcSendChat(text);
-                    }, 0.1f);
-                    new LateTask(() =>
-                    {
-                        PlayerControl.LocalPlayer.RpcSetName(name);
-                    }, 0.15f);
+                    AmongUsClient.Instance.StartCoroutine(AllSend(SNRCommander, text, name));
                     return;
                 }
                 if (target.PlayerId != 0)
                 {
-                    string name = PlayerControl.LocalPlayer.getDefaultName();
-                    PlayerControl.LocalPlayer.RpcSetNamePrivate(SNRCommander, target);
-                    new LateTask(() =>
-                    {
-                        PlayerControl.LocalPlayer.RPCSendChatPrivate(text, target);
-                    }, 0.1f);
-                    new LateTask(() =>
-                    {
-                        PlayerControl.LocalPlayer.RpcSetNamePrivate(name, target);
-                    }, 0.15f);
-
+                    AmongUsClient.Instance.StartCoroutine(PrivateSend(target, SNRCommander, text, time));
                 } else
                 {
                     string name = PlayerControl.LocalPlayer.getDefaultName();
@@ -302,31 +292,12 @@ namespace SuperNewRoles.Patch
                 string name = PlayerControl.LocalPlayer.getDefaultName();
                 if (target == null)
                 {
-                    new LateTask(() => {
-                        PlayerControl.LocalPlayer.RpcSetName(SNRCommander);
-                    }, time);
-                    new LateTask(() => 
-                    {
-                        PlayerControl.LocalPlayer.RpcSendChat(text);
-                    }, time+0.1f);
-                    new LateTask(() =>
-                    {
-                        PlayerControl.LocalPlayer.RpcSetName(name);
-                    }, time + 0.15f);
+                    AmongUsClient.Instance.StartCoroutine(AllSend(SNRCommander, text, name, time));
                     return;
                 }
                 if (target.PlayerId != 0)
                 {
-                    new LateTask(() => {
-                        PlayerControl.LocalPlayer.RpcSetNamePrivate(SNRCommander, target);
-                    }, time);
-                    new LateTask(() => {
-                        PlayerControl.LocalPlayer.RPCSendChatPrivate(text, target);
-                    }, time + 0.1f);
-                    new LateTask(() =>
-                    {
-                        PlayerControl.LocalPlayer.RpcSetName(name);
-                    }, time + 0.15f);
+                AmongUsClient.Instance.StartCoroutine(PrivateSend(target, SNRCommander, text, time));
                 }
                 else
                 {
@@ -346,33 +317,57 @@ namespace SuperNewRoles.Patch
             if (target != null && target.Data.Disconnected) return;
             if (target == null)
             {
-                string name = PlayerControl.LocalPlayer.getDefaultName();
-                PlayerControl.LocalPlayer.RpcSetName(SendName);
-                new LateTask(() => PlayerControl.LocalPlayer.RpcSendChat(command), 0.1f);
-                new LateTask(() => PlayerControl.LocalPlayer.RpcSetName(name), 0.2f);
+                string name = PlayerControl.LocalPlayer.Data.PlayerName;
+                if (name == SNRCommander) return;
+                AmongUsClient.Instance.StartCoroutine(AllSend(SendName, command, name));
                 return;
             }
-            else if (target.AmOwner)
+            else if (target.PlayerId == 0)
             {
-                string name = target.name;
+                string name = target.Data.PlayerName;
                 target.SetName(SendName);
-                new LateTask(() => HudManager.Instance.Chat.AddChat(target, command), 0.1f);
-                new LateTask(() => target.SetName(name), 0.2f);
-            } else { 
-                target.RpcSetNamePrivate(SendName);
-                new LateTask(() =>
-                {
-                    if (target != null && !target.Data.Disconnected)
-                    { target.RPCSendChatPrivate(command); }
-                }
-                , 0.1f);
-                new LateTask(() => {
-                    if (target != null && !target.Data.Disconnected)
-                    {
-                        target.RpcSetName(target.name);
-                    }
-                }, 0.2f);
+                HudManager.Instance.Chat.AddChat(target, command);
+                target.SetName(name);
+            } else
+            {
+                AmongUsClient.Instance.StartCoroutine(PrivateSend(target, SendName, command));
             }
+        }
+        static IEnumerator AllSend(string SendName, string command,string name, float time = 0)
+        {
+            if (time > 0)
+            {
+                yield return new WaitForSeconds(time);
+            }
+            var crs = CustomRpcSender.Create();
+            crs.StartRpc(PlayerControl.LocalPlayer.NetId, RpcCalls.SetName)
+                .Write(SendName)
+                .EndRpc();
+            crs.StartRpc(PlayerControl.LocalPlayer.NetId, RpcCalls.SendChat)
+                .Write(command)
+                .EndRpc(); ;
+            crs.StartRpc(PlayerControl.LocalPlayer.NetId, RpcCalls.SetName)
+                .Write(name)
+                .EndRpc();
+            crs.SendMessage();
+        }
+        static IEnumerator PrivateSend(PlayerControl target, string SendName, string command, float time = 0)
+        {
+            if (time > 0)
+            {
+                yield return new WaitForSeconds(time);
+            }
+            var crs = CustomRpcSender.Create(Hazel.SendOption.None);
+            crs.StartRpc(target.NetId, RpcCalls.SetName, target.getClientId())
+                .Write(SendName)
+                .EndRpc();
+            crs.StartRpc(target.NetId, RpcCalls.SendChat, target.getClientId())
+                .Write(command)
+                .EndRpc();
+            crs.StartRpc(target.NetId, RpcCalls.SetName, target.getClientId())
+                .Write(target.Data.PlayerName)
+                .EndRpc();
+            crs.SendMessage();
         }
     }/**
     [HarmonyPatch(typeof(ChatController),nameof(ChatController.AddChat))]

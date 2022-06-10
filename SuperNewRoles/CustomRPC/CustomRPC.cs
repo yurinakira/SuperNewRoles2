@@ -110,10 +110,17 @@ namespace SuperNewRoles.CustomRPC
         SeerFriends,
         JackalSeer,
         SidekickSeer,
+        Assassin,
+        Marine,
         Arsonist,
         Chief,
         Cleaner,
         MadCleaner,
+        Samurai,
+        MayorFriends,
+        VentMaker,
+        GhostMechanic,
+        EvilHacker,
         OverLoader,
         //RoleId
     }
@@ -130,6 +137,7 @@ namespace SuperNewRoles.CustomRPC
         MeetingSheriffKill,
         CustomRPCKill,
         ReportDeadBody,
+        UncheckedMeeting,
         CleanBody,
         ExiledRPC,
         RPCMurderPlayer,
@@ -176,9 +184,20 @@ namespace SuperNewRoles.CustomRPC
         ShielderProtect,
         SetShielder,
         SetSpeedFreeze,
+        BySamuraiKillRPC,
+        MakeVent,
+        UseAdminTime,
+        UseCameraTime,
+        UseVitalsTime,
+        FixLights,
     }
     public static class RPCProcedure
     {
+        public static void FixLights()
+        {
+            SwitchSystem switchSystem = ShipStatus.Instance.Systems[SystemTypes.Electrical].TryCast<SwitchSystem>();
+            switchSystem.ActualSwitches = switchSystem.ExpectedSwitches;
+        }
         public static void ArsonistDouse(byte source, byte target)
         {
             PlayerControl TargetPlayer = ModHelpers.playerById(target);
@@ -471,8 +490,12 @@ namespace SuperNewRoles.CustomRPC
         public static void SetRole(byte playerid, byte RPCRoleId)
         {
             var player = ModHelpers.playerById(playerid);
-            player.ClearRole();
-            player.setRole((RoleId)RPCRoleId);
+            var roleId = (RoleId)RPCRoleId;
+            if (!roleId.isGhostRole())
+            {
+                player.ClearRole();
+            }
+            player.setRole(roleId);
         }
         public static void SetQuarreled(byte playerid1, byte playerid2)
         {
@@ -651,6 +674,11 @@ namespace SuperNewRoles.CustomRPC
             PlayerControl target = ModHelpers.playerById(targetId);
             if (source != null && target != null) source.ReportDeadBody(target.Data);
         }
+        public static void UncheckedMeeting(byte sourceId)
+        {
+            PlayerControl source = ModHelpers.playerById(sourceId);
+            if (source != null) source.ReportDeadBody(null);
+        }
         public static void CleanBody(byte playerId)
         {
             DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
@@ -734,6 +762,16 @@ namespace SuperNewRoles.CustomRPC
             {
                 source.MurderPlayer(target);
                 FinalStatusData.FinalStatuses[target.PlayerId] = FinalStatus.BySelfBomb;
+            }
+        }
+        public static void BySamuraiKillRPC(byte sourceId, byte targetId)
+        {
+            PlayerControl source = ModHelpers.playerById(sourceId);
+            PlayerControl target = ModHelpers.playerById(targetId);
+            if (source != null && target != null)
+            {
+                source.MurderPlayer(target);
+                FinalStatusData.FinalStatuses[target.PlayerId] = FinalStatus.Kill;
             }
         }
         public static void ExiledRPC(byte playerid)
@@ -824,6 +862,45 @@ namespace SuperNewRoles.CustomRPC
         {
             RoleClass.Shielder.IsShield[PlayerId] = (RoleClass.Shielder.IsShield[PlayerId] = Is);
         }
+        public static void MakeVent(float x, float y, float z)
+        {
+            Vent template = UnityEngine.Object.FindObjectOfType<Vent>();
+            Vent VentMakerVent = UnityEngine.Object.Instantiate<Vent>(template);
+            if (RoleClass.VentMaker.VentCount == 2)
+            {
+                RoleClass.VentMaker.Vent.Right = VentMakerVent;
+                VentMakerVent.Right = RoleClass.VentMaker.Vent;
+                VentMakerVent.Left = null;
+                VentMakerVent.Center = null;
+            }
+            else
+            {
+                VentMakerVent.Right = null;
+                VentMakerVent.Left = null;
+                VentMakerVent.Center = null;
+            }
+
+            VentMakerVent.transform.position = new Vector3(x, y, z);
+            VentMakerVent.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+            VentMakerVent.Id = ShipStatus.Instance.AllVents.Select(x => x.Id).Max() + 1;
+            var allVentsList = ShipStatus.Instance.AllVents.ToList();
+            allVentsList.Add(VentMakerVent);
+            ShipStatus.Instance.AllVents = allVentsList.ToArray();
+            VentMakerVent.name = "VentMakerVent" + VentMakerVent.Id;
+            VentMakerVent.gameObject.SetActive(true);
+        }
+        public static void UseAdminTime(float time)
+        {
+            Patch.AdminPatch.RestrictAdminTime -= time;
+        }
+        public static void UseCameraTime(float time)
+        {
+            Patch.CameraPatch.RestrictCameraTime -= time;
+        }
+        public static void UseVitalTime(float time)
+        {
+            Patch.VitalsPatch.RestrictVitalsTime -= time;
+        }
         [HarmonyPatch(typeof(InnerNetClient), nameof(InnerNetClient.StartEndGame))]
         class STARTENDGAME
         {
@@ -893,6 +970,9 @@ namespace SuperNewRoles.CustomRPC
                         break;
                     case (byte)CustomRPC.ReportDeadBody:
                         RPCProcedure.ReportDeadBody(reader.ReadByte(), reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.UncheckedMeeting:
+                        RPCProcedure.UncheckedMeeting(reader.ReadByte());
                         break;
                     case (byte)CustomRPC.CleanBody:
                         RPCProcedure.CleanBody(reader.ReadByte());
@@ -999,6 +1079,7 @@ namespace SuperNewRoles.CustomRPC
                     case (byte)CustomRPC.CustomEndGame:
                         if (AmongUsClient.Instance.AmHost)
                         {
+                            ShipStatus.Instance.enabled = false;
                             CustomEndGame((GameOverReason)reader.ReadByte(), reader.ReadBoolean());
                         }
                         break;
@@ -1032,9 +1113,23 @@ namespace SuperNewRoles.CustomRPC
                     case (byte)CustomRPC.SetSpeedFreeze:
                         SetSpeedFreeze(reader.ReadBoolean());
                         break;
+                    case (byte)CustomRPC.MakeVent:
+                        MakeVent(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+                        break;
+                    case (byte)CustomRPC.UseAdminTime:
+                        RPCProcedure.UseAdminTime(reader.ReadSingle());
+                        break;
+                    case (byte)CustomRPC.UseCameraTime:
+                        RPCProcedure.UseCameraTime(reader.ReadSingle());
+                        break;
+                    case (byte)CustomRPC.UseVitalsTime:
+                        RPCProcedure.UseVitalTime(reader.ReadSingle());
+                        break;
+                    case (byte)CustomRPC.FixLights:
+                        FixLights();
+                        break;
                 }
             }
         }
-
     }
 }
