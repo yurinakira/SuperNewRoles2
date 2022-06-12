@@ -247,7 +247,7 @@ namespace SuperNewRoles
                 case RoleId.Fox:
                     returntext = CustomOptions.FoxIsUseVent.name + ":" + CustomOptions.FoxIsUseVent.getString() + "\n";
                     break;
-                    //ベント設定可視化
+                    
             }
             return returntext;
         }
@@ -571,6 +571,9 @@ namespace SuperNewRoles
                     break;
                 case (CustomRPC.RoleId.HauntedWolf):
                     Roles.RoleClass.HauntedWolf.HauntedWolfPlayer.Add(player);
+                    break;
+                case (CustomRPC.RoleId.SchrodingerCat):
+                    Roles.RoleClass.SchrodingerCat.SchrodingerCatPlayer.Add(player);
                     break;
                 //ロールアド
                 default:
@@ -899,7 +902,10 @@ namespace SuperNewRoles
                 case (CustomRPC.RoleId.HauntedWolf):
                     Roles.RoleClass.HauntedWolf.HauntedWolfPlayer.RemoveAll(ClearRemove);
                     break;
-                    //ロールリモベ
+                    case (CustomRPC.RoleId.SchrodingerCat):
+                    Roles.RoleClass.SchrodingerCat.SchrodingerCatPlayer.RemoveAll(ClearRemove);
+                    break;
+                //ロールリモベ
 
             }
             ChacheManager.ResetMyRoleChache();
@@ -1007,7 +1013,10 @@ namespace SuperNewRoles
                 case (RoleId.MayorFriends):
                     IsTaskClear = true;
                     break;
-                    //タスククリアか
+                    case (RoleId.SchrodingerCat):
+                    IsTaskClear = true;
+                    break; 
+                //タスククリアか
             }
             if (!IsTaskClear && ModeHandler.isMode(ModeId.SuperHostRoles) && (player.isRole(RoleId.Sheriff) || player.isRole(RoleId.RemoteSheriff)))
             {
@@ -1237,7 +1246,10 @@ namespace SuperNewRoles
                 case (RoleId.MayorFriends):
                     IsNeutral = true;
                     break;
-                    //第三か
+                    case (RoleId.SchrodingerCat):
+                    IsNeutral = true;
+                    break;
+                //第三か
             }
             return IsNeutral;
         }
@@ -1820,6 +1832,10 @@ namespace SuperNewRoles
                 else if (Roles.RoleClass.HauntedWolf.HauntedWolfPlayer.IsCheckListPlayerControl(player))
                 {
                     return CustomRPC.RoleId.HauntedWolf;
+                }
+                else if (Roles.RoleClass.SchrodingerCat.SchrodingerCatPlayer.IsCheckListPlayerControl(player))
+                {
+                    return CustomRPC.RoleId.SchrodingerCat;
                 }
                 //ロールチェック
             }

@@ -144,6 +144,7 @@ namespace SuperNewRoles.Roles
             GhostMechanic.ClearAndReload();
             EvilHacker.ClearAndReload();
             HauntedWolf.ClearAndReload();
+            SchrodingerCat.ClearAndReload();
             //ロールクリア
             Quarreled.ClearAndReload();
             Lovers.ClearAndReload();
@@ -2198,6 +2199,16 @@ namespace SuperNewRoles.Roles
             public static void ClearAndReload()
             {
                 HauntedWolfPlayer = new List<PlayerControl>();
+            }
+        }
+        public static class SchrodingerCat
+        {
+            public static List<PlayerControl> SchrodingerCatPlayer;
+            public static Color32 color = new Color32((192, 192, 192), byte.MaxValue);
+            public static void ClearAndReload()
+            {
+                SchrodingerCatPlayer = new List<PlayerControl>();
+                //くりあぁあんどりろぉどぉ
             }
         }
         //新ロールクラス

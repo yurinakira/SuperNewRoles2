@@ -44,7 +44,7 @@ namespace SuperNewRoles.Roles
             if (Target.isRole(CustomRPC.RoleId.SeerFriends) && RoleClass.Sheriff.IsMadRoleKill) return true;
             if (Target.isRole(CustomRPC.RoleId.MayorFriends) && RoleClass.Sheriff.IsMadRoleKill) return true;
             if (Target.isRole(CustomRPC.RoleId.HauntedWolf)) return true;
-            //シェリフキルゥ
+            if (Target.isRole(CustomRPC.RoleId.SchrodingerCat) && RoleClass.Sheriff.IsMadRoleKill) return true;
             return false;
         }
         public static bool IsRemoteSheriffKill(PlayerControl Target)
@@ -65,7 +65,7 @@ namespace SuperNewRoles.Roles
             if (Target.isRole(CustomRPC.RoleId.SeerFriends) && RoleClass.Sheriff.IsMadRoleKill) return true;
             if (Target.isRole(CustomRPC.RoleId.MayorFriends) && RoleClass.RemoteSheriff.IsMadRoleKill) return true;
             if (Target.isRole(CustomRPC.RoleId.HauntedWolf)) return true;
-            //リモシェリフキルゥ
+            if (Target.isRole(CustomRPC.RoleId.SchrodingerCat) && RoleClass.Sheriff.IsMadRoleKill) return true;
             return false;
         }
         public static bool IsSheriff(PlayerControl Player)

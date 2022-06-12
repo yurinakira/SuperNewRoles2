@@ -518,6 +518,8 @@ namespace SuperNewRoles.CustomOption
         public static CustomOption SeerFriendsCheckJackalTask;
         public static CustomOption SeerFriendsIsUseVent;
         public static CustomOption SeerFriendsIsImpostorLight;
+        public static CustomRoleOption SchrodingerCatOption;
+        public static CustomOption SchrodingerCatPlayerCount;
         //CustomOption
 
         public static CustomRoleOption JackalSeerOption;
@@ -1199,6 +1201,9 @@ namespace SuperNewRoles.CustomOption
 
             HauntedWolfOption = new CustomRoleOption(550, true, CustomOptionType.Crewmate, "HauntedWolfName", RoleClass.HauntedWolf.color, 1);
             HauntedWolfPlayerCount = CustomOption.Create(551, true, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], HauntedWolfOption);
+            
+            SchrodingerCatOption = new CustomRoleOption(567, true, CustomOptionType.Neutral, "SchrodingerCatName",RoleClass.SchrodingerCat.color, 1);
+            SchrodingerCatPlayerCount = CustomOption.Create(5672, true, CustomOptionType.Neutral, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], SchrodingerCatOption);
             //表示設定
 
             QuarreledOption = CustomOption.Create(122, true, CustomOptionType.Neutral, cs(RoleClass.Quarreled.color, "QuarreledName"), false, null, isHeader: true);
