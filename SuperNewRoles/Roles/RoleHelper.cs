@@ -571,6 +571,7 @@ namespace SuperNewRoles
                     break;
                 case (CustomRPC.RoleId.HauntedWolf):
                     Roles.RoleClass.HauntedWolf.HauntedWolfPlayer.Add(player);
+                    break;                    
                 case (CustomRPC.RoleId.OverLoader):
                     Roles.RoleClass.OverLoader.OverLoaderPlayer.Add(player);
                     break;
