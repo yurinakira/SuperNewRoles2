@@ -2204,11 +2204,10 @@ namespace SuperNewRoles.Roles
         public static class SchrodingerCat
         {
             public static List<PlayerControl> SchrodingerCatPlayer;
-            public static Color32 color = new Color32((192, 192, 192), byte.MaxValue);
+            public static Color32 color = new Color32(192, 192, 192, byte.MaxValue);
             public static void ClearAndReload()
             {
                 SchrodingerCatPlayer = new List<PlayerControl>();
-                //くりあぁあんどりろぉどぉ
             }
         }
         //新ロールクラス
