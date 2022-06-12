@@ -255,6 +255,7 @@ namespace SuperNewRoles.Buttons
                 if (Buttons.HudManagerStartPatch.OverLoaderOverLoadButton.Timer <= 0f)
                 {
                     Roles.OverLoader.SpeedBoostEnd();
+                    Roles.OverLoader.OverLoad_NameEnd();
                     Roles.OverLoader.ResetCoolDown();
                     Buttons.HudManagerStartPatch.OverLoaderOverLoadButton.MaxTimer = Roles.RoleClass.OverLoader.CoolTime;
                     Roles.RoleClass.OverLoader.IsOverLoad = false;

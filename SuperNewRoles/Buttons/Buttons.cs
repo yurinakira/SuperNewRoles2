@@ -1548,8 +1548,10 @@ namespace SuperNewRoles.Buttons
                 Roles.RoleClass.OverLoader.ButtonTimer = DateTime.Now;
                 OverLoaderOverLoadButton.actionButton.cooldownTimerText.color = new Color(0F, 0.8F, 0F);
                 OverLoader.BoostStart();
+                OverLoader.OverLoad_NameStart();
+
             },
-            () => { return RoleHelpers.isAlive(PlayerControl.LocalPlayer) && (OverLoader.IsOverLoader(PlayerControl.LocalPlayer) || RoleClass.Levelinger.IsPower(RoleClass.Levelinger.LevelPowerTypes.SpeedBooster)); },
+            () => { return RoleHelpers.isAlive(PlayerControl.LocalPlayer) && (OverLoader.IsOverLoader(PlayerControl.LocalPlayer)); },
             () =>
             {
                 if (OverLoaderOverLoadButton.Timer <= 0)

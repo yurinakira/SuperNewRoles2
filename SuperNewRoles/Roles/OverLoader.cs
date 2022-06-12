@@ -26,6 +26,10 @@ namespace SuperNewRoles.Roles
             RoleClass.OverLoader.IsOverLoad = true;
             OverLoader.ResetCoolDown();
         }
+        public static void OverLoad_NameStart()
+        {
+            CustomRPC.RPCProcedure.SetOverLoad_Name(true, PlayerControl.LocalPlayer.PlayerId);
+        }
         public static void ResetSpeed()
         {
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetOverLoad, Hazel.SendOption.Reliable, -1);
@@ -34,6 +38,10 @@ namespace SuperNewRoles.Roles
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             CustomRPC.RPCProcedure.SetOverLoad(false, PlayerControl.LocalPlayer.PlayerId);
             RoleClass.OverLoader.IsOverLoad = false;
+        }
+        public static void ResetOverLoad_Name()
+        {
+            CustomRPC.RPCProcedure.SetOverLoad_Name(false, PlayerControl.LocalPlayer.PlayerId);
         }
 
         public static void SpeedBoostCheck()
@@ -45,6 +53,10 @@ namespace SuperNewRoles.Roles
         {
             ResetSpeed();
             ResetCoolDown();
+        }
+        public static void OverLoad_NameEnd()
+        {
+            ResetOverLoad_Name();
         }
         public static bool IsOverLoader(PlayerControl Player)
         {
@@ -63,6 +75,7 @@ namespace SuperNewRoles.Roles
             HudManagerStartPatch.OverLoaderOverLoadButton.MaxTimer = RoleClass.OverLoader.CoolTime;
             RoleClass.OverLoader.ButtonTimer = DateTime.Now;
             ResetSpeed();
+            ResetOverLoad_Name();
 
         }
     }
