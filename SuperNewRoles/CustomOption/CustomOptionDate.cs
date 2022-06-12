@@ -560,7 +560,7 @@ namespace SuperNewRoles.CustomOption
         public static CustomOption SamuraiVent;
         public static CustomOption SamuraiSabo;
         public static CustomOption SamuraiScope;
-        
+
         public static CustomRoleOption MayorFriendsOption;
         public static CustomOption MayorFriendsPlayerCount;
         public static CustomOption MayorFriendsIsCheckJackal;
@@ -575,10 +575,12 @@ namespace SuperNewRoles.CustomOption
         public static CustomRoleOption VentMakerOption;
         public static CustomOption VentMakerPlayerCount;
 
-
         public static CustomRoleOption GhostMechanicOption;
         public static CustomOption GhostMechanicPlayerCount;
         public static CustomOption GhostMechanicRepairLimit;
+
+        public static CustomRoleOption HauntedWolfOption;
+        public static CustomOption HauntedWolfPlayerCount;
 
         public static CustomRoleOption EvilHackerOption;
         public static CustomOption EvilHackerPlayerCount;
@@ -693,7 +695,7 @@ namespace SuperNewRoles.CustomOption
             EvilLighterPlayerCount = CustomOption.Create(19, cs(Color.white, "SettingPlayerCountName"), ImpostorPlayers[0], ImpostorPlayers[1], ImpostorPlayers[2], ImpostorPlayers[3], EvilLighterOption);
             EvilLighterCoolTime = CustomOption.Create(20, ModTranslation.getString("EvilLigtherCoolDownSetting"), 30f, 2.5f, 60f, 2.5f, EvilLighterOption, format: "unitSeconds");
             EvilLighterDurationTime = CustomOption.Create(21, ModTranslation.getString("EvilLigtherDurationSetting"), 10f, 1f, 20f, 0.5f, EvilLighterOption, format: "unitSeconds");
-            
+
             **/
             EvilScientistOption = new CustomRoleOption(22, false, CustomOptionType.Impostor, "EvilScientistName", RoleClass.ImpostorRed, 1);
             EvilScientistPlayerCount = CustomOption.Create(34, false, CustomOptionType.Impostor, "SettingPlayerCountName", ImpostorPlayers[0], ImpostorPlayers[1], ImpostorPlayers[2], ImpostorPlayers[3], EvilScientistOption);
@@ -1143,7 +1145,7 @@ namespace SuperNewRoles.CustomOption
             JackalSeerIsImpostorLight = CustomOption.Create(464, false, CustomOptionType.Neutral, "MadMateImpostorLightSetting", false, JackalSeerOption);
             JackalSeerCreateSidekick = CustomOption.Create(465, false, CustomOptionType.Neutral, "JackalCreateSidekickSetting", false, JackalSeerOption);
             JackalSeerNewJackalCreateSidekick = CustomOption.Create(466, false, CustomOptionType.Neutral, "JackalNewJackalCreateSidekickSetting", false, JackalSeerCreateSidekick);
-            
+
             AssassinAndMarineOption = new CustomRoleOption(467, true, CustomOptionType.Impostor, "AssassinAndMarineName", Color.white, 1);
             AssassinPlayerCount = CustomOption.Create(468, true, CustomOptionType.Impostor, "AssassinSettingPlayerCountName", ImpostorPlayers[0], ImpostorPlayers[1], ImpostorPlayers[2], ImpostorPlayers[3], AssassinAndMarineOption);
             MarinePlayerCount = CustomOption.Create(469, true, CustomOptionType.Impostor, "MarineSettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], AssassinAndMarineOption);
@@ -1179,10 +1181,8 @@ namespace SuperNewRoles.CustomOption
             MayorFriendsCommonTask = MayorFriendsoption.Item1;
             MayorFriendsShortTask = MayorFriendsoption.Item2;
             MayorFriendsLongTask = MayorFriendsoption.Item3;
-            MayorFriendsCheckJackalTask = CustomOption.Create(482, true, CustomOptionType.Crewmate, "MadMateCheckImpostorTaskSetting", rates4, MayorFriendsIsCheckJackal);
-            MayorFriendsVoteCount = CustomOption.Create(483, true, CustomOptionType.Crewmate, "MayorVoteCountSetting", 2f, 1f, 100f, 1f, MayorFriendsOption);
-            SeerFriendsCheckJackalTask = CustomOption.Create(455, true, CustomOptionType.Crewmate, "MadMateCheckImpostorTaskSetting", rates4, SeerFriendsIsCheckJackal);
-            
+            MayorFriendsCheckJackalTask = CustomOption.Create(523, true, CustomOptionType.Crewmate, "MadMateCheckImpostorTaskSetting", rates4, MayorFriendsIsCheckJackal);
+            MayorFriendsVoteCount = CustomOption.Create(524, true, CustomOptionType.Crewmate, "MayorVoteCountSetting", 2f, 1f, 100f, 1f, MayorFriendsOption);
             MayorFriendsCheckJackalTask = CustomOption.Create(496, true, CustomOptionType.Crewmate, "MadMateCheckImpostorTaskSetting", rates4, MayorFriendsIsCheckJackal);
             MayorFriendsVoteCount = CustomOption.Create(497, true, CustomOptionType.Crewmate, "MayorVoteCountSetting", 2f, 1f, 100f, 1f, MayorFriendsOption);
 
@@ -1205,6 +1205,9 @@ namespace SuperNewRoles.CustomOption
             GhostMechanicOption = new CustomRoleOption(520, false, CustomOptionType.Crewmate, "GhostMechanicName", RoleClass.GhostMechanic.color, 1);
             GhostMechanicPlayerCount = CustomOption.Create(521, false, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], GhostMechanicOption);
             GhostMechanicRepairLimit = CustomOption.Create(522, false, CustomOptionType.Crewmate, "GhostMechanicRepairLimitSetting", 1f, 1f, 30f, 1f, GhostMechanicOption);
+
+            HauntedWolfOption = new CustomRoleOption(550, true, CustomOptionType.Crewmate, "HauntedWolfName", RoleClass.HauntedWolf.color, 1);
+            HauntedWolfPlayerCount = CustomOption.Create(551, true, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], HauntedWolfOption);
 
             OverLoaderOption = new CustomRoleOption(900, false, CustomOptionType.Impostor, "OverLoaderName", RoleClass.OverLoader.color, 1);
             OverLoaderPlayerCount = CustomOption.Create(901, false, CustomOptionType.Impostor, "SettingPlayerCountName", ImpostorPlayers[0], ImpostorPlayers[1], ImpostorPlayers[2], ImpostorPlayers[3], OverLoaderOption);

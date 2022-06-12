@@ -33,6 +33,7 @@ namespace SuperNewRoles.Roles
 
         public static void ClearAndReloadRoles()
         {
+            RoleHelpers.DeadCaches = new Dictionary<byte, bool>();
             LateTask.Tasks = new List<LateTask>();
             LateTask.AddTasks = new List<LateTask>();
             BotManager.AllBots = new List<PlayerControl>();
@@ -48,6 +49,7 @@ namespace SuperNewRoles.Roles
             Mode.BattleRoyal.main.VentData = new Dictionary<byte, int?>();
             EndGame.FinalStatusPatch.FinalStatusData.ClearFinalStatusData();
             Mode.ModeHandler.ClearAndReload();
+            MapRemodeling.AdditionalVents.ClearAndReload();
             SoothSayer.ClearAndReload();
             Jester.ClearAndReload();
             Lighter.ClearAndReload();
@@ -142,6 +144,7 @@ namespace SuperNewRoles.Roles
             VentMaker.ClearAndReload();
             GhostMechanic.ClearAndReload();
             EvilHacker.ClearAndReload();
+            HauntedWolf.ClearAndReload();
             OverLoader.ClearAndReload();
             //ロールクリア
             Quarreled.ClearAndReload();
@@ -505,7 +508,7 @@ namespace SuperNewRoles.Roles
                 CoolTime = CustomOptions.ShielderCoolTime.getFloat();
                 DurationTime = CustomOptions.ShielderDurationTime.getFloat();
                 IsShield = new Dictionary<byte, bool>();
-                foreach (PlayerControl p in PlayerControl.AllPlayerControls) RoleClass.Shielder.IsShield[p.PlayerId] = false;
+                foreach (PlayerControl p in CachedPlayer.AllPlayers) RoleClass.Shielder.IsShield[p.PlayerId] = false;
             }
         }
         public static class Freezer
@@ -653,7 +656,7 @@ namespace SuperNewRoles.Roles
                 DownImpoVision = CustomOptions.ClergymanDownVision.getFloat();
                 DefaultImpoVision = PlayerControl.GameOptions.ImpostorLightMod;
                 OldButtonTimer = DateTime.Now;
-                OldButtonTime = Clergyman.DurationTime;
+                OldButtonTime = 0;
             }
         }
         public static class MadMate
@@ -946,7 +949,7 @@ namespace SuperNewRoles.Roles
             public static Sprite getVitalsSprite()
             {
                 if (VitalSprite) return VitalSprite;
-                VitalSprite = HudManager.Instance.UseButton.fastUseSettings[ImageNames.VitalsButton].Image;
+                VitalSprite = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.VitalsButton].Image;
                 return VitalSprite;
             }
             public static void ClearAndReload()
@@ -1040,7 +1043,7 @@ namespace SuperNewRoles.Roles
                 Timer = 0;
                 ButtonTimer = DateTime.Now;
                 CameraDefault = Camera.main.orthographicSize;
-                Default = HudManager.Instance.UICamera.orthographicSize;
+                Default = FastDestroyableSingleton<HudManager>.Instance.UICamera.orthographicSize;
             }
         }
         public static class Egoist
@@ -1445,7 +1448,7 @@ namespace SuperNewRoles.Roles
                 Timer = 0;
                 ButtonTimer = DateTime.Now;
                 CameraDefault = Camera.main.orthographicSize;
-                Default = HudManager.Instance.UICamera.orthographicSize;
+                Default = FastDestroyableSingleton<HudManager>.Instance.UICamera.orthographicSize;
                 Postion = new Vector3(0, 0, 0);
                 timer1 = 0;
                 Timer2 = DateTime.Now;
@@ -1502,7 +1505,7 @@ namespace SuperNewRoles.Roles
                 Timer = 0;
                 ButtonTimer = DateTime.Now;
                 CameraDefault = Camera.main.orthographicSize;
-                Default = HudManager.Instance.UICamera.orthographicSize;
+                Default = FastDestroyableSingleton<HudManager>.Instance.UICamera.orthographicSize;
                 Postion = new Vector3(0, 0, 0);
                 timer1 = 0;
                 Timer2 = DateTime.Now;
@@ -2072,46 +2075,6 @@ namespace SuperNewRoles.Roles
 
             }
         }
-        public static class OverLoader
-        {
-            public static List<PlayerControl> OverLoaderPlayer;
-            public static Color32 color = ImpostorRed;
-            public static float CoolTime;
-            public static float DurationTime;
-            public static float Speed { get { return CustomOptions.OverLoaderSpeed.getFloat(); } }
-            public static bool IsOverLoad;
-            public static bool IsOverLoad_Name;
-            public static List<PlayerControl> OverLoadedPlayer;
-            public static float KillTime;
-            public static DateTime ButtonTimer;
-            public static Dictionary<int, bool> IsBoostPlayers;
-            private static Sprite OverLoadbuttonSprite;
-            private static Sprite UninstallbuttonSprite;
-            public static Sprite getOverLoadButtonSprite()
-            {
-                if (OverLoadbuttonSprite) return OverLoadbuttonSprite;
-                OverLoadbuttonSprite = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.ArsonistDouse.png", 115f);
-                return OverLoadbuttonSprite;
-            }
-            public static Sprite getUninstallButtonSprite()
-            {
-                if (UninstallbuttonSprite) return UninstallbuttonSprite;
-                UninstallbuttonSprite = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.ArsonistIgnite.png", 115f);
-                return UninstallbuttonSprite;
-            }
-            public static void ClearAndReload()
-            {
-                OverLoaderPlayer = new List<PlayerControl>();
-
-                ButtonTimer = DateTime.Now;
-                CoolTime = CustomOptions.OverLoaderCoolTime.getFloat();
-                DurationTime = CustomOptions.OverLoaderDurationTime.getFloat();
-                IsOverLoad = false;
-                IsOverLoad_Name = false;
-                OverLoadedPlayer = new List<PlayerControl>();
-                IsBoostPlayers = new Dictionary<int, bool>();
-            }
-        }
         public static class Samurai
         {
             public static List<PlayerControl> SamuraiPlayer;
@@ -2219,10 +2182,10 @@ namespace SuperNewRoles.Roles
             {
                 if (buttonSprite) return buttonSprite;
                 byte mapId = PlayerControl.GameOptions.MapId;
-                UseButtonSettings button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.PolusAdminButton]; // Polus
-                if (mapId == 0 || mapId == 3) button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.AdminMapButton]; // Skeld || Dleks
-                else if (mapId == 1) button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.MIRAAdminButton]; // Mira HQ
-                else if (mapId == 4) button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.AirshipAdminButton]; // Airship
+                UseButtonSettings button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.PolusAdminButton]; // Polus
+                if (mapId == 0 || mapId == 3) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.AdminMapButton]; // Skeld || Dleks
+                else if (mapId == 1) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.MIRAAdminButton]; // Mira HQ
+                else if (mapId == 4) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.AirshipAdminButton]; // Airship
                 buttonSprite = button.Image;
                 return buttonSprite; //GMHからの引用
             }
@@ -2230,6 +2193,15 @@ namespace SuperNewRoles.Roles
             {
                 EvilHackerPlayer = new List<PlayerControl>();
                 IsCreateMadmate = CustomOptions.EvilHackerMadmateSetting.getBool();
+            }
+        }
+        public static class HauntedWolf
+        {
+            public static List<PlayerControl> HauntedWolfPlayer;
+            public static Color32 color = new Color32(50, 0, 25, byte.MaxValue);
+            public static void ClearAndReload()
+            {
+                HauntedWolfPlayer = new List<PlayerControl>();
             }
         }
         //新ロールクラス
@@ -2256,7 +2228,46 @@ namespace SuperNewRoles.Roles
                 AliveTaskCount = CustomOptions.LoversAliveTaskCount.getBool();
             }
         }
+        public static class OverLoader
+        {
+            public static List<PlayerControl> OverLoaderPlayer;
+            public static Color32 color = ImpostorRed;
+            public static float CoolTime;
+            public static float DurationTime;
+            public static float Speed { get { return CustomOptions.OverLoaderSpeed.getFloat(); } }
+            public static bool IsOverLoad;
+            public static bool IsOverLoad_Name;
+            public static List<PlayerControl> OverLoadedPlayer;
+            public static float KillTime;
+            public static DateTime ButtonTimer;
+            public static Dictionary<int, bool> IsBoostPlayers;
+            private static Sprite OverLoadbuttonSprite;
+            private static Sprite UninstallbuttonSprite;
+            public static Sprite getOverLoadButtonSprite()
+            {
+                if (OverLoadbuttonSprite) return OverLoadbuttonSprite;
+                OverLoadbuttonSprite = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.ArsonistDouse.png", 115f);
+                return OverLoadbuttonSprite;
+            }
+            public static Sprite getUninstallButtonSprite()
+            {
+                if (UninstallbuttonSprite) return UninstallbuttonSprite;
+                UninstallbuttonSprite = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.ArsonistIgnite.png", 115f);
+                return UninstallbuttonSprite;
+            }
+            public static void ClearAndReload()
+            {
+                OverLoaderPlayer = new List<PlayerControl>();
+
+                ButtonTimer = DateTime.Now;
+                CoolTime = CustomOptions.OverLoaderCoolTime.getFloat();
+                DurationTime = CustomOptions.OverLoaderDurationTime.getFloat();
+                IsOverLoad = false;
+                IsOverLoad_Name = false;
+                OverLoadedPlayer = new List<PlayerControl>();
+                IsBoostPlayers = new Dictionary<int, bool>();
+            }
+        }        
     }
 }
-
 

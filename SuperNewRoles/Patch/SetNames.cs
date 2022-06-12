@@ -61,7 +61,7 @@ namespace SuperNewRoles.Patch
                 pro.Value.text = "";
             }
 
-            foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+            foreach (PlayerControl player in CachedPlayer.AllPlayers)
             {
                 player.nameText.text =  ModHelpers.hidePlayerName(PlayerControl.LocalPlayer, player) ? "" : player.CurrentOutfit.PlayerName;
                 if (PlayerControl.LocalPlayer.isImpostor() && (player.isImpostor() || player.isRole(RoleId.Egoist)))
@@ -242,7 +242,7 @@ namespace SuperNewRoles.Patch
         {
             if (PlayerControl.LocalPlayer.isRole(RoleId.Demon) || PlayerControl.LocalPlayer.isDead() || PlayerControl.LocalPlayer.isRole(RoleId.God))
             {
-                foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+                foreach (PlayerControl player in CachedPlayer.AllPlayers)
                 {
                     if (Demon.IsViewIcon(player))
                     {
@@ -258,7 +258,7 @@ namespace SuperNewRoles.Patch
         {
             if (PlayerControl.LocalPlayer.isRole(RoleId.Arsonist) || PlayerControl.LocalPlayer.isDead() || PlayerControl.LocalPlayer.isRole(RoleId.God))
             {
-                foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+                foreach (PlayerControl player in CachedPlayer.AllPlayers)
                 {
                     if (Arsonist.IsViewIcon(player))
                     {
@@ -308,7 +308,7 @@ namespace SuperNewRoles.Patch
             RoleId LocalRole = PlayerControl.LocalPlayer.getRole();
             if (PlayerControl.LocalPlayer.isDead() && LocalRole != RoleId.NiceRedRidingHood)
             {
-                foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+                foreach (PlayerControl player in CachedPlayer.AllPlayers)
                 {
                     SetNamesClass.SetPlayerNameColors(player);
                     SetNamesClass.SetPlayerRoleNames(player);
@@ -316,7 +316,7 @@ namespace SuperNewRoles.Patch
             }
             else if (LocalRole == RoleId.God)
             {
-                foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+                foreach (PlayerControl player in CachedPlayer.AllPlayers)
                 {
                     if (RoleClass.IsMeeting || player.isAlive())
                     {
@@ -333,7 +333,7 @@ namespace SuperNewRoles.Patch
                     (RoleClass.Demon.IsCheckImpostor && LocalRole == RoleId.Demon)
                     )
                 {
-                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                    foreach (PlayerControl p in CachedPlayer.AllPlayers)
                     {
                         if (p.isImpostor())
                         {
@@ -390,7 +390,7 @@ namespace SuperNewRoles.Patch
             {
                 if (Sabotage.SabotageManager.thisSabotage == Sabotage.SabotageManager.CustomSabotage.CognitiveDeficit)
                 {
-                    foreach (PlayerControl p3 in PlayerControl.AllPlayerControls)
+                    foreach (PlayerControl p3 in CachedPlayer.AllPlayers)
                     {
                         if (p3.isAlive() && !Sabotage.CognitiveDeficit.main.OKPlayers.IsCheckListPlayerControl(p3))
                         {
