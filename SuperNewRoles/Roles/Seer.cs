@@ -1,35 +1,23 @@
-using System.Net;
-using System.Linq;
-using BepInEx;
-using BepInEx.Configuration;
-using BepInEx.IL2CPP;
 using HarmonyLib;
-using Hazel;
 using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.IO;
 using UnityEngine;
-using SuperNewRoles.Patches;
-using System.Reflection;
-using SuperNewRoles.Roles;
-using System.Text;
 using SuperNewRoles.CustomRPC;
+using SuperNewRoles.Mode;
+using SuperNewRoles.Helpers;
 
 namespace SuperNewRoles.Roles
 {
     class Seer
     //&MadSeer & EvilSeer & SeerFriends & JackalSeer & Sidekick(Seer)
     {
-
-
         private static Sprite SoulSprite;
         public static Sprite getSoulSprite()
         {
             if (SoulSprite) return SoulSprite;
             SoulSprite = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.Soul.png", 500f);
             return SoulSprite;
-        }
+        }//霊魂のスプライトを取得
 
         public static class ExileControllerWrapUpPatch
         {
@@ -138,13 +126,26 @@ namespace SuperNewRoles.Roles
                                 ModeFlag = RoleClass.JackalSeer.mode <= 1;
                                 break;
                         }
-                        if (PlayerControl.LocalPlayer.isAlive() && CachedPlayer.LocalPlayer.PlayerId != target.PlayerId && ModeFlag)
+                        if (ModeHandler.isMode(ModeId.SuperHostRoles))
                         {
-                            RoleHelpers.ShowFlash(new Color(42f / 255f, 187f / 255f, 245f / 255f));
+                            if (PlayerControl.LocalPlayer.isAlive() && CachedPlayer.LocalPlayer.PlayerId != target.PlayerId && ModeFlag)
+                            {
+                                RoleHelpers.ShowFlash(new Color(42f / 255f, 187f / 255f, 245f / 255f));//点滅の制御は[RoleHelpers.ShowFlash]此処は色の制御のみ
+                            }
+                        }
+                        if (ModeHandler.isMode(ModeId.Default))
+                        {
+                            if (PlayerControl.LocalPlayer.isAlive() && CachedPlayer.LocalPlayer.PlayerId != target.PlayerId && ModeFlag)
+                            {
+                                RPCHelper.RPCSetColorDeathFlasSHR(PlayerControl.LocalPlayer, 0);
+                            }
                         }
                     }
                 }
             }
+            //Mode_0_死の点滅＆幽霊が見える
+            //Mode_1_死の点滅が見える
+            //Mode_2_幽霊が見える
 
         }
 

@@ -14,6 +14,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
     public static class FixedUpdate
     {
         public static Dictionary<int, string> DefaultName = new Dictionary<int, string>();
+        public static Dictionary<int, byte> DefaultColor = new Dictionary<int, byte>();
         private static int UpdateDate = 0;
 
         [HarmonyPatch(typeof(HudManager), nameof(HudManager.CoShowIntro))]
@@ -69,7 +70,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             string callerMethodName = callerMethod.Name;
             string callerClassName = callerMethod.DeclaringType.FullName;
             SuperNewRolesPlugin.Logger.LogInfo(player.name + "への(IsCommsなしの)SetRoleNameが" + callerClassName + "." + callerMethodName + "から呼び出されました。");
-            SetRoleName(player, RoleHelpers.IsComms() , IsUnchecked);
+            SetRoleName(player, RoleHelpers.IsComms(), IsUnchecked);
         }
 
         //短時間で何回も呼ばれると重くなるため更新可能までの時間を指定
@@ -84,7 +85,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             var callerMethod = caller.GetMethod();
             string callerMethodName = callerMethod.Name;
             string callerClassName = callerMethod.DeclaringType.FullName;
-            SuperNewRolesPlugin.Logger.LogInfo(player.name+"へのSetRoleNameが" + callerClassName + "." + callerMethodName + "から呼び出されました。");
+            SuperNewRolesPlugin.Logger.LogInfo(player.name + "へのSetRoleNameが" + callerClassName + "." + callerMethodName + "から呼び出されました。");
 
             //if (UpdateTime.ContainsKey(player.PlayerId) && UpdateTime[player.PlayerId] > 0) return;
 
@@ -93,7 +94,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             List<PlayerControl> DiePlayers = new List<PlayerControl>();
             foreach (PlayerControl p in CachedPlayer.AllPlayers)
             {
-                if (p.PlayerId != 0 && p.PlayerId != player.PlayerId  && p.IsPlayer())
+                if (p.PlayerId != 0 && p.PlayerId != player.PlayerId && p.IsPlayer())
                 {
                     if (p.isDead() || p.isRole(RoleId.God))
                     {
