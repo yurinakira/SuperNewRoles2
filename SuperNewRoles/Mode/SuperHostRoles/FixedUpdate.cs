@@ -44,20 +44,13 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                 return DefaultName[playerid];
             }
         }
-        public static void RoleFixedUpdate()
-        {
-
-
-        }/*
+        public static void RoleFixedUpdate() { }/*
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.SetKillTimer))]
         public class KilltimerSheriff
         {
             public void Prefix()
             {
-                if (ModeHandler.isMode(ModeId.SuperHostRoles) && PlayerControl.LocalPlayer.isRole(CustomRPC.RoleId.Sheriff))
-                {
-
-                }
+                if (ModeHandler.isMode(ModeId.SuperHostRoles) && PlayerControl.LocalPlayer.isRole(CustomRPC.RoleId.Sheriff)) { }
             }
         }*/
         //public static Dictionary<byte, float> UpdateTime;
@@ -69,7 +62,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             var callerMethod = caller.GetMethod();
             string callerMethodName = callerMethod.Name;
             string callerClassName = callerMethod.DeclaringType.FullName;
-            SuperNewRolesPlugin.Logger.LogInfo(player.name + "への(IsCommsなしの)SetRoleNameが" + callerClassName + "." + callerMethodName + "から呼び出されました。");
+            SuperNewRolesPlugin.Logger.LogInfo("[SHR:FixedUpdate]" + player.name + "への(IsCommsなしの)SetRoleNameが" + callerClassName + "." + callerMethodName + "から呼び出されました。");
             SetRoleName(player, RoleHelpers.IsComms(), IsUnchecked);
         }
 
@@ -85,7 +78,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             var callerMethod = caller.GetMethod();
             string callerMethodName = callerMethod.Name;
             string callerClassName = callerMethod.DeclaringType.FullName;
-            SuperNewRolesPlugin.Logger.LogInfo(player.name + "へのSetRoleNameが" + callerClassName + "." + callerMethodName + "から呼び出されました。");
+            SuperNewRolesPlugin.Logger.LogInfo("[SHR: FixedUpdate]" + player.name + "へのSetRoleNameが" + callerClassName + "." + callerMethodName + "から呼び出されました。");
 
             //if (UpdateTime.ContainsKey(player.PlayerId) && UpdateTime[player.PlayerId] > 0) return;
 
@@ -353,7 +346,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             var callerMethod = caller.GetMethod();
             string callerMethodName = callerMethod.Name;
             string callerClassName = callerMethod.DeclaringType.FullName;
-            SuperNewRolesPlugin.Logger.LogInfo("SetRoleNamesが" + callerClassName + "." + callerMethodName + "から呼び出されました。");
+            SuperNewRolesPlugin.Logger.LogInfo("[SHR:FixedUpdate] SetRoleNamesが" + callerClassName + "." + callerMethodName + "から呼び出されました。");
 
             bool commsActive = RoleHelpers.IsComms();
             foreach (PlayerControl p in CachedPlayer.AllPlayers)

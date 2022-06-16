@@ -21,7 +21,6 @@ namespace SuperNewRoles.Roles
 
         public static class ExileControllerWrapUpPatch
         {
-
             public static void WrapUpPostfix(GameData.PlayerInfo exiled)
             {
                 var role = PlayerControl.LocalPlayer.getRole();
@@ -146,12 +145,6 @@ namespace SuperNewRoles.Roles
             //Mode_0_死の点滅＆幽霊が見える
             //Mode_1_死の点滅が見える
             //Mode_2_幽霊が見える
-
         }
-
     }
-
-
 }
-
-
