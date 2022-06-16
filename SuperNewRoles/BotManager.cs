@@ -2,6 +2,7 @@
 using SuperNewRoles.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace SuperNewRoles
@@ -13,17 +14,16 @@ namespace SuperNewRoles
         {
             try
             {
-                if (player == null) return false;
-                if (player.Data.Disconnected) return false;
                 foreach (PlayerControl p in BotManager.AllBots)
                 {
                     if (p.PlayerId == player.PlayerId) return true;
                 }
                 return false;
             }
-            catch
+            catch(Exception e)
             {
-                return false;
+                if (player == null) return true;
+                return player.PlayerId > 14;
             }
         }
         public static bool IsPlayer(this PlayerControl player)
@@ -33,7 +33,7 @@ namespace SuperNewRoles
         public static PlayerControl Spawn(string name = "Bot", byte BotPlayerId = 1)
         {
             byte id = 0;
-            foreach (PlayerControl p in CachedPlayer.AllPlayers)
+            foreach (PlayerControl p in PlayerControl.AllPlayerControls)
             {
                 if (p.PlayerId > id)
                 {
@@ -63,16 +63,16 @@ namespace SuperNewRoles
             Bot.RpcSetNamePlate("nameplate_NoPlate");
             Bot.RpcSetSkin("skin_None");
             GameData.Instance.RpcSetTasks(Bot.PlayerId, new byte[0]);
-            SuperNewRolesPlugin.Logger.LogInfo("botスポーン!\nID:" + Bot.PlayerId + "\nBotName:" + Bot.name);
+            SuperNewRolesPlugin.Logger.LogInfo("botスポーン！\nID:" + Bot.PlayerId + "\nBotName:" + Bot.name);
             AllBots.Add(Bot);
             MessageWriter writer = RPCHelper.StartRPC(CustomRPC.CustomRPC.SetBot);
             writer.Write(Bot.PlayerId);
-            new LateTask(()=>writer.EndRPC(),0.5f);
+            writer.EndRPC();
             return Bot;
         }
         public static void Despawn(PlayerControl Bot)
         {
-            SuperNewRolesPlugin.Logger.LogInfo("botデスポーン!\nID:" + Bot.PlayerId + "\nBotName:" + Bot.name);
+            SuperNewRolesPlugin.Logger.LogInfo("botデスポーン！\nID:" + Bot.PlayerId + "\nBotName:" + Bot.name);
             GameData.Instance.RemovePlayer(Bot.PlayerId);
             AmongUsClient.Instance.Despawn(Bot);
             SuperNewRolesPlugin.Logger.LogInfo("完了！");
@@ -82,7 +82,7 @@ namespace SuperNewRoles
         {
             foreach (PlayerControl Bots in AllBots)
             {
-                SuperNewRolesPlugin.Logger.LogInfo("botデスポーン!\nID:" + Bots.PlayerId + "\nBotName:" + Bots.name);
+                SuperNewRolesPlugin.Logger.LogInfo("botデスポーン！\nID:" + Bots.PlayerId + "\nBotName:" + Bots.name);
                 GameData.Instance.RemovePlayer(Bots.PlayerId);
                 Bots.Despawn();
                 SuperNewRolesPlugin.Logger.LogInfo("完了！");

@@ -14,18 +14,25 @@ namespace SuperNewRoles.Mode.SuperHostRoles.Roles
 {
     class Bait
     {
-        public static void MurderPostfix(PlayerControl __instance, PlayerControl target)
+        public static void MurderPostfix(PlayerControl __instance,PlayerControl target)
         {
-            if (target.isRole(CustomRPC.RoleId.Bait) && (!__instance.isRole(CustomRPC.RoleId.Minimalist) || RoleClass.Minimalist.UseReport))
+            if (target.isRole(CustomRPC.RoleId.Bait) && (!__instance.isRole(CustomRPC.RoleId.Minimalist) && !RoleClass.Minimalist.UseReport))
             {
-                new LateTask(() =>
-                {
-                    if (!(__instance.isRole(CustomRPC.RoleId.Minimalist) && !RoleClass.Minimalist.UseReport))
+                new LateTask(() => {
+                    if (AmongUsClient.Instance.GameState == AmongUsClient.GameStates.Started)
                     {
-                        RoleClass.Bait.ReportedPlayer.Add(target.PlayerId);
-                        __instance.CmdReportDeadBody(target.Data);
+                        if (!(__instance.isRole(CustomRPC.RoleId.Minimalist) && !RoleClass.Minimalist.UseReport))
+                        {
+                            RoleClass.Bait.ReportedPlayer.Add(target.PlayerId);
+                            __instance.CmdReportDeadBody(target.Data);
+                        }
+                        /*
+                        MeetingRoomManager.Instance.AssignSelf(__instance, target.Data);
+                        DestroyableSingleton<HudManager>.Instance.OpenMeetingRoom(__instance);
+                        __instance.RpcStartMeeting(target.Data);
+                        */
                     }
-                }, RoleClass.Bait.ReportTime, "ReportBaitBody");
+                },  0.15f, "ReportBaitBody");
             }
         }
     }

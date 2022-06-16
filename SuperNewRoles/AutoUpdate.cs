@@ -1,10 +1,28 @@
-﻿using HarmonyLib;
+﻿using System;
+using BepInEx;
+using BepInEx.Configuration;
+using BepInEx.IL2CPP;
+using Il2CppSystem;
+using Hazel;
+using HarmonyLib;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Events;
+using UnhollowerBaseLib;
 using System.IO;
 using System.Reflection;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using Twitch;
 
 namespace SuperNewRoles
@@ -59,7 +77,11 @@ namespace SuperNewRoles
                         responseStream.CopyTo(fileStream);
                     }
                 }
+
+                
+
                 SuperNewRolesPlugin.IsUpdate = true;
+
                 return true;
             }
             catch (System.Exception ex)
@@ -129,13 +151,15 @@ namespace SuperNewRoles
                                 browser_download_url.EndsWith(".dll"))
                             {
                                 updateURL = browser_download_url;
-                                await Update();
+                                AutoUpdate.Update();
                                 setdate.SetText(ModTranslation.getString("creditsMain") + "\n" + string.Format(ModTranslation.getString("creditsUpdateOk"), SuperNewRolesPlugin.NewVersion));
                             }
                         }
                     }
+                    
                 }
                 return false;
+
             }
             catch (System.Exception e)
             {

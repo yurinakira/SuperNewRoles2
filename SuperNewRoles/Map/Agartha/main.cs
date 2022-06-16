@@ -11,11 +11,10 @@ namespace SuperNewRoles.Map.Agartha
         {
             get
             {
-                if (thisfloor == null)
+                if(thisfloor == null)
                 {
                     return 1;
-                }
-                else
+                } else
                 {
                     return thisfloor;
                 }
@@ -25,8 +24,7 @@ namespace SuperNewRoles.Map.Agartha
                 if (value == 1 || value == 2)
                 {
                     thisfloor = value;
-                }
-                else
+                } else
                 {
                     thisfloor = 1;
                 }

@@ -3,6 +3,8 @@ using Hazel;
 using SuperNewRoles.Buttons;
 using SuperNewRoles.Mode;
 using System;
+using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace SuperNewRoles.Roles
@@ -21,8 +23,7 @@ namespace SuperNewRoles.Roles
             if (PlayerControl.LocalPlayer.isImpostor())
             {
                 CoolTime = RoleClass.EvilScientist.CoolTime;
-            }
-            else
+            } else
             {
                 CoolTime = RoleClass.NiceScientist.CoolTime;
             }
@@ -32,25 +33,27 @@ namespace SuperNewRoles.Roles
         public static void Start()
         {
             RoleClass.NiceScientist.IsScientist = true;
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetScientistRPC, Hazel.SendOption.Reliable, -1);
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetScientistRPC, Hazel.SendOption.Reliable, -1);
             writer.Write(true);
-            writer.Write(CachedPlayer.LocalPlayer.PlayerId);
+            writer.Write(PlayerControl.LocalPlayer.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
-            CustomRPC.RPCProcedure.SetScientistRPC(true, CachedPlayer.LocalPlayer.PlayerId);
+            CustomRPC.RPCProcedure.SetScientistRPC(true, PlayerControl.LocalPlayer.PlayerId);
             SpeedBooster.ResetCoolDown();
         }
-        public static void ResetScientist() { }
+        public static void ResetScientist()
+        {
+        }
         public static void ScientistEnd()
         {
             RoleClass.NiceScientist.IsScientist = false;
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetScientistRPC, Hazel.SendOption.Reliable, -1);
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetScientistRPC, Hazel.SendOption.Reliable, -1);
             writer.Write(false);
-            writer.Write(CachedPlayer.LocalPlayer.PlayerId);
+            writer.Write(PlayerControl.LocalPlayer.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
-            CustomRPC.RPCProcedure.SetScientistRPC(false, CachedPlayer.LocalPlayer.PlayerId);
+            CustomRPC.RPCProcedure.SetScientistRPC(false, PlayerControl.LocalPlayer.PlayerId);
             ResetScientist();
         }
-        public static void setOpacity(PlayerControl player, float opacity, bool cansee)
+        public static void setOpacity(PlayerControl player, float opacity,bool cansee)
         {
             // Sometimes it just doesn't work?
             var color = Color.Lerp(Palette.ClearWhite, Palette.White, opacity);
@@ -108,7 +111,7 @@ namespace SuperNewRoles.Roles
                     {
                         opacity = Math.Max(opacity, 1.5f);
                     }
-                    setOpacity(Scientist, opacity, canSee);
+                    setOpacity(Scientist, opacity,canSee);
                 }
             }
         }

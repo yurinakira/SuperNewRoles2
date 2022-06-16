@@ -1,5 +1,8 @@
 ﻿using Hazel;
 using SuperNewRoles.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace SuperNewRoles.Roles
 {
@@ -13,11 +16,10 @@ namespace SuperNewRoles.Roles
             BaitReport,
             RedRidingHoodRevive,
             JackalSidekick,
-            JackalSeerSidekick,
             NekomataExiled,
             FoxGuard
         }
-        public static bool IsBlock(BlockTypes blocktype, PlayerControl player = null)
+        public static bool IsBlock(BlockTypes blocktype,PlayerControl player = null)
         {
             if (player == null) player = PlayerControl.LocalPlayer;
             if (!player.isRole(CustomRPC.RoleId.EvilEraser)) return false;
@@ -44,7 +46,7 @@ namespace SuperNewRoles.Roles
             }
             return false;
         }
-        public static bool IsBlockAndTryUse(BlockTypes blocktype, PlayerControl player = null)
+        public static bool IsBlockAndTryUse(BlockTypes blocktype,PlayerControl player = null)
         {
             bool BlockData = IsBlock(blocktype, player);
             if (BlockData)
@@ -60,8 +62,7 @@ namespace SuperNewRoles.Roles
             writer.EndRPC();
             CustomRPC.RPCProcedure.UseEraserCount(player.PlayerId);
         }
-        public static bool IsOKAndTryUse(BlockTypes blocktype, PlayerControl player = null)
-        {
+        public static bool IsOKAndTryUse(BlockTypes blocktype,PlayerControl player = null) {
             return !IsBlockAndTryUse(blocktype, player);
         }
         public static bool IsWinGodGuard = false;
@@ -84,11 +85,9 @@ namespace SuperNewRoles.Roles
                 return true;
             }
             PlayerControl player = GetOnCount();
-            if (player == null)
-            {
+            if (player == null){
                 return false;
-            }
-            else
+            } else
             {
                 IsWinGodGuard = true;
                 UseCount(player);
@@ -116,11 +115,9 @@ namespace SuperNewRoles.Roles
                 return true;
             }
             PlayerControl player = GetOnCount();
-            if (player == null)
-            {
+            if (player == null){
                 return false;
-            }
-            else
+            } else
             {
                 IsWinFoxGuard = true;
                 UseCount(player);

@@ -30,6 +30,7 @@ namespace SuperNewRoles.Mode.BattleRoyal
             BattleRoyalKillButton.Timer = PlayerControl.GameOptions.KillCooldown;
         }
 
+
         private static PlayerControl SheriffKillTarget;
 
         public static void Postfix(HudManager __instance)
@@ -57,7 +58,7 @@ namespace SuperNewRoles.Mode.BattleRoyal
                 8
             );
 
-            BattleRoyalKillButton.buttonText = FastDestroyableSingleton<HudManager>.Instance.KillButton.buttonLabelText.text;
+            BattleRoyalKillButton.buttonText = HudManager.Instance.KillButton.buttonLabelText.text;
             BattleRoyalKillButton.showButtonText = true;
         }
     }

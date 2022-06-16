@@ -17,6 +17,7 @@ namespace SuperNewRoles.CustomCosmetics
     [HarmonyPatch]
     public class CustomVisors
     {
+
         public class CustomVisor
         {
             public string author { get; set; }
@@ -39,10 +40,10 @@ namespace SuperNewRoles.CustomCosmetics
             IsEndDownload = false;
             Directory.CreateDirectory(Path.GetDirectoryName(Application.dataPath) + @"\SuperNewRoles\");
             Directory.CreateDirectory(Path.GetDirectoryName(Application.dataPath) + @"\SuperNewRoles\CustomVisorsChache\");
-            SuperNewRolesPlugin.Logger.LogInfo("[CustomVisor:Download] バイザーダウンロード開始");
+            SuperNewRolesPlugin.Logger.LogInfo("バイザーダウンロード開始");
             FetchHats("https://raw.githubusercontent.com/ykundesu/SuperNewNamePlates/main");
             FetchHats("https://raw.githubusercontent.com/hinakkyu/TheOtherHats/master");
-            FetchHats("https://raw.githubusercontent.com/Ujet222/TOPVisors/main", true);
+            FetchHats("https://raw.githubusercontent.com/Ujet222/TOPVisors/main",true);
             running = true;
         }
         private static string sanitizeResourcePath(string res)
@@ -51,9 +52,9 @@ namespace SuperNewRoles.CustomCosmetics
                 return null;
 
             res = res.Replace("\\", "")
-                    .Replace("/", "")
-                    .Replace("*", "")
-                    .Replace("..", "");
+                     .Replace("/", "")
+                     .Replace("*", "")
+                     .Replace("..", "");
             return res;
         }
         private static bool doesResourceRequireDownload(string respath, string reshash, MD5 md5)
@@ -70,7 +71,7 @@ namespace SuperNewRoles.CustomCosmetics
         public static async Task<HttpStatusCode> FetchHats(string repo, bool IsTOP = false)
         {
             fetchs.Add(repo);
-            SuperNewRolesPlugin.Logger.LogInfo("[CustomVisor:Download] バイザーダウンロード開始:" + repo);
+            SuperNewRolesPlugin.Logger.LogInfo("バイザーダウンロード開始:"+repo);
             HttpClient http = new HttpClient();
             http.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue { NoCache = true };
             var response = await http.GetAsync(new System.Uri($"{repo}/CustomVisors.json"), HttpCompletionOption.ResponseContentRead);
@@ -92,8 +93,8 @@ namespace SuperNewRoles.CustomCosmetics
                 string json = await response.Content.ReadAsStringAsync();
                 string visortext = "Visors";
                 JToken jobj = JObject.Parse(json)["Visors"];
-                if (jobj == null || !jobj.HasValues)
-                {
+                if (jobj == null || !jobj.HasValues) {
+
                     visortext = "visors";
                     jobj = JObject.Parse(json)["visors"];
                     if (jobj == null || !jobj.HasValues)
@@ -106,7 +107,7 @@ namespace SuperNewRoles.CustomCosmetics
 
                 for (JToken current = jobj.First; current != null; current = current.Next)
                 {
-                    if (current != null && current.HasValues)
+                    if (current != null &&  current.HasValues)
                     {
                         CustomVisors.CustomVisor info = new CustomVisors.CustomVisor();
 
@@ -152,7 +153,7 @@ namespace SuperNewRoles.CustomCosmetics
                 SuperNewRolesPlugin.Instance.Log.LogError(ex.ToString());
                 System.Console.WriteLine(ex);
             }
-            SuperNewRolesPlugin.Logger.LogInfo("[CustomVisor:Download] バイザーダウンロード終了:" + repo);
+            SuperNewRolesPlugin.Logger.LogInfo("バイザーダウンロード終了:"+repo);
             fetchs.Remove(repo);
             if (fetchs.Count <= 0)
             {

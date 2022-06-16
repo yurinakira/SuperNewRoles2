@@ -108,6 +108,7 @@ namespace SuperNewRoles.Mode.Detective
         {
             CustomEndGame(__instance, GameOverReason.ImpostorBySabotage, false);
             return;
+                       
         }
 
         internal class PlayerStatistics
@@ -133,6 +134,7 @@ namespace SuperNewRoles.Mode.Detective
                         if (playerInfo.Object.isAlive())
                         {
                             numTotalAlive++;
+
                             if (playerInfo.Object.isImpostor())
                             {
                                 numImpostorsAlive++;
@@ -144,6 +146,7 @@ namespace SuperNewRoles.Mode.Detective
                         }
                     }
                 }
+
                 TeamImpostorsAlive = numImpostorsAlive;
                 TotalAlive = numTotalAlive;
                 CrewAlive = numCrewAlive;

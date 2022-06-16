@@ -24,7 +24,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles.Roles
                     }
                 }
             }
-            SuperNewRolesPlugin.Logger.LogInfo("[SHR:GetRoleText] Return Data:" + returndata);
+            SuperNewRolesPlugin.Logger.LogInfo("returnデータ:"+returndata);
             return returndata;
         }
         public static string GetNameTextPostfix(PlayerControl p)

@@ -1,184 +1,385 @@
 ﻿using HarmonyLib;
-using Hazel;
-using SuperNewRoles.Buttons;
 using SuperNewRoles.CustomRPC;
 using SuperNewRoles.Helpers;
-using SuperNewRoles.Mode;
+using SuperNewRoles.Mode.SuperHostRoles.Roles;
+using SuperNewRoles.Patch;
+using SuperNewRoles.Patches;
 using SuperNewRoles.Roles;
-using SuperNewRoles.Sabotage;
-using SuperNewRoles.CustomOption;
-using SuperNewRoles.Mode.SuperHostRoles;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
-namespace SuperNewRoles.Patch
+namespace SuperNewRoles.Mode.SuperHostRoles
 {
-    [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.StartGame))]
-    public class StartGame
+    public static class FixedUpdate
     {
-        public static void Postfix(PlayerControl __instance)
+        public static Dictionary<int, string> DefaultName = new Dictionary<int, string>();
+        private static int UpdateDate = 0;
+
+        [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnPlayerJoined))]
+        public class AmongUsClientOnPlayerJoinedPatch
         {
-            FixedUpdate.IsProDown = ConfigRoles.CustomProcessDown.Value;
-        }
-    }
-    [HarmonyPatch(typeof(AbilityButton), nameof(AbilityButton.Update))]
-    public class AbilityUpdate
-    {
-        public static void Postfix(AbilityButton __instance)
-        {
-            if (CachedPlayer.LocalPlayer.Data.Role.IsSimpleRole && __instance.commsDown.active)
+            public static void Postfix()
             {
-                __instance.commsDown.SetActive(false);
+                DefaultName = new Dictionary<int, string>();
             }
         }
-    }
-
-    [HarmonyPatch(typeof(ControllerManager), nameof(ControllerManager.Update))]
-    class DebugManager
-    {
-        public static void Postfix(ControllerManager __instance)
+        public static string getDefaultName(this PlayerControl player)
         {
-            if (AmongUsClient.Instance.GameState == AmongUsClient.GameStates.Started)
+            var playerid = player.PlayerId;
+            if (DefaultName.ContainsKey(playerid))
             {
-                if (AmongUsClient.Instance.AmHost && Input.GetKeyDown(KeyCode.H) && Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.RightShift))
+                return DefaultName[playerid];
+            }
+            else
+            {
+                DefaultName[playerid] = player.nameText.text;
+                return DefaultName[playerid];
+            }
+        }
+        public static void RoleFixedUpdate()
+        {
+
+
+        }/*
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.SetKillTimer))]
+        public class KilltimerSheriff
+        {
+            public void Prefix()
+            {
+                if (ModeHandler.isMode(ModeId.SuperHostRoles) && PlayerControl.LocalPlayer.isRole(CustomRPC.RoleId.Sheriff))
                 {
-                    RPCHelper.StartRPC(CustomRPC.CustomRPC.SetHaison).EndRPC();
-                    RPCProcedure.SetHaison();
-                    MapUtilities.CachedShipStatus.enabled = false;
-                    ShipStatus.RpcEndGame(GameOverReason.HumansByTask, false);
+
                 }
             }
-        }
-    }
-    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
-    public class FixedUpdate
-    {
-        static void setBasePlayerOutlines()
+        }*/
+        private static int a = 0;
+        public static void SetRoleNames(bool IsUnchecked = false)
         {
-            foreach (PlayerControl target in CachedPlayer.AllPlayers)
+            if (!AmongUsClient.Instance.AmHost) return;
+            bool commsActive = false;
+            if (RoleClass.Technician.TechnicianPlayer.Count != 0)
             {
-                if (target == null || target.MyRend == null) continue;
-                target.MyRend.material.SetFloat("_Outline", 0f);
-            }
-        }
-
-        private static bool ProDown = false;
-        public static bool IsProDown;
-
-        public static void Postfix(PlayerControl __instance)
-        {
-            if (__instance == PlayerControl.LocalPlayer)
-            {
-                if (IsProDown)
+                foreach (PlayerTask t in PlayerControl.LocalPlayer.myTasks)
                 {
-                    ProDown = !ProDown;
-                    if (ProDown)
+                    if (t.TaskType == TaskTypes.FixComms)
                     {
-                        return;
+                        commsActive = true;
+                        break;
                     }
                 }
-                if (AmongUsClient.Instance.GameState == AmongUsClient.GameStates.Started)
+            }
+            List<PlayerControl> DiePlayers = new List<PlayerControl>();
+            foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+            {
+                if (!p.Data.Disconnected && p.PlayerId != 0 && p.IsPlayer())
                 {
-                    setBasePlayerOutlines();
-                    VentAndSabo.VentButtonVisibilityPatch.Postfix(__instance);
-                    SerialKiller.FixedUpdate();
-                    if (ModeHandler.isMode(ModeId.NotImpostorCheck))
+                    if (p.isDead() || p.isRole(RoleId.God))
                     {
-                        Mode.NotImpostorCheck.NameSet.Postfix();
+                        DiePlayers.Add(p);
                     }
-                    else if (ModeHandler.isMode(ModeId.SuperHostRoles))
+                }
+            }
+            foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+            {
+                if (!p.Data.Disconnected && p.IsPlayer())
+                {
+                    string Suffix = "";
+                    if (!p.IsMod() && p.isAlive())
                     {
-                        Mode.SuperHostRoles.FixedUpdate.Update();
-                        Fox.FixedUpdate.Postfix();
-                    }
-                    else if (ModeHandler.isMode(ModeId.Default))
-                    {
-                        SabotageManager.Update();
-                        SetNameUpdate.Postfix(__instance);
-                        Jackal.JackalFixedPatch.Postfix(__instance);
-                        JackalSeer.JackalSeerFixedPatch.Postfix(__instance);
-                        if (PlayerControl.LocalPlayer.isAlive())
+                        if (RoleClass.Celebrity.ChangeRoleView)
                         {
-                            if (PlayerControl.LocalPlayer.isImpostor()) { SetTarget.ImpostorSetTarget(); }
-                            var MyRole = PlayerControl.LocalPlayer.getRole();
-                            switch (MyRole)
+                            foreach (PlayerControl p2 in RoleClass.Celebrity.ViewPlayers)
                             {
-                                case RoleId.Researcher:
-                                    Researcher.ReseUseButtonSetTargetPatch.Postfix(PlayerControl.LocalPlayer);
-                                    break;
-                                case RoleId.Pursuer:
-                                    Pursuer.PursureUpdate.Postfix();
-                                    break;
-                                case RoleId.Levelinger:
-                                    if (RoleClass.Levelinger.IsPower(RoleClass.Levelinger.LevelPowerTypes.Pursuer))
-                                    {
-                                        if (!RoleClass.Pursuer.arrow.arrow.active)
-                                        {
-                                            RoleClass.Pursuer.arrow.arrow.SetActive(true);
-                                        }
-                                        Pursuer.PursureUpdate.Postfix();
-                                    }
-                                    else
-                                    {
-                                        if (RoleClass.Pursuer.arrow.arrow.active)
-                                        {
-                                            RoleClass.Pursuer.arrow.arrow.SetActive(false);
-                                        }
-                                    }
-                                    break;
-                                case RoleId.Hawk:
-                                    Hawk.FixedUpdate.Postfix();
-                                    break;
-                                case RoleId.NiceHawk:
-                                    NiceHawk.FixedUpdate.Postfix();
-                                    break;
-                                case RoleId.MadHawk:
-                                    MadHawk.FixedUpdate.Postfix();
-                                    break;
-                                case RoleId.Vampire:
-                                    Vampire.FixedUpdate.Postfix();
-                                    break;
-                                case RoleId.DarkKiller:
-                                    DarkKiller.FixedUpdate.Postfix();
-                                    break;
-                                case RoleId.Vulture:
-                                    Vulture.FixedUpdate.Postfix();
-                                    break;
+                                if( p.PlayerId != p2.PlayerId )
+                                {
+                                    p2.RpcSetNamePrivate(ModHelpers.cs(RoleClass.Celebrity.color, p2.getDefaultName()), p);
+                                }
                             }
-                            Fox.FixedUpdate.Postfix();
-                            Minimalist.FixedUpdate.Postfix();
                         }
                         else
                         {
-                            if (PlayerControl.LocalPlayer.isRole(RoleId.Bait))
+                            foreach (PlayerControl p2 in RoleClass.Celebrity.CelebrityPlayer)
                             {
-                                if (!RoleClass.Bait.Reported)
+                                if(p.PlayerId != p2.PlayerId)
                                 {
-                                    Bait.BaitUpdate.Postfix(__instance);
-                                }
-                            }
-                            else if (PlayerControl.LocalPlayer.isRole(RoleId.SideKiller))
-                            {
-                                var sideplayer = RoleClass.SideKiller.getSidePlayer(PlayerControl.LocalPlayer);
-                                if (sideplayer != null)
-                                {
-                                    if (!RoleClass.SideKiller.IsUpMadKiller)
-                                    {
-                                        sideplayer.RPCSetRoleUnchecked(RoleTypes.Impostor);
-                                        RoleClass.SideKiller.IsUpMadKiller = true;
-                                    }
+                                    p2.RpcSetNamePrivate(ModHelpers.cs(RoleClass.Celebrity.color, p2.getDefaultName()), p);
                                 }
                             }
                         }
+                        bool IsMadmateCheck = Madmate.CheckImpostor(p);
+                        if (IsMadmateCheck)
+                        {
+                            foreach (PlayerControl p2 in PlayerControl.AllPlayerControls)
+                            {
+                                if (!p2.Data.Disconnected && p2.isImpostor())
+                                {
+                                    p2.RpcSetNamePrivate(ModHelpers.cs(RoleClass.ImpostorRed, p2.getDefaultName()), p);
+                                }
+                            }
+                            //Madmate.CheckedImpostor.Add(p.PlayerId);
+                        }
+                        bool IsMadStuntManCheck = MadStuntMan.CheckImpostor(p);
+                        //  SuperNewRolesPlugin.Logger.LogInfo("マッドスタントマンがチェックできるか:"+IsMadStuntManCheck);
+                        if (IsMadStuntManCheck)
+                        {
+                            foreach (PlayerControl p2 in PlayerControl.AllPlayerControls)
+                            {
+                                if (!p2.Data.Disconnected && !p2.isImpostor())
+                                {
+                                    p2.RpcSetNamePrivate(p2.getDefaultName(), p);
+                                }
+                                else if (!p2.Data.Disconnected && p2.isImpostor())
+                                {
+                                    p2.RpcSetNamePrivate(ModHelpers.cs(RoleClass.ImpostorRed, p2.getDefaultName()), p);
+                                }
+                            }
+                            //MadStuntMan.CheckedImpostor.Add(p.PlayerId);
+                        }
+
+                        if (p.isRole(RoleId.JackalFriends) && RoleClass.JackalFriends.IsJackalCheck)
+                        {
+                            foreach (PlayerControl p2 in PlayerControl.AllPlayerControls)
+                            {
+                                if (!p2.Data.Disconnected && !p2.isRole(RoleId.Jackal))
+                                {
+                                    p2.RpcSetNamePrivate(p2.getDefaultName(), p);
+                                }
+                                else if (!p2.Data.Disconnected && p2.isRole(RoleId.Jackal))
+                                {
+                                    p2.RpcSetNamePrivate(ModHelpers.cs(RoleClass.Jackal.color, p2.getDefaultName()), p);
+                                }
+                            }
+                            //MadStuntMan.CheckedImpostor.Add(p.PlayerId);
+                        }
+                        if (p.IsLovers() && p.isAlive())
+                        {
+                            var suffix = ModHelpers.cs(RoleClass.Lovers.color, " ♥");
+                            PlayerControl Side = p.GetOneSideLovers();
+                            string name = Side.getDefaultName();
+                            if (Madmate.CheckImpostor(p) && (Side.isImpostor() || Side.isRole(RoleId.Egoist)))
+                            {
+                                name = ModHelpers.cs(RoleClass.ImpostorRed, name);
+                            } else if (Side.isRole(RoleId.Celebrity) || (RoleClass.Celebrity.ChangeRoleView && RoleClass.Celebrity.ViewPlayers.IsCheckListPlayerControl(Side)))
+                            {
+                                name = ModHelpers.cs(RoleClass.Celebrity.color, name);
+                            } else if (p.isRole(RoleId.JackalFriends) && RoleClass.JackalFriends.IsJackalCheck && Side.isRole(RoleId.Jackal))
+                            {
+                                name = ModHelpers.cs(RoleClass.Jackal.color, name);
+                            }
+                            Side.RpcSetNamePrivate(name + suffix, p);
+                        }
+                        if (p.IsQuarreled() && p.isAlive())
+                        {
+                            var suffix = ModHelpers.cs(RoleClass.Quarreled.color, "○");
+                            PlayerControl Side = p.GetOneSideQuarreled();
+                            string name = Side.getDefaultName();
+                            if (Madmate.CheckImpostor(p) && (Side.isImpostor() || Side.isRole(RoleId.Egoist)))
+                            {
+                                name = ModHelpers.cs(RoleClass.ImpostorRed, name);
+                            }
+                            else if (Side.isRole(RoleId.Celebrity) || (RoleClass.Celebrity.ChangeRoleView && RoleClass.Celebrity.ViewPlayers.IsCheckListPlayerControl(Side)))
+                            {
+                                name = ModHelpers.cs(RoleClass.Celebrity.color, name);
+                            }
+                            else if (p.isRole(RoleId.JackalFriends) && RoleClass.JackalFriends.IsJackalCheck && Side.isRole(RoleId.Jackal))
+                            {
+                                name = ModHelpers.cs(RoleClass.Jackal.color, name);
+                            }
+                            if (Side.IsLovers())
+                            {
+                                suffix += ModHelpers.cs(RoleClass.Lovers.color, " ♥");
+                            }
+                            Side.RpcSetNamePrivate(name + suffix, p);
+                        }
                     }
-                    else
+                    if (p.IsLovers())
                     {
-                        ModeHandler.FixedUpdate(__instance);
+                        Suffix += ModHelpers.cs(RoleClass.Lovers.color, " ♥");
+                    }
+                    if (p.IsQuarreled())
+                    {
+                        Suffix += ModHelpers.cs(RoleClass.Quarreled.color, "○");
+                    }
+                    if (p.isRole(RoleId.Sheriff) || RoleClass.SchrodingerCat.IsSheriff(p))
+                    {
+                        if (RoleClass.Sheriff.KillCount.ContainsKey(p.PlayerId))
+                        {
+                            Suffix += "(残り" + RoleClass.Sheriff.KillCount[p.PlayerId] + "発)";
+                        }
+                    } else if (p.isRole(RoleId.RemoteSheriff))
+                    {
+                        if (RoleClass.RemoteSheriff.KillCount.ContainsKey(p.PlayerId))
+                        {
+                            Suffix += "(残り" + RoleClass.RemoteSheriff.KillCount[p.PlayerId] + "発)";
+                        }
+                    }
+                    var introdate = SuperNewRoles.Intro.IntroDate.GetIntroDate(p.getRole(), p);
+                    string TaskText = "";
+                    if (!p.isImpostor())
+                    {
+                        try
+                        {
+                            if (commsActive)
+                            {
+                                var all = TaskCount.TaskDateNoClearCheck(p.Data).Item2;
+                                TaskText = ModHelpers.cs(Color.yellow, "(?/" + all + ")");
+                            }
+                            else
+                            {
+                                var (complate, all) = TaskCount.TaskDateNoClearCheck(p.Data);
+                                TaskText = ModHelpers.cs(Color.yellow, "(" + complate + "/" + all + ")");
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                    string NewName = "";
+                    Color color = introdate.color;
+
+                    if (p.isRole(RoleId.SchrodingerCat))
+                    {
+                        if (RoleClass.SchrodingerCat.IsJackal())
+                        {
+                            color = RoleClass.Jackal.color;
+                        } else if (RoleClass.SchrodingerCat.IsImpostor())
+                        {
+                            color = RoleClass.ImpostorRed;
+                        } else if (RoleClass.SchrodingerCat.IsSheriff())
+                        {
+                            color = RoleClass.Sheriff.color;
+                        } else if (RoleClass.SchrodingerCat.IsCrewTeam())
+                        {
+                            color = Color.white;
+                        }
+                    }
+
+                    if ((p.isDead() || p.isRole(RoleId.God)) && !IsUnchecked)
+                    {
+                        NewName = "(<size=75%>" + ModHelpers.cs(color, introdate.Name) + TaskText + GetRoleTextClass.GetRoleTextPostfix(p) + "</size>)" + ModHelpers.cs(color, p.getDefaultName() + Suffix);
+                    }
+                    else if (p.isAlive() || IsUnchecked)
+                    {
+                        NewName = "<size=75%>" + ModHelpers.cs(color, introdate.Name) + TaskText + GetRoleTextClass.GetRoleTextPostfix(p) + "</size>\n" + ModHelpers.cs(color, p.getDefaultName() + Suffix);
+                    }
+                    if (!p.IsMod())
+                    {
+                        p.RpcSetNamePrivate(NewName);
+                    }
+                    if (p.isRole(RoleId.Jackal) || RoleClass.SchrodingerCat.IsJackal(p))
+                    {
+                        foreach(PlayerControl player in RoleClass.SchrodingerCat.SchrodingerCatPlayer)
+                        {
+                            if (RoleClass.SchrodingerCat.IsJackal(player) && p.PlayerId != player.PlayerId)
+                            {
+                                player.RpcSetNamePrivate(ModHelpers.cs(RoleClass.Jackal.color,player.getDefaultName()),p);
+                            }
+                        }
+                    }
+                    if (p.isImpostor() || RoleClass.SchrodingerCat.IsImpostor(p))
+                    {
+                        foreach (PlayerControl player in RoleClass.SchrodingerCat.SchrodingerCatPlayer)
+                        {
+                            if (RoleClass.SchrodingerCat.IsImpostor(player) && p.PlayerId != player.PlayerId)
+                            {
+                                player.RpcSetNamePrivate(ModHelpers.cs(RoleClass.ImpostorRed, player.getDefaultName()), p);
+                            }
+                        }
+                    }
+                    foreach (PlayerControl p2 in DiePlayers)
+                    {
+                        if (p.PlayerId != p2.PlayerId && !p2.IsMod() && !p2.Data.Disconnected)
+                        {
+                            p.RpcSetNamePrivate(NewName, p2);
+                        }
                     }
                 }
-                else if (AmongUsClient.Instance.GameState == AmongUsClient.GameStates.Joined) { }
+            }
+        }
+        public static void Update()
+        {
+            if (PlayerControl.LocalPlayer.isRole(RoleId.Sheriff) || RoleClass.SchrodingerCat.IsSheriff())
+            {
+                if (RoleClass.Sheriff.KillMaxCount >= 1)
+                {
+                    HudManager.Instance.KillButton.gameObject.SetActive(true);
+                    PlayerControl.LocalPlayer.Data.Role.CanUseKillButton = true;
+                    DestroyableSingleton<HudManager>.Instance.KillButton.SetTarget(PlayerControlFixedUpdatePatch.setTarget());
+                    if (Input.GetKeyDown(KeyCode.Q))
+                    {
+                        DestroyableSingleton<HudManager>.Instance.KillButton.DoClick();
+                    }
+                }
+                else
+                {
+                    HudManager.Instance.KillButton.gameObject.SetActive(false);
+                    PlayerControl.LocalPlayer.Data.Role.CanUseKillButton = false;
+                    DestroyableSingleton<HudManager>.Instance.KillButton.SetTarget(null);
+                }
+            }
+            else if (PlayerControl.LocalPlayer.isRole(RoleId.RemoteSheriff))
+            {
+                HudManager.Instance.KillButton.gameObject.SetActive(true);
+                PlayerControl.LocalPlayer.Data.Role.CanUseKillButton = true;
+                DestroyableSingleton<HudManager>.Instance.KillButton.SetTarget(PlayerControl.LocalPlayer);
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    DestroyableSingleton<HudManager>.Instance.KillButton.DoClick();
+                }
+            }
+            else if (PlayerControl.LocalPlayer.isRole(RoleId.Egoist))
+            {
+                HudManager.Instance.KillButton.gameObject.SetActive(true);
+                PlayerControl.LocalPlayer.Data.Role.CanUseKillButton = true;
+                DestroyableSingleton<HudManager>.Instance.KillButton.SetTarget(PlayerControlFixedUpdatePatch.setTarget());
+            }
+            else if (PlayerControl.LocalPlayer.isRole(RoleId.Jackal) ||
+                RoleClass.SchrodingerCat.IsImpostor() ||
+                RoleClass.SchrodingerCat.IsJackal())
+            {
+                HudManager.Instance.KillButton.gameObject.SetActive(true);
+                PlayerControl.LocalPlayer.Data.Role.CanUseKillButton = true;
+                DestroyableSingleton<HudManager>.Instance.KillButton.SetTarget(PlayerControlFixedUpdatePatch.setTarget());
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    DestroyableSingleton<HudManager>.Instance.KillButton.DoClick();
+                }
+            }
+            SetNameUpdate.Postfix(PlayerControl.LocalPlayer);
+            if (!AmongUsClient.Instance.AmHost) return;
+            foreach (PlayerControl p in BotManager.AllBots)
+            {
+                p.NetTransform.RpcSnapTo(new Vector2(99999, 99999));
+            }
+            if (AmongUsClient.Instance.GameState == AmongUsClient.GameStates.Started)
+            {
+                UpdateDate--;
+                RoleFixedUpdate();
+                if (AmongUsClient.Instance.AmHost)
+                {
+                    BlockTool.FixedUpdate();
+                    if (UpdateDate <= 0)
+                    {
+                        UpdateDate = 15;
+                        if (RoleClass.IsMeeting)
+                        {
+                            SetDefaultNames();
+                        }
+                        else
+                        {
+                            SetRoleNames();
+                        }
+                    }
+                }
+            }
+        }
+        public static void SetDefaultNames()
+        {
+            foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+            {
+                p.RpcSetName(p.getDefaultName());
             }
         }
     }

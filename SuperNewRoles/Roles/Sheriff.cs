@@ -1,8 +1,14 @@
-﻿using System;
+﻿using HarmonyLib;
+using Hazel;
+using System;
+using System.Collections.Generic;
+using SuperNewRoles.Patches;
+using UnityEngine;
 using SuperNewRoles.Buttons;
+using SuperNewRoles.CustomOption;
 
 namespace SuperNewRoles.Roles
-{
+{    
     class Sheriff
     {
         public static void ResetKillCoolDown()
@@ -33,12 +39,6 @@ namespace SuperNewRoles.Roles
             if (Target.isRole(CustomRPC.RoleId.MadMayor) && RoleClass.Sheriff.IsMadRoleKill) return true;
             if (Target.isRole(CustomRPC.RoleId.MadHawk) && RoleClass.Sheriff.IsMadRoleKill) return true;
             if (Target.isRole(CustomRPC.RoleId.MadSeer) && RoleClass.Sheriff.IsMadRoleKill) return true;
-            if (Target.isRole(CustomRPC.RoleId.MadMaker) && RoleClass.Sheriff.IsMadRoleKill) return true;
-            if (Target.isRole(CustomRPC.RoleId.JackalFriends) && RoleClass.Sheriff.IsMadRoleKill) return true;
-            if (Target.isRole(CustomRPC.RoleId.SeerFriends) && RoleClass.Sheriff.IsMadRoleKill) return true;
-            if (Target.isRole(CustomRPC.RoleId.MayorFriends) && RoleClass.Sheriff.IsMadRoleKill) return true;
-            if (Target.isRole(CustomRPC.RoleId.HauntedWolf)) return true;
-            //シェリフキルゥ
             return false;
         }
         public static bool IsRemoteSheriffKill(PlayerControl Target)
@@ -54,12 +54,6 @@ namespace SuperNewRoles.Roles
             if (Target.isRole(CustomRPC.RoleId.MadMayor) && RoleClass.RemoteSheriff.IsMadRoleKill) return true;
             if (Target.isRole(CustomRPC.RoleId.MadHawk) && RoleClass.RemoteSheriff.IsMadRoleKill) return true;
             if (Target.isRole(CustomRPC.RoleId.MadSeer) && RoleClass.RemoteSheriff.IsMadRoleKill) return true;
-            if (Target.isRole(CustomRPC.RoleId.MadMaker) && RoleClass.RemoteSheriff.IsMadRoleKill) return true;
-            if (Target.isRole(CustomRPC.RoleId.JackalFriends) && RoleClass.RemoteSheriff.IsMadRoleKill) return true;
-            if (Target.isRole(CustomRPC.RoleId.SeerFriends) && RoleClass.Sheriff.IsMadRoleKill) return true;
-            if (Target.isRole(CustomRPC.RoleId.MayorFriends) && RoleClass.RemoteSheriff.IsMadRoleKill) return true;
-            if (Target.isRole(CustomRPC.RoleId.HauntedWolf)) return true;
-            //リモシェリフキルゥ
             return false;
         }
         public static bool IsSheriff(PlayerControl Player)

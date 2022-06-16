@@ -21,8 +21,11 @@ using System.Security.Cryptography;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
+
 namespace SuperNewRoles.CustomCosmetics
 {
+
+
     [HarmonyPatch]
     public class CustomHats
     {
@@ -114,8 +117,10 @@ namespace SuperNewRoles.CustomCosmetics
                     hat.backflipresource = bfr;
                 if (hat.backresource != null)
                     hat.behind = true;
+
                 customhats.Add(hat);
             }
+
             return customhats;
         }
 
@@ -156,6 +161,7 @@ namespace SuperNewRoles.CustomCosmetics
             hat.Free = true;
             hat.NotInStore = true;
 
+
             if (ch.adaptive && hatShader != null)
                 hat.hatViewData.viewData.AltShader = hatShader;
 
@@ -178,6 +184,7 @@ namespace SuperNewRoles.CustomCosmetics
             {
                 CustomHatRegistry.Add(hat.name, extend);
             }
+
             return hat;
         }
 
@@ -286,7 +293,7 @@ namespace SuperNewRoles.CustomCosmetics
                     List<CustomHat> hats = createCustomHatDetails(filePaths, true);
                     if (hats.Count > 0)
                     {
-                        foreach (PlayerControl pc in CachedPlayer.AllPlayers)
+                        foreach (PlayerControl pc in PlayerControl.AllPlayerControls)
                         {
                             var color = pc.CurrentOutfit.ColorId;
                             pc.SetHat("hat_dusk", color);
@@ -347,7 +354,7 @@ namespace SuperNewRoles.CustomCosmetics
                     float ypos = offset - (i / __instance.NumPerRow) * __instance.YOffset;
                     ColorChip colorChip = UnityEngine.Object.Instantiate<ColorChip>(__instance.ColorTabPrefab, __instance.scroller.Inner);
 
-                    int color = __instance.HasLocalPlayer() ? CachedPlayer.LocalPlayer.Data.DefaultOutfit.ColorId : SaveManager.BodyColor;
+                    int color = __instance.HasLocalPlayer() ? PlayerControl.LocalPlayer.Data.DefaultOutfit.ColorId : SaveManager.BodyColor;
 
                     colorChip.transform.localPosition = new Vector3(xpos, ypos, inventoryZ);
                     if (ActiveInputManager.currentControlType == ActiveInputManager.InputType.Keyboard)
@@ -367,6 +374,7 @@ namespace SuperNewRoles.CustomCosmetics
                     colorChip.Button.ClickMask = __instance.scroller.Hitbox;
                     __instance.ColorChips.Add(colorChip);
                 }
+
                 return offset - ((numHats - 1) / __instance.NumPerRow) * __instance.YOffset - headerSize;
             }
 
@@ -405,10 +413,9 @@ namespace SuperNewRoles.CustomCosmetics
 
                 float YOffset = __instance.YStart;
 
-                var orderedKeys = packages.Keys.OrderBy((string x) =>
-                {
+                var orderedKeys = packages.Keys.OrderBy((string x) => {
                     if (x == innerslothPackageName) return 100003;
-
+                    
                     if (x == "developerHats") return 20;
                     if (x.Contains("gmEdition")) return 40;
                     if (x.Contains("shiune")) return 30;
@@ -466,6 +473,7 @@ namespace SuperNewRoles.CustomCosmetics
             "https://raw.githubusercontent.com/haoming37/TheOtherHats-GM-Haoming/master",
             "https://raw.githubusercontent.com/yukinogatari/TheOtherHats-GM/master",
             "https://raw.githubusercontent.com/Eisbison/TheOtherHats/master"*/
+            
         };
 
         public static List<CustomHatOnline> hatDetails = new List<CustomHatOnline>();
@@ -484,14 +492,14 @@ namespace SuperNewRoles.CustomCosmetics
             Directory.CreateDirectory(Path.GetDirectoryName(Application.dataPath) + @"\SuperNewRoles\CustomHatsChache\");
             hatDetails = new List<CustomHatOnline>();
             List<string> repos = new List<string>(hatRepos);
-            SuperNewRolesPlugin.Logger.LogInfo("[CustomHats] フェチ");
+            SuperNewRolesPlugin.Logger.LogInfo("フェチ");
             foreach (string repo in repos)
             {
                 Repos.Add(repo);
             }
             foreach (string repo in repos)
             {
-                SuperNewRolesPlugin.Logger.LogInfo("[CustomHats] ハットスタート:" + repo);
+                SuperNewRolesPlugin.Logger.LogInfo("ハットスタート:"+repo);
                 try
                 {
                     HttpStatusCode status = await FetchHats(repo);
@@ -514,9 +522,9 @@ namespace SuperNewRoles.CustomCosmetics
                 return null;
 
             res = res.Replace("\\", "")
-                    .Replace("/", "")
-                    .Replace("*", "")
-                    .Replace("..", "");
+                     .Replace("/", "")
+                     .Replace("*", "")
+                     .Replace("..", "");
             return res;
         }
         public static List<string> Repos = new List<string>();
@@ -551,7 +559,7 @@ namespace SuperNewRoles.CustomCosmetics
                         info.resource = sanitizeResourcePath(current["resource"]?.ToString());
                         if (info.resource == null || info.name == null) // required
                             continue;
-                        info.reshasha = info.resource + info.name + info.author;
+                        info.reshasha = info.resource+info.name+info.author;
                         info.backresource = sanitizeResourcePath(current["backresource"]?.ToString());
                         info.reshashb = current["reshashb"]?.ToString();
                         info.climbresource = sanitizeResourcePath(current["climbresource"]?.ToString());
@@ -597,6 +605,7 @@ namespace SuperNewRoles.CustomCosmetics
 
                 foreach (var file in markedfordownload)
                 {
+
                     var hatFileResponse = await http.GetAsync($"{repo}/hats/{file}", HttpCompletionOption.ResponseContentRead);
                     if (hatFileResponse.StatusCode != HttpStatusCode.OK) continue;
                     using (var responseStream = await hatFileResponse.Content.ReadAsStreamAsync())

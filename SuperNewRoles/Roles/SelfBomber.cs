@@ -1,5 +1,8 @@
 ﻿using Hazel;
 using SuperNewRoles.Buttons;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace SuperNewRoles.Roles
@@ -28,22 +31,22 @@ namespace SuperNewRoles.Roles
             }
         }
         public static void SelfBomb() {
-            foreach (PlayerControl p in CachedPlayer.AllPlayers) {
-                if (p.isAlive() && p.PlayerId!= CachedPlayer.LocalPlayer.PlayerId) {
+            foreach (PlayerControl p in PlayerControl.AllPlayerControls) {
+                if (p.isAlive() && p.PlayerId!= PlayerControl.LocalPlayer.PlayerId) {
                     if (GetIsBomb(PlayerControl.LocalPlayer, p)) {
 
-                        CustomRPC.RPCProcedure.ByBomKillRPC(CachedPlayer.LocalPlayer.PlayerId, p.PlayerId);
+                        CustomRPC.RPCProcedure.ByBomKillRPC(PlayerControl.LocalPlayer.PlayerId, p.PlayerId);
 
-                        MessageWriter Writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.ByBomKillRPC, Hazel.SendOption.Reliable, -1);
-                        Writer.Write(CachedPlayer.LocalPlayer.PlayerId);
+                        MessageWriter Writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.ByBomKillRPC, Hazel.SendOption.Reliable, -1);
+                        Writer.Write(PlayerControl.LocalPlayer.PlayerId);
                         Writer.Write(p.PlayerId);
                         AmongUsClient.Instance.FinishRpcImmediately(Writer);
                     }
                 }
             }
-            CustomRPC.RPCProcedure.BomKillRPC(CachedPlayer.LocalPlayer.PlayerId);
-            MessageWriter Writer2 = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.BomKillRPC, Hazel.SendOption.Reliable, -1);
-            Writer2.Write(CachedPlayer.LocalPlayer.PlayerId);
+            CustomRPC.RPCProcedure.BomKillRPC(PlayerControl.LocalPlayer.PlayerId);
+            MessageWriter Writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.BomKillRPC, Hazel.SendOption.Reliable, -1);
+            Writer2.Write(PlayerControl.LocalPlayer.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(Writer2);
         }
         public static bool GetIsBomb(PlayerControl source,PlayerControl player)

@@ -1,9 +1,10 @@
 ﻿using InnerNet;
-using SuperNewRoles.CustomRPC;
-using SuperNewRoles.Intro;
+using SuperNewRoles.Patch;
 using SuperNewRoles.Roles;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using static SuperNewRoles.Patch.ShareGameVersion;
 
@@ -77,16 +78,11 @@ namespace SuperNewRoles
             {
                 var task = new GameObject("RoleTask").AddComponent<ImportantTextTask>();
                 task.transform.SetParent(player.transform, false);
-
+                
                 task.Text = CustomOption.CustomOptions.cs(roleInfo.color, $"{ModTranslation.getString(roleInfo.NameKey + "Name")}: {roleInfo.TitleDesc}");
                 if (player.IsLovers())
                 {
                     task.Text += "\n" + ModHelpers.cs(RoleClass.Lovers.color,ModTranslation.getString("LoversName")+": "+ string.Format(ModTranslation.getString("LoversIntro"), PlayerControl.LocalPlayer.GetOneSideLovers()?.Data?.PlayerName ?? ""));
-                }
-                if (!player.isGhostRole(RoleId.DefaultRole))
-                {
-                    var GhostRoleInfo = IntroDate.GetIntroDate(player.getGhostRole(), player);
-                    task.Text += "\n" + CustomOption.CustomOptions.cs(GhostRoleInfo.color, $"{ModTranslation.getString(GhostRoleInfo.NameKey + "Name")}: {GhostRoleInfo.TitleDesc}");
                 }
                 /**
                 if (player.IsQuarreled())

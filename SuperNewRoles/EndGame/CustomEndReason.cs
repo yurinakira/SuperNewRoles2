@@ -19,9 +19,6 @@ namespace SuperNewRoles.EndGame
         MadJesterWin,
         FalseChargesWin,
         FoxWin,
-        DemonWin,
-        ArsonistWin,
-        VultureWin,
         BugEnd
     }
 }

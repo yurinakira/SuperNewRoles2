@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿
+using HarmonyLib;
 using SuperNewRoles.Helpers;
 using SuperNewRoles.Roles;
 using System;
@@ -18,7 +19,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles.Roles
             {
                 foreach (PlayerControl p in RoleClass.Bestfalsecharge.BestfalsechargePlayer)
                 {
-                    p.RpcInnerExiled();
+                    p.RpcMurderPlayer(p);
                 }
                 RoleClass.Bestfalsecharge.IsOnMeeting = true;
             }

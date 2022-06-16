@@ -36,15 +36,15 @@ namespace SuperNewRoles
 
                 if (_submarineStatus is null || _submarineStatus.WasCollected || !_submarineStatus || _submarineStatus == null)
                 {
-                    if (MapUtilities.CachedShipStatus is null || MapUtilities.CachedShipStatus.WasCollected || !MapUtilities.CachedShipStatus || MapUtilities.CachedShipStatus == null)
+                    if (ShipStatus.Instance is null || ShipStatus.Instance.WasCollected || !ShipStatus.Instance || ShipStatus.Instance == null)
                     {
                         return _submarineStatus = null;
                     }
                     else
                     {
-                        if (MapUtilities.CachedShipStatus.Type == SUBMERGED_MAP_TYPE)
+                        if (ShipStatus.Instance.Type == SUBMERGED_MAP_TYPE)
                         {
-                            return _submarineStatus = MapUtilities.CachedShipStatus.GetComponent(Il2CppType.From(SubmarineStatusType))?.TryCast(SubmarineStatusType) as MonoBehaviour;
+                            return _submarineStatus = ShipStatus.Instance.GetComponent(Il2CppType.From(SubmarineStatusType))?.TryCast(SubmarineStatusType) as MonoBehaviour;
                         }
                         else
                         {
@@ -179,18 +179,19 @@ namespace SuperNewRoles
             if (!Loaded) return;
             try
             {
-                MapUtilities.CachedShipStatus.RpcRepairSystem((SystemTypes)130, 64);
+                ShipStatus.Instance.RpcRepairSystem((SystemTypes)130, 64);
                 RepairDamageMethod.Invoke(SubmarineOxygenSystemInstanceField.GetValue(null), new object[] { PlayerControl.LocalPlayer, 64 });
             }
             catch (System.NullReferenceException)
             {
                 SuperNewRolesPlugin.Logger.LogMessage("null reference in engineer oxygen fix");
             }
+
         }
 
         public static bool isSubmerged()
         {
-            return Loaded && MapUtilities.CachedShipStatus && MapUtilities.CachedShipStatus.Type == SUBMERGED_MAP_TYPE;
+            return Loaded && ShipStatus.Instance && ShipStatus.Instance.Type == SUBMERGED_MAP_TYPE;
         }
     }
 

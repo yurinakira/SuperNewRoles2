@@ -12,7 +12,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles.Roles
     {
         public static void WrapUp(GameData.PlayerInfo exiled)
         {
-            if (!AmongUsClient.Instance.AmHost) return;
+            if (!AmongUsClient.Instance.AmHost) return ;
             if (exiled.Object.isRole(CustomRPC.RoleId.Jester))
             {
                 var (complate, all) = TaskCount.TaskDateNoClearCheck(exiled);
@@ -37,12 +37,11 @@ namespace SuperNewRoles.Mode.SuperHostRoles.Roles
                     }
                     catch (Exception e)
                     {
-                        SuperNewRolesPlugin.Logger.LogInfo("[SHR:Error] Jester WrapUp Error:" + e);
+                        SuperNewRolesPlugin.Logger.LogInfo("[SHR]てるてるWrapUpエラー:"+e);
                     }
-                    EndGameCheck.CustomEndGame(MapUtilities.CachedShipStatus, GameOverReason.HumansByVote, false);
+                    EndGameCheck.CustomEndGame(ShipStatus.Instance, GameOverReason.HumansByVote, false);
                 }
-            }
-            else if (exiled.Object.isRole(CustomRPC.RoleId.MadJester))
+            } else if (exiled.Object.isRole(CustomRPC.RoleId.MadJester))
             {
                 var (complate, all) = TaskCount.TaskDateNoClearCheck(exiled);
                 if (!RoleClass.MadJester.IsMadJesterTaskClearWin || complate >= all)
@@ -66,9 +65,9 @@ namespace SuperNewRoles.Mode.SuperHostRoles.Roles
                     }
                     catch (Exception e)
                     {
-                        SuperNewRolesPlugin.Logger.LogInfo("[SHR:Error] Mad Jester WrapUp Error:" + e);
+                        SuperNewRolesPlugin.Logger.LogInfo("[SHR]マッドてるてるWrapUpエラー:" + e);
                     }
-                    EndGameCheck.CustomEndGame(MapUtilities.CachedShipStatus, GameOverReason.ImpostorByVote, false);
+                    EndGameCheck.CustomEndGame(ShipStatus.Instance, GameOverReason.ImpostorByVote, false);
                 }
             }
         }

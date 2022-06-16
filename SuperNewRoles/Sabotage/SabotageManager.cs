@@ -1,6 +1,8 @@
 ﻿using Hazel;
 using SuperNewRoles.Helpers;
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace SuperNewRoles.Sabotage
 {
@@ -54,6 +56,7 @@ namespace SuperNewRoles.Sabotage
         }
         public static void ClearAndReloads()
         {
+            SuperNewRolesPlugin.Logger.LogInfo("クリアアンドリロード");
             InfectedOverlayInstance = null;
             thisSabotage = CustomSabotage.None;
             CustomButtons = new List<ButtonBehavior>();
@@ -66,28 +69,23 @@ namespace SuperNewRoles.Sabotage
         }
         public static void Update()
         {
-            if (CustomButtons.Count > 0)
+            if (InfectedOverlayInstance != null) {
+                float specialActive = ((InfectedOverlayInstance.doors != null && InfectedOverlayInstance.doors.IsActive) ? 1f : InfectedOverlayInstance.SabSystem.PercentCool);
+                foreach (ButtonBehavior button in CustomButtons) {
+                    button.spriteRenderer.material.SetFloat("_Percent", specialActive);
+                }
+            }
+            switch (thisSabotage)
             {
-                if (InfectedOverlayInstance != null)
-                {
-                    float specialActive = ((InfectedOverlayInstance.doors != null && InfectedOverlayInstance.doors.IsActive) ? 1f : InfectedOverlayInstance.SabSystem.PercentCool);
-                    foreach (ButtonBehavior button in CustomButtons)
-                    {
-                        button.spriteRenderer.material.SetFloat("_Percent", specialActive);
-                    }
-                }
-                switch (thisSabotage)
-                {
-                    case CustomSabotage.CognitiveDeficit:
-                        CognitiveDeficit.main.Update();
-                        break;
-                }
+                case CustomSabotage.CognitiveDeficit:
+                    CognitiveDeficit.main.Update();
+                    break;
             }
         }
         public static void CustomSabotageRPC(PlayerControl p,CustomSabotage type,bool Is)
         {
             MessageWriter writer = RPCHelper.StartRPC(CustomRPC.CustomRPC.SetCustomSabotage);
-            writer.Write(CachedPlayer.LocalPlayer.PlayerId);
+            writer.Write(PlayerControl.LocalPlayer.PlayerId);
             writer.Write((byte)type);
             writer.Write(Is);
             writer.EndRPC();

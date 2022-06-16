@@ -18,16 +18,14 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             {
                 if (AmongUsClient.Instance.AmHost)
                 {
-                    switch (args[0])
+                    switch(args[0])
                     {
                         case "/help":
-                            if (args.Length != 1)
-                            {
+                            if (args.Length != 1) {
                                 switch (args[1])
                                 {
                                     case "role":
-                                        if (args.Length != 2)
-                                        {
+                                        if (args.Length != 2) {
                                             PlayerControl.LocalPlayer.RpcSendChat(GetRoleDes(args[3]));
                                         }
                                         break;
@@ -46,8 +44,10 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             string IntroDesc;
             string Desc;
             IntroDate data = IntroDate.CrewmateIntro;
-            if (rolename == ModTranslation.getString("LoversName")) { }
-            else
+            if (rolename == ModTranslation.getString("LoversName"))
+            {
+
+            } else
             {
                 data = GetNameIntroDate(rolename);
                 IntroDesc = data.TitleDesc;
@@ -59,18 +59,16 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             if (data.Team == TeamRoleType.Crewmate)
             {
                 team = ModTranslation.getString("CrewMateName");
-            }
-            else if (data.Team == TeamRoleType.Impostor)
+            } else if (data.Team == TeamRoleType.Impostor)
             {
                 team = ModTranslation.getString("ImpostorName");
-            }
-            else if (data.Team == TeamRoleType.Neutral)
+            } else if(data.Team == TeamRoleType.Neutral)
             {
                 team = ModTranslation.getString("NeutralName");
             }
             string returndata = "";
-            returndata = rolename + "\n";
-            returndata += team + "陣営\n";
+            returndata = rolename+"\n";
+            returndata += team+"陣営\n";
             returndata += data.Description;
             return "";
         }
@@ -94,7 +92,6 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                 {ModTranslation.getString("trueloverName"),IntroDate.trueloverIntro },
                 {ModTranslation.getString("TechnicianName"),IntroDate.TechnicianIntro },
                 {ModTranslation.getString("MadStuntmanName"),IntroDate.MadStuntManIntro },
-                {ModTranslation.getString("SamuraiName"),IntroDate.SamuraiIntro },
             };
             foreach (var data in NameData)
             {

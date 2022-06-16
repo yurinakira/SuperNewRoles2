@@ -122,6 +122,7 @@ namespace SuperNewRoles.Mode.NotImpostorCheck
                         if (playerInfo.Object.isAlive())
                         {
                             numTotalAlive++;
+
                             if (main.Impostors.Contains(playerInfo.PlayerId))
                             {
                                 numImpostorsAlive++;
@@ -133,6 +134,7 @@ namespace SuperNewRoles.Mode.NotImpostorCheck
                         }
                     }
                 }
+
                 TeamImpostorsAlive = numImpostorsAlive;
                 TotalAlive = numTotalAlive;
                 CrewAlive = numCrewAlive;

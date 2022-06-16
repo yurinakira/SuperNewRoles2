@@ -82,6 +82,7 @@ namespace SuperNewRoles.Patch
                     portField.SetText(ConfigRoles.Port.Value.ToString());
                 })));
 
+
                 portField.ClearOnFocus = false;
                 portField.OnEnter = portField.OnChange = new Button.ButtonClickedEvent();
                 portField.OnFocusLost = new Button.ButtonClickedEvent();
@@ -116,7 +117,7 @@ namespace SuperNewRoles.Patch
             IRegionInfo[] regions = defaultRegions;
 
             var CustomRegion = new DnsRegionInfo(ConfigRoles.Ip.Value, "Custom", StringNames.NoTranslation, ConfigRoles.Ip.Value, ConfigRoles.Port.Value, false);
-            regions = regions.Concat(new IRegionInfo[] { CustomRegion.CastFast<IRegionInfo>() }).ToArray();
+            regions = regions.Concat(new IRegionInfo[] { CustomRegion.Cast<IRegionInfo>() }).ToArray();
             ServerManager.DefaultRegions = regions;
             serverManager.AvailableRegions = regions;
         }

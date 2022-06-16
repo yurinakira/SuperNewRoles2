@@ -1,5 +1,7 @@
 ﻿using HarmonyLib;
+using Hazel;
 using SuperNewRoles.CustomObject;
+using SuperNewRoles.Helpers;
 using SuperNewRoles.Patch;
 using System;
 using System.Collections.Generic;
@@ -76,7 +78,7 @@ namespace SuperNewRoles.Sabotage.CognitiveDeficit
                 }
             }
             bool IsOK = true;
-            foreach (PlayerControl p3 in CachedPlayer.AllPlayers)
+            foreach (PlayerControl p3 in PlayerControl.AllPlayerControls)
             {
                 if (p3.isAlive() && !OKPlayers.IsCheckListPlayerControl(p3)) {
                     IsOK = false;
@@ -145,14 +147,14 @@ namespace SuperNewRoles.Sabotage.CognitiveDeficit
                 if (UpdateTime <= 0)
                 {
                     List<PlayerControl> target = new List<PlayerControl>();
-                    foreach (PlayerControl p in CachedPlayer.AllPlayers)
+                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                     {
                         if (!p.Data.Disconnected && p.isAlive())
                         {
                             target.Add(p);
                         }
                     }
-                    foreach (PlayerControl p in CachedPlayer.AllPlayers)
+                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                     {
                         if (target.Count > 0)
                         {
@@ -169,7 +171,7 @@ namespace SuperNewRoles.Sabotage.CognitiveDeficit
         public static void EndSabotage(PlayerControl p)
         {
             OKPlayers.Add(p);
-            if (p.PlayerId == CachedPlayer.LocalPlayer.PlayerId)
+            if (p.PlayerId == PlayerControl.LocalPlayer.PlayerId)
             {
                 IsLocalEnd = true;
                 if (PlayerControl.GameOptions.TaskBarMode != TaskBarMode.Invisible)
@@ -181,7 +183,7 @@ namespace SuperNewRoles.Sabotage.CognitiveDeficit
                     GameObject.Destroy(aw.arrow);
                 }
                 ArrowDatas = new List<Arrow>();
-                foreach (PlayerControl p2 in CachedPlayer.AllPlayers)
+                foreach (PlayerControl p2 in PlayerControl.AllPlayerControls)
                 {
                     p2.resetChange();
                 }

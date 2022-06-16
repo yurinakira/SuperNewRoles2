@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using HarmonyLib;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace SuperNewRoles.Roles
 {
@@ -8,9 +11,40 @@ namespace SuperNewRoles.Roles
         {
             public static void WrapUpPatch()
             {
-                RoleClass.CountChanger.IsSet = false;
-                RoleClass.CountChanger.ChangeData = RoleClass.CountChanger.Setdata;
-                RoleClass.CountChanger.Setdata = new Dictionary<int, int>();
+                    RoleClass.CountChanger.IsSet = false;
+                    RoleClass.CountChanger.ChangeData = RoleClass.CountChanger.Setdata;
+                    RoleClass.CountChanger.Setdata = new Dictionary<int, int>();
+            }
+            [HarmonyPatch(typeof(ExileController), nameof(ExileController.WrapUp))]
+            public class CountChange
+            {
+                
+                public static void Postfix(ExileController __instance)
+                {
+                    try
+                    {
+                        WrapUpPatch();
+                    }
+                    catch (Exception e)
+                    {
+                        SuperNewRolesPlugin.Logger.LogInfo("CHECKERROR:" + e);
+                    }
+                }
+            }
+            [HarmonyPatch(typeof(AirshipExileController), nameof(AirshipExileController.WrapUpAndSpawn))]
+            public class CountChangeairship
+            {
+                public static void Postfix(AirshipExileController __instance)
+                {
+                    try
+                    {
+                        WrapUpPatch();
+                    }
+                    catch (Exception e)
+                    {
+                        SuperNewRolesPlugin.Logger.LogInfo("CHECKERROR:" + e);
+                    }
+                }
             }
         }
         public static bool isChange(this PlayerControl p)
@@ -18,29 +52,27 @@ namespace SuperNewRoles.Roles
             if (RoleClass.CountChanger.ChangeData.ContainsKey(p.PlayerId))
             {
                 return true;
-            }
-            else if (RoleClass.CountChanger.ChangeData.ContainsValue(p.PlayerId))
+            } else if (RoleClass.CountChanger.ChangeData.ContainsValue(p.PlayerId))
             {
                 return true;
             }
             return false;
         }
-
+        
         public static TeamRoleType GetRoleType(this PlayerControl p)
         {
-            if (RoleClass.CountChanger.ChangeData.ContainsKey(p.PlayerId))
-            {
-                var player = ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData[p.PlayerId]);
-                return Get(player);
-            }
-            else if (RoleClass.CountChanger.ChangeData.ContainsValue(p.PlayerId))
-            {
+                if (RoleClass.CountChanger.ChangeData.ContainsKey(p.PlayerId))
+                {
+                    var player = ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData[p.PlayerId]);
+                    return Get(player);
+                }
+                else if (RoleClass.CountChanger.ChangeData.ContainsValue(p.PlayerId))
+                {
                 return Get(ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData.GetKey(p.PlayerId)));
-            }
-            else
-            {
-                return Get(p);
-            }
+                } else
+                {
+                    return Get(p);
+                }
         }
         public static bool IsChangeMadmate(this PlayerControl p)
         {
@@ -49,7 +81,7 @@ namespace SuperNewRoles.Roles
             {
                 if (RoleClass.CountChanger.ChangeData.ContainsKey(p.PlayerId))
                 {
-                    if (ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData[p.PlayerId]).isRole(CustomRPC.RoleId.MadMate)) return true;
+                    if(ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData[p.PlayerId]).isRole(CustomRPC.RoleId.MadMate)) return true;
                 }
                 else if (RoleClass.CountChanger.ChangeData.ContainsValue(p.PlayerId))
                 {
@@ -162,147 +194,7 @@ namespace SuperNewRoles.Roles
             }
             return false;
         }
-        public static bool IsChangeMadMaker(this PlayerControl p)
-        {
-            var getroledata = GetRoleType(p);
-            if (getroledata == TeamRoleType.Crewmate)
-            {
-                if (RoleClass.CountChanger.ChangeData.ContainsKey(p.PlayerId))
-                {
-                    if (ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData[p.PlayerId]).isRole(CustomRPC.RoleId.MadMaker)) return true;
-                }
-                else if (RoleClass.CountChanger.ChangeData.ContainsValue(p.PlayerId))
-                {
-                    if (ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData.GetKey(p.PlayerId)).isRole(CustomRPC.RoleId.MadMaker)) return true;
-                }
-                else
-                {
-                    return p.isRole(CustomRPC.RoleId.MadMaker);
-                }
-            }
-            return false;
-        }
-        public static bool IsChangeJackal(this PlayerControl p)
-        {
-            var getroledata = GetRoleType(p);
-            if (getroledata == TeamRoleType.Crewmate)
-            {
-                if (RoleClass.CountChanger.ChangeData.ContainsKey(p.PlayerId))
-                {
-                    if (ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData[p.PlayerId]).isRole(CustomRPC.RoleId.Jackal)) return true;
-                }
-                else if (RoleClass.CountChanger.ChangeData.ContainsValue(p.PlayerId))
-                {
-                    if (ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData.GetKey(p.PlayerId)).isRole(CustomRPC.RoleId.Jackal)) return true;
-                }
-                else
-                {
-                    return p.isRole(CustomRPC.RoleId.Jackal);
-                }
-            }
-            return false;
-        }
-        public static bool IsChangeSidekick(this PlayerControl p)
-        {
-            var getroledata = GetRoleType(p);
-            if (getroledata == TeamRoleType.Crewmate)
-            {
-                if (RoleClass.CountChanger.ChangeData.ContainsKey(p.PlayerId))
-                {
-                    if (ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData[p.PlayerId]).isRole(CustomRPC.RoleId.Jackal)) return true;
-                }
-                else if (RoleClass.CountChanger.ChangeData.ContainsValue(p.PlayerId))
-                {
-                    if (ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData.GetKey(p.PlayerId)).isRole(CustomRPC.RoleId.Jackal)) return true;
-                }
-                else
-                {
-                    return p.isRole(CustomRPC.RoleId.Sidekick);
-                }
-            }
-            return false;
-        }
-        public static bool IsChangeJackalFriends(this PlayerControl p)
-        {
-            var getroledata = GetRoleType(p);
-            if (getroledata == TeamRoleType.Crewmate)
-            {
-                if (RoleClass.CountChanger.ChangeData.ContainsKey(p.PlayerId))
-                {
-                    if (ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData[p.PlayerId]).isRole(CustomRPC.RoleId.JackalFriends)) return true;
-                }
-                else if (RoleClass.CountChanger.ChangeData.ContainsValue(p.PlayerId))
-                {
-                    if (ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData.GetKey(p.PlayerId)).isRole(CustomRPC.RoleId.JackalFriends)) return true;
-                }
-                else
-                {
-                    return p.isRole(CustomRPC.RoleId.JackalFriends);
-                }
-            }
-            return false;
-        }
-        public static bool IsChangeSeerFriends(this PlayerControl p)
-        {
-            var getroledata = GetRoleType(p);
-            if (getroledata == TeamRoleType.Crewmate)
-            {
-                if (RoleClass.CountChanger.ChangeData.ContainsKey(p.PlayerId))
-                {
-                    if (ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData[p.PlayerId]).isRole(CustomRPC.RoleId.SeerFriends)) return true;
-                }
-                else if (RoleClass.CountChanger.ChangeData.ContainsValue(p.PlayerId))
-                {
-                    if (ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData.GetKey(p.PlayerId)).isRole(CustomRPC.RoleId.SeerFriends)) return true;
-                }
-                else
-                {
-                    return p.isRole(CustomRPC.RoleId.SeerFriends);
-                }
-            }
-            return false;
-        }
-        public static bool IsChangeJackalSeer(this PlayerControl p)
-        {
-            var getroledata = GetRoleType(p);
-            if (getroledata == TeamRoleType.Crewmate)
-            {
-                if (RoleClass.CountChanger.ChangeData.ContainsKey(p.PlayerId))
-                {
-                    if (ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData[p.PlayerId]).isRole(CustomRPC.RoleId.Jackal)) return true;
-                }
-                else if (RoleClass.CountChanger.ChangeData.ContainsValue(p.PlayerId))
-                {
-                    if (ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData.GetKey(p.PlayerId)).isRole(CustomRPC.RoleId.Jackal)) return true;
-                }
-                else
-                {
-                    return p.isRole(CustomRPC.RoleId.JackalSeer);
-                }
-            }
-            return false;
-        }
-        public static bool IsChangeSidekickSeer(this PlayerControl p)
-        {
-            var getroledata = GetRoleType(p);
-            if (getroledata == TeamRoleType.Crewmate)
-            {
-                if (RoleClass.CountChanger.ChangeData.ContainsKey(p.PlayerId))
-                {
-                    if (ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData[p.PlayerId]).isRole(CustomRPC.RoleId.Jackal)) return true;
-                }
-                else if (RoleClass.CountChanger.ChangeData.ContainsValue(p.PlayerId))
-                {
-                    if (ModHelpers.playerById((byte)RoleClass.CountChanger.ChangeData.GetKey(p.PlayerId)).isRole(CustomRPC.RoleId.Jackal)) return true;
-                }
-                else
-                {
-                    return p.isRole(CustomRPC.RoleId.SidekickSeer);
-                }
-            }
-            return false;
-        }
-        public static int? GetKey(this Dictionary<int, int> dics, int id)
+        public static int? GetKey(this Dictionary<int,int> dics,int id)
         {
             foreach (var data in dics)
             {
@@ -313,21 +205,20 @@ namespace SuperNewRoles.Roles
             }
             return null;
         }
-        public static TeamRoleType Get(PlayerControl player)
-        {
-            if (player.isImpostor())
+            public static TeamRoleType Get(PlayerControl player)
             {
-                return TeamRoleType.Impostor;
-            }
-            else if (player.isCrew())
-            {
-                return TeamRoleType.Crewmate;
-            }
-            else if (player.isNeutral())
-            {
-                return TeamRoleType.Neutral;
-            }
-            return TeamRoleType.Error;
-        }
-    }
+                if (player.isImpostor())
+                {
+                    return TeamRoleType.Impostor;
+                }
+                else if (player.isCrew())
+                {
+                    return TeamRoleType.Crewmate;
+                }
+                else if (player.isNeutral())
+                {
+                    return TeamRoleType.Neutral;
+                }
+                return TeamRoleType.Error;
+            }    }
 }
