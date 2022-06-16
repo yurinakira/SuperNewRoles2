@@ -693,7 +693,7 @@ namespace SuperNewRoles.EndGame
                     }
                 }
             }
-            //if (TempData.winners.ToArray().Any(x => x.IsImpostor))
+            if (TempData.winners.ToArray().Any(x => x.IsImpostor))
             else if (DemonWin)
             {
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
