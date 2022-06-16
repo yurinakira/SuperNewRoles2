@@ -118,27 +118,15 @@ namespace SuperNewRoles.Helpers
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             player.SetColor(color);
         }
-        public static void RPCSetColorDeathFlasSHR(this PlayerControl player, byte color)
+        public static void RPCSetColorDeathFlashSHR(this PlayerControl player, byte color)
         {//シーアの能力「死の点滅が見える」SHR時の代用で身体の色変更を制御しているコード
 
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)CustomRPC.CustomRPC.UncheckedSetColor, SendOption.Reliable);
             var Outfit = player.Data.DefaultOutfit;
-
-            player.RpcSetColor(10);
-            HudManager.Instance.StartCoroutine(Effects.Lerp(600f, new Action<float>((p) =>
-            {
-                player.RpcSetColor(1);
-            })));
-            HudManager.Instance.StartCoroutine(Effects.Lerp(600f, new Action<float>((p) =>
-            {
-                player.RpcSetColor(2);
-            })));
-            HudManager.Instance.StartCoroutine(Effects.Lerp(600f, new Action<float>((p) =>
-            {
-                player.RawSetColor(Outfit.ColorId);
-            })));
-
+            
         }
+        
+
         public static void RPCSetRoleUnchecked(this PlayerControl player, RoleTypes roletype)
         {
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.UncheckedSetVanilaRole, SendOption.Reliable);

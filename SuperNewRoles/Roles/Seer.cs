@@ -5,6 +5,7 @@ using UnityEngine;
 using SuperNewRoles.CustomRPC;
 using SuperNewRoles.Mode;
 using SuperNewRoles.Helpers;
+using System.Collections;
 
 namespace SuperNewRoles.Roles
 {
@@ -136,15 +137,50 @@ namespace SuperNewRoles.Roles
                         {
                             if (PlayerControl.LocalPlayer.isAlive() && CachedPlayer.LocalPlayer.PlayerId != target.PlayerId && ModeFlag)
                             {
-                                RPCHelper.RPCSetColorDeathFlasSHR(PlayerControl.LocalPlayer, 0);
+                                new LateTask(() => { RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 10); }, 1f, "SkyBlue");
+                                new LateTask(() => { RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 1); }, 1f, "Blue");
+                                new LateTask(() => { RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 11); }, 1f, "SkyBlue");
                             }
+
                         }
+
+
+
                     }
                 }
+
             }
             //Mode_0_死の点滅＆幽霊が見える
             //Mode_1_死の点滅が見える
             //Mode_2_幽霊が見える
+
+            /*            public static class SHRDeathFlashStare
+                        {
+                            public static void SHRDeathFlash()
+                            {
+                                StartCoroutine ("DeathFlash");
+
+                            }
+
+                            private static IEnumerator DeathFlash()
+                            {
+                                    RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 10);
+                                    yield return new WaitForSeconds(0.5f);
+                                    RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 1);
+                                    yield return new WaitForSeconds(0.5f);
+                                    RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 2);
+                                    yield return new WaitForSeconds(0.5f);
+                                    //RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer,Outfit.ColorId);
+
+
+                            }
+                        }*/
+
+
+
         }
     }
+
+
+
 }
