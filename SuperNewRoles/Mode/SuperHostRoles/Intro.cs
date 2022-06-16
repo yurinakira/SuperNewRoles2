@@ -16,9 +16,9 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             {
                 if (PlayerControl.LocalPlayer.isCrew())
                 {
-                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                    foreach (PlayerControl p in CachedPlayer.AllPlayers)
                     {
-                        if (p.PlayerId != PlayerControl.LocalPlayer.PlayerId && p.IsPlayer())
+                        if (p.PlayerId != CachedPlayer.LocalPlayer.PlayerId && p.IsPlayer())
                         {
                             Teams.Add(p);
                         }
@@ -26,17 +26,18 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                 }
                 else if (PlayerControl.LocalPlayer.isImpostor())
                 {
-                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                    foreach (PlayerControl p in CachedPlayer.AllPlayers)
                     {
-                        if (p.isImpostor() && p.PlayerId != PlayerControl.LocalPlayer.PlayerId && p.IsPlayer())
+                        if (p.isImpostor() && p.PlayerId != CachedPlayer.LocalPlayer.PlayerId && p.IsPlayer())
                         {
                             Teams.Add(p);
                         }
                     }
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
-                SuperNewRolesPlugin.Logger.LogInfo("イントロエラー:"+e);
+                SuperNewRolesPlugin.Logger.LogInfo("[SHR:Intro] Intro Error:" + e);
             }
             return Teams;
         }

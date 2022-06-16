@@ -14,10 +14,12 @@ namespace SuperNewRoles.Mode.SuperHostRoles
 {
     class MurderPlayer
     {
-        public static void Postfix(PlayerControl __instance,PlayerControl target)
+        public static void Postfix(PlayerControl __instance, PlayerControl target)
         {
             if (!AmongUsClient.Instance.AmHost) return;
-            if (target.isRole(RoleId.Sheriff) || target.isRole(RoleId.truelover))
+            if (target.isAlive()) return;
+            FixedUpdate.SetRoleNames();
+            if (target.isRole(RoleId.Sheriff) || target.isRole(RoleId.truelover) || target.isRole(RoleId.MadMaker))
             {
                 target.RpcSetRoleDesync(RoleTypes.GuardianAngel);
             }
@@ -31,8 +33,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                         new LateTask(() =>
                         {
                             RPCProcedure.ShareWinner(target.PlayerId);
-
-                            MessageWriter Writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.ShareWinner, Hazel.SendOption.Reliable, -1);
+                            MessageWriter Writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.ShareWinner, Hazel.SendOption.Reliable, -1);
                             Writer.Write(target.PlayerId);
                             AmongUsClient.Instance.FinishRpcImmediately(Writer);
                             Writer = RPCHelper.StartRPC(CustomRPC.CustomRPC.SetWinCond);
@@ -46,7 +47,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                             Chat.Winner = new List<PlayerControl>();
                             Chat.Winner.Add(target);
                             RoleClass.Quarreled.IsQuarreledWin = true;
-                            SuperHostRoles.EndGameCheck.CustomEndGame(ShipStatus.Instance, GameOverReason.HumansByTask, false);
+                            SuperHostRoles.EndGameCheck.CustomEndGame(MapUtilities.CachedShipStatus, GameOverReason.HumansByTask, false);
                         }, 0.15f);
                     }
                 }
@@ -59,7 +60,8 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     Side.RpcMurderPlayer(Side);
                 }
             }
-            Roles.Bait.MurderPostfix(__instance,target);
+            Roles.Bait.MurderPostfix(__instance, target);
+            FixedUpdate.SetRoleName(target);
         }
     }
 }

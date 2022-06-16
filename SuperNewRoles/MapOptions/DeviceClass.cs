@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace SuperNewRoles.MapOptions
 {
-    class DeviceClass
+    public class DeviceClass
     {
         [HarmonyPatch(typeof(MapConsole), nameof(MapConsole.Use))]
         public static class MapConsoleUsePatch
@@ -62,7 +62,8 @@ namespace SuperNewRoles.MapOptions
                 if (!MapOption.UseVitalOrDoorLog)
                 {
                     __instance.Close();
-                } else
+                }
+                else
                 {
                     /*
                     if (BlockTool.VitalTime > 0)
@@ -89,7 +90,8 @@ namespace SuperNewRoles.MapOptions
                 if (MapOption.UseCamera == false)
                 {
                     __instance.Close();
-                } else
+                }
+                else
                 {
                     /*
                     if (BlockTool.CameraTime > 0)
@@ -116,7 +118,8 @@ namespace SuperNewRoles.MapOptions
                 if (MapOption.UseCamera == false)
                 {
                     __instance.Close();
-                } else
+                }
+                else
                 {/*
                     if (BlockTool.CameraTime > 0)
                     {
@@ -142,7 +145,8 @@ namespace SuperNewRoles.MapOptions
                 if (MapOption.UseVitalOrDoorLog == false)
                 {
                     __instance.Close();
-                } else
+                }
+                else
                 {/*
                     if (BlockTool.VitalTime > 0)
                     {

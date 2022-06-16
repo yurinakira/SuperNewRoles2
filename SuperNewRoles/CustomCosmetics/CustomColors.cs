@@ -16,7 +16,7 @@ namespace SuperNewRoles.CustomCosmetics
         public static uint pickableColors = (uint)Palette.ColorNames.Length;
 
         /* version 1
-        private static readonly List<int> ORDER = new List<int>() { 7, 17, 5, 33, 4, 
+        private static readonly List<int> ORDER = new List<int>() { 7, 17, 5, 33, 4,
                                                                     30, 0, 19, 27, 3,
                                                                     13, 25, 18, 15, 23,
                                                                     8, 32, 1, 21, 31,
@@ -456,7 +456,7 @@ namespace SuperNewRoles.CustomCosmetics
             {
                 private static bool isTaken(PlayerControl player, uint color)
                 {
-                    foreach (GameData.PlayerInfo p in GameData.Instance.AllPlayers)
+                    foreach (GameData.PlayerInfo p in GameData.Instance.AllPlayers.GetFastEnumerator())
                         if (!p.Disconnected && p.PlayerId != player.PlayerId && p.DefaultOutfit.ColorId == color)
                             return true;
                     return false;

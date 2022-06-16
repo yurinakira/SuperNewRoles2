@@ -22,6 +22,7 @@ namespace SuperNewRoles.Patch
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
     public class MainMenuPatch
     {
+        public const string snrdiscordserver = "https://discord.gg/6DjxfaDsAj";
         private static void Prefix(MainMenuManager __instance)
         {
             var template = GameObject.Find("ExitGameButton");
@@ -40,7 +41,7 @@ namespace SuperNewRoles.Patch
             SpriteRenderer buttonSpriteDiscord = buttonDiscord.GetComponent<SpriteRenderer>();
 
             passiveButtonDiscord.OnClick = new Button.ButtonClickedEvent();
-            passiveButtonDiscord.OnClick.AddListener((System.Action)(() => Application.OpenURL("https://discord.gg/dKxdJZQgVQ")));
+            passiveButtonDiscord.OnClick.AddListener((System.Action)(() => Application.OpenURL(snrdiscordserver)));
 
             Color discordColor = new Color32(88, 101, 242, byte.MaxValue);
             buttonSpriteDiscord.color = textDiscord.color = discordColor;
@@ -48,7 +49,6 @@ namespace SuperNewRoles.Patch
             {
                 buttonSpriteDiscord.color = textDiscord.color = discordColor;
             });
-
 
             var buttonTwitter = UnityEngine.Object.Instantiate(template, null);
             if (File.Exists(Assembly.GetExecutingAssembly().Location.Replace("SuperNewRoles.dll", "Submerged.dll"))) buttonTwitter.transform.localPosition = new Vector3(buttonTwitter.transform.localPosition.x, buttonTwitter.transform.localPosition.y + 1.2f, buttonTwitter.transform.localPosition.z);
@@ -71,7 +71,6 @@ namespace SuperNewRoles.Patch
             {
                 buttonSpriteTwitter.color = textTwitter.color = TwitterColor;
             });
-
 
             var buttonTwitterSNRDevs = UnityEngine.Object.Instantiate(template, null);
             buttonTwitterSNRDevs.SetActive(false);
@@ -103,7 +102,7 @@ namespace SuperNewRoles.Patch
                 PassiveButton passivebuttonTwitterSuperNewRoles = buttonTwitterSuperNewRoles.GetComponent<PassiveButton>();
                 SpriteRenderer buttonSpriteTwitterSuperNewRoles = buttonTwitterSuperNewRoles.GetComponent<SpriteRenderer>();
                 passivebuttonTwitterSuperNewRoles.OnClick = new Button.ButtonClickedEvent();
-                passivebuttonTwitterSuperNewRoles.OnClick.AddListener((System.Action)(() => Application.OpenURL("https://twitter.com/SuperNewRoles")));                
+                passivebuttonTwitterSuperNewRoles.OnClick.AddListener((System.Action)(() => Application.OpenURL("https://twitter.com/SuperNewRoles")));
             }));
         }
     }

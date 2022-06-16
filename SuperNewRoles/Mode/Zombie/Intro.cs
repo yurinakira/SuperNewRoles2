@@ -18,9 +18,9 @@ namespace SuperNewRoles.Mode.Zombie
             else
             {
                 Teams.Add(PlayerControl.LocalPlayer);
-                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                foreach (PlayerControl p in CachedPlayer.AllPlayers)
                 {
-                    if (p.PlayerId != PlayerControl.LocalPlayer.PlayerId)
+                    if (p.PlayerId != CachedPlayer.LocalPlayer.PlayerId)
                     {
                         Teams.Add(p);
                     }
@@ -53,7 +53,6 @@ namespace SuperNewRoles.Mode.Zombie
             __instance.RoleBlurbText.text = desc;
             __instance.RoleBlurbText.color = backcolor;
             /**
-
             if (PlayerControl.LocalPlayer.IsQuarreled())
             {
                 __instance.RoleBlurbText.text = __instance.RoleBlurbText.text + "\n" + ModHelpers.cs(RoleClass.Quarreled.color, String.Format(ModTranslation.getString("QuarreledIntro"), SetNamesClass.AllNames[PlayerControl.LocalPlayer.GetOneSideQuarreled().PlayerId]));

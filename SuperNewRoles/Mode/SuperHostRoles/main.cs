@@ -13,20 +13,19 @@ namespace SuperNewRoles.Mode.SuperHostRoles
     {
         public static void ClearAndReloads()
         {
+            RealExiled = null;
             Chat.WinCond = null;
-
+            // FixedUpdate.UpdateTime = new Dictionary<byte, float>();
             EndGame.OnGameEndPatch.EndData = null;
-            foreach (PlayerControl p in PlayerControl.AllPlayerControls)
-            {
-                p.getDefaultName();
-            }
+            FixedUpdate.DefaultName = new Dictionary<int, string>();
         }
+        public static PlayerControl RealExiled;
         public static void SendAllRoleChat()
         {/*
             if (ModeHandler.isMode(ModeId.SuperHostRoles))
             {
                 float Time = 3;
-                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                foreach (PlayerControl p in CachedPlayer.AllPlayers)
                 {
                     if (!p.Data.Disconnected && p.PlayerId != 0)
                     {
@@ -83,7 +82,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                 Chat2 += IntroDate.GetTitle(RoleIntroDate2.NameKey, RoleIntroDate2.TitleNum) + "\n";
                 Chat2 += RoleIntroDate2.Description + "\n";
                 Chat2 += "設定:\n" + RoleHelpers.GetOptionsText(RoleIntroDate2.RoleId);
-                DestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, Chat2);
+                FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, Chat2);
             }
         }*/
         }

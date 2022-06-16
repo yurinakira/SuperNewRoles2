@@ -24,10 +24,11 @@ namespace SuperNewRoles.Mode.Detective
             IsDetectiveNotTask = DetectiveOptions.DetectiveIsNotTask.getBool();
             IsNotDetectiveMeetingButton = DetectiveOptions.IsNotDetectiveMeetingButton.getBool();
         }
-        public static void RoleSelect() {
+        public static void RoleSelect()
+        {
             DetectivePlayer = PlayerControl.LocalPlayer;
             List<PlayerControl> selectplayers = new List<PlayerControl>();
-            foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+            foreach (PlayerControl p in CachedPlayer.AllPlayers)
             {
                 if (p.isCrew())
                 {
@@ -39,7 +40,7 @@ namespace SuperNewRoles.Mode.Detective
             writer.Write(random.PlayerId);
             writer.EndRPC();
             CustomRPC.RPCProcedure.SetDetective(random.PlayerId);
-            DetectivePlayer.RpcSetName(ModHelpers.cs(DetectiveColor,DetectivePlayer.getDefaultName()));
+            DetectivePlayer.RpcSetName(ModHelpers.cs(DetectiveColor, DetectivePlayer.getDefaultName()));
             DetectivePlayer.SetName(ModHelpers.cs(DetectiveColor, DetectivePlayer.getDefaultName()));
         }
         public static void MurderPatch(PlayerControl target)
@@ -48,7 +49,7 @@ namespace SuperNewRoles.Mode.Detective
             /*
             if (target.PlayerId != 0)
             {
-                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                foreach (PlayerControl p in CachedPlayer.AllPlayers)
                 {
                     if (!p.Data.Disconnected && p.isImpostor())
                     {
@@ -57,7 +58,7 @@ namespace SuperNewRoles.Mode.Detective
                 }
             } else
             {
-                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                foreach (PlayerControl p in CachedPlayer.AllPlayers)
                 {
                     if (!p.Data.Disconnected && p.isImpostor())
                     {
