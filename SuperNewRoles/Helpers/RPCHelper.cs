@@ -122,7 +122,7 @@ namespace SuperNewRoles.Helpers
         {//シーアの能力「死の点滅が見える」SHR時の代用で身体の色変更を制御しているコード
 
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)CustomRPC.CustomRPC.UncheckedSetColor, SendOption.Reliable);
-            var Outfit = player.Data.DefaultOutfit;
+            player.RpcSetColor(color);
             
         }
         

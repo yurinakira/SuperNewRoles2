@@ -138,8 +138,8 @@ namespace SuperNewRoles.Roles
                             if (PlayerControl.LocalPlayer.isAlive() && CachedPlayer.LocalPlayer.PlayerId != target.PlayerId && ModeFlag)
                             {
                                 new LateTask(() => { RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 10); }, 1f, "SkyBlue");
-                                new LateTask(() => { RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 1); }, 1f, "Blue");
-                                new LateTask(() => { RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 11); }, 1f, "SkyBlue");
+                                new LateTask(() => { RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 1); }, 2f, "Blue");
+                                new LateTask(() => { RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 10); }, 3f, "SkyBlue");
                             }
 
                         }
