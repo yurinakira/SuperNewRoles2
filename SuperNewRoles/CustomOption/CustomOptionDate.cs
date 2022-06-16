@@ -1108,20 +1108,6 @@ namespace SuperNewRoles.CustomOption
             SchrodingerCatSheriffMode = CustomOption.Create(415, true, CustomOptionType.Neutral, "SchrodingerCatSheriffModeSetting", new string[2] { "CrewMateName", "SheriffName" }, SchrodingerCatOption);
             SchrodingerCatOverKillerKillGuard = CustomOption.Create(416, true, CustomOptionType.Neutral, "SchrodingerCatOverKillerOKSetting", false, SchrodingerCatOption);
 
-            QuarreledOption = CustomOption.Create(122, false, CustomOptionType.Neutral, cs(RoleClass.Quarreled.color, "QuarreledName"), false, null, isHeader: true);
-            QuarreledTeamCount = CustomOption.Create(124, false, CustomOptionType.Neutral, "QuarreledTeamCountSetting", QuarreledPlayers[0], QuarreledPlayers[1], QuarreledPlayers[2], QuarreledPlayers[3], QuarreledOption);
-            QuarreledOnlyCrewMate = CustomOption.Create(123, false, CustomOptionType.Neutral, "QuarreledOnlyCrewMateSetting", false, QuarreledOption);
-            
-            LoversOption = CustomOption.Create(221, true, CustomOptionType.Neutral, cs(RoleClass.Lovers.color, "LoversName"), false, null, isHeader: true);
-            LoversTeamCount = CustomOption.Create(222, true, CustomOptionType.Neutral, "LoversTeamCountSetting", QuarreledPlayers[0], QuarreledPlayers[1], QuarreledPlayers[2], QuarreledPlayers[3], LoversOption);
-            LoversPar = CustomOption.Create(223, true, CustomOptionType.Neutral, "LoversParSetting", rates , LoversOption);
-            LoversOnlyCrewMate = CustomOption.Create(224, true, CustomOptionType.Neutral, "LoversOnlyCrewMateSetting", false, LoversOption);
-            LoversSingleTeam = CustomOption.Create(225, true, CustomOptionType.Neutral, "LoversSingleTeamSetting", true, LoversOption);
-            LoversSameDie = CustomOption.Create(226, true, CustomOptionType.Neutral, "LoversSameDieSetting", true, LoversOption);
-            LoversAliveTaskCount = CustomOption.Create(227, true, CustomOptionType.Neutral, "LoversAliveTaskCountSetting", false, LoversOption);
-            LoversDuplicationQuarreled = CustomOption.Create(228, true, CustomOptionType.Neutral, "LoversDuplicationQuarreledSetting", true, LoversOption);
-            var loversoption = SelectTask.TaskSetting(268, 269, 270,LoversOption, CustomOptionType.Neutral, true);
-
             MadMakerOption = new CustomRoleOption(347, true, CustomOptionType.Crewmate, "MadMakerName", RoleClass.MadMaker.color, 1);
             MadMakerPlayerCount = CustomOption.Create(348, true, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], MadMakerOption);
             MadMakerIsUseVent = CustomOption.Create(349, true, CustomOptionType.Crewmate, "MadMateUseVentSetting", false, MadMakerOption);
