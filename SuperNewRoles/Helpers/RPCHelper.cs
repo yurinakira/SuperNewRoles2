@@ -117,15 +117,7 @@ namespace SuperNewRoles.Helpers
             writer.Write(color);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             player.SetColor(color);
-        }
-        public static void RPCSetColorDeathFlashSHR(this PlayerControl player, byte color)
-        {//シーアの能力「死の点滅が見える」SHR時の代用で身体の色変更を制御しているコード
-
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)CustomRPC.CustomRPC.UncheckedSetColor, SendOption.Reliable);
-            player.RpcSetColor(color);
-            
-        }
-        
+        }        
 
         public static void RPCSetRoleUnchecked(this PlayerControl player, RoleTypes roletype)
         {

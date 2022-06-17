@@ -5,7 +5,7 @@ using UnityEngine;
 using SuperNewRoles.CustomRPC;
 using SuperNewRoles.Mode;
 using SuperNewRoles.Helpers;
-using System.Collections;
+using Hazel;
 
 namespace SuperNewRoles.Roles
 {
@@ -137,9 +137,9 @@ namespace SuperNewRoles.Roles
                         {
                             if (PlayerControl.LocalPlayer.isAlive() && CachedPlayer.LocalPlayer.PlayerId != target.PlayerId && ModeFlag)
                             {
-                                new LateTask(() => { RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 10); }, 1f, "SkyBlue");
-                                new LateTask(() => { RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 1); }, 2f, "Blue");
-                                new LateTask(() => { RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 10); }, 3f, "SkyBlue");
+                                new LateTask(() => { SeerSHR.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 10); }, 1f, "SkyBlue");
+                                new LateTask(() => { SeerSHR.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 1); }, 2f, "Blue");
+                                new LateTask(() => { SeerSHR.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 10); }, 3f, "SkyBlue");
                             }
 
                         }
@@ -181,6 +181,15 @@ namespace SuperNewRoles.Roles
         }
     }
 
+    public static class SeerSHR
+    {
+        public static void RPCSetColorDeathFlashSHR(this PlayerControl player, byte color)
+        {//シーアの能力「死の点滅が見える」SHR時の代用で身体の色変更を制御しているコード
 
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)CustomRPC.CustomRPC.UncheckedSetColor, SendOption.Reliable);
+            player.RpcSetColor(color);
+            
+        }
+    }
 
 }
