@@ -847,8 +847,11 @@ namespace SuperNewRoles.EndGame
             if (QuarreledWin)
             {
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                var winplays = new List<PlayerControl>() { WinnerPlayer };
-                winplays.Add(WinnerPlayer.GetOneSideQuarreled());
+                var winplays = new List<PlayerControl>
+                {
+                    WinnerPlayer,
+                    WinnerPlayer.GetOneSideQuarreled()
+                };
                 foreach (PlayerControl p in winplays)
                 {
                     p.Data.IsDead = false;

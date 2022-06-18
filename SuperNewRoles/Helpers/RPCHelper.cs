@@ -117,7 +117,7 @@ namespace SuperNewRoles.Helpers
             writer.Write(color);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             player.SetColor(color);
-        }        
+        }
 
         public static void RPCSetRoleUnchecked(this PlayerControl player, RoleTypes roletype)
         {

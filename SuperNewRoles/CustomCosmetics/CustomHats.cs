@@ -84,11 +84,14 @@ namespace SuperNewRoles.CustomCosmetics
                     flips.Add(p[0], hats[i]);
                 else
                 {
-                    CustomHat custom = new() { resource = hats[i] };
-                    custom.name = p[0].Replace('-', ' ');
-                    custom.bounce = options.Contains("bounce");
-                    custom.adaptive = options.Contains("adaptive");
-                    custom.behind = options.Contains("behind");
+                    CustomHat custom = new()
+                    {
+                        resource = hats[i],
+                        name = p[0].Replace('-', ' '),
+                        bounce = options.Contains("bounce"),
+                        adaptive = options.Contains("adaptive"),
+                        behind = options.Contains("behind")
+                    };
 
                     fronts.Add(p[0], custom);
                 }
