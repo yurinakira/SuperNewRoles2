@@ -1,11 +1,11 @@
-using HarmonyLib;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using SuperNewRoles.CustomRPC;
-using SuperNewRoles.Mode;
-using SuperNewRoles.Helpers;
+using HarmonyLib;
 using Hazel;
+using SuperNewRoles.CustomRPC;
+using SuperNewRoles.Helpers;
+using SuperNewRoles.Mode;
+using UnityEngine;
 
 namespace SuperNewRoles.Roles
 {
@@ -25,9 +25,9 @@ namespace SuperNewRoles.Roles
             public static void WrapUpPostfix(GameData.PlayerInfo exiled)
             {
                 var role = PlayerControl.LocalPlayer.getRole();
-                if (role == RoleId.Seer || role == RoleId.MadSeer || role == RoleId.EvilSeer || role == RoleId.SeerFriends || role == RoleId.JackalSeer || role == RoleId.SidekickSeer)
+                if (role is RoleId.Seer or RoleId.MadSeer or RoleId.EvilSeer or RoleId.SeerFriends or RoleId.JackalSeer or RoleId.SidekickSeer)
                 {
-                    List<Vector3> DeadBodyPositions = new List<Vector3>();
+                    List<Vector3> DeadBodyPositions = new();
                     bool limitSoulDuration = false;
                     float soulDuration = 0f;
                     switch (role)
@@ -37,28 +37,28 @@ namespace SuperNewRoles.Roles
                             RoleClass.Seer.deadBodyPositions = new List<Vector3>();
                             limitSoulDuration = RoleClass.Seer.limitSoulDuration;
                             soulDuration = RoleClass.Seer.soulDuration;
-                            if (RoleClass.Seer.mode != 0 && RoleClass.Seer.mode != 2) return;
+                            if (RoleClass.Seer.mode is not 0 and not 2) return;
                             break;
                         case RoleId.MadSeer:
                             DeadBodyPositions = RoleClass.MadSeer.deadBodyPositions;
                             RoleClass.MadSeer.deadBodyPositions = new List<Vector3>();
                             limitSoulDuration = RoleClass.MadSeer.limitSoulDuration;
                             soulDuration = RoleClass.MadSeer.soulDuration;
-                            if (RoleClass.MadSeer.mode != 0 && RoleClass.MadSeer.mode != 2) return;
+                            if (RoleClass.MadSeer.mode is not 0 and not 2) return;
                             break;
                         case RoleId.EvilSeer:
                             DeadBodyPositions = RoleClass.EvilSeer.deadBodyPositions;
                             RoleClass.EvilSeer.deadBodyPositions = new List<Vector3>();
                             limitSoulDuration = RoleClass.EvilSeer.limitSoulDuration;
                             soulDuration = RoleClass.EvilSeer.soulDuration;
-                            if (RoleClass.EvilSeer.mode != 0 && RoleClass.EvilSeer.mode != 2) return;
+                            if (RoleClass.EvilSeer.mode is not 0 and not 2) return;
                             break;
                         case RoleId.SeerFriends:
                             DeadBodyPositions = RoleClass.SeerFriends.deadBodyPositions;
                             RoleClass.SeerFriends.deadBodyPositions = new List<Vector3>();
                             limitSoulDuration = RoleClass.SeerFriends.limitSoulDuration;
                             soulDuration = RoleClass.SeerFriends.soulDuration;
-                            if (RoleClass.SeerFriends.mode != 0 && RoleClass.SeerFriends.mode != 2) return;
+                            if (RoleClass.SeerFriends.mode is not 0 and not 2) return;
                             break;
                         case RoleId.JackalSeer:
                         case RoleId.SidekickSeer:
@@ -66,12 +66,12 @@ namespace SuperNewRoles.Roles
                             RoleClass.JackalSeer.deadBodyPositions = new List<Vector3>();
                             limitSoulDuration = RoleClass.JackalSeer.limitSoulDuration;
                             soulDuration = RoleClass.JackalSeer.soulDuration;
-                            if (RoleClass.JackalSeer.mode != 0 && RoleClass.JackalSeer.mode != 2) return;
+                            if (RoleClass.JackalSeer.mode is not 0 and not 2) return;
                             break;
                     }
                     foreach (Vector3 pos in DeadBodyPositions)
                     {
-                        GameObject soul = new GameObject();
+                        GameObject soul = new();
                         soul.transform.position = pos;
                         soul.layer = 5;
                         var rend = soul.AddComponent<SpriteRenderer>();
@@ -99,7 +99,7 @@ namespace SuperNewRoles.Roles
                 public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
                 {
                     var role = PlayerControl.LocalPlayer.getRole();
-                    if (role == RoleId.Seer || role == RoleId.MadSeer || role == RoleId.EvilSeer || role == RoleId.SeerFriends || role == RoleId.JackalSeer || role == RoleId.SidekickSeer)
+                    if (role is RoleId.Seer or RoleId.MadSeer or RoleId.EvilSeer or RoleId.SeerFriends or RoleId.JackalSeer or RoleId.SidekickSeer)
                     {
                         bool ModeFlag = false;
                         switch (role)
@@ -153,34 +153,8 @@ namespace SuperNewRoles.Roles
             //Mode_0_死の点滅＆幽霊が見える
             //Mode_1_死の点滅が見える
             //Mode_2_幽霊が見える
-
-            /*            public static class SHRDeathFlashStare
-                        {
-                            public static void SHRDeathFlash()
-                            {
-                                StartCoroutine ("DeathFlash");
-
-                            }
-
-                            private static IEnumerator DeathFlash()
-                            {
-                                    RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 10);
-                                    yield return new WaitForSeconds(0.5f);
-                                    RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 1);
-                                    yield return new WaitForSeconds(0.5f);
-                                    RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 2);
-                                    yield return new WaitForSeconds(0.5f);
-                                    //RPCHelper.RPCSetColorDeathFlashSHR(PlayerControl.LocalPlayer,Outfit.ColorId);
-
-
-                            }
-                        }*/
-
-
-
         }
     }
-
     public static class SeerSHR
     {
         public static void RPCSetColorDeathFlashSHR(this PlayerControl player, byte color)
@@ -188,8 +162,7 @@ namespace SuperNewRoles.Roles
 
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)CustomRPC.CustomRPC.UncheckedSetColor, SendOption.Reliable);
             player.RpcSetColor(color);
-            
+
         }
     }
-
 }
