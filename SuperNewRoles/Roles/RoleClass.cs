@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using SuperNewRoles.CustomObject;
@@ -1636,6 +1636,9 @@ namespace SuperNewRoles.Roles
             public static bool limitSoulDuration;
             public static int mode;
 
+            public static int IntDefaultColor;
+            public static byte byteDefaultColor;
+
             public static void ClearAndReload()
             {
                 SeerPlayer = new List<PlayerControl>();
@@ -1643,6 +1646,9 @@ namespace SuperNewRoles.Roles
                 limitSoulDuration = CustomOptions.SeerLimitSoulDuration.getBool();
                 soulDuration = CustomOptions.SeerSoulDuration.getFloat();
                 mode = CustomOptions.SeerMode.getSelection();
+                IntDefaultColor = 0;
+                byteDefaultColor = 0;
+
             }
         }
         public static class MadSeer

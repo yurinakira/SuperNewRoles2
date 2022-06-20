@@ -141,10 +141,18 @@ namespace SuperNewRoles.Roles
                                 //シーアの能力「死の点滅が見える」SHR時の代用で色変更しているコード。
                                 //LateTaskで遅延
 
+                                foreach (GameData.PlayerInfo p in GameData.Instance.AllPlayers.GetFastEnumerator())//Get DefaultColor
+                                {
+                                    {
+                                        RoleClass.Seer.IntDefaultColor = p.DefaultOutfit.ColorId;//DefaultColorをint型で取得
+                                        RoleClass.Seer.byteDefaultColor = System.Convert.ToByte(RoleClass.Seer.IntDefaultColor);//int型で取得したDefaultColorをbyte型に変換
+                                    }
+                                }
+
                                 SeerSHR.RawSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 10);
                                 new LateTask(() => { SeerSHR.RawSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 1); }, 1f, "Blue");
                                 new LateTask(() => { SeerSHR.RawSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 10); }, 2f, "SkyBlue");
-                                new LateTask(() => { SeerSHR.RawSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 10); }, 3f, "SkyBlue");
+                                new LateTask(() => { SeerSHR.RawSetColorDeathFlashSHR(PlayerControl.LocalPlayer, RoleClass.Seer.byteDefaultColor); }, 3f, "DefaultColor");
                             }
                         }
                     }
@@ -159,10 +167,7 @@ namespace SuperNewRoles.Roles
     {
         public static void RawSetColorDeathFlashSHR(this PlayerControl player, byte color)
         {//シーアの能力「死の点滅が見える」SHR時の代用で身体の色変更を制御しているコード
-
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)CustomRPC.CustomRPC.UncheckedSetColor, SendOption.Reliable);
             player.RawSetColor(color);
-
         }
     }
 }
