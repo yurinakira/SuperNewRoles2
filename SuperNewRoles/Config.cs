@@ -17,6 +17,7 @@ namespace SuperNewRoles
         public static ConfigEntry<bool> IsAutoRoomCreate { get; set; }
         public static ConfigEntry<bool> HideTaskArrows { get; set; }
         public static ConfigEntry<bool> EnableHorseMode { get; set; }
+        public static ConfigEntry<bool> EnableAutoChatTranslation { get; set; }
         public static void Load()
         {
             StreamerMode = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "Enable Streamer Mode", false);
@@ -27,8 +28,10 @@ namespace SuperNewRoles
             IsVersionErrorView = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "IsVersionErrorView", true);
             HideTaskArrows = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "HideTaskArrows", false);
             ShareCosmeticsNamePlatesURL = SuperNewRolesPlugin.Instance.Config.Bind("ShareCosmetics", "NamePlateURL", "");
-            IsAutoRoomCreate = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "AutoRoomCreate", true); ;
+            IsAutoRoomCreate = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "AutoRoomCreate", true);
             EnableHorseMode = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "EnableHorseMode", false);
+            EnableAutoChatTranslation = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "EnableAutoChatTranslation", false);
+            SuperNewRolesPlugin.Logger.LogInfo("自動翻訳:"+EnableAutoChatTranslation.Value);
             Ip = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "Custom Server IP", "127.0.0.1");
             Port = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "Custom Server Port", (ushort)22023);
             IntroPatch.ShouldAlwaysHorseAround.isHorseMode = ConfigRoles.EnableHorseMode.Value;

@@ -2,9 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
+using BepInEx.IL2CPP.Utils;
 using HarmonyLib;
 using Hazel;
 using InnerNet;
+using Newtonsoft.Json.Linq;
 using SuperNewRoles.CustomCosmetics.ShareCosmetics;
 using SuperNewRoles.CustomOption;
 using SuperNewRoles.EndGame;
@@ -15,6 +21,7 @@ using SuperNewRoles.Patches;
 using SuperNewRoles.Roles;
 using SuperNewRoles.Sabotage;
 using UnityEngine;
+using UnityEngine.Networking;
 using static SuperNewRoles.EndGame.FinalStatusPatch;
 
 namespace SuperNewRoles.CustomRPC
@@ -937,6 +944,47 @@ namespace SuperNewRoles.CustomRPC
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
         class RPCHandlerPatch
         {
+            const string k_Url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl={0}&tl={1}&dt=t&q={2}";
+            static IEnumerator Coro(PlayerControl __instance, string chatText2)
+            {
+                var requestUrl = String.Format(k_Url, new object[] { "auto", "ja", chatText2 });
+                SuperNewRolesPlugin.Logger.LogInfo(requestUrl);
+                UnityWebRequest req = UnityWebRequest.Get(requestUrl);
+
+                yield return req;
+
+                if (req.isNetworkError || req.isHttpError)
+                {
+                    SuperNewRolesPlugin.Logger.LogError(req.error);
+                    
+                }
+                SuperNewRolesPlugin.Logger.LogInfo("TEXT:"+req.downloadHandler.text);
+
+                JToken jobj = JObject.Parse(req.downloadHandler.text).First.First.First;
+                SuperNewRolesPlugin.Logger.LogInfo(jobj.ToString());
+                string content = jobj.ToString();
+                content = chatText2 + "\n" + content;
+                DestroyableSingleton<HudManager>.Instance.Chat.AddChat(__instance, content);
+                yield return null;
+            }
+            static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] byte callId, [HarmonyArgument(1)] MessageReader reader)
+            {
+                return true;
+                byte packetId = callId;
+                switch ((RpcCalls)packetId)
+                {
+                    case RpcCalls.SendChat:
+                        //SuperNewRolesPlugin.Logger.LogInfo();
+                        return true;
+                        if (!ConfigRoles.EnableAutoChatTranslation.Value) break;
+                        if (DestroyableSingleton<HudManager>.Instance)
+                        {
+                            __instance.StartCoroutine(Coro(__instance, reader.ReadString()));
+                        }
+                        return false;
+                }
+                return true;
+            }
             static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] byte callId, [HarmonyArgument(1)] MessageReader reader)
             {
                 byte packetId = callId;
