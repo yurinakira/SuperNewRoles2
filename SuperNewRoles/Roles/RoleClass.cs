@@ -1636,8 +1636,7 @@ namespace SuperNewRoles.Roles
             public static bool limitSoulDuration;
             public static int mode;
 
-            public static int IntDefaultColor;
-            public static byte byteDefaultColor;
+            public static byte DefaultColor;
 
             public static void ClearAndReload()
             {
@@ -1646,9 +1645,8 @@ namespace SuperNewRoles.Roles
                 limitSoulDuration = CustomOptions.SeerLimitSoulDuration.getBool();
                 soulDuration = CustomOptions.SeerSoulDuration.getFloat();
                 mode = CustomOptions.SeerMode.getSelection();
-                IntDefaultColor = 0;
-                byteDefaultColor = 0;
 
+                DefaultColor = 0;
             }
         }
         public static class MadSeer

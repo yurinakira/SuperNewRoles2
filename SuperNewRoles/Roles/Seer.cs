@@ -141,14 +141,12 @@ namespace SuperNewRoles.Roles
                                 //シーアの能力「死の点滅が見える」SHR時の代用で色変更しているコード。
                                 //LateTaskで遅延
 
-                                        RoleClass.Seer.IntDefaultColor = CachedPlayer.LocalPlayer.Data.DefaultOutfit.ColorId;//DefaultColorをint型で取得
-                                        RoleClass.Seer.byteDefaultColor = System.Convert.ToByte(RoleClass.Seer.IntDefaultColor);//int型で取得したDefaultColorをbyte型に変換
+                                RoleClass.Seer.DefaultColor = (byte)CachedPlayer.LocalPlayer.Data.DefaultOutfit.ColorId; //DefaultのColorId(int型)をbyte型に変換しながら取得
 
-
-                                SeerSHR.RawSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 10);
-                                new LateTask(() => { SeerSHR.RawSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 1); }, 1f, "Blue");
+                                SeerSHR.RawSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 10); //体の色を ColorId 10(SkyBlue) に変更する。
+                                new LateTask(() => { SeerSHR.RawSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 1); }, 1f, "Blue");// 1s遅延後 LocalPlayerの 体の色を ColorId 0(Blue) に変更する。
                                 new LateTask(() => { SeerSHR.RawSetColorDeathFlashSHR(PlayerControl.LocalPlayer, 10); }, 2f, "SkyBlue");
-                                new LateTask(() => { SeerSHR.RawSetColorDeathFlashSHR(PlayerControl.LocalPlayer, RoleClass.Seer.byteDefaultColor); }, 3f, "DefaultColor");
+                                new LateTask(() => { SeerSHR.RawSetColorDeathFlashSHR(PlayerControl.LocalPlayer, RoleClass.Seer.DefaultColor); }, 3f, "DefaultColor");// 3s遅延後 LocalPlayerの 体の色を 元の色 に変更する。
                             }
                         }
                     }
