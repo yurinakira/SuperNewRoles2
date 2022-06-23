@@ -1,13 +1,13 @@
-using HarmonyLib;
-using System.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using SuperNewRoles.Roles;
+using System.Linq;
+using HarmonyLib;
 using SuperNewRoles.CustomOption;
-using static SuperNewRoles.CustomOption.CustomOptions;
 using SuperNewRoles.Mode.SuperHostRoles;
+using SuperNewRoles.Roles;
+using UnityEngine;
+using static SuperNewRoles.CustomOption.CustomOptions;
 
 namespace SuperNewRoles.MapOptions
 {
@@ -62,9 +62,9 @@ namespace SuperNewRoles.MapOptions
                 }
                 UseDeadBodyReport = !NotUseReportDeadBody.getBool();
                 UseMeetingButton = !NotUseMeetingButton.getBool();
-                SuperNewRoles.Patch.AdminPatch.ClearAndReload();
-                SuperNewRoles.Patch.CameraPatch.ClearAndReload();
-                SuperNewRoles.Patch.VitalsPatch.ClearAndReload();
+                //SuperNewRoles.Patch.AdminPatch.ClearAndReload();
+                //SuperNewRoles.Patch.CameraPatch.ClearAndReload();
+                //SuperNewRoles.Patch.VitalsPatch.ClearAndReload();
             }
             else
             {
@@ -81,10 +81,10 @@ namespace SuperNewRoles.MapOptions
                 ValidationSubmerged = false;
             }
             RandomMap.Prefix();
-            BlockTool.OldDesyncCommsPlayers = new List<byte>();
-            BlockTool.CameraPlayers = new List<byte>();
-            //BlockTool.VitalPlayers = new List<byte>();
-            //BlockTool.AdminPlayers = new List<byte>();
+            BlockTool.OldDesyncCommsPlayers = new();
+            BlockTool.CameraPlayers = new();
+            //BlockTool.VitalPlayers = new();
+            //BlockTool.AdminPlayers = new();
             /*
             if (DeviceUseCameraTime.getFloat() == 0 || !UseCamera)
             {
@@ -148,6 +148,10 @@ namespace SuperNewRoles.MapOptions
 
         public static CustomOption.CustomOption MapRemodelingOption;
         public static CustomOption.CustomOption AirShipAdditionalVents;
+        public static CustomOption.CustomOption PolusAdditionalVents;
+        public static CustomOption.CustomOption MiraAdditionalVents;
+
+        public static CustomOption.CustomOption VentAnimation;
 
         public static void LoadOption()
         {
@@ -169,7 +173,7 @@ namespace SuperNewRoles.MapOptions
             RandomMapAirship = CustomOption.CustomOption.Create(458, true, CustomOptionType.Generic, "RMAirshipSetting", true, RandomMapOption);
             RandomMapSubmerged = CustomOption.CustomOption.Create(459, true, CustomOptionType.Generic, "RMSubmergedSetting", true, RandomMapOption);
             //RM??��?��??��?��RandomMap??��?��̗�??��?��ł�()
-
+/*
             RestrictDevicesOption = CustomOption.CustomOption.Create(460, false, CustomOptionType.Generic, "RestrictDevicesSetting", true, MapOptionSetting);
             RestrictAdmin = CustomOption.CustomOption.Create(461, false, CustomOptionType.Generic, "RestrictAdminSetting", false, RestrictDevicesOption);
             IsYkundesuBeplnEx = CustomOption.CustomOption.Create(462, false, CustomOptionType.Generic, "IsYkundesuBeplnExSetting", false, RestrictAdmin);
@@ -178,7 +182,7 @@ namespace SuperNewRoles.MapOptions
             CanUseCameraTime = CustomOption.CustomOption.Create(465, false, CustomOptionType.Generic, "DeviceTimeSetting", 10f, 0f, 300f, 2.5f, RestrictCamera);
             RestrictVital = CustomOption.CustomOption.Create(466, false, CustomOptionType.Generic, "RestrictVitalSetting", false, RestrictDevicesOption);
             CanUseVitalTime = CustomOption.CustomOption.Create(467, false, CustomOptionType.Generic, "DeviceTimeSetting", 10f, 0f, 300f, 2.5f, RestrictVital);
-
+*/
             ReactorDurationOption = CustomOption.CustomOption.Create(468, true, CustomOptionType.Generic, "ReactorDurationSetting", false, MapOptionSetting);
             PolusReactorTimeLimit = CustomOption.CustomOption.Create(469, true, CustomOptionType.Generic, "PolusReactorTime", 30f, 0f, 100f, 1f, ReactorDurationOption);
             MiraReactorTimeLimit = CustomOption.CustomOption.Create(470, true, CustomOptionType.Generic, "MiraReactorTime", 30f, 0f, 100f, 1f, ReactorDurationOption);
@@ -186,13 +190,12 @@ namespace SuperNewRoles.MapOptions
 
             AddVitalsMira = CustomOption.CustomOption.Create(472, false, CustomOptionType.Generic, "AddVitalsMiraSetting", false, MapOptionSetting);
 
-            MapRemodelingOption = CustomOption.CustomOption.Create(521, false, CustomOptionType.Generic, "MapRemodelingOptionSetting", false, MapOptionSetting);
-            AirShipAdditionalVents = CustomOption.CustomOption.Create(522, false, CustomOptionType.Generic, "AirShipAdditionalVents", false, MapRemodelingOption);
+            MapRemodelingOption = CustomOption.CustomOption.Create(604, false, CustomOptionType.Generic, "MapRemodelingOptionSetting", false, MapOptionSetting);
+            AirShipAdditionalVents = CustomOption.CustomOption.Create(605, false, CustomOptionType.Generic, "AirShipAdditionalVents", false, MapRemodelingOption);
+            PolusAdditionalVents = CustomOption.CustomOption.Create(606, false, CustomOptionType.Generic, "PolusAdditionalVents", false, MapRemodelingOption);
+            MiraAdditionalVents = CustomOption.CustomOption.Create(607, false, CustomOptionType.Generic, "MiraAdditionalVents", false, MapRemodelingOption);
 
-            VentAnimation = CustomOption.CustomOption.Create(529, false, CustomOptionType.Generic, "VentAnimation", false, MapOptionSetting);
-            MapRemodelingOption = CustomOption.CustomOption.Create(473, false, CustomOptionType.Generic, "MapRemodelingOptionSetting", false, MapOptionSetting);
-            AirShipAdditionalVents = CustomOption.CustomOption.Create(474, false, CustomOptionType.Generic, "AirShipAdditionalVents", false, MapRemodelingOption);
-
+            VentAnimation = CustomOption.CustomOption.Create(600, false, CustomOptionType.Generic, "VentAnimation", false, MapOptionSetting);
         }
     }
 }
