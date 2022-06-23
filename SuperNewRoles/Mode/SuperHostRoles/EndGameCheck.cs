@@ -54,7 +54,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     {
                         if (WinGods == null)
                         {
-                            WinGods = new List<PlayerControl>();
+                            WinGods = new();
                         }
                         WinGods.Add(p);
                         Chat.WinCond = CustomGameOverReason.GodWin;
@@ -186,14 +186,12 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             }
             if (num2 <= 0 && statistics.TeamJackalAlive <= 0 && (!DestroyableSingleton<TutorialManager>.InstanceExists || num3 > 0))
             {
-                __instance.BeginCalled = false;
                 CustomEndGame(__instance, GameOverReason.HumansByVote, !SaveManager.BoughtNoAds);
             }
             else if (num1 <= num2 && statistics.TeamJackalAlive < 1)
             {
                 if (!DestroyableSingleton<TutorialManager>.InstanceExists)
                 {
-                    __instance.BeginCalled = false;
                     var endReason = TempData.LastDeathReason switch
                     {
                         DeathReason.Exile => GameOverReason.ImpostorByVote,
