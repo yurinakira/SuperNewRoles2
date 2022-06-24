@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using SuperNewRoles.CustomObject;
@@ -29,6 +29,8 @@ namespace SuperNewRoles.Roles
             IsCoolTimeSetted = false;
             IsStart = false;
             Map.Data.ClearAndReloads();
+            MapOptions.SpawnInMinigamePatch.resetSpawnCandidates();
+            MapOptions.SpawnInMinigamePatch.reset();
             SabotageManager.ClearAndReloads();
             Madmate.CheckedImpostor = new();
             Roles.MadMayor.CheckedImpostor = new();

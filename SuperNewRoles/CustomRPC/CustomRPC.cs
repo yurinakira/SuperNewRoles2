@@ -193,6 +193,7 @@ namespace SuperNewRoles.CustomRPC
         UseCameraTime,
         UseVitalsTime,
         FixLights,
+        Synchronize,
     }
     public static class RPCProcedure
     {
@@ -934,6 +935,10 @@ namespace SuperNewRoles.CustomRPC
         {
             Patch.VitalsPatch.RestrictVitalsTime -= time;
         }*/
+        public static void synchronize(byte playerId, int tag)
+        {
+            MapOptions.SpawnInMinigamePatch.synchronizeData.Synchronize((MapOptions.SpawnInMinigamePatch.SynchronizeTag)tag, playerId);
+        }
         [HarmonyPatch(typeof(InnerNetClient), nameof(InnerNetClient.StartEndGame))]
         class STARTENDGAME
         {
@@ -1149,19 +1154,22 @@ namespace SuperNewRoles.CustomRPC
                     case CustomRPC.PositionSwapperTP:
                         RPCProcedure.PositionSwapperTP(reader.ReadByte(), reader.ReadByte());
                         break;
-                        /*
-                    case CustomRPC.UseAdminTime:
-                        UseAdminTime(reader.ReadSingle());
-                        break;
-                    case CustomRPC.UseCameraTime:
-                        UseCameraTime(reader.ReadSingle());
-                        break;
-                    case CustomRPC.UseVitalsTime:
-                        UseVitalTime(reader.ReadSingle());
-                        break;
-                        */
+                    /*
+                case CustomRPC.UseAdminTime:
+                    UseAdminTime(reader.ReadSingle());
+                    break;
+                case CustomRPC.UseCameraTime:
+                    UseCameraTime(reader.ReadSingle());
+                    break;
+                case CustomRPC.UseVitalsTime:
+                    UseVitalTime(reader.ReadSingle());
+                    break;
+                    */
                     case CustomRPC.FixLights:
                         FixLights();
+                        break;
+                    case CustomRPC.Synchronize:
+                        RPCProcedure.synchronize(reader.ReadByte(), reader.ReadInt32());
                         break;
                 }
             }

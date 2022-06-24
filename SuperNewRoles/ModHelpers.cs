@@ -462,6 +462,11 @@ namespace SuperNewRoles
             return null;
         }
 
+        public static Sprite loadSpriteFromResources(Texture2D texture, float pixelsPerUnit, Rect textureRect, Vector2 pivot)
+        {
+            return Sprite.Create(texture, textureRect, pivot, pixelsPerUnit);
+        }
+
         public static string cs(Color c, string s)
         {
             return string.Format("<color=#{0:X2}{1:X2}{2:X2}{3:X2}>{4}</color>", CustomOptions.ToByte(c.r), CustomOptions.ToByte(c.g), CustomOptions.ToByte(c.b), CustomOptions.ToByte(c.a), s);
