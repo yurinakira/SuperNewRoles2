@@ -96,6 +96,10 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     {
                         p.RpcSetRole(RoleTypes.GuardianAngel);
                     }
+                    if (!p.isRole(RoleId.JackalSeer))
+                    {
+                        p.RpcSetRole(RoleTypes.GuardianAngel);
+                    }
                 }
             }
             FixedUpdate.SetRoleNames(true);

@@ -327,6 +327,34 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     }
                     optdata.KillCooldown = KillCoolSet(RoleClass.Jackal.KillCoolDown);
                     break;
+                case RoleId.JackalSeer:
+                    if (!player.IsMod())
+                    {
+                        if (!RoleClass.JackalSeer.IsImpostorLight)
+                        {
+                            optdata.ImpostorLightMod = optdata.CrewLightMod;
+                            var switchSystemJackalSeer = MapUtilities.CachedShipStatus.Systems[SystemTypes.Electrical].CastFast<SwitchSystem>();
+
+                            if (switchSystemJackalSeer != null && switchSystemJackalSeer.IsActive)
+                            {
+                                optdata.ImpostorLightMod /= 5;
+                            }
+                        }
+                    }
+                    if (player.IsMod())
+                    {
+                        if (RoleClass.JackalSeer.IsImpostorLight)
+                        {
+                            optdata.CrewLightMod = optdata.ImpostorLightMod;
+                            var switchSystem2 = MapUtilities.CachedShipStatus.Systems[SystemTypes.Electrical].CastFast<SwitchSystem>();
+                            if (switchSystem2 != null && switchSystem2.IsActive)
+                            {
+                                optdata.CrewLightMod = optdata.ImpostorLightMod * 15;
+                            }
+                        }
+                    }
+                    optdata.KillCooldown = KillCoolSet(RoleClass.JackalSeer.KillCoolDown);
+                    break;
                 case RoleId.Demon:
                     optdata.KillCooldown = KillCoolSet(RoleClass.Demon.CoolTime);
                     break;

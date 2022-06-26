@@ -142,6 +142,20 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                         }
                     }
                 }
+                foreach (PlayerControl JackalSeer in RoleClass.JackalSeer.JackalSeerPlayer)
+                {
+                    if (!JackalSeer.Data.Disconnected)
+                    {
+                        if (!ChangePlayers.ContainsKey(JackalSeer.PlayerId))
+                        {
+                            ChangePlayers.Add(JackalSeer.PlayerId, ModHelpers.cs(RoleClass.JackalSeer.color, JackalSeer.getDefaultName()));
+                        }
+                        else
+                        {
+                            ChangePlayers[JackalSeer.PlayerId] = ModHelpers.cs(RoleClass.JackalSeer.color, ChangePlayers[JackalSeer.PlayerId]);
+                        }
+                    }
+                }
             }
             else if (player.isRole(RoleId.Demon))
             {
@@ -377,7 +391,8 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                 PlayerControl.LocalPlayer.isRole(RoleId.Egoist) ||
                 PlayerControl.LocalPlayer.isRole(RoleId.RemoteSheriff) ||
                 PlayerControl.LocalPlayer.isRole(RoleId.Demon) ||
-                PlayerControl.LocalPlayer.isRole(RoleId.Arsonist)
+                PlayerControl.LocalPlayer.isRole(RoleId.Arsonist) ||
+                PlayerControl.LocalPlayer.isRole(RoleId.JackalSeer)
                 )
             {
                 FastDestroyableSingleton<HudManager>.Instance.KillButton.gameObject.SetActive(true);

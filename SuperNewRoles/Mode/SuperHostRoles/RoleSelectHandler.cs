@@ -63,6 +63,21 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                         }
                     }
                 }
+                if (CustomOptions.JackalSeerOption.getSelection() != 0)
+                {
+                    for (int i = 0; i < (1 * PlayerControl.GameOptions.NumImpostors + 2); i++)
+                    {
+                        PlayerControl bot = BotManager.Spawn("[SHR] 暗転対策BOT" + (i + 1));
+                        if (i == 0)
+                        {
+                            bot.RpcSetRole(RoleTypes.Impostor);
+                        }
+                        if (i > 0)
+                        {
+                            bot.RpcSetRole(RoleTypes.Crewmate);
+                        }
+                    }
+                }
                 else if (
                     CustomOptions.EgoistOption.getSelection() != 0 ||
                     CustomOptions.SheriffOption.getSelection() != 0 ||
@@ -101,6 +116,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
         {
             List<PlayerControl> DesyncImpostors = new();
             DesyncImpostors.AddRange(RoleClass.Jackal.JackalPlayer);
+            DesyncImpostors.AddRange(RoleClass.JackalSeer.JackalSeerPlayer);
             DesyncImpostors.AddRange(RoleClass.Sheriff.SheriffPlayer);
             DesyncImpostors.AddRange(RoleClass.Demon.DemonPlayer);
             DesyncImpostors.AddRange(RoleClass.truelover.trueloverPlayer);

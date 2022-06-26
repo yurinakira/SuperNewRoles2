@@ -33,6 +33,9 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                 case RoleId.Jackal:
                     if (RoleClass.Jackal.IsUseVent) return true;
                     break;
+                case RoleId.JackalSeer:
+                    if (RoleClass.JackalSeer.IsUseVent) return true;
+                    break;
                 case RoleId.MadMaker:
                     if (RoleClass.MadMaker.IsUseVent) return true;
                     break;
