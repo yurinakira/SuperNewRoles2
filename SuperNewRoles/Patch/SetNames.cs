@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -270,6 +270,19 @@ namespace SuperNewRoles.Patch
                 }
             }
         }
+        public static void LobbyNameSet()
+        {
+            if (AmongUsClient.Instance.AmHost)
+            {
+                foreach (PlayerControl player in CachedPlayer.AllPlayers)
+                {
+                        if (!player.nameText().text.Contains(ModHelpers.cs(RoleClass.ImpostorRed, " [SHR]")))
+                        {
+                            SetNamesClass.SetPlayerNameText(player, player.nameText().text + ModHelpers.cs(RoleClass.Arsonist.color, " [SHR]"));
+                        }
+                }
+            }
+        }
         public static void CelebritySet()
         {
             if (RoleClass.Celebrity.ChangeRoleView)
@@ -328,7 +341,7 @@ namespace SuperNewRoles.Patch
                             SetNamesClass.SetPlayerNameColor(p, RoleClass.ImpostorRed);
                         }
                     }
-                }                
+                }
                 if (PlayerControl.LocalPlayer.isImpostor())
                 {
                     foreach (PlayerControl p in RoleClass.SideKiller.MadKillerPlayer)
