@@ -1,31 +1,27 @@
-using System;
+/*using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using Hazel;
 using SuperNewRoles.CustomRPC;
 using SuperNewRoles.Helpers;
+using static SuperNewRoles.Roles.Seer;
 using SuperNewRoles.Mode;
 using UnityEngine;
-using static SuperNewRoles.Helpers.RPCHelper;
-using static SuperNewRoles.OutfitManager;
+using static SuperNewRoles.OutfitManager;//不要とありますが使用しています(元々の色の取得)
+using SuperNewRoles.Roles;
+using static SuperNewRoles.Helpers.RPCHelper;//不要とありますが使用しています(色変更)
 
-namespace SuperNewRoles.Roles
+
+namespace SuperNewRoles.Mode.SuperHostRoles.Roles
 {
     class Seer
-    //&MadSeer & EvilSeer & SeerFriends & JackalSeer & Sidekick(Seer)
-
     {
-        private static Sprite SoulSprite;
-        public static Sprite getSoulSprite()
-        {
-            if (SoulSprite) return SoulSprite;
-            SoulSprite = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.Soul.png", 500f);
-            return SoulSprite;
-        }//霊魂のスプライトを取得
+        //&MadSeer & EvilSeer & SeerFriends & JackalSeer & Sidekick(Seer)
+
 
         public static class ExileControllerWrapUpPatch
         {
-            public static void WrapUpPostfix(GameData.PlayerInfo exiled)
+            /*public static void WrapUpPostfix(GameData.PlayerInfo exiled)
             {
                 var role = PlayerControl.LocalPlayer.getRole();
                 if (role is RoleId.Seer or RoleId.MadSeer or RoleId.EvilSeer or RoleId.SeerFriends or RoleId.JackalSeer or RoleId.SidekickSeer)
@@ -61,7 +57,7 @@ namespace SuperNewRoles.Roles
                             RoleClass.SeerFriends.deadBodyPositions = new List<Vector3>();
                             limitSoulDuration = RoleClass.SeerFriends.limitSoulDuration;
                             soulDuration = RoleClass.SeerFriends.soulDuration;
-                            if (RoleClass.SeerFriends.mode is not 0 and not 2) return;//
+                            if (RoleClass.SeerFriends.mode is not 0 and not 2) return;
                             break;
                         case RoleId.JackalSeer:
                         case RoleId.SidekickSeer:
@@ -95,7 +91,7 @@ namespace SuperNewRoles.Roles
                         }
                     }
                 }
-            }
+            }*//*
 
             public static class MurderPlayerPatch
             {
@@ -129,32 +125,6 @@ namespace SuperNewRoles.Roles
                                 ModeFlag = RoleClass.JackalSeer.mode <= 1;
                                 break;
                         }
-                        if (ModeHandler.isMode(ModeId.Default))
-                        {
-                            if (PlayerControl.LocalPlayer.isAlive() && CachedPlayer.LocalPlayer.PlayerId != target.PlayerId && ModeFlag)
-                            {
-                                RoleHelpers.ShowFlash(new Color(42f / 255f, 187f / 255f, 245f / 255f));//点滅の制御は[RoleHelpers.ShowFlash]此処は色の制御のみ
-                            }
-                        }
-                        if (PlayerControl.LocalPlayer.IsMod())
-                        {
-                            if (ModeHandler.isMode(ModeId.SuperHostRoles))
-                            {
-                                if (PlayerControl.LocalPlayer.isAlive() && CachedPlayer.LocalPlayer.PlayerId != target.PlayerId && ModeFlag)
-                                {
-                                    //シーアの能力「死の点滅が見える」SHR時の代用で色変更しているコード。
-                                    //LateTaskで遅延
-
-                                    RoleClass.Seer.DefaultColor = (byte)CachedPlayer.LocalPlayer.Data.DefaultOutfit.ColorId; //DefaultのColorId(int型)をbyte型に変換しながら取得
-                                    var Seer = PlayerControl.LocalPlayer;
-
-                                    SeerDeathFlashSHR.RawSetColorDeathFlashSHR(Seer, 10); //体の色を ColorId 10(SkyBlue) に変更する。
-                                    new LateTask(() => { SeerDeathFlashSHR.RawSetColorDeathFlashSHR(Seer, 1); }, 1f, "Blue");// 1s遅延後 LocalPlayerの 体の色を ColorId 0(Blue) に変更する。
-                                    new LateTask(() => { SeerDeathFlashSHR.RawSetColorDeathFlashSHR(Seer, 10); }, 2f, "SkyBlue");
-                                    new LateTask(() => { SeerDeathFlashSHR.RawSetColorDeathFlashSHR(Seer, RoleClass.Seer.DefaultColor); }, 3f, "DefaultColor");// 3s遅延後 LocalPlayerの 体の色を 元の色 に変更する。
-                                }
-                            }
-                        }
                         if (!PlayerControl.LocalPlayer.IsMod())
                         {
                             if (ModeHandler.isMode(ModeId.SuperHostRoles))
@@ -167,11 +137,10 @@ namespace SuperNewRoles.Roles
                                     RoleClass.Seer.DefaultColor = (byte)CachedPlayer.LocalPlayer.Data.DefaultOutfit.ColorId; //DefaultのColorId(int型)をbyte型に変換しながら取得
                                     var SeerID = CachedPlayer.LocalPlayer.PlayerId;
 
-
-                                    RPCHelper.RpcSetColorDesync(SeerID, 10); //体の色を ColorId 10(SkyBlue) に変更する。
-                                    new LateTask(() => { RPCHelper.RpcSetColorDesync(SeerID, 1); }, 1f, "Blue");// 1s遅延後 LocalPlayerの 体の色を ColorId 0(Blue) に変更する。
-                                    new LateTask(() => { RPCHelper.RpcSetColorDesync(SeerID, 10); }, 2f, "SkyBlue");
-                                    new LateTask(() => { RPCHelper.RpcSetColorDesync(SeerID, RoleClass.Seer.DefaultColor); }, 3f, "DefaultColor");// 3s遅延後 LocalPlayerの 体の色を 元の色 に変更する。
+                                    RPCProcedure.RpcSetColorDesync(CachedPlayer.LocalPlayer.PlayerId, 10); //体の色を ColorId 10(SkyBlue) に変更する。
+                                    new LateTask(() => { RPCProcedure.RpcSetColorDesync(SeerID, 1); }, 1f, "Blue");// 1s遅延後 LocalPlayerの 体の色を ColorId 0(Blue) に変更する。
+                                    new LateTask(() => { RPCProcedure.RpcSetColorDesync(SeerID, 10); }, 2f, "SkyBlue");
+                                    new LateTask(() => { RPCProcedure.RpcSetColorDesync(SeerID, RoleClass.Seer.DefaultColor); }, 3f, "DefaultColor");// 3s遅延後 LocalPlayerの 体の色を 元の色 に変更する。
                                 }
                             }
                         }
@@ -183,12 +152,5 @@ namespace SuperNewRoles.Roles
             //Mode_2_幽霊が見える
         }
     }
-    public static class SeerDeathFlashSHR
-    {
-        public static void RawSetColorDeathFlashSHR(this PlayerControl player, byte color)
-        {//シーアの能力「死の点滅が見える」SHR時の代用で身体の色変更を制御しているコード
-            player.RawSetColor(color);
-        }
-    }
-}
+}*/
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -1083,31 +1083,31 @@ namespace SuperNewRoles.CustomOption
             DarkKillerPlayerCount = CustomOption.Create(316, false, CustomOptionType.Impostor, "SettingPlayerCountName", ImpostorPlayers[0], ImpostorPlayers[1], ImpostorPlayers[2], ImpostorPlayers[3], DarkKillerOption);
             DarkKillerKillCoolTime = CustomOption.Create(317, false, CustomOptionType.Impostor, "DarkKillerKillCoolSetting", 20f, 2.5f, 60f, 2.5f, DarkKillerOption);
 
-            SeerOption = new CustomRoleOption(318, false, CustomOptionType.Crewmate, "SeerName", RoleClass.Seer.color, 1);
-            SeerPlayerCount = CustomOption.Create(319, false, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], SeerOption);
-            SeerMode = CustomOption.Create(320, false, CustomOptionType.Crewmate, "SeerMode", new string[] { "SeerModeBoth", "SeerModeFlash", "SeerModeSouls" }, SeerOption);
-            SeerLimitSoulDuration = CustomOption.Create(321, false, CustomOptionType.Crewmate, "SeerLimitSoulDuration", false, SeerOption);
-            SeerSoulDuration = CustomOption.Create(322, false, CustomOptionType.Crewmate, "SeerSoulDuration", 15f, 0f, 120f, 5f, SeerLimitSoulDuration, format: "unitCouples");
+            SeerOption = new CustomRoleOption(318, true, CustomOptionType.Crewmate, "SeerName", RoleClass.Seer.color, 1);
+            SeerPlayerCount = CustomOption.Create(319, true, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], SeerOption);
+            SeerMode = CustomOption.Create(320, true, CustomOptionType.Crewmate, "SeerMode", new string[] { "SeerModeBoth", "SeerModeFlash", "SeerModeSouls" }, SeerOption);
+            SeerLimitSoulDuration = CustomOption.Create(321, true, CustomOptionType.Crewmate, "SeerLimitSoulDuration", false, SeerOption);
+            SeerSoulDuration = CustomOption.Create(322, true, CustomOptionType.Crewmate, "SeerSoulDuration", 15f, 0f, 120f, 5f, SeerLimitSoulDuration, format: "unitCouples");
 
-            MadSeerOption = new CustomRoleOption(323, false, CustomOptionType.Crewmate, "MadSeerName", RoleClass.MadSeer.color, 1);
-            MadSeerPlayerCount = CustomOption.Create(324, false, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], MadSeerOption);
-            MadSeerMode = CustomOption.Create(325, false, CustomOptionType.Crewmate, "SeerMode", new string[] { "SeerModeBoth", "SeerModeFlash", "SeerModeSouls" }, MadSeerOption);
-            MadSeerLimitSoulDuration = CustomOption.Create(326, false, CustomOptionType.Crewmate, "SeerLimitSoulDuration", false, MadSeerOption);
-            MadSeerSoulDuration = CustomOption.Create(327, false, CustomOptionType.Crewmate, "SeerSoulDuration", 15f, 0f, 120f, 5f, MadSeerLimitSoulDuration, format: "unitCouples");
-            MadSeerIsUseVent = CustomOption.Create(328, false, CustomOptionType.Crewmate, "MadMateUseVentSetting", false, MadSeerOption);
-            MadSeerIsImpostorLight = CustomOption.Create(329, false, CustomOptionType.Crewmate, "MadMateImpostorLightSetting", false, MadSeerOption);
-            MadSeerIsCheckImpostor = CustomOption.Create(330, false, CustomOptionType.Crewmate, "MadMateIsCheckImpostorSetting", false, MadSeerOption);
+            MadSeerOption = new CustomRoleOption(323, true, CustomOptionType.Crewmate, "MadSeerName", RoleClass.MadSeer.color, 1);
+            MadSeerPlayerCount = CustomOption.Create(324, true, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], MadSeerOption);
+            MadSeerMode = CustomOption.Create(325, true, CustomOptionType.Crewmate, "SeerMode", new string[] { "SeerModeBoth", "SeerModeFlash", "SeerModeSouls" }, MadSeerOption);
+            MadSeerLimitSoulDuration = CustomOption.Create(326, true, CustomOptionType.Crewmate, "SeerLimitSoulDuration", false, MadSeerOption);
+            MadSeerSoulDuration = CustomOption.Create(327, true, CustomOptionType.Crewmate, "SeerSoulDuration", 15f, 0f, 120f, 5f, MadSeerLimitSoulDuration, format: "unitCouples");
+            MadSeerIsUseVent = CustomOption.Create(328, true, CustomOptionType.Crewmate, "MadMateUseVentSetting", false, MadSeerOption);
+            MadSeerIsImpostorLight = CustomOption.Create(329, true, CustomOptionType.Crewmate, "MadMateImpostorLightSetting", false, MadSeerOption);
+            MadSeerIsCheckImpostor = CustomOption.Create(330, true, CustomOptionType.Crewmate, "MadMateIsCheckImpostorSetting", false, MadSeerOption);
             var madseeroption = SelectTask.TaskSetting(331, 332, 526, MadSeerIsCheckImpostor, CustomOptionType.Crewmate, true);
             MadSeerCommonTask = madseeroption.Item1;
             MadSeerShortTask = madseeroption.Item2;
             MadSeerLongTask = madseeroption.Item3;
-            MadSeerCheckImpostorTask = CustomOption.Create(333, false, CustomOptionType.Crewmate, "MadMateCheckImpostorTaskSetting", rates4, MadSeerIsCheckImpostor);
+            MadSeerCheckImpostorTask = CustomOption.Create(333, true, CustomOptionType.Crewmate, "MadMateCheckImpostorTaskSetting", rates4, MadSeerIsCheckImpostor);
 
-            EvilSeerOption = new CustomRoleOption(334, false, CustomOptionType.Impostor, "EvilSeerName", RoleClass.EvilSeer.color, 1);
-            EvilSeerPlayerCount = CustomOption.Create(335, false, CustomOptionType.Impostor, "SettingPlayerCountName", ImpostorPlayers[0], ImpostorPlayers[1], ImpostorPlayers[2], ImpostorPlayers[3], EvilSeerOption);
-            EvilSeerMode = CustomOption.Create(336, false, CustomOptionType.Impostor, "SeerMode", new string[] { "SeerModeBoth", "SeerModeFlash", "SeerModeSouls" }, EvilSeerOption);
-            EvilSeerLimitSoulDuration = CustomOption.Create(337, false, CustomOptionType.Impostor, "SeerLimitSoulDuration", false, EvilSeerOption);
-            EvilSeerSoulDuration = CustomOption.Create(338, false, CustomOptionType.Impostor, "SeerSoulDuration", 15f, 0f, 120f, 5f, EvilSeerLimitSoulDuration, format: "unitCouples");
+            EvilSeerOption = new CustomRoleOption(334, true, CustomOptionType.Impostor, "EvilSeerName", RoleClass.EvilSeer.color, 1);
+            EvilSeerPlayerCount = CustomOption.Create(335, true, CustomOptionType.Impostor, "SettingPlayerCountName", ImpostorPlayers[0], ImpostorPlayers[1], ImpostorPlayers[2], ImpostorPlayers[3], EvilSeerOption);
+            EvilSeerMode = CustomOption.Create(336, true, CustomOptionType.Impostor, "SeerMode", new string[] { "SeerModeBoth", "SeerModeFlash", "SeerModeSouls" }, EvilSeerOption);
+            EvilSeerLimitSoulDuration = CustomOption.Create(337, true, CustomOptionType.Impostor, "SeerLimitSoulDuration", false, EvilSeerOption);
+            EvilSeerSoulDuration = CustomOption.Create(338, true, CustomOptionType.Impostor, "SeerSoulDuration", 15f, 0f, 120f, 5f, EvilSeerLimitSoulDuration, format: "unitCouples");
 
             TeleportingJackalOption = new CustomRoleOption(339, false, CustomOptionType.Neutral, "TeleportingJackalName", RoleClass.TeleportingJackal.color, 1);
             TeleportingJackalPlayerCount = CustomOption.Create(340, false, CustomOptionType.Neutral, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], TeleportingJackalOption);
@@ -1137,19 +1137,19 @@ namespace SuperNewRoles.CustomOption
             TaskManagerShortTask = taskmanageroption.Item2;
             TaskManagerLongTask = taskmanageroption.Item3;
 
-            SeerFriendsOption = new CustomRoleOption(362, false, CustomOptionType.Crewmate, "SeerFriendsName", RoleClass.SeerFriends.color, 1);
-            SeerFriendsPlayerCount = CustomOption.Create(363, false, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], SeerFriendsOption);
-            SeerFriendsMode = CustomOption.Create(364, false, CustomOptionType.Crewmate, "SeerMode", new string[] { "SeerModeBoth", "SeerModeFlash", "SeerModeSouls" }, SeerFriendsOption);
-            SeerFriendsLimitSoulDuration = CustomOption.Create(365, false, CustomOptionType.Crewmate, "SeerLimitSoulDuration", false, SeerFriendsOption);
-            SeerFriendsSoulDuration = CustomOption.Create(366, false, CustomOptionType.Crewmate, "SeerSoulDuration", 15f, 0f, 120f, 5f, SeerFriendsLimitSoulDuration, format: "unitCouples");
-            SeerFriendsIsUseVent = CustomOption.Create(367, false, CustomOptionType.Crewmate, "MadMateUseVentSetting", false, SeerFriendsOption);
-            SeerFriendsIsImpostorLight = CustomOption.Create(368, false, CustomOptionType.Crewmate, "MadMateImpostorLightSetting", false, SeerFriendsOption);
-            SeerFriendsIsCheckJackal = CustomOption.Create(369, false, CustomOptionType.Crewmate, "JackalFriendsIsCheckJackalSetting", false, SeerFriendsOption);
+            SeerFriendsOption = new CustomRoleOption(362, true, CustomOptionType.Crewmate, "SeerFriendsName", RoleClass.SeerFriends.color, 1);
+            SeerFriendsPlayerCount = CustomOption.Create(363, true, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], SeerFriendsOption);
+            SeerFriendsMode = CustomOption.Create(364, true, CustomOptionType.Crewmate, "SeerMode", new string[] { "SeerModeBoth", "SeerModeFlash", "SeerModeSouls" }, SeerFriendsOption);
+            SeerFriendsLimitSoulDuration = CustomOption.Create(365, true, CustomOptionType.Crewmate, "SeerLimitSoulDuration", false, SeerFriendsOption);
+            SeerFriendsSoulDuration = CustomOption.Create(366, true, CustomOptionType.Crewmate, "SeerSoulDuration", 15f, 0f, 120f, 5f, SeerFriendsLimitSoulDuration, format: "unitCouples");
+            SeerFriendsIsUseVent = CustomOption.Create(367, true, CustomOptionType.Crewmate, "MadMateUseVentSetting", false, SeerFriendsOption);
+            SeerFriendsIsImpostorLight = CustomOption.Create(368, true, CustomOptionType.Crewmate, "MadMateImpostorLightSetting", false, SeerFriendsOption);
+            SeerFriendsIsCheckJackal = CustomOption.Create(369, true, CustomOptionType.Crewmate, "JackalFriendsIsCheckJackalSetting", false, SeerFriendsOption);
             var SeerFriendsoption = SelectTask.TaskSetting(371, 372, 373, SeerFriendsIsCheckJackal, CustomOptionType.Crewmate, true);
             SeerFriendsCommonTask = SeerFriendsoption.Item1;
             SeerFriendsShortTask = SeerFriendsoption.Item2;
             SeerFriendsLongTask = SeerFriendsoption.Item3;
-            SeerFriendsCheckJackalTask = CustomOption.Create(374, false, CustomOptionType.Crewmate, "MadMateCheckImpostorTaskSetting", rates4, SeerFriendsIsCheckJackal);
+            SeerFriendsCheckJackalTask = CustomOption.Create(374, true, CustomOptionType.Crewmate, "MadMateCheckImpostorTaskSetting", rates4, SeerFriendsIsCheckJackal);
 
             JackalSeerOption = new CustomRoleOption(375, false, CustomOptionType.Neutral, "JackalSeerName", RoleClass.JackalSeer.color, 1);
             JackalSeerPlayerCount = CustomOption.Create(376, false, CustomOptionType.Neutral, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], JackalSeerOption);

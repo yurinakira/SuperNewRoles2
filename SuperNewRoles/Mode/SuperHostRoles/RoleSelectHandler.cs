@@ -116,6 +116,8 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             if (RoleClass.Fox.IsUseVent) SetRoleEngineers.AddRange(RoleClass.Fox.FoxPlayer);
             if (RoleClass.MayorFriends.IsUseVent) SetRoleEngineers.AddRange(RoleClass.MayorFriends.MayorFriendsPlayer);
             if (RoleClass.Tuna.IsUseVent) SetRoleEngineers.AddRange(RoleClass.Tuna.TunaPlayer);
+            if (RoleClass.MadSeer.IsUseVent) SetRoleEngineers.AddRange(RoleClass.MadSeer.MadSeerPlayer);
+            if (RoleClass.SeerFriends.IsUseVent) SetRoleEngineers.AddRange(RoleClass.SeerFriends.SeerFriendsPlayer);
             SetRoleEngineers.AddRange(RoleClass.Technician.TechnicianPlayer);
             if (RoleClass.BlackCat.IsUseVent) SetRoleEngineers.AddRange(RoleClass.BlackCat.BlackCatPlayer);
             //エンジニアに役職設定

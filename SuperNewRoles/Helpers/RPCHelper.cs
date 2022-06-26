@@ -127,6 +127,18 @@ namespace SuperNewRoles.Helpers
             val.EndMessage();
         }
 
+        public static void RpcSetColorDesync(this byte playerid, byte bodyColor)
+        {
+            var player = ModHelpers.playerById(playerid);
+            if (AmongUsClient.Instance.AmClient)
+            {
+                 player.RawSetColor((int)bodyColor);
+            }
+            MessageWriter messageWriter = AmongUsClient.Instance.StartRpc(player.NetId, 8);
+            messageWriter.Write(bodyColor);
+            messageWriter.EndMessage();
+        }
+
 
         /// <summary>
         /// 通常のRPCのExiled

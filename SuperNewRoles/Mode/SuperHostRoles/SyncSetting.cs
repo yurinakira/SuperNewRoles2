@@ -180,6 +180,38 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                         }
                     }
                     break;
+                case RoleId.MadSeer:
+                    if (RoleClass.MadSeer.IsUseVent)
+                    {
+                        optdata.RoleOptions.EngineerCooldown = 0f;
+                        optdata.RoleOptions.EngineerInVentMaxTime = 0f;
+                    }
+                    if (RoleClass.MadSeer.IsImpostorLight)
+                    {
+                        optdata.CrewLightMod = optdata.ImpostorLightMod;
+                        var switchSystem2 = MapUtilities.Systems[SystemTypes.Electrical].CastFast<SwitchSystem>();
+                        if (switchSystem2 != null && switchSystem2.IsActive)
+                        {
+                            optdata.CrewLightMod = optdata.ImpostorLightMod * 15;
+                        }
+                    }
+                    break;
+                case RoleId.SeerFriends:
+                    if (RoleClass.SeerFriends.IsUseVent)
+                    {
+                        optdata.RoleOptions.EngineerCooldown = 0f;
+                        optdata.RoleOptions.EngineerInVentMaxTime = 0f;
+                    }
+                    if (RoleClass.SeerFriends.IsImpostorLight)
+                    {
+                        optdata.CrewLightMod = optdata.ImpostorLightMod;
+                        var switchSystem2 = MapUtilities.Systems[SystemTypes.Electrical].CastFast<SwitchSystem>();
+                        if (switchSystem2 != null && switchSystem2.IsActive)
+                        {
+                            optdata.CrewLightMod = optdata.ImpostorLightMod * 15;
+                        }
+                    }
+                    break;
                 case RoleId.truelover:
                     optdata.ImpostorLightMod = optdata.CrewLightMod;
                     var switchSystemtruelover = MapUtilities.CachedShipStatus.Systems[SystemTypes.Electrical].CastFast<SwitchSystem>();
