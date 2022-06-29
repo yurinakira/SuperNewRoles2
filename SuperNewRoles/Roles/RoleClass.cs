@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace SuperNewRoles.Roles
 {
-    [HarmonyPatch]
+    //[HarmonyPatch]
     public static class RoleClass
     {
         public static bool IsMeeting;

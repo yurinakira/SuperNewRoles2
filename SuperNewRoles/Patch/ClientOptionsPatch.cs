@@ -10,7 +10,7 @@ using Object = UnityEngine.Object;
 
 namespace SuperNewRoles.Patch
 {
-    [HarmonyPatch]
+    //[HarmonyPatch]
     public static class ClientOptionsPatch
     {
         private static SelectionBehaviour[] AllOptions = {

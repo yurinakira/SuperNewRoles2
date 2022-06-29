@@ -14,7 +14,7 @@ namespace SuperNewRoles.Map
         public static class ShipStatusBeginPatch
         {
             [HarmonyPostfix]
-            [HarmonyPatch]
+            //[HarmonyPatch]
             public static void Postfix(ShipStatus __instance)
             {
                 ApplyChanges(__instance);

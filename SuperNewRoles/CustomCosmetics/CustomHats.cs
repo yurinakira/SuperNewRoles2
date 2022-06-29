@@ -23,7 +23,7 @@ using UnityEngine;
 
 namespace SuperNewRoles.CustomCosmetics
 {
-    [HarmonyPatch]
+    //[HarmonyPatch]
     public class CustomHats
     {
         public static Material hatShader;

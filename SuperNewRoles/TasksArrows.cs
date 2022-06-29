@@ -2,7 +2,7 @@ using HarmonyLib;
 
 namespace SuperNewRoles
 {
-    [HarmonyPatch]
+    //[HarmonyPatch]
     public static class TasksArrow
     {
         [HarmonyPatch(typeof(NormalPlayerTask), nameof(NormalPlayerTask.FixedUpdate))]

@@ -32,10 +32,10 @@ namespace SuperNewRoles
         public static implicit operator PlayerPhysics(CachedPlayer player) => player.PlayerPhysics;
     }
 
-    [HarmonyPatch]
+    //[HarmonyPatch]
     public static class CachedPlayerPatches
     {
-        [HarmonyPatch]
+        //[HarmonyPatch]
         private class CacheLocalPlayerPatch
         {
             [HarmonyTargetMethod]

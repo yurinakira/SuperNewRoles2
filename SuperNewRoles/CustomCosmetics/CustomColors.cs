@@ -389,7 +389,7 @@ namespace SuperNewRoles.CustomCosmetics
             public bool isLighterColor;
         }
 
-        [HarmonyPatch]
+        //[HarmonyPatch]
         public static class CustomColorPatches
         {
             [HarmonyPatch(typeof(TranslationController), nameof(TranslationController.GetString), new[] {

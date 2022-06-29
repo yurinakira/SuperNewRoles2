@@ -42,7 +42,7 @@ namespace SuperNewRoles.Patch
             cameraTimer = 0f;
         }
 
-        [HarmonyPatch]
+        //[HarmonyPatch]
         class SurveillanceMinigamePatch
         {
             private static int page = 0;
@@ -180,7 +180,7 @@ namespace SuperNewRoles.Patch
             }
         }
 
-        [HarmonyPatch]
+        //[HarmonyPatch]
         class PlanetSurveillanceMinigamePatch
         {
             static TMPro.TextMeshPro TimeRemaining;
@@ -248,7 +248,7 @@ namespace SuperNewRoles.Patch
             }
         }
 
-        [HarmonyPatch]
+        //[HarmonyPatch]
         class DoorLogPatch
         {
             static TMPro.TextMeshPro TimeRemaining;
@@ -307,7 +307,7 @@ namespace SuperNewRoles.Patch
                 }
             }
 
-            [HarmonyPatch]
+            //[HarmonyPatch]
             class SecurityLogGameClosePatch
             {
                 private static IEnumerable<MethodBase> TargetMethods()

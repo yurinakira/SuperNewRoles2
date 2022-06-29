@@ -24,7 +24,7 @@ namespace SuperNewRoles.Roles
                 allRoles = new List<Role>();
             }
         }
-        [HarmonyPatch]
+        //[HarmonyPatch]
         public abstract class RoleBase<T> : Role where T : RoleBase<T>, new()
         {
             public static List<T> players = new();

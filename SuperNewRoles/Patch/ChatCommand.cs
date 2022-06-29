@@ -6,7 +6,7 @@ using InnerNet;
 namespace SuperNewRoles.Patch
 {
     class ChatCommand { }
-    [HarmonyPatch]
+    //[HarmonyPatch]
     public static class DynamicLobbies
     {
         public static int LobbyLimit = 15;

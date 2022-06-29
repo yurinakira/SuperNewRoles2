@@ -11,7 +11,7 @@ using static SuperNewRoles.CustomOption.CustomOptions;
 
 namespace SuperNewRoles.MapOptions
 {
-    [HarmonyPatch]
+    //[HarmonyPatch]
     public class MapOption
     {
         public static bool UseAdmin;

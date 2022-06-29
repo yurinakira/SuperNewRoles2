@@ -829,7 +829,7 @@ namespace SuperNewRoles.CustomOption
             return false;
         }
     }
-    [HarmonyPatch]
+    //[HarmonyPatch]
     class GameOptionsDataPatch
     {
         public static string tl(string key)

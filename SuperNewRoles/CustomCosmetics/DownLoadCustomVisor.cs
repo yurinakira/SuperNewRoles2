@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace SuperNewRoles.CustomCosmetics
 {
-    [HarmonyPatch]
+    //[HarmonyPatch]
     public class CustomVisors
     {
         public class CustomVisor

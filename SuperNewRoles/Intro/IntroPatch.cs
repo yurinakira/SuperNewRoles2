@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace SuperNewRoles.Patches
 {
-    [HarmonyPatch]
+    //[HarmonyPatch]
     class IntroPatch
     {
         public static void setupIntroTeamIcons(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)

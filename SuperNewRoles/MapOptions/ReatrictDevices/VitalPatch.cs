@@ -98,7 +98,7 @@ namespace SuperNewRoles.Patch
             }
         }
 
-        [HarmonyPatch]
+        //[HarmonyPatch]
         class VitalsMinigameClosePatch
         {
             private static IEnumerable<MethodBase> TargetMethods()
