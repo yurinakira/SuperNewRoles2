@@ -1,20 +1,20 @@
-﻿using BepInEx;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Security.Cryptography;
+using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.IL2CPP;
 using HarmonyLib;
 using Hazel;
-using System.Security.Cryptography;
-using System.Linq;
-using System.Net;
-using System.IO;
-using System;
-using System.Reflection;
+using InnerNet;
+using SuperNewRoles.CustomOption;
 using UnhollowerBaseLib;
 using UnityEngine;
-using SuperNewRoles.CustomOption;
-using InnerNet;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace SuperNewRoles.Patch
 {
@@ -27,23 +27,23 @@ namespace SuperNewRoles.Patch
             {
                 if (ConfigRoles.DebugMode.Value)
                 {
-                    SuperNewRolesPlugin.Logger.LogInfo("アドミンの場所(x):" + __instance.transform.position.x);
-                    SuperNewRolesPlugin.Logger.LogInfo("アドミンの場所(y):" + __instance.transform.position.y);
-                    SuperNewRolesPlugin.Logger.LogInfo("アドミンの場所(Z):" + __instance.transform.position.z);
+                    SuperNewRolesPlugin.Logger.LogInfo("[DebugMode]Admin Coordinate(x):" + __instance.transform.position.x);
+                    SuperNewRolesPlugin.Logger.LogInfo("[DebugMode]Admin Coordinate(y):" + __instance.transform.position.y);
+                    SuperNewRolesPlugin.Logger.LogInfo("[DebugMode]Admin Coordinate(Z):" + __instance.transform.position.z);
                 }
             }
         }
         [HarmonyPatch(typeof(KeyboardJoystick), nameof(KeyboardJoystick.Update))]
         public static class DebugManager
         {
-            private static readonly System.Random random = new System.Random((int)DateTime.Now.Ticks);
-            private static List<PlayerControl> bots = new List<PlayerControl>();
+            private static readonly System.Random random = new((int)DateTime.Now.Ticks);
+            private static List<PlayerControl> bots = new();
             public class LateTask
             {
                 public string name;
                 public float timer;
                 public Action action;
-                public static List<LateTask> Tasks = new List<LateTask>();
+                public static List<LateTask> Tasks = new();
                 public bool run(float deltaTime)
                 {
                     timer -= deltaTime;
@@ -64,7 +64,8 @@ namespace SuperNewRoles.Patch
                 public static void Update(float deltaTime)
                 {
                     var TasksToRemove = new List<LateTask>();
-                    Tasks.ForEach((task) => {
+                    Tasks.ForEach((task) =>
+                    {
                         if (task.run(deltaTime))
                         {
                             TasksToRemove.Add(task);
@@ -96,72 +97,39 @@ namespace SuperNewRoles.Patch
                 // Spawn dummys
                 if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.G))
                 {
-                    var playerControl = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);
-                    var i = playerControl.PlayerId = (byte)GameData.Instance.GetAvailableId();
+                    PlayerControl bot = BotManager.Spawn(PlayerControl.LocalPlayer.nameText().text);
 
-                    bots.Add(playerControl);
-                    GameData.Instance.AddPlayer(playerControl);
-                    AmongUsClient.Instance.Spawn(playerControl, -2, InnerNet.SpawnFlags.None);
-
-                    int hat = random.Next(HatManager.Instance.allHats.Count);
-                    int pet = random.Next(HatManager.Instance.allPets.Count);
-                    int skin = random.Next(HatManager.Instance.allSkins.Count);
-                    int visor = random.Next(HatManager.Instance.allVisors.Count);
-                    int color = random.Next(Palette.PlayerColors.Length);
-                    int nameplate = random.Next(HatManager.Instance.allNamePlates.Count);
-                    var id = 0;
-                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
-                    {
-                        SuperNewRolesPlugin.Logger.LogInfo(p.PlayerId);
-                        if (id < p.PlayerId && p.PlayerId != 255)
-                        {
-                            SuperNewRolesPlugin.Logger.LogInfo("idセット:" + id);
-                            id = p.PlayerId;
-                        }
-                    }
-                    id++;
-                    var bot = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);
-                    bot.PlayerId = (byte)id;
-                    GameData.Instance.AddPlayer(bot);
-                    AmongUsClient.Instance.Spawn(bot, -2, SpawnFlags.None);
-                    bot.transform.position = PlayerControl.LocalPlayer.transform.position;
-                    bot.NetTransform.enabled = true;
-                    GameData.Instance.RpcSetTasks(bot.PlayerId, new byte[0]);
-
-                    bot.RpcSetColor((byte)PlayerControl.LocalPlayer.CurrentOutfit.ColorId);
-                    bot.RpcSetName(PlayerControl.LocalPlayer.name);
-                    bot.RpcSetPet(PlayerControl.LocalPlayer.CurrentOutfit.PetId);
-                    bot.RpcSetSkin(PlayerControl.LocalPlayer.CurrentOutfit.SkinId);
-                    bot.RpcSetNamePlate(PlayerControl.LocalPlayer.CurrentOutfit.NamePlateId);
+                    new LateTask(() => bot.NetTransform.RpcSnapTo(new Vector2(0, 15)), 0.2f, "Bot TP Task");
+                    new LateTask(() => { foreach (var pc in CachedPlayer.AllPlayers) pc.PlayerControl.RpcMurderPlayer(bot); }, 0.4f, "Bot Kill Task");
+                    new LateTask(() => bot.Despawn(), 0.6f, "Bot Despawn Task");
                 }
                 
                 if (Input.GetKeyDown(KeyCode.I))
                 {
-                    MeetingRoomManager.Instance.AssignSelf(PlayerControl.LocalPlayer, null);
-                    DestroyableSingleton<HudManager>.Instance.OpenMeetingRoom(PlayerControl.LocalPlayer);
-                    PlayerControl.LocalPlayer.RpcStartMeeting(PlayerControl.LocalPlayer.Data);
+                    foreach (PlayerControl p in CachedPlayer.AllPlayers)
+                    {
+                        if (p == PlayerControl.LocalPlayer) continue;
+                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.MyPhysics.NetId, (byte)RpcCalls.EnterVent, SendOption.None, p.getClientId());
+                        writer.WritePacked(MapUtilities.CachedShipStatus.AllVents[0].Id);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        SuperNewRolesPlugin.Logger.LogInfo(MapUtilities.CachedShipStatus.AllVents[0].transform);
+                    }
                 }
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    if (Default == 0) Default = Camera.main.orthographicSize;
-                    Camera.main.orthographicSize = Default * 2.5f;
-                    HudManager.Instance.UICamera.orthographicSize = Default * 2.5f;
-                }
-                if (Input.GetKeyDown(KeyCode.N))
-                {
-                    if (Default == 0) Default = Camera.main.orthographicSize;
-                    Camera.main.orthographicSize = Default * 7f;
-                    HudManager.Instance.UICamera.orthographicSize = Default * 7f;
-                }
-                if (Input.GetKeyDown(KeyCode.C))
-                {
-                    if (Default == 0) return;
-                    Camera.main.orthographicSize = Default;
-                    HudManager.Instance.UICamera.orthographicSize = Default;
-                }
+                /*
+                    if (Input.GetKeyDown(KeyCode.C))
+                    {
+                        SuperNewRolesPlugin.Logger.LogInfo("CHANGE!!!");
+                        foreach (PlayerControl p in CachedPlayer.AllPlayers)
+                        {
+                            RoleManager.Instance.SetRole(p, RoleTypes.Engineer);
+                            AmongUsClient.Instance.Spawn(GameData.Instance, -2, SpawnFlags.IsClientCharacter);
+                            AmongUsClient.Instance.Spawn(p, p.OwnerId, SpawnFlags.IsClientCharacter);
+                        }
+                    }
+                    */
                 if (Input.GetKeyDown(KeyCode.F10))
                 {
-                    BotManager.Spawn($"bot{(byte)GameData.Instance.GetAvailableId()}");                
+                    BotManager.Spawn($"bot{(byte)GameData.Instance.GetAvailableId()}");
                 }
                 if (Input.GetKeyDown(KeyCode.F11))
                 {
@@ -176,10 +144,13 @@ namespace SuperNewRoles.Patch
                     .Select(s => s[random.Next(s.Length)]).ToArray());
             }
         }
-        public static bool IsDebugMode() {
+        public static bool IsDebugMode()
+        {
             var IsDebugModeBool = false;
-            if (ConfigRoles.DebugMode.Value) {
-                if (CustomOptions.IsDebugMode.getBool()) {
+            if (ConfigRoles.DebugMode.Value)
+            {
+                if (CustomOptions.IsDebugMode.getBool())
+                {
                     IsDebugModeBool = true;
                 }
             }

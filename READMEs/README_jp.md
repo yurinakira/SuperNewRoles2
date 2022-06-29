@@ -20,6 +20,12 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 ## 1役職に複数人設定できる
 クルーメイト全員がシェリフなどもできます!
 
+## 機器設定
+アドミンやバイタルなどの設定をすることができます。<br>
+通常モードにおいて、時間設定も可能になりました。<br>
+[ykundesuBeplnEx]設定も搭載しています!<br>
+現在SHRモードにおいては使える・使えないの設定のみ使えます。<br>
+
 ## モードがある
 通常とは別で、[かくれんぼモード](#かくれんぼモード)などが追加されています。
 
@@ -33,7 +39,7 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 [TheOtherRolesGM](https://github.com/yukinogatari/TheOtherRoles-GM) オプションやボタンなどのソースコードを参考にさせていただきました。**yukinogatari**さんありがとうございます！
 
 [Essentials](https://github.com/DorCoMaNdO/Reactor-Essentials) - カスタムゲームオプション
-**DorCoMaNdO**: 
+**DorCoMaNdO**:
 - v1.6より前：デフォルトのEssentialsリリースを使用しました
 - v1.6-v1.8：デフォルトのEssentialsを少し変更しました。 変更 この ブランチに は、フォークの あります。
 - v2.0.0以降：Reactorを使用しなくなったため、 実装に触発された独自の実装を使用しています。 **DorCoMaNdO**の
@@ -42,15 +48,32 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 
 [BepInEx](https://github.com/BepInEx) - modを適用するために使いました。<br>
 [JackalとSidekick](https://www.twitch.tv/dhalucard) - 元のアイデアは **Dhalucard**から来ています。(TheOtherRolesより)<br>
-[Town Of Host](https://github.com/tukasa0001/TownOfHost) - LateTaskやRpcSetRoleDesyncなどのコードを使用させてもらいました。 **tukasa0001**さんありがとうございます！<br>
+[Town Of Host](https://github.com/tukasa0001/TownOfHost) - LateTaskやRpcSetRoleDesync、CustomRPCSenderなどのコードを使用させてもらいました。 **tukasa0001**さんありがとうございます！<br>
 [Jester](https://github.com/Maartii/Jester) - Jester(てるてる)のアイデアは、 **Maartii** から来ています。(TheOtherRolesから引用)<br>
 [Among-Us-Love-Couple-Mod](https://github.com/Woodi-dev/Among-Us-Love-Couple-Mod) - Lovers(ラバーズ)のアイデアは、**Woodi-dev**から来ています。(TheOtherRolesから引用)<br>
 [Among-Us-Sheriff-Mod](https://github.com/Woodi-dev/Among-Us-Sheriff-Mod) - Sheriffのアイデアは **Woodi-dev** から来ています。(TheOtherRolesから引用)<br>
-[au.libhalt.net](https://au.libhalt.net) - ナイス猫又/イビル猫又のアイデアは **au.libhalt.net** から来ています。
+[au.libhalt.net](https://au.libhalt.net) - ナイス猫又/イビル猫又のアイデアは **au.libhalt.net** から来ています。<br>
+[TheOtherRolesGMHaoming](https://github.com/haoming37/TheOtherRoles-GM-Haoming) - ベント追加、バイタル移動のコードを参考にさせていただきました！**Haoming37**さんありがとうございます！<br>
 
 ## 連絡について
 
 Discordサーバーからお願いします:[Discordサーバー](https://discord.gg/95YuUZp4kM)
+
+## 開発者
+[よっキング](https://github.com/ykundesu) ([Twitter](https://twitter.com/SNRDevs))<br>
+[さつまいも](https://github.com/satsumaimoamo) ([Twitter](https://twitter.com/satsumaimo_SNR))<br>
+[VSCode大好き](https://github.com/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa9841)<br>
+[漢方薬の人](https://github.com/UKON256)<br>
+[じゅきまぐろ](https://github.com/jukimaguro1) ([Twitter](https://twitter.com/jukimaguro))<br>
+[くらと](https://github.com/Kurato-Tsukishiro) ([Twitter](https://twitter.com/Kurato_SNR7))<br>
+[DekoKiyo](https://github.com/Dekokiyo) ([Twitter](https://twitter.com/kiyo_deko))<br>
+
+## スポンサー
+こんこるど様<br>
+kibou102様<br>
+つちな様<br>
+windows7様<br>
+渋谷先生様<br>
 
 ## 役職一覧
 Discordサーバーには全てすでに乗っています。
@@ -66,22 +89,29 @@ Discordサーバーには全てすでに乗っています。
 | [追跡者](#追跡者) | [自宅警備員](#自宅警備員) |  [純愛者](#純愛者) |  |
 | [イビルサイエンティスト](#イビルサイエンティスト) | [スタントマン](#スタントマン) | [忘却者](#忘却者) |  |
 | [ホーク](#ホーク) | [ムービング](#ムービング) |[ジャッカルフレンズ](#ジャッカルフレンズ)  |  |
-| [ミニマリスト](#ミニマリスト) | [ベスト冤罪ヤー](#ベスト冤罪ヤー) |  |  |
-| [マガジナー](#マガジナー)| [ナイス猫又](#ナイス猫又) |  |  |
-| [シリアルキラー](#シリアルキラー) | [ドクター](#ドクター)
-| [イビルイレイサー](#イビルイレイサー) | [ミーティングシェリフ](#ミーティングシェリフ)
+| [ミニマリスト](#ミニマリスト) | [ベスト冤罪ヤー](#ベスト冤罪ヤー) | [冤罪師](#冤罪師) |  |
+| [マガジナー](#マガジナー)| [ナイス猫又](#ナイス猫又) | [妖狐](#妖狐) |  |
+| [シリアルキラー](#シリアルキラー) | [ドクター](#ドクター) |[テレポーティングジャッカル](#テレポーティングジャッカル)
+| [イビルイレイサー](#イビルイレイサー) | [ミーティングシェリフ](#ミーティングシェリフ) | [悪魔](#悪魔)
 | [オーバーキラー](#オーバーキラー) | [ナイスサイエンティスト](#ナイスサイエンティスト)
 | [イビルムービング](#イビルムービング) |[ナイス赤ずきん](#ナイス赤ずきん)
 | [レベリンガー](#レベリンガー) | [メイヤー](#メイヤー)
 | [サイドキラー](#サイドキラー) | [技術者](#技術者)
 | [サバイバー](#サバイバー) | [占い師](#占い師)
-| |[霊媒師](#霊媒師)
-| |[マッドメイヤー](#マッドメイヤー)
-| |[ナイスホーク](#ナイスホーク)
+| [イビルシーア](#イビルシーア)|[霊媒師](#霊媒師)
+| [ダークキラー](#ダークキラー)|[マッドメイヤー](#マッドメイヤー)
+| [ヴァンパイア](#ヴァンパイア)|[ナイスホーク](#ナイスホーク)
 | |[マッドスタントマン](#マッドスタントマン)
 | |[マッドホーク](#マッドホーク)
 | |[パン屋](#パン屋)
 | |[マッドてるてる](#マッドてるてる)
+| |[夜行性](#夜行性)
+| |[スター](#スター)
+| |[マッドシーア](#マッドシーア)
+| |[リモートシェリフ](#リモートシェリフ)
+| |[タスクマネージャー](#タスクマネージャー)
+| |[マッドメーカー](#マッドメーカー)
+| |[狐憑き](#狐憑き)
 
 # 役職の詳細
 
@@ -174,7 +204,7 @@ Discordサーバーには全てすでに乗っています。
 ### ゲーム設定
 | 名前 | 説明 |
 |----------|:-------------:|
-| 最大回数 | 能力を使用できる回数を設定できます。 
+| 最大回数 | 能力を使用できる回数を設定できます。
 | 次のターンに反映 |能力を使用した次のターンに判定が交換されるかを設定できます。
 -----------------------
 
@@ -798,6 +828,18 @@ SuperHostRoles対応(キルボタンと置き換え)
 | クルーメイトのみ | クルーメイトのみにクラードが選ばれるか設定できます。
 -----------------------
 
+## 狐憑き
+### クルー陣営
+
+占い師やシェリフなどにはインポスターとして判定される。<br>
+タスクなどは普通のクルーと同じ。<br>
+SHR対応<br>
+
+### ゲーム設定
+| 名前 | 説明 |
+|----------|:-------------:|
+
+-----------------------
 ## ラバーズ
 ### 重複陣営
 

@@ -1,11 +1,12 @@
-﻿using SuperNewRoles.CustomOption;
-using SuperNewRoles.CustomRPC;
-using SuperNewRoles.Patch;
-using SuperNewRoles.Roles;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using SuperNewRoles.CustomOption;
+using SuperNewRoles.CustomRPC;
+using SuperNewRoles.Intro;
+using SuperNewRoles.Patch;
+using SuperNewRoles.Roles;
 using UnityEngine;
 
 namespace SuperNewRoles.Mode.SuperHostRoles
@@ -14,26 +15,28 @@ namespace SuperNewRoles.Mode.SuperHostRoles
     {
         public static void RoleSelect()
         {
+            SuperNewRolesPlugin.Logger.LogInfo("[SHR] ROLESELECT");
             if (!AmongUsClient.Instance.AmHost) return;
-            OneOrNotListSet();
+            SuperNewRolesPlugin.Logger.LogInfo("[SHR] つうか");
             CrewOrImpostorSet();
+            OneOrNotListSet();
             AllRoleSetClass.AllRoleSet();
             SetCustomRoles();
             SyncSetting.CustomSyncSettings();
             ChacheManager.ResetChache();
-            FixedUpdate.SetRoleNames();
             main.SendAllRoleChat();
-            
+
             //BotHandler.AddBot(3, "キルされるBot");
-            new LateTask(() => {
+            new LateTask(() =>
+            {
                 if (AmongUsClient.Instance.GameState == AmongUsClient.GameStates.Started)
                 {
                     PlayerControl.LocalPlayer.RpcSetName(PlayerControl.LocalPlayer.getDefaultName());
                     PlayerControl.LocalPlayer.RpcSendChat("＊注意(自動送信)＊\nこのMODは、バグ等がたくさん発生します。\nいろいろな重大なバグがあるため、あくまで自己責任でお願いします。");
-                    foreach (var pc in PlayerControl.AllPlayerControls)
+                    foreach (var pc in CachedPlayer.AllPlayers)
                     {
-                        pc.RpcSetRole(RoleTypes.Shapeshifter);
-                        SuperNewRolesPlugin.Logger.LogInfo("シェイプシフターセット！");
+                        pc.PlayerControl.RpcSetRole(RoleTypes.Shapeshifter);
+                        SuperNewRolesPlugin.Logger.LogInfo("[SHR] シェイプシフターセット！");
                     }
                 }
             }, 3f, "SetImpostor");
@@ -42,158 +45,105 @@ namespace SuperNewRoles.Mode.SuperHostRoles
         {
             if (ModeHandler.isMode(ModeId.SuperHostRoles))
             {
-
-                bool IsJackalSpawned = false;
+                int impostor = PlayerControl.GameOptions.NumImpostors;
+                int crewmate = 0;
                 //ジャッカルがいるなら
                 if (CustomOptions.JackalOption.getSelection() != 0)
                 {
-                    IsJackalSpawned = true;
-                    for (int i = 0; i < (1 * PlayerControl.GameOptions.NumImpostors + 2); i++)
+                    for (int i = 0; i < (PlayerControl.GameOptions.NumImpostors + 2); i++)
                     {
-                        PlayerControl bot = BotManager.Spawn("暗転対策BOT" + (i + 1));
+                        PlayerControl bot = BotManager.Spawn("[SHR] 暗転対策BOT" + (i + 1));
                         if (i == 0)
                         {
+                            impostor++;
                             bot.RpcSetRole(RoleTypes.Impostor);
                         }
-                        if (i > 0) {
+                        if (i > 0)
+                        {
+                            crewmate++;
                             bot.RpcSetRole(RoleTypes.Crewmate);
                         }
                     }
-                } else
-                {
-                bool flag = !IsJackalSpawned && (
+                }
+                else if (
                     CustomOptions.EgoistOption.getSelection() != 0 ||
                     CustomOptions.SheriffOption.getSelection() != 0 ||
                     CustomOptions.trueloverOption.getSelection() != 0 ||
                     CustomOptions.FalseChargesOption.getSelection() != 0 ||
                     CustomOptions.RemoteSheriffOption.getSelection() != 0 ||
                     CustomOptions.MadMakerOption.getSelection() != 0 ||
-                    CustomOptions.DemonOption.getSelection() != 0 
-                    );
-                    if (flag)
+                    CustomOptions.SamuraiOption.getSelection() != 0 ||
+                    CustomOptions.DemonOption.getSelection() != 0)
+                {
+                    PlayerControl bot1 = BotManager.Spawn("暗転対策BOT1");
+                    bot1.RpcSetRole(RoleTypes.Impostor);
+
+                    PlayerControl bot2 = BotManager.Spawn("暗転対策BOT2");
+                    bot2.RpcSetRole(RoleTypes.Crewmate);
+
+                    PlayerControl bot3 = BotManager.Spawn("暗転対策BOT3");
+                    bot3.RpcSetRole(RoleTypes.Crewmate);
+                    impostor++;
+                    crewmate++;
+                    crewmate++;
+                }
+                else if (CustomOptions.AssassinAndMarineOption.getSelection() != 0)
+                {
+                    PlayerControl bot1 = BotManager.Spawn("暗転対策BOT1");
+                    bot1.RpcSetRole(RoleTypes.Crewmate);
+                    crewmate++;
+                }
+                if (CustomOptions.SpyOption.getSelection() != 0)
+                {
+                    for (int i = 0; i < CustomOptions.SpyPlayerCount.getFloat() - (crewmate-(impostor - PlayerControl.GameOptions.NumImpostors)) + 1; i++)
                     {
-                        PlayerControl bot1 = BotManager.Spawn("暗転対策BOT1");
-                        bot1.RpcSetRole(RoleTypes.Impostor);
-
-                        PlayerControl bot2 = BotManager.Spawn("暗転対策BOT2");
-                        bot2.RpcSetRole(RoleTypes.Crewmate);
-
-                        PlayerControl bot3 = BotManager.Spawn("暗転対策BOT3");
-                        bot3.RpcSetRole(RoleTypes.Crewmate);
+                        PlayerControl bot1 = BotManager.Spawn("暗転対策BOT");
+                        bot1.RpcSetRole(RoleTypes.Crewmate);
+                        crewmate++;
                     }
                 }
-            } else if (ModeHandler.isMode(ModeId.LevelUp))
-            {
-                BotManager.Spawn("キルされてしまうかわいそうなBOT");
+                if (CustomOptions.BakeryOption.getSelection() != 0)
+                {
+                    BotManager.Spawn("パン屋BOT").Exiled();
+                }
+                else if (CustomOptions.AssassinAndMarineOption.getSelection() != 0)
+                {
+                    BotManager.Spawn(ModTranslation.getString("AssassinAndMarineName") + "BOT").Exiled();
+                }
             }
         }
-        public static void SetCustomRoles() {
-            List<PlayerControl> DesyncImpostorPlayers = new List<PlayerControl>();
-            foreach (PlayerControl JackalPlayer in RoleClass.Jackal.JackalPlayer)
-            {
-                if (!JackalPlayer.IsMod())
-                {
-                    JackalPlayer.RpcSetRoleDesync(RoleTypes.Impostor);
-                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
-                    {
-                        if (p.PlayerId != JackalPlayer.PlayerId && p.IsPlayer())
-                        {
-                            JackalPlayer.RpcSetRoleDesync(RoleTypes.Scientist, p);
-                            p.RpcSetRoleDesync(RoleTypes.Scientist, JackalPlayer);
-                        }
-                    }
-                }
-                else
-                {
-                    JackalPlayer.RpcSetRole(RoleTypes.Crewmate);
-                }
-                //SheriffPlayer.Data.IsDead = true;
-            }
-            foreach (PlayerControl SheriffPlayer in RoleClass.Sheriff.SheriffPlayer)
-            {
-                if (!SheriffPlayer.IsMod())
-                {
-                    SheriffPlayer.RpcSetRoleDesync(RoleTypes.Impostor);
-                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
-                    {
-                        if (p.PlayerId != SheriffPlayer.PlayerId && p.IsPlayer())
-                        {
-                            SheriffPlayer.RpcSetRoleDesync(RoleTypes.Scientist, p);
-                            p.RpcSetRoleDesync(RoleTypes.Scientist, SheriffPlayer);
-                        }
-                    }
-                } else
-                {
-                    SheriffPlayer.RpcSetRole(RoleTypes.Crewmate);
-                }
-                //SheriffPlayer.Data.IsDead = true;
-            }
-            foreach (PlayerControl DemonPlayer in RoleClass.Demon.DemonPlayer)
-            {
-                if (!DemonPlayer.IsMod())
-                {
-                    DemonPlayer.RpcSetRoleDesync(RoleTypes.Impostor);
-                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
-                    {
-                        if (p.PlayerId != DemonPlayer.PlayerId && p.IsPlayer())
-                        {
-                            DemonPlayer.RpcSetRoleDesync(RoleTypes.Scientist, p);
-                            p.RpcSetRoleDesync(RoleTypes.Scientist, DemonPlayer);
-                        }
-                    }
-                }
-                else
-                {
-                    DemonPlayer.RpcSetRole(RoleTypes.Crewmate);
-                }
-                //DemonPlayer.Data.IsDead = true;
-            }
-            foreach (PlayerControl RemoteSheriffPlayer in RoleClass.RemoteSheriff.RemoteSheriffPlayer)
-            {
-                if (!RemoteSheriffPlayer.IsMod())
-                {
-                    RemoteSheriffPlayer.RpcSetRoleDesync(RoleTypes.Shapeshifter);
-                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
-                    {
-                        if (p.PlayerId != RemoteSheriffPlayer.PlayerId && p.IsPlayer())
-                        {
-                            RemoteSheriffPlayer.RpcSetRoleDesync(RoleTypes.Scientist, p);
-                            p.RpcSetRoleDesync(RoleTypes.Scientist, RemoteSheriffPlayer);
-                        }
-                    }
-                }
-                else
-                {
-                    RemoteSheriffPlayer.RpcSetRole(RoleTypes.Crewmate);
-                }
-                //SheriffPlayer.Data.IsDead = true;
-            }
-            foreach (PlayerControl trueloverPlayer in RoleClass.truelover.trueloverPlayer)
-            {
-                if (!trueloverPlayer.IsMod())
-                {
-                    trueloverPlayer.RpcSetRoleDesync(RoleTypes.Impostor);
-                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
-                    {
-                        if (p.PlayerId != trueloverPlayer.PlayerId && p.IsPlayer())
-                        {
-                            trueloverPlayer.RpcSetRoleDesync(RoleTypes.Scientist, p);
-                            p.RpcSetRoleDesync(RoleTypes.Scientist, trueloverPlayer);
-                        }
-                    }
-                }
-                else
-                {
-                    trueloverPlayer.RpcSetRole(RoleTypes.Crewmate);
-                }
-                //trueloverPlayer.Data.IsDead = true;
-            }
-            foreach (PlayerControl Player in RoleClass.FalseCharges.FalseChargesPlayer)
+        public static void SetCustomRoles()
+        {
+            List<PlayerControl> DesyncImpostors = new();
+            DesyncImpostors.AddRange(RoleClass.Jackal.JackalPlayer);
+            DesyncImpostors.AddRange(RoleClass.Sheriff.SheriffPlayer);
+            DesyncImpostors.AddRange(RoleClass.Demon.DemonPlayer);
+            DesyncImpostors.AddRange(RoleClass.truelover.trueloverPlayer);
+            DesyncImpostors.AddRange(RoleClass.FalseCharges.FalseChargesPlayer);
+            DesyncImpostors.AddRange(RoleClass.MadMaker.MadMakerPlayer);
+            //インポスターにDesync
+            List<PlayerControl> SetRoleEngineers = new();
+            if (RoleClass.Jester.IsUseVent) SetRoleEngineers.AddRange(RoleClass.Jester.JesterPlayer);
+            if (RoleClass.JackalFriends.IsUseVent) SetRoleEngineers.AddRange(RoleClass.JackalFriends.JackalFriendsPlayer);
+            if (RoleClass.MadMate.IsUseVent) SetRoleEngineers.AddRange(RoleClass.MadMate.MadMatePlayer);
+            if (RoleClass.MadStuntMan.IsUseVent) SetRoleEngineers.AddRange(RoleClass.MadStuntMan.MadStuntManPlayer);
+            if (RoleClass.MadJester.IsUseVent) SetRoleEngineers.AddRange(RoleClass.MadJester.MadJesterPlayer);
+            if (RoleClass.Fox.IsUseVent) SetRoleEngineers.AddRange(RoleClass.Fox.FoxPlayer);
+            if (RoleClass.MayorFriends.IsUseVent) SetRoleEngineers.AddRange(RoleClass.MayorFriends.MayorFriendsPlayer);
+            if (RoleClass.Tuna.IsUseVent) SetRoleEngineers.AddRange(RoleClass.Tuna.TunaPlayer);
+            SetRoleEngineers.AddRange(RoleClass.Technician.TechnicianPlayer);
+            if (RoleClass.BlackCat.IsUseVent) SetRoleEngineers.AddRange(RoleClass.BlackCat.BlackCatPlayer);
+            //エンジニアに役職設定
+            List<PlayerControl> DesyncShapeshifters = new();
+            DesyncShapeshifters.AddRange(RoleClass.Arsonist.ArsonistPlayer);
+            DesyncShapeshifters.AddRange(RoleClass.RemoteSheriff.RemoteSheriffPlayer);
+            //シェイプシフターにDesync
+            foreach (PlayerControl Player in DesyncImpostors)
             {
                 if (!Player.IsMod())
                 {
                     Player.RpcSetRoleDesync(RoleTypes.Impostor);
-                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                    foreach (PlayerControl p in CachedPlayer.AllPlayers)
                     {
                         if (p.PlayerId != Player.PlayerId && p.IsPlayer())
                         {
@@ -206,130 +156,131 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                 {
                     Player.RpcSetRole(RoleTypes.Crewmate);
                 }
-                //trueloverPlayer.Data.IsDead = true;
             }
-            foreach (PlayerControl MadMakerPlayer in RoleClass.MadMaker.MadMakerPlayer)
+            foreach (PlayerControl Player in DesyncShapeshifters)
             {
-                if (!MadMakerPlayer.IsMod())
+                if (!Player.IsMod())
                 {
-                    MadMakerPlayer.RpcSetRoleDesync(RoleTypes.Impostor);
-                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                    Player.RpcSetRoleDesync(RoleTypes.Shapeshifter);
+                    foreach (PlayerControl p in CachedPlayer.AllPlayers)
                     {
-                        if (p.PlayerId != MadMakerPlayer.PlayerId && p.IsPlayer())
+                        if (p.PlayerId != Player.PlayerId && p.IsPlayer())
                         {
-                            MadMakerPlayer.RpcSetRoleDesync(RoleTypes.Scientist, p);
-                            p.RpcSetRoleDesync(RoleTypes.Scientist, MadMakerPlayer);
+                            Player.RpcSetRoleDesync(RoleTypes.Scientist, p);
+                            p.RpcSetRoleDesync(RoleTypes.Scientist, Player);
                         }
                     }
                 }
                 else
                 {
-                    MadMakerPlayer.RpcSetRole(RoleTypes.Crewmate);
+                    Player.RpcSetRole(RoleTypes.Crewmate);
                 }
             }
-            if (RoleClass.Jester.IsUseVent)
-            {
-                foreach (PlayerControl p in RoleClass.Jester.JesterPlayer)
-                {
-                    if (!ShareGameVersion.GameStartManagerUpdatePatch.VersionPlayers.ContainsKey(p.getClientId()))
-                    {
-                        p.RpcSetRoleDesync(RoleTypes.Engineer);
-                    }
-                }
-            }
-            if (RoleClass.JackalFriends.IsUseVent)
-            {
-                foreach (PlayerControl p in RoleClass.JackalFriends.JackalFriendsPlayer)
-                {
-                    if (!p.IsMod())
-                    {
-                        p.RpcSetRoleDesync(RoleTypes.Engineer);
-                    }
-                }
-            }
-            if (RoleClass.MadMate.IsUseVent)
-            {
-                foreach (PlayerControl p in RoleClass.MadMate.MadMatePlayer)
-                {
-                    if (!ShareGameVersion.GameStartManagerUpdatePatch.VersionPlayers.ContainsKey(p.getClientId()))
-                    {
-                        p.RpcSetRoleDesync(RoleTypes.Engineer);
-                    }
-                }
-            }
-            if (RoleClass.MadStuntMan.IsUseVent)
-            {
-                foreach (PlayerControl p in RoleClass.MadStuntMan.MadStuntManPlayer)
-                {
-                    if (!ShareGameVersion.GameStartManagerUpdatePatch.VersionPlayers.ContainsKey(p.getClientId()))
-                    {
-                        p.RpcSetRoleDesync(RoleTypes.Engineer);
-                    }
-                }
-            }
-            if (RoleClass.MadJester.IsUseVent)
-            {
-                foreach (PlayerControl p in RoleClass.MadJester.MadJesterPlayer)
-                {
-                    if (!ShareGameVersion.GameStartManagerUpdatePatch.VersionPlayers.ContainsKey(p.getClientId()))
-                    {
-                        p.RpcSetRoleDesync(RoleTypes.Engineer);
-                    }
-                }
-            }
-            if (RoleClass.Fox.IsUseVent)
-            {
-                foreach (PlayerControl p in RoleClass.Fox.FoxPlayer)
-                {
-                    if (!ShareGameVersion.GameStartManagerUpdatePatch.VersionPlayers.ContainsKey(p.getClientId()))
-                    {
-                        p.RpcSetRoleDesync(RoleTypes.Engineer);
-                    }
-                }
-            }
-
             foreach (PlayerControl p in RoleClass.Egoist.EgoistPlayer)
             {
                 if (!p.IsMod())
                 {
                     p.RpcSetRole(RoleTypes.Impostor);
-                    foreach (PlayerControl p2 in PlayerControl.AllPlayerControls)
+                    foreach (PlayerControl p2 in CachedPlayer.AllPlayers)
                     {
                         if (p2.PlayerId != p.PlayerId && !p.isRole(RoleId.Sheriff) && !p.isRole(RoleId.truelover) && p.IsPlayer())
                         {
                             p2.RpcSetRoleDesync(RoleTypes.Scientist, p);
                         }
                     }
-                } else
+                }
+                else
                 {
-                    p.RpcSetRoleDesync(RoleTypes.Crewmate);
+                    if (p.PlayerId != 0)
+                    {
+                        p.RpcSetRoleDesync(RoleTypes.Crewmate);
+                    }
+                    else
+                    {
+                        p.SetRole(RoleTypes.Crewmate);
+                    }
                     p.RpcSetRole(RoleTypes.Impostor);
                 }
                 //p.Data.IsDead = true;
             }
-            foreach (PlayerControl p in RoleClass.Technician.TechnicianPlayer)
+            foreach (PlayerControl p in RoleClass.Spy.SpyPlayer)
+            {
+                var crsSpy = CustomRpcSender.Create(Hazel.SendOption.Reliable);
+                if (!p.IsMod())
+                {
+                    if (RoleClass.Spy.CanUseVent)
+                    {
+                        p.RpcSetRoleDesync(crsSpy, RoleTypes.Engineer);
+                    } else
+                    {
+                        p.RpcSetRoleDesync(crsSpy, RoleTypes.Crewmate);
+                    }
+                    foreach (PlayerControl p2 in PlayerControl.AllPlayerControls)
+                    {
+                        if (p.PlayerId == p2.PlayerId) continue;
+                        if (p2.IsPlayer())
+                        {
+                            if (p2.IsMod())
+                            {
+                                if (p2.PlayerId != 0)
+                                {
+                                    p.RpcSetRoleDesync(crsSpy, RoleTypes.Crewmate, p2);
+                                } else
+                                {
+                                    p.SetRole(RoleTypes.Crewmate);
+                                }
+                            } else
+                            {
+                                if (p2.isImpostor() || p2.isRole(RoleId.Spy))
+                                {
+                                    p.RpcSetRoleDesync(crsSpy, RoleTypes.Impostor, p2);
+                                } else
+                                {
+                                    p.RpcSetRoleDesync(crsSpy, RoleTypes.Crewmate, p2);
+                                }
+                            }
+                        }
+                    }
+                    p.RpcSetRole(crsSpy, RoleTypes.Impostor);
+                }
+                else
+                {
+                    if (p.PlayerId != 0)
+                    {
+                        p.RpcSetRoleDesync(crsSpy, RoleTypes.Crewmate);
+                    }
+                    else
+                    {
+                        p.SetRole(RoleTypes.Crewmate);
+                    }
+                    p.RpcSetRole(crsSpy, RoleTypes.Impostor);
+                }
+                crsSpy.SendMessage();
+                //p.Data.IsDead = true;
+            }
+
+            foreach (PlayerControl p in SetRoleEngineers)
             {
                 if (!p.IsMod())
                 {
-                    p.RpcSetRoleDesync(RoleTypes.Engineer);
+                    p.RpcSetRole(RoleTypes.Engineer);
                 }
             }
             foreach (PlayerControl p in RoleClass.SelfBomber.SelfBomberPlayer)
             {
                 p.RpcSetRole(RoleTypes.Shapeshifter);
             }
-            /*
-            foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+            foreach (PlayerControl p in RoleClass.Samurai.SamuraiPlayer)
             {
-                p.Data.IsDead = false;
+                p.RpcSetRole(RoleTypes.Shapeshifter);
             }
-            */
+            return;
         }
         public static void CrewOrImpostorSet()
         {
-            AllRoleSetClass.CrewMatePlayers = new List<PlayerControl>();
-            AllRoleSetClass.ImpostorPlayers = new List<PlayerControl>();
-            foreach (PlayerControl Player in PlayerControl.AllPlayerControls)
+            AllRoleSetClass.CrewMatePlayers = new();
+            AllRoleSetClass.ImpostorPlayers = new();
+            foreach (PlayerControl Player in CachedPlayer.AllPlayers)
             {
                 if (Player.IsPlayer())
                 {
@@ -346,564 +297,76 @@ namespace SuperNewRoles.Mode.SuperHostRoles
         }
         public static void OneOrNotListSet()
         {
-            var Impoonepar = new List<RoleId>();
-            var Imponotonepar = new List<RoleId>();
-            var Neutonepar = new List<RoleId>();
-            var Neutnotonepar = new List<RoleId>();
-            var Crewonepar = new List<RoleId>();
-            var Crewnotonepar = new List<RoleId>();
-            if (!(CustomOption.CustomOptions.OpportunistOption.getString().Replace("0%", "") == ""))
+            List<RoleId> Impoonepar = new();
+            List<RoleId> Imponotonepar = new();
+            List<RoleId> Neutonepar = new();
+            List<RoleId> Neutnotonepar = new();
+            List<RoleId> Crewonepar = new();
+            List<RoleId> Crewnotonepar = new();
+
+            foreach (IntroDate intro in IntroDate.IntroDatas)
             {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.OpportunistOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Opportunist;
-                if (OptionDate == 10)
+                if (intro.RoleId != RoleId.DefaultRole)
                 {
-                    Neutonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
+                    var option = IntroDate.GetOption(intro.RoleId);
+                    if (option == null || !option.isSHROn) continue;
+                    var selection = option.getSelection();
+                    if (selection != 0)
                     {
-                        Neutnotonepar.Add(ThisRoleId);
+                        if (selection == 10)
+                        {
+                            switch (intro.Team)
+                            {
+                                case TeamRoleType.Crewmate:
+                                    Crewonepar.Add(intro.RoleId);
+                                    break;
+                                case TeamRoleType.Impostor:
+                                    Impoonepar.Add(intro.RoleId);
+                                    break;
+                                case TeamRoleType.Neutral:
+                                    Neutonepar.Add(intro.RoleId);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 1; i <= selection; i++)
+                            {
+                                switch (intro.Team)
+                                {
+                                    case TeamRoleType.Crewmate:
+                                        Crewnotonepar.Add(intro.RoleId);
+                                        break;
+                                    case TeamRoleType.Impostor:
+                                        Imponotonepar.Add(intro.RoleId);
+                                        break;
+                                    case TeamRoleType.Neutral:
+                                        Neutnotonepar.Add(intro.RoleId);
+                                        break;
+                                }
+                            }
+                        }
                     }
                 }
             }
-            if (!(CustomOption.CustomOptions.GodOption.getString().Replace("0%", "") == ""))
+
+            var Assassinselection = CustomOptions.AssassinAndMarineOption.getSelection();
+            SuperNewRolesPlugin.Logger.LogInfo("[SHR] アサイン情報:" + Assassinselection + "、" + AllRoleSetClass.CrewMatePlayerNum + "、" + AllRoleSetClass.CrewMatePlayers.Count);
+            if (Assassinselection != 0 && AllRoleSetClass.CrewMatePlayerNum > 0 && AllRoleSetClass.CrewMatePlayers.Count > 0)
             {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.GodOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.God;
-                if (OptionDate == 10)
+                if (Assassinselection == 10)
                 {
-                    Neutonepar.Add(ThisRoleId);
+                    Impoonepar.Add(RoleId.Assassin);
                 }
                 else
                 {
-                    for (int i = 1; i <= OptionDate; i++)
+                    for (int i = 1; i <= Assassinselection; i++)
                     {
-                        Neutnotonepar.Add(ThisRoleId);
+                        Imponotonepar.Add(RoleId.Assassin);
                     }
                 }
             }
-            if (!(CustomOption.CustomOptions.JesterOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.JesterOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Jester;
-                if (OptionDate == 10)
-                {
-                    Neutonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Neutnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.NiceNekomataOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.NiceNekomataOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.NiceNekomata;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.EvilNekomataOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.EvilNekomataOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.EvilNekomata;
-                if (OptionDate == 10)
-                {
-                    Impoonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Imponotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.BestfalsechargeOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.BestfalsechargeOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Bestfalsecharge;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.BaitOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.BaitOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Bait;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.HomeSecurityGuardOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.HomeSecurityGuardOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.HomeSecurityGuard;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.MadMateOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.MadMateOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.MadMate;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.StuntManOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.StuntManOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.StuntMan;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.EgoistOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.EgoistOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Egoist;
-                if (OptionDate == 10)
-                {
-                    Neutonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Neutnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.SheriffOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.SheriffOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Sheriff;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.RemoteSheriffOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.RemoteSheriffOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.RemoteSheriff;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.MinimalistOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.MinimalistOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Minimalist;
-                if (OptionDate == 10)
-                {
-                    Impoonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Imponotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.MayorOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.MayorOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Mayor;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.MadMayorOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.MadMayorOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.MadMayor;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.trueloverOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.trueloverOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.truelover;
-                if (OptionDate == 10)
-                {
-                    Neutonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Neutnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.EvilGamblerOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.EvilGamblerOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.EvilGambler;
-                if (OptionDate == 10)
-                {
-                    Impoonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Imponotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.TechnicianOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.TechnicianOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Technician;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.SerialKillerOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.SerialKillerOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.SerialKiller;
-                if (OptionDate == 10)
-                {
-                    Impoonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Imponotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.OverKillerOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.OverKillerOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.OverKiller;
-                if (OptionDate == 10)
-                {
-                    Impoonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Imponotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.WorkpersonOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.WorkpersonOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Workperson;
-                if (OptionDate == 10)
-                {
-                    Neutonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Neutnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.MadJesterOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.MadJesterOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.MadJester;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.FalseChargesOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.FalseChargesOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.FalseCharges;
-                if (OptionDate == 10)
-                {
-                    Neutonepar.Add(ThisRoleId);
-                }
-            }
-            if (!(CustomOption.CustomOptions.CelebrityOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.CelebrityOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Celebrity;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.NocturnalityOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.NocturnalityOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Nocturnality;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Neutnotonepar.Add(ThisRoleId);
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.ObserverOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.ObserverOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Observer;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.SelfBomberOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.SelfBomberOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.SelfBomber;
-                if (OptionDate == 10)
-                {
-                    Impoonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Imponotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.FoxOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.FoxOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Fox;
-                if (OptionDate == 10)
-                {
-                    Neutonepar.Add(ThisRoleId);
-                } else {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                       Neutonepar.Add(ThisRoleId);
-                    }                        
-                }
-            }
-            if (!(CustomOption.CustomOptions.SurvivorOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.SurvivorOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Survivor;
-                if (OptionDate == 10)
-                {
-                    Impoonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Imponotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.JackalOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.JackalOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Jackal;
-                if (OptionDate == 10)
-                {
-                    Neutonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Neutonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.JackalFriendsOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.JackalFriendsOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.JackalFriends;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.MadMakerOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.MadMakerOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.MadMaker;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.DemonOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.DemonOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.Demon;
-                if (OptionDate == 10)
-                {
-                    Neutonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Neutonepar.Add(ThisRoleId);
-                    }
-                }
-            }
-            if (!(CustomOption.CustomOptions.TaskManagerOption.getString().Replace("0%", "") == ""))
-            {
-                int OptionDate = int.Parse(CustomOption.CustomOptions.TaskManagerOption.getString().Replace("0%", ""));
-                RoleId ThisRoleId = RoleId.TaskManager;
-                if (OptionDate == 10)
-                {
-                    Crewonepar.Add(ThisRoleId);
-                }
-                else
-                {
-                    for (int i = 1; i <= OptionDate; i++)
-                    {
-                        Crewnotonepar.Add(ThisRoleId);
-                    }
-                }
-            }
+
             AllRoleSetClass.Impoonepar = Impoonepar;
             AllRoleSetClass.Imponotonepar = Imponotonepar;
             AllRoleSetClass.Neutonepar = Neutonepar;

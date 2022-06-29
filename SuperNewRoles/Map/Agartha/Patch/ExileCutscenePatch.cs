@@ -21,9 +21,9 @@ namespace SuperNewRoles.Map.Agartha.Patch
             Player.transform.localPosition = new Vector3(0f, 5.85f, 1001f);
             Player.transform.localScale = new Vector3(0.75f,0.75f,1.5f);
 
-            Player.HatSlot.gameObject.SetActive(false);
-            Player.VisorSlot.gameObject.SetActive(false);
-            Player.Skin.gameObject.SetActive(false);
+            Player.HatSlot().gameObject.SetActive(false);
+            Player.VisorSlot().gameObject.SetActive(false);
+            Player.cosmetics.skin.gameObject.SetActive(false);
 
             
             UpObject = GameObject.Instantiate(Player,Player.transform.parent);
@@ -138,11 +138,11 @@ namespace SuperNewRoles.Map.Agartha.Patch
                     {
                         __instance.completeString = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.ExileTextSN, exiled.PlayerName);
                     }
-                    __instance.Player.UpdateFromEitherPlayerDataOrCache(exiled, PlayerOutfitType.Default);
-                    __instance.Player.PetSlot.enabled = false;
-                    __instance.Player.Skin.animator.Stop();
+                    __instance.Player.UpdateFromEitherPlayerDataOrCache(exiled, PlayerOutfitType.Default, PlayerMaterial.MaskType.Exile, false);
+                    __instance.Player.cosmetics.currentPet.enabled = false;
+                    __instance.Player.cosmetics.skin.animator.Stop();
                     SkinViewData skin = ShipStatus.Instance.CosmeticsCache.GetSkin(exiled.Outfits[PlayerOutfitType.Default].SkinId);
-                    __instance.Player.Skin.layer.sprite = skin.EjectFrame;
+                    __instance.Player.cosmetics.skin.layer.sprite = skin.EjectFrame;
                     if (exiled.Object.isImpostor())
                     {
                         num--;
@@ -189,7 +189,7 @@ namespace SuperNewRoles.Map.Agartha.Patch
                 //__instance.Duration -= 1f;
 
                 SuperNewRolesPlugin.Logger.LogInfo(__instance.Duration);
-                __instance.Player.BodySprites[0].BodySprite.sprite = ImageManager.CustomExilePlayer;
+                __instance.Player.cosmetics.bodySprites[0].BodySprite.sprite = ImageManager.CustomExilePlayer;
 
                 if (__instance.exiled == null)
                 {
