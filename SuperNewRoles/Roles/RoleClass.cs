@@ -139,6 +139,7 @@ namespace SuperNewRoles.Roles
             Mafia.ClearAndReload();
             BlackCat.ClearAndReload();
             Spy.ClearAndReload();
+            Narrator.ClearAndReload();
             //ロールクリア
             Quarreled.ClearAndReload();
             Lovers.ClearAndReload();
@@ -2262,6 +2263,15 @@ namespace SuperNewRoles.Roles
             {
                 SpyPlayer = new List<PlayerControl>();
                 CanUseVent = CustomOptions.SpyCanUseVent.getBool();
+            }
+        }
+        public static class Narrator
+        {
+            public static List<PlayerControl> NarratorPlayer;
+            public static Color32 color = new (149, 133, 156, byte.MaxValue);
+            public static void ClearAndReload()
+            {
+                NarratorPlayer = new List<PlayerControl>();
             }
         }
         //新ロールクラス

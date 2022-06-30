@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Hazel;
 using SuperNewRoles.CustomOption;
@@ -570,6 +570,9 @@ namespace SuperNewRoles
                 case (CustomRPC.RoleId.Spy):
                     Roles.RoleClass.Spy.SpyPlayer.Add(player);
                     break;
+                case (CustomRPC.RoleId.Narrator):
+                    Roles.RoleClass.Narrator.NarratorPlayer.Add(player);
+                    break;
                 //ロールアド
                 default:
                     SuperNewRolesPlugin.Logger.LogError("[SetRole]:No Method Found for Role Type {role}");
@@ -910,6 +913,9 @@ namespace SuperNewRoles
                     case (CustomRPC.RoleId.Spy):
                     Roles.RoleClass.Spy.SpyPlayer.RemoveAll(ClearRemove);
                     break;
+                case (CustomRPC.RoleId.Narrator):
+                    Roles.RoleClass.Narrator.NarratorPlayer.RemoveAll(ClearRemove);
+                    break;
                 //ロールリモベ
             }
             ChacheManager.ResetMyRoleChache();
@@ -1023,7 +1029,10 @@ namespace SuperNewRoles
                 case RoleId.BlackCat:
                     IsTaskClear = true;
                     break;
-                    //タスククリアか
+                    case (RoleId.Narrator):
+                    IsTaskClear = true;
+                    break;
+                //タスククリアか
             }
             if (player.isImpostor())
             {
@@ -1235,7 +1244,10 @@ namespace SuperNewRoles
                 case RoleId.Tuna:
                     IsNeutral = true;
                     break;
-                    //第三か
+                case (RoleId.Narrator):
+                    IsNeutral = true;
+                    break;
+                //第三か
             }
             return IsNeutral;
         }
@@ -1835,6 +1847,10 @@ namespace SuperNewRoles
                 else if (Roles.RoleClass.Spy.SpyPlayer.IsCheckListPlayerControl(player))
                 {
                     return CustomRPC.RoleId.Spy;
+                }
+                else if (Roles.RoleClass.Narrator.NarratorPlayer.IsCheckListPlayerControl(player))
+                {
+                    return CustomRPC.RoleId.Narrator;
                 }
                 //ロールチェック
             }

@@ -127,6 +127,7 @@ namespace SuperNewRoles.CustomRPC
         Mafia,
         BlackCat,
         Spy,
+        Narrator,
         //RoleId
     }
 
