@@ -38,6 +38,7 @@ namespace SuperNewRoles.EndGame
         ArsonistWin,
         VultureWin,
         TunaWin,
+        NarratorEnd,
         BugEnd
     }
     [HarmonyPatch(typeof(ShipStatus))]
@@ -60,12 +61,15 @@ namespace SuperNewRoles.EndGame
 
         public static Dictionary<int, PlayerControl> plagueDoctorInfected = new();
         public static Dictionary<int, float> plagueDoctorProgress = new();
+        public static bool IsNarrator = false;
 
         public static void clear()
         {
             playerRoles.Clear();
             additionalWinConditions.Clear();
             winCondition = WinCondition.Default;
+            IsNarrator = false;
+
         }
         internal class PlayerRoleInfo
         {
@@ -159,6 +163,14 @@ namespace SuperNewRoles.EndGame
             bonusTextObject.transform.localScale = new Vector3(0.7f, 0.7f, 1f);
             textRenderer = bonusTextObject.GetComponent<TMPro.TMP_Text>();
             textRenderer.text = "";
+
+            if (AdditionalTempData.IsNarrator)
+            {
+                __instance.WinText.text = "Game Over";
+                __instance.WinText.color = RoleClass.Narrator.color;
+                __instance.BackgroundBar.material.SetColor("_Color", RoleClass.Narrator.color);
+            }
+
             var text = "";
             switch (AdditionalTempData.winCondition)
             {
@@ -236,6 +248,11 @@ namespace SuperNewRoles.EndGame
                     text = "TunaName";
                     textRenderer.color = RoleClass.Tuna.color;
                     __instance.BackgroundBar.material.SetColor("_Color", RoleClass.Tuna.color);
+                    break;
+                case WinCondition.NarratorEnd:
+                    __instance.WinText.text = ModTranslation.getString("NarratorGameEnd");
+                    textRenderer.color = RoleClass.Narrator.color;
+                    __instance.BackgroundBar.material.SetColor("_Color", RoleClass.Narrator.color);
                     break;
                 default:
                     switch (AdditionalTempData.gameOverReason)
@@ -510,6 +527,8 @@ namespace SuperNewRoles.EndGame
                     });
                 }
             }
+            AdditionalTempData.IsNarrator = PlayerControl.LocalPlayer.isRole(RoleId.Narrator);
+
             // Remove Jester, Arsonist, Vulture, Jackal, former Jackals and Sidekick from winners (if they win, they'll be readded)
             List<PlayerControl> notWinners = new();
 
@@ -544,6 +563,7 @@ namespace SuperNewRoles.EndGame
             notWinners.AddRange(RoleClass.MayorFriends.MayorFriendsPlayer);
             notWinners.AddRange(RoleClass.Tuna.TunaPlayer);
             notWinners.AddRange(RoleClass.BlackCat.BlackCatPlayer);
+            notWinners.AddRange(RoleClass.Narrator.NarratorPlayer);
 
             foreach (PlayerControl p in RoleClass.Survivor.SurvivorPlayer)
             {
@@ -853,7 +873,7 @@ namespace SuperNewRoles.EndGame
             if (QuarreledWin)
             {
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                List<PlayerControl> winplays = new(){ WinnerPlayer };
+                List<PlayerControl> winplays = new() { WinnerPlayer };
                 winplays.Add(WinnerPlayer.GetOneSideQuarreled());
                 foreach (PlayerControl p in winplays)
                 {
@@ -1207,7 +1227,7 @@ namespace SuperNewRoles.EndGame
                     GameData.PlayerInfo playerInfo = GameData.Instance.AllPlayers[i];
                     if (!playerInfo.Disconnected && playerInfo.Object.IsPlayer())
                     {
-                        if (playerInfo.Object.isAlive())
+                        if (playerInfo.Object.isAlive() && !playerInfo.Object.isRole(RoleId.Narrator))
                         {
                             numTotalAlive++;
                             if (playerInfo.Object.isRole(RoleId.Jackal) || playerInfo.Object.isRole(CustomRPC.RoleId.Sidekick) || playerInfo.Object.isRole(CustomRPC.RoleId.TeleportingJackal) || playerInfo.Object.isRole(CustomRPC.RoleId.JackalSeer) || playerInfo.Object.isRole(CustomRPC.RoleId.SidekickSeer))
