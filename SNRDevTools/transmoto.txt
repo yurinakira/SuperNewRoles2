@@ -769,3 +769,11 @@ SpyTitle1
 SpyDescription
 SpecimenVitalSetting
 CustomDownloadSuperNewNamePlates
+Zoomafterdeath
+mousemode
+clairvoyantmode
+clairvoyantCoolTime
+clairvoyantDurationTime
+ClairvoyantButtonName
+LadderDead
+LadderDeadChance

@@ -17,8 +17,8 @@ namespace SuperNewRoles
     {
         public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] RoleTypes roleType)
         {
-            SuperNewRolesPlugin.Logger.LogInfo(__instance.Data.PlayerName+" => "+roleType);
-            return true;
+            SuperNewRolesPlugin.Logger.LogInfo(__instance.Data.PlayerName + " => " + roleType);
+            if (!AmongUsClient.Instance.AmHost) return true;
             if (RoleManagerSelectRolesPatch.IsShapeSet)
             {
                 MessageWriter messageWriter = AmongUsClient.Instance.StartRpc(__instance.NetId, (byte)RpcCalls.SetRole);
@@ -837,7 +837,8 @@ namespace SuperNewRoles
                 RoleId.Mafia => CustomOptions.MafiaPlayerCount.getFloat(),
                 RoleId.BlackCat => CustomOptions.BlackCatPlayerCount.getFloat(),
                 RoleId.Spy => CustomOptions.SpyPlayerCount.getFloat(),
-                //NarratorはHostのみの割り振りで複数人対応させない為此処に[PlayerCount.getFloat(),]置いていない状態が正常です。
+                RoleId.Narrator => CustomOptions.NarratorPlayerCount.getFloat(),
+                //プレイヤーカウント
                 _ => 1,
             };
         }
