@@ -837,6 +837,7 @@ namespace SuperNewRoles
                 RoleId.Mafia => CustomOptions.MafiaPlayerCount.getFloat(),
                 RoleId.BlackCat => CustomOptions.BlackCatPlayerCount.getFloat(),
                 RoleId.Spy => CustomOptions.SpyPlayerCount.getFloat(),
+                //NarratorはHostのみの割り振りで複数人対応させない為此処に[PlayerCount.getFloat(),]置いていない状態が正常です。
                 _ => 1,
             };
         }
