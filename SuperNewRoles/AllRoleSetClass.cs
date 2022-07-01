@@ -297,7 +297,7 @@ namespace SuperNewRoles
             {
                 foreach (PlayerControl p in CachedPlayer.AllPlayers)
                 {
-                    if (p.IsPlayer())
+                    if (p.IsPlayer() && !p.isRole(RoleId.Narrator))
                     {
                         SelectPlayers.Add(p);
                     }
@@ -362,7 +362,7 @@ namespace SuperNewRoles
                 {
                     if (!IsQuarreledDup || (!p.IsQuarreled() && p.IsPlayer()))
                     {
-                        if (!p.isRole(RoleId.truelover))
+                        if (!p.isRole(RoleId.truelover) && !p.isRole(RoleId.Narrator))
                         {
                             SelectPlayers.Add(p);
                         }
