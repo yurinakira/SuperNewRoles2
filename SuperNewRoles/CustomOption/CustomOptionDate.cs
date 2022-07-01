@@ -679,6 +679,10 @@ namespace SuperNewRoles.CustomOption
 
             enableMirroMap = CustomOption.Create(9, false, CustomOptionType.Generic, "enableMirroMap", false);
 
+            specialOptions = new CustomOptionBlank(null);
+            NarratorOption = new CustomRoleOption(1000, true, CustomOptionType.Generic, "NarratorName", RoleClass.Narrator.color, 1);
+            NarratorPlayerCount = CustomOption.Create(1001, true, CustomOptionType.Generic, "SettingPlayerCountName", AlonePlayers[0], AlonePlayers[1], AlonePlayers[2], AlonePlayers[3], NarratorOption);
+
             if (ConfigRoles.DebugMode.Value)
             {
                 IsDebugMode = CustomOption.Create(10, true, CustomOptionType.Generic, "デバッグモード", false, null, isHeader: true);
@@ -1257,8 +1261,7 @@ namespace SuperNewRoles.CustomOption
             SpyPlayerCount = CustomOption.Create(615, true, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], SpyOption);
             SpyCanUseVent = CustomOption.Create(617, true, CustomOptionType.Crewmate, "JesterIsVentSetting", false, SpyOption);
 
-            NarratorOption = new CustomRoleOption(1000, true, CustomOptionType.Neutral, "NarratorName", RoleClass.Narrator.color, 1);
-            NarratorPlayerCount = CustomOption.Create(1001, true, CustomOptionType.Neutral, "SettingPlayerCountName", AlonePlayers[0], AlonePlayers[1], AlonePlayers[2], AlonePlayers[3], NarratorOption);
+
             //表示設定
 
             QuarreledOption = CustomOption.Create(432, true, CustomOptionType.Neutral, cs(RoleClass.Quarreled.color, "QuarreledName"), false, null, isHeader: true);
