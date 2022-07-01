@@ -637,7 +637,7 @@ namespace SuperNewRoles.CustomOption
         public static string[] LevelingerTexts = new string[] { };
         private static string[] VultureDeadBodyCount = new string[] { "1", "2", "3", "4", "5", "6" };
         public static List<float> CrewPlayers = new() { 1f, 1f, 15f, 1f };
-        public static List<float> AlonePlayers = new() { 1f, 1f, 1f, 1f };
+        public static List<float> AlonePlayers = new() { 1f, 1f, 1f, 1f };//Arsonist及びNarratorで使用している、役職を複数人にさせない為のコード
         public static List<float> ImpostorPlayers = new() { 1f, 1f, 5f, 1f };
         public static List<float> QuarreledPlayers = new() { 1f, 1f, 7f, 1f };
         // public static CustomOption ;
@@ -1258,7 +1258,7 @@ namespace SuperNewRoles.CustomOption
             SpyCanUseVent = CustomOption.Create(617, true, CustomOptionType.Crewmate, "JesterIsVentSetting", false, SpyOption);
 
             NarratorOption = new CustomRoleOption(1000, true, CustomOptionType.Neutral, "NarratorName", RoleClass.Narrator.color, 1);
-            NarratorPlayerCount = CustomOption.Create(1001, true, CustomOptionType.Neutral, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], NarratorOption);
+            NarratorPlayerCount = CustomOption.Create(1001, true, CustomOptionType.Neutral, "SettingPlayerCountName", AlonePlayers[0], AlonePlayers[1], AlonePlayers[2], AlonePlayers[3], NarratorOption);
             //表示設定
 
             QuarreledOption = CustomOption.Create(432, true, CustomOptionType.Neutral, cs(RoleClass.Quarreled.color, "QuarreledName"), false, null, isHeader: true);
