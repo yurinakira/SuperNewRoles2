@@ -9,6 +9,7 @@ using SuperNewRoles.Intro;
 using SuperNewRoles.Mode;
 using SuperNewRoles.Mode.SuperHostRoles;
 using SuperNewRoles.Roles;
+using System.Linq;
 
 namespace SuperNewRoles
 {
@@ -78,6 +79,7 @@ namespace SuperNewRoles
         public static bool Prefix()
         {
             AllRoleSetClass.SetPlayerNum();
+            ExcludeRole();
             IsNotPrefix = false;
             IsSetRoleRpc = false;
             IsRPCSetRoleOK = true;
@@ -203,7 +205,50 @@ namespace SuperNewRoles
                 }, 3f, "SetImpostor");
             }
         }
+        //TORGM [assignRoles]より 除外する役職設定
+        private static void ExcludeRole()
+        {
+            if (CustomOptions.NarratorOption.getSelection() != 0 )
+            {
+                PlayerControl host = AmongUsClient.Instance?.GetHost().Character;
+                if (host.Data.Role.IsImpostor)
+                {
+                    SuperNewRolesPlugin.Logger.LogInfo("Why are we here");
+                    bool hostIsImpostor = host.Data.Role.IsImpostor;
+                    if (host.Data.Role.IsImpostor)
+                    {
+                        int newImpId = 0;
+                        PlayerControl newImp;
+                        while (true)
+                        {
+                            newImpId = RoleClass.rnd.Next(0, PlayerControl.AllPlayerControls.Count);
+                            newImp = PlayerControl.AllPlayerControls[newImpId];
+                            if (newImp == host || newImp.Data.Role.IsImpostor)
+                            {
+                                continue;
+                            }
+                            break;
+                        }
+
+                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.UncheckedSetVanilaRole, Hazel.SendOption.Reliable, -1);
+                        writer.Write(host.PlayerId);
+                        writer.Write((byte)RoleTypes.Crewmate);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        RPCProcedure.UncheckedSetVanilaRole(host.PlayerId, (byte)RoleTypes.Crewmate);
+
+                        writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.UncheckedSetVanilaRole, Hazel.SendOption.Reliable, -1);
+                        writer.Write(newImp.PlayerId);
+                        writer.Write((byte)RoleTypes.Impostor);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        RPCProcedure.UncheckedSetVanilaRole(newImp.PlayerId, (byte)RoleTypes.Impostor);
+                    }
+                }
+                var date = GameOptionsDataPatch.ResultData();
+                AllRoleSetClass.SetNarratorInHost(date);
+            }
+        }
     }
+
     class AllRoleSetClass
     {
         public static List<PlayerControl> impostors;
@@ -386,6 +431,7 @@ namespace SuperNewRoles
             }
             ChacheManager.ResetLoversChache();
         }
+
         public static void SetPlayerNum()
         {
             ImpostorPlayerNum = (int)CustomOptions.impostorRolesCountMax.getFloat();
@@ -394,6 +440,36 @@ namespace SuperNewRoles
             NeutralGhostRolePlayerNum = (int)CustomOptions.neutralGhostRolesCountMax.getFloat();
             CrewMatePlayerNum = (int)CustomOptions.crewmateRolesCountMax.getFloat();
             CrewMateGhostRolePlayerNum = (int)CustomOptions.crewmateGhostRolesCountMax.getFloat();
+        }
+        private static byte SetRoleToHost(byte roleId, PlayerControl host)
+        {
+            byte playerId = host.PlayerId;
+
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)RpcCalls.SetRole, Hazel.SendOption.Reliable, -1);
+            writer.Write(roleId);
+            writer.Write(playerId);
+            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            RPCProcedure.SetRole(playerId, roleId);
+            return playerId;
+        }
+        public static void SetNarratorInHost(string date)
+        {
+            //SetNarratorInHost(TORGMの [assignSpecialRoles // Assign GM] より)
+            {
+
+                byte NarratorID = 0;
+                PlayerControl host = AmongUsClient.Instance?.GetHost().Character;
+                NarratorID = SetRoleToHost((byte)RoleId.Narrator, host);
+
+                // First, remove the Narrator from role selection.
+                AllRoleSetClass.ImpostorPlayers.RemoveAll(x => x.PlayerId == host.PlayerId);
+                AllRoleSetClass.CrewMatePlayers.RemoveAll(x => x.PlayerId == host.PlayerId);
+
+                PlayerControl p = PlayerControl.AllPlayerControls.ToArray().ToList().Find(x => x.PlayerId == NarratorID);
+                p.Exiled();
+
+            }
+
         }
         public static void ImpostorRandomSelect()
         {
