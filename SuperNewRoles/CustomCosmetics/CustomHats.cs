@@ -165,9 +165,9 @@ namespace SuperNewRoles.CustomCosmetics
 
             HatExtension extend = new()
             {
-               author = ch.author ?? "Unknown",
-               package = ch.package ?? "YJ*白桜コレクション",
-               condition = ch.condition ?? "none",
+                author = ch.author ?? "Unknown",
+                package = ch.package ?? "YJ*白桜コレクション",
+                condition = ch.condition ?? "none",
             };
 
             if (ch.flipresource != null)
@@ -338,6 +338,7 @@ namespace SuperNewRoles.CustomCosmetics
                     title.enableAutoSizing = false;
                     title.autoSizeTextContainer = true;
                     title.text = ModTranslation.getString(packageName);
+
                     switch (packageName)
                     {
                         case "shiuneCollection":
@@ -513,17 +514,24 @@ namespace SuperNewRoles.CustomCosmetics
             foreach (string repo in repos)
             {
                 SuperNewRolesPlugin.Logger.LogInfo("[CustomHats] ハットスタート:" + repo);
-                try
+                if (!ConfigRoles.DownloadSuperNewNamePlates.Value)
                 {
-                    HttpStatusCode status = await FetchHats(repo);
-                    if (status != HttpStatusCode.OK)
-                        System.Console.WriteLine($"Custom hats could not be loaded from repo: {repo}\n");
-                    else
-                        SuperNewRolesPlugin.Logger.LogInfo("ハット終了:" + repo);
+                    SuperNewRolesPlugin.Logger.LogInfo("ダウンロードをスキップしました:"/*"Skipped download.:"*/ + repo);
                 }
-                catch (System.Exception e)
+                else
                 {
-                    System.Console.WriteLine($"Unable to fetch hats from repo: {repo}\n" + e.Message);
+                    try
+                    {
+                        HttpStatusCode status = await FetchHats(repo);
+                        if (status != HttpStatusCode.OK)
+                            System.Console.WriteLine($"Custom hats could not be loaded from repo: {repo}\n");
+                        else
+                            SuperNewRolesPlugin.Logger.LogInfo("ハット終了:" + repo);
+                    }
+                    catch (System.Exception e)
+                    {
+                        System.Console.WriteLine($"Unable to fetch hats from repo: {repo}\n" + e.Message);
+                    }
                 }
             }
             running = false;
@@ -598,7 +606,7 @@ namespace SuperNewRoles.CustomCosmetics
                         hatdatas.Add(info);
                     }
                 }
-              
+
                 List<string> markedfordownload = new();
 
                 string filePath = Path.GetDirectoryName(Application.dataPath) + @"\SuperNewRoles\CustomHatsChache\";
