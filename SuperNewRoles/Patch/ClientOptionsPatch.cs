@@ -21,6 +21,7 @@ namespace SuperNewRoles.Patch
             new SelectionBehaviour("CustomIsVersionErrorView", () => ConfigRoles.IsVersionErrorView.Value = !ConfigRoles.IsVersionErrorView.Value, ConfigRoles.IsVersionErrorView.Value),
             new SelectionBehaviour("CustomHideTaskArrows", () => TasksArrowsOption.hideTaskArrows = ConfigRoles.HideTaskArrows.Value = !ConfigRoles.HideTaskArrows.Value, ConfigRoles.HideTaskArrows.Value),
             new SelectionBehaviour("CustomDownloadSuperNewNamePlates", () => ConfigRoles.DownloadSuperNewNamePlates.Value = !ConfigRoles.DownloadSuperNewNamePlates.Value, ConfigRoles.DownloadSuperNewNamePlates.Value),
+            new SelectionBehaviour("HidePetFromOtherVision", () => ConfigRoles.HidePetFromOtherVision.Value = !ConfigRoles.HidePetFromOtherVision.Value, ConfigRoles.HidePetFromOtherVision.Value),
         };
 
         private static GameObject popUp;
@@ -108,7 +109,7 @@ namespace SuperNewRoles.Patch
             var pos = moreOptions.transform.localPosition;
             moreOptions.transform.localScale *= 1.1f;
             float count = 1.55f;
-            moreOptions.transform.localPosition = new Vector3(pos.x*1.5f, pos.y * count, pos.z);
+            moreOptions.transform.localPosition = new Vector3(pos.x * 1.5f, pos.y * count, pos.z);
             var trans = moreOptions.transform.localPosition;
             moreOptions.gameObject.SetActive(true);
             trans = moreOptions.transform.position;
