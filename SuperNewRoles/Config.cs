@@ -19,6 +19,7 @@ namespace SuperNewRoles
         public static ConfigEntry<bool> EnableHorseMode { get; set; }
         public static ConfigEntry<bool> DownloadSuperNewNamePlates { get; set; }
         public static ConfigEntry<bool> DownloadOtherSkins { get; set; }
+        public static ConfigEntry<bool> HidePetFromOtherVision { get; set; }
         public static void Load()
         {
             StreamerMode = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "Enable Streamer Mode", false);
@@ -32,6 +33,7 @@ namespace SuperNewRoles
             IsAutoRoomCreate = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "AutoRoomCreate", true);
             EnableHorseMode = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "EnableHorseMode", false);
             DownloadSuperNewNamePlates = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "DownloadSuperNewNamePlates", true);
+            HidePetFromOtherVision = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "Hide Pet From Other Vision", false);
             Ip = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "Custom Server IP", "127.0.0.1");
             Port = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "Custom Server Port", (ushort)22023);
             IntroPatch.ShouldAlwaysHorseAround.isHorseMode = ConfigRoles.EnableHorseMode.Value;
