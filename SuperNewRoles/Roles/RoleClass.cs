@@ -32,9 +32,9 @@ namespace SuperNewRoles.Roles
             LadderDead.Reset();
             Map.Data.ClearAndReloads();
             SabotageManager.ClearAndReloads();
-            Madmate.CheckedImpostor = new();
-            Roles.MadMayor.CheckedImpostor = new();
-            Roles.MadSeer.CheckedImpostor = new();
+            Roles.Crewmate.Madmate.CheckedImpostor = new();
+            Roles.Crewmate.MadMayor.CheckedImpostor = new();
+            Roles.Crewmate.MadSeer.CheckedImpostor = new();
             Roles.JackalFriends.CheckedJackal = new();
             Mode.BattleRoyal.main.VentData = new();
             EndGame.FinalStatusPatch.FinalStatusData.ClearFinalStatusData();
@@ -1406,7 +1406,7 @@ namespace SuperNewRoles.Roles
                     Short = PlayerControl.GameOptions.NumShortTasks;
                 }
                 ImpostorCheckTask = (int)(AllTask * (int.Parse(CustomOptions.MadMayorCheckImpostorTask.getString().Replace("%", "")) / 100f));
-                Roles.MadMayor.CheckedImpostor = new();
+                Roles.Crewmate.MadMayor.CheckedImpostor = new();
             }
         }
         public static class NiceHawk
@@ -1689,7 +1689,7 @@ namespace SuperNewRoles.Roles
                     Short = PlayerControl.GameOptions.NumShortTasks;
                 }
                 ImpostorCheckTask = (int)(AllTask * (int.Parse(CustomOptions.MadSeerCheckImpostorTask.getString().Replace("%", "")) / 100f));
-                Roles.MadSeer.CheckedImpostor = new();
+                Roles.Crewmate.MadSeer.CheckedImpostor = new();
             }
         }
         public static class EvilSeer

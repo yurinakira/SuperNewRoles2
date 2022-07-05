@@ -1,7 +1,7 @@
 using HarmonyLib;
 using Hazel;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Crewmate
 {
     public class Bestfalsecharge
     {

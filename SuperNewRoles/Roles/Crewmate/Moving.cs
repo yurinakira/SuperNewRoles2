@@ -2,7 +2,7 @@ using System;
 using SuperNewRoles.Buttons;
 using UnityEngine;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Crewmate
 {
     class Moving
     {

@@ -1,7 +1,7 @@
 using HarmonyLib;
 using SuperNewRoles.Mode;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Crewmate
 {
     [HarmonyPatch(typeof(ExileController), nameof(ExileController.Begin))]
     public class Bakery

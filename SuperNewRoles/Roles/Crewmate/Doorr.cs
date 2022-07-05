@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using SuperNewRoles.Buttons;
 using UnityEngine;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Crewmate
 {
     class Doorr
     {

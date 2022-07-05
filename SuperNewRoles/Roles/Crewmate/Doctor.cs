@@ -4,7 +4,7 @@ using System.Linq;
 using HarmonyLib;
 using SuperNewRoles.Patch;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Crewmate
 {
     class Doctor
     {

@@ -3,7 +3,7 @@ using Hazel;
 using SuperNewRoles.EndGame;
 using SuperNewRoles.Mode;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Crewmate
 {
     class Nekomata
     {

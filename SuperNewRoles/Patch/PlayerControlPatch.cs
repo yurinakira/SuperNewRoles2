@@ -13,6 +13,7 @@ using SuperNewRoles.Mode;
 using SuperNewRoles.Mode.SuperHostRoles;
 using SuperNewRoles.Patch;
 using SuperNewRoles.Roles;
+using SuperNewRoles.Roles.Crewmate;
 using UnityEngine;
 using static SuperNewRoles.Helpers.DesyncHelpers;
 using static SuperNewRoles.ModHelpers;
@@ -197,7 +198,7 @@ namespace SuperNewRoles.Patches
                         if (player.isAlive())
                         {
                             var Target = player;
-                            var misfire = !Roles.Sheriff.IsRemoteSheriffKill(Target);
+                            var misfire = !Roles.Crewmate.Sheriff.IsRemoteSheriffKill(Target);
                             var TargetID = Target.PlayerId;
                             var LocalID = CachedPlayer.LocalPlayer.PlayerId;
 

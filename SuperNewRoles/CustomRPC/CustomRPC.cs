@@ -624,7 +624,7 @@ namespace SuperNewRoles.CustomRPC
             if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) return;
             if (Start)
             {
-                Roles.Clergyman.LightOutStartRPC();
+                Roles.Crewmate.Clergyman.LightOutStartRPC();
             }
             else
             {

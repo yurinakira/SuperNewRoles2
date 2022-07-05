@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using HarmonyLib;
 using SuperNewRoles.Roles;
+using SuperNewRoles.Roles.Crewmate;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,8 +43,8 @@ namespace SuperNewRoles.Buttons
                 Buttons.HudManagerStartPatch.ScientistButton.Timer = (float)((Roles.RoleClass.NiceScientist.ButtonTimer + TimeSpanDate) - DateTime.Now).TotalSeconds;
                 if (Buttons.HudManagerStartPatch.ScientistButton.Timer <= 0f)
                 {
-                    Roles.Scientist.ScientistEnd();
-                    Roles.Scientist.ResetCoolDown();
+                    Roles.Crewmate.Scientist.ScientistEnd();
+                    Roles.Crewmate.Scientist.ResetCoolDown();
                     Buttons.HudManagerStartPatch.ScientistButton.MaxTimer = cooltime;
                     Roles.RoleClass.NiceScientist.IsScientist = false;
                     Buttons.HudManagerStartPatch.ScientistButton.actionButton.cooldownTimerText.color = Color.white;
@@ -137,8 +138,8 @@ namespace SuperNewRoles.Buttons
                 Buttons.HudManagerStartPatch.LighterLightOnButton.Timer = (float)((Roles.RoleClass.Lighter.ButtonTimer + TimeSpanDate) - DateTime.Now).TotalSeconds;
                 if (Buttons.HudManagerStartPatch.LighterLightOnButton.Timer <= 0f)
                 {
-                    Roles.Lighter.LightOutEnd();
-                    Roles.Lighter.ResetCoolDown();
+                    Roles.Crewmate.Lighter.LightOutEnd();
+                    Roles.Crewmate.Lighter.ResetCoolDown();
                     Buttons.HudManagerStartPatch.LighterLightOnButton.MaxTimer = Roles.RoleClass.Lighter.CoolTime;
                     Roles.RoleClass.Lighter.IsLightOn = false;
                     Buttons.HudManagerStartPatch.LighterLightOnButton.actionButton.cooldownTimerText.color = Color.white;
@@ -193,8 +194,8 @@ namespace SuperNewRoles.Buttons
                 Buttons.HudManagerStartPatch.SpeedBoosterBoostButton.Timer = (float)((Roles.RoleClass.SpeedBooster.ButtonTimer + TimeSpanDate) - DateTime.Now).TotalSeconds;
                 if (Buttons.HudManagerStartPatch.SpeedBoosterBoostButton.Timer <= 0f)
                 {
-                    Roles.SpeedBooster.SpeedBoostEnd();
-                    Roles.SpeedBooster.ResetCoolDown();
+                    Roles.Crewmate.SpeedBooster.SpeedBoostEnd();
+                    Roles.Crewmate.SpeedBooster.ResetCoolDown();
                     Buttons.HudManagerStartPatch.SpeedBoosterBoostButton.MaxTimer = Roles.RoleClass.SpeedBooster.CoolTime;
                     Roles.RoleClass.SpeedBooster.IsSpeedBoost = false;
                     Buttons.HudManagerStartPatch.SpeedBoosterBoostButton.actionButton.cooldownTimerText.color = Color.white;

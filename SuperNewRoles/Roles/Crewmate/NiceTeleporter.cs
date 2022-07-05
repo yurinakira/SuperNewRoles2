@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Hazel;
 using SuperNewRoles.Buttons;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Crewmate
 {
     class NiceTeleporter
     {

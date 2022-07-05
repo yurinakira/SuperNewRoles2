@@ -7,6 +7,7 @@ using SuperNewRoles.Mode.SuperHostRoles.Roles;
 using SuperNewRoles.Patch;
 using SuperNewRoles.Patches;
 using SuperNewRoles.Roles;
+using SuperNewRoles.Roles.Crewmate;
 using UnityEngine;
 
 namespace SuperNewRoles.Mode.SuperHostRoles

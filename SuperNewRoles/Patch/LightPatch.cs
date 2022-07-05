@@ -4,6 +4,7 @@ using System.Text;
 using HarmonyLib;
 using SuperNewRoles.CustomRPC;
 using SuperNewRoles.Roles;
+using SuperNewRoles.Roles.Crewmate;
 using UnityEngine;
 
 namespace SuperNewRoles.Patch

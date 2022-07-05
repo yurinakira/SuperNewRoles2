@@ -10,6 +10,7 @@ using SuperNewRoles.Mode;
 using SuperNewRoles.Mode.HideAndSeek;
 using SuperNewRoles.Patch;
 using SuperNewRoles.Roles;
+using SuperNewRoles.Roles.Crewmate;
 using TMPro;
 using UnityEngine;
 

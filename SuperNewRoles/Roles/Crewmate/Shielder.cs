@@ -4,7 +4,7 @@ using SuperNewRoles.Buttons;
 using SuperNewRoles.CustomRPC;
 using UnityEngine;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Crewmate
 {
     public class Shielder
     {

@@ -6,7 +6,7 @@ using SuperNewRoles.Mode;
 using SuperNewRoles.Patch;
 using UnityEngine;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Crewmate
 {
     [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Update))]
     class MeetingUpdatePatch
