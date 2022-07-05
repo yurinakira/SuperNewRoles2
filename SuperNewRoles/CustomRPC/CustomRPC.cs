@@ -129,6 +129,7 @@ namespace SuperNewRoles.CustomRPC
         BlackCat,
         SecretlyKiller,
         Spy,
+        Kunoichi,
         //RoleId
     }
 
@@ -196,9 +197,37 @@ namespace SuperNewRoles.CustomRPC
         UseCameraTime,
         UseVitalsTime,
         FixLights,
+        KunaiKill,
+        SetSecretRoomTeleportStatus,
+        ChiefSidekick
     }
     public static class RPCProcedure
     {
+        public static void KunaiKill(byte sourceid, byte targetid)
+        {
+            PlayerControl source = ModHelpers.playerById(sourceid);
+            PlayerControl target = ModHelpers.playerById(targetid);
+            if (source == null || target == null) return;
+            RPCMurderPlayer(sourceid, targetid, 0);
+            FinalStatusData.FinalStatuses[target.PlayerId] = FinalStatus.Kill;
+
+            if (targetid == CachedPlayer.LocalPlayer.PlayerId)
+            {
+                FastDestroyableSingleton<HudManager>.Instance.KillOverlay.ShowKillAnimation(target.Data, source.Data);
+            }
+        }
+
+        public static void ChiefSidekick(byte targetid)
+        {
+            RoleClass.Chief.SheriffPlayer.Add(targetid);
+            SetRole(targetid, (byte)RoleId.Sheriff);
+            if (targetid == CachedPlayer.LocalPlayer.PlayerId)
+            {
+                Sheriff.ResetKillCoolDown();
+                RoleClass.Sheriff.KillMaxCount = RoleClass.Chief.KillLimit;
+            }
+            UncheckedSetVanilaRole(targetid, 0);
+        }
         public static void FixLights()
         {
             SwitchSystem switchSystem = MapUtilities.Systems[SystemTypes.Electrical].TryCast<SwitchSystem>();
@@ -1158,6 +1187,15 @@ namespace SuperNewRoles.CustomRPC
                         */
                         case CustomRPC.FixLights:
                             FixLights();
+                            break;
+                        case CustomRPC.KunaiKill:
+                            KunaiKill(reader.ReadByte(), reader.ReadByte());
+                            break;
+                        case CustomRPC.SetSecretRoomTeleportStatus:
+                            MapCustoms.Airship.SecretRoom.SetSecretRoomTeleportStatus((MapCustoms.Airship.SecretRoom.Status)reader.ReadByte(), reader.ReadByte(), reader.ReadByte());
+                            break;
+                        case CustomRPC.ChiefSidekick:
+                            ChiefSidekick(reader.ReadByte());
                             break;
                     }
                 }

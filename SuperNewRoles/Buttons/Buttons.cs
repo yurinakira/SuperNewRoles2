@@ -63,6 +63,7 @@ namespace SuperNewRoles.Buttons
         public static CustomButton EvilHackerButton;
         public static CustomButton EvilHackerMadmateSetting;
         public static CustomButton PositionSwapperButton;
+        public static CustomButton KunoichiKunaiButton;
         public static CustomButton SecretlyKillerMainButton;
         public static CustomButton SecretlyKillerSecretlyKillButton;
         public static CustomButton ClairvoyantButton;
@@ -88,6 +89,39 @@ namespace SuperNewRoles.Buttons
 
         public static void Postfix(HudManager __instance)
         {
+            KunoichiKunaiButton = new CustomButton(
+                () =>
+                {
+                    if (RoleClass.Kunoichi.Kunai.kunai.active)
+                    {
+                        RoleClass.Kunoichi.Kunai.kunai.SetActive(false);
+                    } else
+                    {
+                        RoleClass.Kunoichi.Kunai.kunai.SetActive(true);
+                    }
+                },
+                (bool isAlive, RoleId role) => { return isAlive && role == RoleId.Kunoichi; },
+                () =>
+                {
+                    return PlayerControl.LocalPlayer.CanMove;
+                },
+                () =>
+                {
+                    KunoichiKunaiButton.MaxTimer = 0f;
+                    KunoichiKunaiButton.Timer = 0f;
+                },
+                RoleClass.Kunoichi.getButtonSprite(),
+                new Vector3(-1.8f, -0.06f, 0),
+                __instance,
+                __instance.AbilityButton,
+                KeyCode.F,
+                49,
+                () => { return false; }
+            )
+            {
+                buttonText = ModTranslation.getString("KunoichiKunai"),
+                showButtonText = true
+            };
             FalseChargesFalseChargeButton = new CustomButton(
                 () =>
                 {
@@ -680,13 +714,17 @@ namespace SuperNewRoles.Buttons
                     }
                     else if (PlayerControl.LocalPlayer.isRole(RoleId.Sheriff))
                     {
-                        if (RoleClass.Sheriff.KillMaxCount >= 1 && setTarget())
+                        if (RoleClass.Sheriff.KillMaxCount > 0 && setTarget())
                         {
-                            RoleClass.Sheriff.KillMaxCount--;
                             var Target = PlayerControlFixedUpdatePatch.setTarget();
-                            var misfire = !Roles.Crewmate.Sheriff.IsSheriffKill(Target);
+                            var misfire = !Sheriff.IsSheriffKill(Target);
                             var TargetID = Target.PlayerId;
+
                             var LocalID = CachedPlayer.LocalPlayer.PlayerId;
+                            if (RoleClass.Chief.SheriffPlayer.Contains(LocalID))
+                            {
+                                misfire = Sheriff.IsChiefSheriffKill(Target);
+                            }
 
                             CustomRPC.RPCProcedure.SheriffKill(LocalID, TargetID, misfire);
                             MessageWriter killWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SheriffKill, Hazel.SendOption.Reliable, -1);
@@ -1140,33 +1178,37 @@ namespace SuperNewRoles.Buttons
                 () =>
                 {
                     var target = setTarget();
-                    if (!target.Data.Role.IsImpostor && target && RoleHelpers.isAlive(PlayerControl.LocalPlayer) && PlayerControl.LocalPlayer.CanMove && !RoleClass.Chief.IsCreateSheriff)
+                    if (target && !RoleClass.Chief.IsCreateSheriff)
                     {
-                        target.RPCSetRoleUnchecked(RoleTypes.Crewmate);
-                        target.setRoleRPC(RoleId.Sheriff);
-                        RoleClass.Chief.IsCreateSheriff = true;
-                    }
-                    else if (target.Data.Role.IsImpostor)
-                    {
-                        if (ModeHandler.isMode(ModeId.Default))
+                        if (!target.isImpostor())
                         {
-                            if (PlayerControl.LocalPlayer.isRole(RoleId.Chief))
-                            {
-                                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.RPCMurderPlayer, SendOption.Reliable, -1);
-                                writer.Write(CachedPlayer.LocalPlayer.PlayerId);
-                                writer.Write(CachedPlayer.LocalPlayer.PlayerId);
-                                writer.Write(byte.MaxValue);
-                                AmongUsClient.Instance.FinishRpcImmediately(writer);
-                                RPCProcedure.RPCMurderPlayer(CachedPlayer.LocalPlayer.PlayerId, CachedPlayer.LocalPlayer.PlayerId, byte.MaxValue);
-                            }
+                            MessageWriter writer = RPCHelper.StartRPC(CustomRPC.CustomRPC.ChiefSidekick);
+                            writer.Write(target);
+                            RPCHelper.EndRPC(writer);
+                            RoleClass.Chief.IsCreateSheriff = true;
                         }
-                        else if (ModeHandler.isMode(ModeId.SuperHostRoles))
+                        else
                         {
-                            if (AmongUsClient.Instance.AmHost)
+                            if (ModeHandler.isMode(ModeId.Default))
                             {
-                                foreach (PlayerControl p in RoleClass.Chief.ChiefPlayer)
+                                if (PlayerControl.LocalPlayer.isRole(RoleId.Chief))
                                 {
-                                    p.RpcMurderPlayer(p);
+                                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.RPCMurderPlayer, SendOption.Reliable, -1);
+                                    writer.Write(CachedPlayer.LocalPlayer.PlayerId);
+                                    writer.Write(CachedPlayer.LocalPlayer.PlayerId);
+                                    writer.Write(byte.MaxValue);
+                                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                                    RPCProcedure.RPCMurderPlayer(CachedPlayer.LocalPlayer.PlayerId, CachedPlayer.LocalPlayer.PlayerId, byte.MaxValue);
+                                }
+                            }
+                            else if (ModeHandler.isMode(ModeId.SuperHostRoles))
+                            {
+                                if (AmongUsClient.Instance.AmHost)
+                                {
+                                    foreach (PlayerControl p in RoleClass.Chief.ChiefPlayer)
+                                    {
+                                        p.RpcMurderPlayer(p);
+                                    }
                                 }
                             }
                         }
@@ -1768,7 +1810,7 @@ namespace SuperNewRoles.Buttons
                         MapOptions.MapOption.IsZoomOn = true;
                     }
                 },
-                (bool isAlive, RoleId role) => { return (!PlayerControl.LocalPlayer.isAlive() && MapOptions.MapOption.ClairvoyantZoom); },
+                (bool isAlive, RoleId role) => { return (!PlayerControl.LocalPlayer.isAlive() && MapOptions.MapOption.ClairvoyantZoom && ModeHandler.isMode(ModeId.Default)); },
                 () =>
                 {
                     return PlayerControl.LocalPlayer.CanMove;
