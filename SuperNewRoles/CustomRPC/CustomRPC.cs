@@ -223,7 +223,7 @@ namespace SuperNewRoles.CustomRPC
             SetRole(targetid, (byte)RoleId.Sheriff);
             if (targetid == CachedPlayer.LocalPlayer.PlayerId)
             {
-                Sheriff.ResetKillCoolDown();
+                Roles.Crewmate.Sheriff.ResetKillCoolDown();
                 RoleClass.Sheriff.KillMaxCount = RoleClass.Chief.KillLimit;
             }
             UncheckedSetVanilaRole(targetid, 0);
