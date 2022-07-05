@@ -3,7 +3,7 @@ using SuperNewRoles.CustomRPC;
 using SuperNewRoles.Mode;
 using UnityEngine;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Impostor
 {
     public static class SerialKiller
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Impostor
 {
     class Vampire
     {

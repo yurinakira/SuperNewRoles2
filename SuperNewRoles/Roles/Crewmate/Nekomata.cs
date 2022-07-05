@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Hazel;
 using SuperNewRoles.EndGame;
 using SuperNewRoles.Mode;
+using SuperNewRoles.Roles.Impostor;
 
 namespace SuperNewRoles.Roles.Crewmate
 {

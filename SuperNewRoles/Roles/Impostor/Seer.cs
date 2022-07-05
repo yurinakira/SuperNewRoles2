@@ -4,7 +4,7 @@ using HarmonyLib;
 using SuperNewRoles.CustomRPC;
 using UnityEngine;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Impostor
 {
     class Seer
     //&MadSeer & EvilSeer & SeerFriends & JackalSeer & Sidekick(Seer)

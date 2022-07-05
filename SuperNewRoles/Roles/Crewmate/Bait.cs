@@ -1,6 +1,7 @@
 using System.Linq;
 using Hazel;
 using SuperNewRoles.Patch;
+using SuperNewRoles.Roles.Impostor;
 using UnityEngine;
 
 namespace SuperNewRoles.Roles.Crewmate

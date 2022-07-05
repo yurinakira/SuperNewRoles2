@@ -2,7 +2,7 @@ using Hazel;
 using SuperNewRoles.Buttons;
 using UnityEngine;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Impostor
 {
     public class Samurai
     {

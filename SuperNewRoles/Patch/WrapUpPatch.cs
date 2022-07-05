@@ -10,6 +10,7 @@ using SuperNewRoles.Helpers;
 using SuperNewRoles.Mode;
 using SuperNewRoles.Roles;
 using SuperNewRoles.Roles.Crewmate;
+using SuperNewRoles.Roles.Impostor;
 using SuperNewRoles.Sabotage;
 
 namespace SuperNewRoles.Patch

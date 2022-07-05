@@ -5,6 +5,7 @@ using System.Reflection;
 using HarmonyLib;
 using SuperNewRoles.Roles;
 using SuperNewRoles.Roles.Crewmate;
+using SuperNewRoles.Roles.Impostor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -222,8 +223,8 @@ namespace SuperNewRoles.Buttons
                 Buttons.HudManagerStartPatch.EvilSpeedBoosterBoostButton.Timer = (float)((Roles.RoleClass.EvilSpeedBooster.ButtonTimer + TimeSpanDate) - DateTime.Now).TotalSeconds;
                 if (Buttons.HudManagerStartPatch.EvilSpeedBoosterBoostButton.Timer <= 0f)
                 {
-                    Roles.EvilSpeedBooster.SpeedBoostEnd();
-                    Roles.EvilSpeedBooster.ResetCoolDown();
+                    EvilSpeedBooster.SpeedBoostEnd();
+                    EvilSpeedBooster.ResetCoolDown();
                     Buttons.HudManagerStartPatch.EvilSpeedBoosterBoostButton.MaxTimer = Roles.RoleClass.EvilSpeedBooster.CoolTime;
                     Roles.RoleClass.EvilSpeedBooster.IsSpeedBoost = false;
                     Buttons.HudManagerStartPatch.EvilSpeedBoosterBoostButton.actionButton.cooldownTimerText.color = Color.white;

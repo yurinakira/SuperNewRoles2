@@ -1,6 +1,6 @@
 using SuperNewRoles.CustomRPC;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Impostor
 {
     public class Minimalist
     {

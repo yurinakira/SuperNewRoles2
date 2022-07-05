@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Impostor
 {
     public static class CountChanger
     {

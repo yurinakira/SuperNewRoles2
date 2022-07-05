@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Impostor
 {
     public class Hawk
     {

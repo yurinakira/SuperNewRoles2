@@ -4,7 +4,7 @@ using SuperNewRoles.Buttons;
 using SuperNewRoles.Mode;
 using UnityEngine;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Impostor
 {
     public class Freezer
     {

@@ -1,6 +1,7 @@
 using HarmonyLib;
 using SuperNewRoles.CustomRPC;
 using UnityEngine;
+using SuperNewRoles.Roles.Impostor;
 
 namespace SuperNewRoles.Roles
 {

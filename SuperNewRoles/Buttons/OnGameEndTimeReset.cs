@@ -4,7 +4,7 @@ using System.Text;
 using HarmonyLib;
 using SuperNewRoles.Roles;
 using UnityEngine;
-using static SuperNewRoles.Roles.EvilGambler;
+using SuperNewRoles.Roles.Impostor;
 
 namespace SuperNewRoles.Buttons
 {
@@ -18,7 +18,7 @@ namespace SuperNewRoles.Buttons
         public static void Patch()
         {
             Roles.Crewmate.SpeedBooster.ResetSpeed();
-            Roles.EvilSpeedBooster.ResetSpeed();
+            EvilSpeedBooster.ResetSpeed();
             Roles.Crewmate.Lighter.LightOutEnd();
             Camera.main.orthographicSize = RoleClass.Hawk.Default;
             FastDestroyableSingleton<HudManager>.Instance.UICamera.orthographicSize = RoleClass.Hawk.Default;

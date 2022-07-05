@@ -4,6 +4,7 @@ using HarmonyLib;
 using Hazel;
 using SuperNewRoles.Mode;
 using SuperNewRoles.Patch;
+using SuperNewRoles.Roles.Impostor;
 using UnityEngine;
 
 namespace SuperNewRoles.Roles.Crewmate

@@ -1,6 +1,7 @@
 using System;
 using Hazel;
 using SuperNewRoles.Buttons;
+using SuperNewRoles.Roles.Impostor;
 
 namespace SuperNewRoles.Roles.Crewmate
 {

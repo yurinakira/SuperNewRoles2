@@ -1,5 +1,6 @@
 using System;
 using SuperNewRoles.Buttons;
+using SuperNewRoles.Roles.Impostor;
 
 namespace SuperNewRoles.Roles.Crewmate
 {

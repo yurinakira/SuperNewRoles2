@@ -6,7 +6,7 @@ using UnityEngine;
 using SuperNewRoles.Buttons;
 using SuperNewRoles.Mode;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Impostor
 {
     public static class SecretlyKiller
     {

@@ -2,7 +2,7 @@ using System.Linq;
 using SuperNewRoles.Helpers;
 using SuperNewRoles.Patch;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Impostor
 {
     public class RedRidingHood
     {

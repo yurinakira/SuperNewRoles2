@@ -1,7 +1,7 @@
 using Hazel;
 using SuperNewRoles.Helpers;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Impostor
 {
     public static class EvilEraser
     {

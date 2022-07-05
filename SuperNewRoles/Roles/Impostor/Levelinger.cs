@@ -2,7 +2,7 @@ using SuperNewRoles.CustomRPC;
 using SuperNewRoles.Helpers;
 using SuperNewRoles.Patch;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Impostor
 {
     public static class Levelinger
     {

@@ -9,6 +9,7 @@ using SuperNewRoles.CustomOption;
 using SuperNewRoles.CustomRPC;
 using SuperNewRoles.Helpers;
 using SuperNewRoles.Roles;
+using SuperNewRoles.Roles.Impostor;
 using TMPro;
 using UnhollowerBaseLib;
 using UnityEngine;

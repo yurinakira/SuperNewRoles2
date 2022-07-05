@@ -2,7 +2,7 @@ using HarmonyLib;
 using SuperNewRoles.Mode;
 using SuperNewRoles.Mode.SuperHostRoles;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Impostor
 {
     class EvilGambler
     {
