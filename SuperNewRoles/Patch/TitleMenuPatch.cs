@@ -20,7 +20,7 @@ using Object = UnityEngine.Object;
 namespace SuperNewRoles.Patch
 {
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
-    public class MainMenuPatch
+    public class TitleMenuPatch
     {
         public const string snrdiscordserver = "https://discord.gg/6DjxfaDsAj";
         private static void Prefix(MainMenuManager __instance)

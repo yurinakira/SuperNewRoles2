@@ -390,7 +390,7 @@ namespace SuperNewRoles.CustomCosmetics
         }
 
         [HarmonyPatch]
-        public static class CustomColorPatches
+        public static class CustomColorPatch
         {
             [HarmonyPatch(typeof(TranslationController), nameof(TranslationController.GetString), new[] {
                 typeof(StringNames),

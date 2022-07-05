@@ -89,7 +89,7 @@ namespace SuperNewRoles.Patch
                 Commands[0].Equals("/dc", StringComparison.OrdinalIgnoreCase)
                 )
             {
-                SendCommand(sourcePlayer, ModTranslation.getString("SNROfficialDiscordMessage") + "\n" + MainMenuPatch.snrdiscordserver);
+                SendCommand(sourcePlayer, ModTranslation.getString("SNROfficialDiscordMessage") + "\n" + TitleMenuPatch.snrdiscordserver);
                 return false;
             }
             else if (

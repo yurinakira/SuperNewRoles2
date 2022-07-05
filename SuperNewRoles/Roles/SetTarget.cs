@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using SuperNewRoles.Patches;
+using SuperNewRoles.Patch;
 
 namespace SuperNewRoles.Roles
 {

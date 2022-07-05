@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Hazel;
 using SuperNewRoles.Helpers;
-using SuperNewRoles.Patches;
+using SuperNewRoles.Patch;
 using SuperNewRoles.Roles;
 using UnityEngine;
 

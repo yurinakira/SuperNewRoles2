@@ -18,7 +18,7 @@ using TMPro;
 using Twitch;
 using UnityEngine;
 using UnityEngine.UI;
-namespace SuperNewRoles.Patches
+namespace SuperNewRoles.Patch
 {
     [HarmonyPatch]
     public static class CredentialsPatch

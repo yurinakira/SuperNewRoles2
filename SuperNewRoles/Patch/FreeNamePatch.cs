@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
-namespace SuperNewRoles.Patches
+namespace SuperNewRoles.Patch
 {
     class FreeNamePatch
     {

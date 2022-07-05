@@ -7,7 +7,7 @@ using InnerNet;
 using SuperNewRoles.CustomRPC;
 using SuperNewRoles.EndGame;
 using SuperNewRoles.Helpers;
-using SuperNewRoles.Patches;
+using SuperNewRoles.Patch;
 using SuperNewRoles.Roles;
 using UnityEngine;
 

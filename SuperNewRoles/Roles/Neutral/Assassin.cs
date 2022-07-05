@@ -12,7 +12,7 @@ namespace SuperNewRoles.Roles
 {
     public static class Assassin
     {
-        //元:https://github.com/yukieiji/ExtremeRoles/blob/master/ExtremeRoles/Patches/AirShipStatusPatch.cs
+        //元:https://github.com/yukieiji/ExtremeRoles/blob/master/ExtremeRoles/Patch/AirShipStatusPatch.cs
         [HarmonyPatch(typeof(AirshipStatus), nameof(AirshipStatus.PrespawnStep))]
         public static class AirshipStatusPrespawnStepPatch
         {

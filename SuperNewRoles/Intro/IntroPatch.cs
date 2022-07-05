@@ -14,7 +14,7 @@ using SuperNewRoles.Roles.Crewmate;
 using TMPro;
 using UnityEngine;
 
-namespace SuperNewRoles.Patches
+namespace SuperNewRoles.Patch
 {
     [HarmonyPatch]
     class IntroPatch

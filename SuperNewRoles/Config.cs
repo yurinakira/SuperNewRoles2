@@ -1,5 +1,5 @@
 using BepInEx.Configuration;
-using SuperNewRoles.Patches;
+using SuperNewRoles.Patch;
 namespace SuperNewRoles
 {
     public static class ConfigRoles

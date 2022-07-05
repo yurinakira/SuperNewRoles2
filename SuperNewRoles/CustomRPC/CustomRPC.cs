@@ -11,7 +11,7 @@ using SuperNewRoles.EndGame;
 using SuperNewRoles.Helpers;
 using SuperNewRoles.Mode;
 using SuperNewRoles.Mode.SuperHostRoles;
-using SuperNewRoles.Patches;
+using SuperNewRoles.Patch;
 using SuperNewRoles.Roles;
 using SuperNewRoles.Sabotage;
 using UnityEngine;
@@ -490,7 +490,7 @@ namespace SuperNewRoles.CustomRPC
             else
                 ver = new System.Version(major, minor, build, revision);
             Patch.ShareGameVersion.GameStartManagerUpdatePatch.VersionPlayers[clientId] = new Patch.PlayerVersion(ver, guid);
-            //SuperNewRolesPlugin.Logger.LogInfo("PATCHES:"+ Patch.ShareGameVersion.playerVersions);
+            //SuperNewRolesPlugin.Logger.LogInfo("Patch:"+ Patch.ShareGameVersion.playerVersions);
         }
         public static void SetRole(byte playerid, byte RPCRoleId)
         {
@@ -1160,9 +1160,9 @@ namespace SuperNewRoles.CustomRPC
                             break;
                     }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    SuperNewRolesPlugin.Logger.LogInfo((CustomRPC)callId+"でエラー:"+e);
+                    SuperNewRolesPlugin.Logger.LogInfo((CustomRPC)callId + "でエラー:" + e);
                 }
             }
         }

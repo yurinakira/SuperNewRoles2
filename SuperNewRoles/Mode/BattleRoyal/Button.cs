@@ -1,7 +1,7 @@
 /*
 using HarmonyLib;
 using SuperNewRoles.Buttons;
-using SuperNewRoles.Patches;
+using SuperNewRoles.Patch;
 using SuperNewRoles.Roles;
 using System;
 using System.Collections.Generic;

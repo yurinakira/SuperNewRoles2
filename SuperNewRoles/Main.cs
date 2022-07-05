@@ -40,7 +40,7 @@ namespace SuperNewRoles
             CustomCosmetics.CustomColors.Load();
             ConfigRoles.Load();
             CustomOption.CustomOptions.Load();
-            Patches.FreeNamePatch.Initialize();
+            Patch.FreeNamePatch.Initialize();
             // All Load() End
 
             // Old Delete Start
