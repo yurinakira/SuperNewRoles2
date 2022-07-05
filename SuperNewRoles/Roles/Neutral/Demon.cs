@@ -5,7 +5,7 @@ using SuperNewRoles.CustomRPC;
 using SuperNewRoles.Helpers;
 using SuperNewRoles.Mode;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Neutral
 {
     public static class Demon
     {

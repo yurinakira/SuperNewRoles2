@@ -3,7 +3,7 @@ using HarmonyLib;
 using SuperNewRoles.Mode;
 using UnityEngine;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Neutral
 {
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     public class Tuna

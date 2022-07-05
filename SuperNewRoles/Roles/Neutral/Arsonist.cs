@@ -9,7 +9,7 @@ using SuperNewRoles.Helpers;
 using SuperNewRoles.Mode;
 using UnityEngine;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Neutral
 {
     public static class Arsonist
     {

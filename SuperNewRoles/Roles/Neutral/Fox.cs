@@ -3,7 +3,7 @@ using SuperNewRoles.CustomRPC;
 using UnityEngine;
 using SuperNewRoles.Roles.Impostor;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Neutral
 {
     class Fox
     {

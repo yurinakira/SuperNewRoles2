@@ -1,7 +1,7 @@
 using HarmonyLib;
 using SuperNewRoles.CustomOption;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Neutral
 {
     class Workperson
     {

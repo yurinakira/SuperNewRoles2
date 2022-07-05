@@ -35,7 +35,7 @@ namespace SuperNewRoles.Roles
             Roles.Crewmate.Madmate.CheckedImpostor = new();
             Roles.Crewmate.MadMayor.CheckedImpostor = new();
             Roles.Crewmate.MadSeer.CheckedImpostor = new();
-            Roles.JackalFriends.CheckedJackal = new();
+            Roles.Neutral.JackalFriends.CheckedJackal = new();
             Mode.BattleRoyal.main.VentData = new();
             EndGame.FinalStatusPatch.FinalStatusData.ClearFinalStatusData();
             Mode.ModeHandler.ClearAndReload();
@@ -922,7 +922,7 @@ namespace SuperNewRoles.Roles
                     Short = PlayerControl.GameOptions.NumShortTasks;
                 }
                 JackalCheckTask = (int)(AllTask * (int.Parse(CustomOptions.JackalFriendsCheckJackalTask.getString().Replace("%", "")) / 100f));
-                Roles.JackalFriends.CheckedJackal = new();
+                Roles.Neutral.JackalFriends.CheckedJackal = new();
             }
         }
         public static class Doctor

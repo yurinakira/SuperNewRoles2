@@ -5,7 +5,7 @@ using SuperNewRoles.Buttons;
 using SuperNewRoles.CustomRPC;
 using UnityEngine;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Neutral
 {
     class JackalSeer
     {
