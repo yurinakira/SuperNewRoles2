@@ -1,3 +1,4 @@
+import openpyxl as px
 import os
 import re
 import sys
@@ -47,7 +48,6 @@ def stringToJson(in_files):
 if __name__ == "__main__":
   in_files = [
     os.path.join(WORKING_DIR, "TransData.xlsx"),
-    os.path.join(WORKING_DIR, "Strings-Dev.xlsx")
   ]
   
   stringToJson(in_files)
