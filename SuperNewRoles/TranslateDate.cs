@@ -21,7 +21,7 @@ namespace SuperNewRoles
         public static void Load()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
-            Stream stream = assembly.GetManifestResourceStream("SuperNewRoles.Resources.translatedate.json");
+            Stream stream = assembly.GetManifestResourceStream("SuperNewRoles.Resources.translatedata.json");
             var byteTexture = new byte[stream.Length];
             var read = stream.Read(byteTexture, 0, (int)stream.Length);
             string json = System.Text.Encoding.UTF8.GetString(byteTexture);
