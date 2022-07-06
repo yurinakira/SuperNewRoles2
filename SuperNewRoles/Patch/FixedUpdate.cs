@@ -42,6 +42,8 @@ namespace SuperNewRoles.Patch
     [HarmonyPatch(typeof(ControllerManager), nameof(ControllerManager.Update))]
     class DebugManager
     {
+        static (int, int)[] resolutions = { (480, 270), (640, 360), (800, 450), (1280, 720), (1600, 900) };
+        static int resolutionIndex = 0;
         public static void Postfix(ControllerManager __instance)
         {
             if (AmongUsClient.Instance.GameState == AmongUsClient.GameStates.Started)
@@ -54,14 +56,6 @@ namespace SuperNewRoles.Patch
                     MapUtilities.CachedShipStatus.enabled = false;
                 }
             }
-        }
-    }
-    class ControllerManagerUpdatePatch
-    {
-        static (int, int)[] resolutions = { (480, 270), (640, 360), (800, 450), (1280, 720), (1600, 900) };
-        static int resolutionIndex = 0;
-        public static void Postfix(ControllerManager __instance)
-        {
             //解像度変更
             if (Input.GetKeyDown(KeyCode.F9))
             {
