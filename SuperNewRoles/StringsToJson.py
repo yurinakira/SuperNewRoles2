@@ -1,4 +1,3 @@
-import openpyxl as px
 import os
 import re
 import sys
@@ -8,8 +7,8 @@ from openpyxl import load_workbook
 
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
-IN_FILE = os.path.join(WORKING_DIR, "")
-OUT_FILE = os.path.join(WORKING_DIR, "SuperNewRoles", "Resources", "translatedata.json")
+IN_FILE = os.path.join(WORKING_DIR, "TransData.xlsx")
+OUT_FILE = os.path.join(WORKING_DIR, "Resources", "translatedata.json")
 
 def stringToJson(in_files):
   stringData = {}
@@ -48,6 +47,7 @@ def stringToJson(in_files):
 if __name__ == "__main__":
   in_files = [
     os.path.join(WORKING_DIR, "TransData.xlsx"),
+        os.path.join(WORKING_DIR, "Strings-Dev.xlsx")
   ]
   
   stringToJson(in_files)
