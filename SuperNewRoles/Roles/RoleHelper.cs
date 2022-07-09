@@ -587,6 +587,9 @@ namespace SuperNewRoles
                 case (CustomRPC.RoleId.SuicideWisher):
                     Roles.RoleClass.SuicideWisher.SuicideWisherPlayer.Add(player);
                     break;
+                case (CustomRPC.RoleId.Neet):
+                    Roles.RoleClass.Neet.NeetPlayer.Add(player);
+                    break;
                 //ロールアド
                 default:
                     SuperNewRolesPlugin.Logger.LogError($"[SetRole]:No Method Found for Role Type {role}");
@@ -939,6 +942,9 @@ namespace SuperNewRoles
                 case (CustomRPC.RoleId.SuicideWisher):
                     Roles.RoleClass.SuicideWisher.SuicideWisherPlayer.RemoveAll(ClearRemove);
                     break;
+                case (CustomRPC.RoleId.Neet):
+                    Roles.RoleClass.Neet.NeetPlayer.RemoveAll(ClearRemove);
+                    break;
                     //ロールリモベ
             }
             ChacheManager.ResetMyRoleChache();
@@ -1050,6 +1056,9 @@ namespace SuperNewRoles
                     IsTaskClear = true;
                     break;
                 case RoleId.BlackCat:
+                    IsTaskClear = true;
+                    break;
+                case RoleId.Neet:
                     IsTaskClear = true;
                     break;
                     //タスククリアか
@@ -1262,6 +1271,9 @@ namespace SuperNewRoles
                     IsNeutral = true;
                     break;
                 case RoleId.Tuna:
+                    IsNeutral = true;
+                    break;
+                case RoleId.Neet:
                     IsNeutral = true;
                     break;
                     //第三か
@@ -1896,6 +1908,10 @@ namespace SuperNewRoles
                 else if (Roles.RoleClass.SuicideWisher.SuicideWisherPlayer.IsCheckListPlayerControl(player))
                 {
                     return CustomRPC.RoleId.SuicideWisher;
+                }
+                else if (RoleClass.Neet.NeetPlayer.IsCheckListPlayerControl(player))
+                {
+                    return RoleId.Neet;
                 }
                 //ロールチェック
             }
