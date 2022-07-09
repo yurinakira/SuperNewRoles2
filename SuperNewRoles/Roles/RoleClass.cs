@@ -2423,12 +2423,15 @@ namespace SuperNewRoles.Roles
             public static float KillCoolTime;
             public static float CoolTime;
             public static float DurationTime;
+            public static bool IsScientist;
+            public static DateTime ButtonTimer;
             public static void ClearAndReload()
             {
                 EliminatorPlayer = new List<PlayerControl>();
                 KillCoolTime = CustomOptions.EliminatorKillCoolTime.getFloat();
                 CoolTime = CustomOptions.EliminatorCoolTime.getFloat();
                 DurationTime = CustomOptions.EliminatorDurationTime.getFloat();
+                IsScientist = false;
             }
         }
         public static class SuicideWisher
