@@ -34,33 +34,34 @@ namespace SuperNewRoles.Roles
 
 
 
+
         public static void ResetCoolDown()
         {
             float CoolTime;
             CoolTime = RoleClass.Eliminator.CoolTime;
 
-            HudManagerStartPatch.ScientistButton.MaxTimer = CoolTime;
+            HudManagerStartPatch.EliminatorButton.MaxTimer = CoolTime;
             RoleClass.Eliminator.ButtonTimer = DateTime.Now;
         }
         public static void Start()
         {
             RoleClass.Eliminator.IsScientist = true;
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetScientistRPC, Hazel.SendOption.Reliable, -1);
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetEliminatorRPC, Hazel.SendOption.Reliable, -1);
             writer.Write(true);
             writer.Write(CachedPlayer.LocalPlayer.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
-            CustomRPC.RPCProcedure.SetScientistRPC(true, CachedPlayer.LocalPlayer.PlayerId);
-            SpeedBooster.ResetCoolDown();
+            CustomRPC.RPCProcedure.SetEliminatorRPC(true, CachedPlayer.LocalPlayer.PlayerId);
+            Eliminator.ResetCoolDown();
         }
         public static void ResetScientist() { }
         public static void ScientistEnd()
         {
             RoleClass.Eliminator.IsScientist = false;
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetScientistRPC, Hazel.SendOption.Reliable, -1);
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetEliminatorRPC, Hazel.SendOption.Reliable, -1);
             writer.Write(false);
             writer.Write(CachedPlayer.LocalPlayer.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
-            CustomRPC.RPCProcedure.SetScientistRPC(false, CachedPlayer.LocalPlayer.PlayerId);
+            CustomRPC.RPCProcedure.SetEliminatorRPC(false, CachedPlayer.LocalPlayer.PlayerId);
             ResetScientist();
         }
         public static void setOpacity(PlayerControl player, float opacity, bool cansee)
@@ -102,30 +103,29 @@ namespace SuperNewRoles.Roles
             {
                 if (AmongUsClient.Instance.GameState != AmongUsClient.GameStates.Started) return;
                 if (!ModeHandler.isMode(ModeId.Default)) return;
-                if (__instance.myPlayer.isRole(CustomRPC.RoleId.EvilScientist) || __instance.myPlayer.isRole(CustomRPC.RoleId.NiceScientist))
+                if (__instance.myPlayer.isRole(CustomRPC.RoleId.Eliminator))
                 {
-                    var Scientist = __instance.myPlayer;
-                    if (Scientist == null || Scientist.isDead()) return;
-                    var ison = RoleClass.NiceScientist.IsScientistPlayers.ContainsKey(__instance.myPlayer.PlayerId) && GameData.Instance && RoleClass.NiceScientist.IsScientistPlayers[__instance.myPlayer.PlayerId];
+                    var Eliminator = __instance.myPlayer;
+                    if (Eliminator == null || Eliminator.isDead()) return;
+                    var ison = RoleClass.Eliminator.IsScientistPlayers.ContainsKey(__instance.myPlayer.PlayerId) && GameData.Instance && RoleClass.Eliminator.IsScientistPlayers[__instance.myPlayer.PlayerId];
                     bool canSee =
                         (__instance.myPlayer.isImpostor() && PlayerControl.LocalPlayer.isImpostor()) ||
-                        PlayerControl.LocalPlayer.isDead() || !ison;
+                         PlayerControl.LocalPlayer.isDead() || !ison;
 
                     var opacity = canSee ? 0.1f : 0.0f;
                     if (ison)
                     {
                         opacity = Math.Max(opacity, 0);
-                        Scientist.MyRend().material.SetFloat("_Outline", 0f);
+                        Eliminator.MyRend().material.SetFloat("_Outline", 0f);
                     }
                     else
                     {
                         opacity = Math.Max(opacity, 1.5f);
                     }
-                    setOpacity(Scientist, opacity, canSee);
+                    setOpacity(Eliminator, opacity, canSee);
                 }
             }
         }
-
-
     }
 }
+
