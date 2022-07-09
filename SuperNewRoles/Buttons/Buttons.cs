@@ -1847,10 +1847,13 @@ namespace SuperNewRoles.Buttons
                             case RoleId.Smasher:
                                 Smasher.resetCoolDown();
                                 break;
+                            case RoleId.Eliminator:
+                                Eliminator.resetCoolDown();
+                                break;
                         }
                     }
                 },
-                (bool isAlive, RoleId role) => { return isAlive && (role == RoleId.DoubleKiller) && ModeHandler.isMode(ModeId.Default) || isAlive && (role == RoleId.Smasher) && ModeHandler.isMode(ModeId.Default); },
+                (bool isAlive, RoleId role) => { return isAlive && (role == RoleId.DoubleKiller) && ModeHandler.isMode(ModeId.Default) || isAlive && (role == RoleId.Smasher) && ModeHandler.isMode(ModeId.Default) || isAlive && (role == RoleId.Eliminator) && ModeHandler.isMode(ModeId.Default); },
                 () =>
                 {
                     return DoubleKiller.DoubleKillerFixedPatch.DoubleKillersetTarget() && PlayerControl.LocalPlayer.CanMove;
