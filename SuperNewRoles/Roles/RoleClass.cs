@@ -2426,13 +2426,16 @@ namespace SuperNewRoles.Roles
             public static float DurationTime;
             public static bool IsScientist;
             public static DateTime ButtonTimer;
+            public static Dictionary<int, bool> IsScientistPlayers;
             public static void ClearAndReload()
             {
                 EliminatorPlayer = new List<PlayerControl>();
                 KillCoolTime = CustomOptions.EliminatorKillCoolTime.getFloat();
                 CoolTime = CustomOptions.EliminatorCoolTime.getFloat();
                 DurationTime = CustomOptions.EliminatorDurationTime.getFloat();
+                ButtonTimer = DateTime.Now;
                 IsScientist = false;
+                IsScientistPlayers = new Dictionary<int, bool>();
             }
         }
         public static class SuicideWisher

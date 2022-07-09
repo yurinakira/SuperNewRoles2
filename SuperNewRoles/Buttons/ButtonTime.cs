@@ -57,6 +57,43 @@ namespace SuperNewRoles.Buttons
                 if (Buttons.HudManagerStartPatch.ScientistButton.Timer <= 0f) Buttons.HudManagerStartPatch.ScientistButton.Timer = 0f; return;
             }
         }
+        public static void EliminatorButton()
+        {
+            float durationtime;
+            float cooltime;
+            if (PlayerControl.LocalPlayer.isRole(CustomRPC.RoleId.Eliminator))
+            {
+                durationtime = RoleClass.Eliminator.DurationTime;
+                cooltime = RoleClass.Eliminator.CoolTime;
+            }
+            else
+            {
+                durationtime = RoleClass.NiceScientist.DurationTime;
+                cooltime = RoleClass.NiceScientist.CoolTime;
+            }
+
+            if (Roles.RoleClass.Eliminator.IsScientist)
+            {
+                var TimeSpanDate = new TimeSpan(0, 0, 0, (int)durationtime);
+                Buttons.HudManagerStartPatch.EliminatorButton.MaxTimer = durationtime;
+                Buttons.HudManagerStartPatch.EliminatorButton.Timer = (float)((Roles.RoleClass.Eliminator.ButtonTimer + TimeSpanDate) - DateTime.Now).TotalSeconds;
+                if (Buttons.HudManagerStartPatch.EliminatorButton.Timer <= 0f)
+                {
+                    Roles.Eliminator.ScientistEnd();
+                    Roles.Eliminator.ResetCoolDown();
+                    Buttons.HudManagerStartPatch.EliminatorButton.MaxTimer = cooltime;
+                    Roles.RoleClass.Eliminator.IsScientist = false;
+                    Buttons.HudManagerStartPatch.EliminatorButton.actionButton.cooldownTimerText.color = Color.white;
+                    Roles.RoleClass.Eliminator.ButtonTimer = DateTime.Now;
+                }
+            }
+            else
+            {
+                var TimeSpanDate = new TimeSpan(0, 0, 0, (int)cooltime);
+                Buttons.HudManagerStartPatch.EliminatorButton.Timer = (float)((Roles.RoleClass.Eliminator.ButtonTimer + TimeSpanDate) - DateTime.Now).TotalSeconds;
+                if (Buttons.HudManagerStartPatch.EliminatorButton.Timer <= 0f) Buttons.HudManagerStartPatch.EliminatorButton.Timer = 0f; return;
+            }
+        }
         public static void HawkDuration()
         {
             if (RoleClass.Hawk.Timer == 0 && PlayerControl.LocalPlayer.isRole(CustomRPC.RoleId.Hawk)) return;

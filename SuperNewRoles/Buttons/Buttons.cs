@@ -67,6 +67,7 @@ namespace SuperNewRoles.Buttons
         public static CustomButton DoubleKillerMainKillButton;
         public static CustomButton DoubleKillerSubKillButton;
         public static CustomButton SuicideWisherSuicideButton;
+        public static CustomButton EliminatorButton;
 
         public static TMPro.TMP_Text sheriffNumShotsText;
         public static TMPro.TMP_Text GhostMechanicNumRepairText;
@@ -1940,6 +1941,33 @@ namespace SuperNewRoles.Buttons
             )
             {
                 buttonText = ModTranslation.getString("SuicideName"),
+                showButtonText = true
+            };
+
+            EliminatorButton = new Buttons.CustomButton(
+                () =>
+                {
+                    if (!PlayerControl.LocalPlayer.CanMove) return;
+                    Roles.RoleClass.Eliminator.ButtonTimer = DateTime.Now;
+                    EliminatorButton.actionButton.cooldownTimerText.color = new Color(0F, 0.8F, 0F);
+                    Eliminator.Start();
+                },
+                (bool isAlive, RoleId role) => { return isAlive && (role == RoleId.Eliminator) && ModeHandler.isMode(ModeId.Default); },
+                () =>
+                {
+                    return PlayerControl.LocalPlayer.CanMove;
+                },
+                () => { Eliminator.EndMeeting(); },
+                RoleClass.NiceScientist.getButtonSprite(),
+                new Vector3(-1.8f, -0.06f, 0),
+                __instance,
+                __instance.AbilityButton,
+                KeyCode.F,
+                49,
+                () => { return false; }
+            )
+            {
+                buttonText = ModTranslation.getString("ScientistButtonName"),
                 showButtonText = true
             };
 

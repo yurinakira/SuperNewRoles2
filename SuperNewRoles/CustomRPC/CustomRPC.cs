@@ -203,7 +203,8 @@ namespace SuperNewRoles.CustomRPC
         FixLights,
         KunaiKill,
         SetSecretRoomTeleportStatus,
-        ChiefSidekick
+        ChiefSidekick,
+        SetEliminatorRPC
     }
     public static class RPCProcedure
     {
@@ -948,6 +949,10 @@ namespace SuperNewRoles.CustomRPC
                 }
             }
         }
+        public static void SetEliminatorRPC(bool Is, byte id)
+        {
+            RoleClass.Eliminator.IsScientistPlayers[id] = Is;
+        }
         /*
         public static void UseAdminTime(float time)
         {
@@ -1200,6 +1205,9 @@ namespace SuperNewRoles.CustomRPC
                             break;
                         case CustomRPC.ChiefSidekick:
                             ChiefSidekick(reader.ReadByte());
+                            break;
+                        case CustomRPC.SetEliminatorRPC:
+                            SetEliminatorRPC(reader.ReadBoolean(), reader.ReadByte());
                             break;
                     }
                 }
