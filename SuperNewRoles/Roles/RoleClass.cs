@@ -2419,9 +2419,15 @@ namespace SuperNewRoles.Roles
         {
             public static List<PlayerControl> EliminatorPlayer;
             public static Color32 color = new Color32(0, 255, 0, byte.MaxValue);
+            public static float KillCoolTime;
+            public static float CoolTime;
+            public static float DurationTime;
             public static void ClearAndReload()
             {
                 EliminatorPlayer = new List<PlayerControl>();
+                KillCoolTime = CustomOptions.EliminatorKillCoolTime.getFloat();
+                CoolTime = CustomOptions.EliminatorCoolTime.getFloat();
+                DurationTime = CustomOptions.EliminatorDurationTime.getFloat();
             }
         }
         //新ロールクラス
