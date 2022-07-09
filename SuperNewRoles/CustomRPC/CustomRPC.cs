@@ -132,6 +132,7 @@ namespace SuperNewRoles.CustomRPC
         DoubleKiller,
         Smasher,
         Eliminator,
+        SuicideWisher,
         //RoleId
     }
 
@@ -1201,9 +1202,9 @@ namespace SuperNewRoles.CustomRPC
                             break;
                     }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    SuperNewRolesPlugin.Logger.LogInfo((CustomRPC)callId+"でエラー:"+e);
+                    SuperNewRolesPlugin.Logger.LogInfo((CustomRPC)callId + "でエラー:" + e);
                 }
             }
         }

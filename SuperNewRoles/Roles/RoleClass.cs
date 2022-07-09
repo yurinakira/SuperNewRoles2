@@ -148,6 +148,7 @@ namespace SuperNewRoles.Roles
             DoubleKiller.ClearAndReload();
             Smasher.ClearAndReload();
             Eliminator.ClearAndReload();
+            SuicideWisher.ClearAndReload();
             //ロールクリア
             Quarreled.ClearAndReload();
             Lovers.ClearAndReload();
@@ -2428,6 +2429,22 @@ namespace SuperNewRoles.Roles
                 KillCoolTime = CustomOptions.EliminatorKillCoolTime.getFloat();
                 CoolTime = CustomOptions.EliminatorCoolTime.getFloat();
                 DurationTime = CustomOptions.EliminatorDurationTime.getFloat();
+            }
+        }
+        public static class SuicideWisher
+        {
+            public static List<PlayerControl> SuicideWisherPlayer;
+            public static Color32 color = ImpostorRed;
+            private static Sprite buttonSprite;
+            public static Sprite getButtonSprite()
+            {
+                if (buttonSprite) return buttonSprite;
+                buttonSprite = ModHelpers.loadSpriteFromResources("SuperNewRoles.Resources.SuicideWisherButton.png", 115f);
+                return buttonSprite;
+            }
+            public static void ClearAndReload()
+            {
+                SuicideWisherPlayer = new List<PlayerControl>();
             }
         }
         //新ロールクラス

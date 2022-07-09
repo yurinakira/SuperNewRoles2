@@ -584,6 +584,9 @@ namespace SuperNewRoles
                 case (CustomRPC.RoleId.Eliminator):
                     Roles.RoleClass.Eliminator.EliminatorPlayer.Add(player);
                     break;
+                case (CustomRPC.RoleId.SuicideWisher):
+                    Roles.RoleClass.SuicideWisher.SuicideWisherPlayer.Add(player);
+                    break;
                 //ロールアド
                 default:
                     SuperNewRolesPlugin.Logger.LogError($"[SetRole]:No Method Found for Role Type {role}");
@@ -921,7 +924,7 @@ namespace SuperNewRoles
                 case (CustomRPC.RoleId.BlackCat):
                     Roles.RoleClass.BlackCat.BlackCatPlayer.RemoveAll(ClearRemove);
                     break;
-                    case (CustomRPC.RoleId.Spy):
+                case (CustomRPC.RoleId.Spy):
                     Roles.RoleClass.Spy.SpyPlayer.RemoveAll(ClearRemove);
                     break;
                 case (CustomRPC.RoleId.DoubleKiller):
@@ -933,7 +936,10 @@ namespace SuperNewRoles
                 case (CustomRPC.RoleId.Eliminator):
                     Roles.RoleClass.Eliminator.EliminatorPlayer.RemoveAll(ClearRemove);
                     break;
-                //ロールリモベ
+                case (CustomRPC.RoleId.SuicideWisher):
+                    Roles.RoleClass.SuicideWisher.SuicideWisherPlayer.RemoveAll(ClearRemove);
+                    break;
+                    //ロールリモベ
             }
             ChacheManager.ResetMyRoleChache();
         }
@@ -1876,18 +1882,33 @@ namespace SuperNewRoles
                     return CustomRPC.RoleId.Kunoichi;
                 }
                 else if (Roles.RoleClass.DoubleKiller.DoubleKillerPlayer.IsCheckListPlayerControl(player))
-            {
-                return CustomRPC.RoleId.DoubleKiller;
-            }
-            else if (Roles.RoleClass.Smasher.SmasherPlayer.IsCheckListPlayerControl(player))
-            {
-                return CustomRPC.RoleId.Smasher;
-            }
-            else if (Roles.RoleClass.Eliminator.EliminatorPlayer.IsCheckListPlayerControl(player))
-            {
-                return CustomRPC.RoleId.Eliminator;
-            }
-            //ロールチェック
+<<<<<<< HEAD
+                {
+                    return CustomRPC.RoleId.DoubleKiller;
+                }
+                else if (Roles.RoleClass.Smasher.SmasherPlayer.IsCheckListPlayerControl(player))
+                {
+                    return CustomRPC.RoleId.Smasher;
+                }
+                else if (Roles.RoleClass.Eliminator.EliminatorPlayer.IsCheckListPlayerControl(player))
+                {
+                    return CustomRPC.RoleId.Eliminator;
+                }
+                //ロールチェック
+=======
+                {
+                    return CustomRPC.RoleId.DoubleKiller;
+                }
+                else if (Roles.RoleClass.Smasher.SmasherPlayer.IsCheckListPlayerControl(player))
+                {
+                    return CustomRPC.RoleId.Smasher;
+                }
+                else if (Roles.RoleClass.SuicideWisher.SuicideWisherPlayer.IsCheckListPlayerControl(player))
+                {
+                    return CustomRPC.RoleId.SuicideWisher;
+                }
+                //ロールチェック
+>>>>>>> origin/develop
             }
             catch (Exception e)
             {
