@@ -1882,7 +1882,6 @@ namespace SuperNewRoles
                     return CustomRPC.RoleId.Kunoichi;
                 }
                 else if (Roles.RoleClass.DoubleKiller.DoubleKillerPlayer.IsCheckListPlayerControl(player))
-<<<<<<< HEAD
                 {
                     return CustomRPC.RoleId.DoubleKiller;
                 }
@@ -1894,21 +1893,11 @@ namespace SuperNewRoles
                 {
                     return CustomRPC.RoleId.Eliminator;
                 }
-                //ロールチェック
-=======
-                {
-                    return CustomRPC.RoleId.DoubleKiller;
-                }
-                else if (Roles.RoleClass.Smasher.SmasherPlayer.IsCheckListPlayerControl(player))
-                {
-                    return CustomRPC.RoleId.Smasher;
-                }
                 else if (Roles.RoleClass.SuicideWisher.SuicideWisherPlayer.IsCheckListPlayerControl(player))
                 {
                     return CustomRPC.RoleId.SuicideWisher;
                 }
                 //ロールチェック
->>>>>>> origin/develop
             }
             catch (Exception e)
             {
