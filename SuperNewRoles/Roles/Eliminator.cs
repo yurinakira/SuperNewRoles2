@@ -39,7 +39,6 @@ namespace SuperNewRoles.Roles
         {
             float CoolTime;
             CoolTime = RoleClass.Eliminator.CoolTime;
-
             HudManagerStartPatch.EliminatorButton.MaxTimer = CoolTime;
             RoleClass.Eliminator.ButtonTimer = DateTime.Now;
         }
@@ -109,7 +108,7 @@ namespace SuperNewRoles.Roles
                     if (Eliminator == null || Eliminator.isDead()) return;
                     var ison = RoleClass.Eliminator.IsScientistPlayers.ContainsKey(__instance.myPlayer.PlayerId) && GameData.Instance && RoleClass.Eliminator.IsScientistPlayers[__instance.myPlayer.PlayerId];
                     bool canSee =
-                        (__instance.myPlayer.isImpostor() && PlayerControl.LocalPlayer.isImpostor()) ||
+                        (__instance.myPlayer.isCrew() && PlayerControl.LocalPlayer.isCrew()) ||
                          PlayerControl.LocalPlayer.isDead() || !ison;
 
                     var opacity = canSee ? 0.1f : 0.0f;
