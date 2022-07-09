@@ -19,8 +19,7 @@ namespace SuperNewRoles
 
         public static bool isImpostor(this PlayerControl player)
         {
-            if (player.isRole(RoleId.Sheriff)) return false;
-            if (player.isRole(RoleId.Jackal)) return false;
+            if (player.isRole(RoleId.Sheriff, RoleId.Sheriff)) return false;
             return player != null && player.Data.Role.IsImpostor;
         }
 
@@ -567,11 +566,26 @@ namespace SuperNewRoles
                 case (CustomRPC.RoleId.BlackCat):
                     Roles.RoleClass.BlackCat.BlackCatPlayer.Add(player);
                     break;
+                case (CustomRPC.RoleId.SecretlyKiller):
+                    Roles.RoleClass.SecretlyKiller.SecretlyKillerPlayer.Add(player);
+                    break;
                 case (CustomRPC.RoleId.Spy):
                     Roles.RoleClass.Spy.SpyPlayer.Add(player);
                     break;
                 case (CustomRPC.RoleId.Kunoichi):
                     Roles.RoleClass.Kunoichi.KunoichiPlayer.Add(player);
+                    break;
+                case (CustomRPC.RoleId.DoubleKiller):
+                    Roles.RoleClass.DoubleKiller.DoubleKillerPlayer.Add(player);
+                    break;
+                case (CustomRPC.RoleId.Smasher):
+                    Roles.RoleClass.Smasher.SmasherPlayer.Add(player);
+                    break;
+                case (CustomRPC.RoleId.SuicideWisher):
+                    Roles.RoleClass.SuicideWisher.SuicideWisherPlayer.Add(player);
+                    break;
+                case (CustomRPC.RoleId.Neet):
+                    Roles.RoleClass.Neet.NeetPlayer.Add(player);
                     break;
                 //ロールアド
                 default:
@@ -910,10 +924,22 @@ namespace SuperNewRoles
                 case (CustomRPC.RoleId.BlackCat):
                     Roles.RoleClass.BlackCat.BlackCatPlayer.RemoveAll(ClearRemove);
                     break;
-                    case (CustomRPC.RoleId.Spy):
+                case (CustomRPC.RoleId.Spy):
                     Roles.RoleClass.Spy.SpyPlayer.RemoveAll(ClearRemove);
                     break;
-                //ロールリモベ
+                case (CustomRPC.RoleId.DoubleKiller):
+                    Roles.RoleClass.DoubleKiller.DoubleKillerPlayer.RemoveAll(ClearRemove);
+                    break;
+                case (CustomRPC.RoleId.Smasher):
+                    Roles.RoleClass.Smasher.SmasherPlayer.RemoveAll(ClearRemove);
+                    break;
+                case (CustomRPC.RoleId.SuicideWisher):
+                    Roles.RoleClass.SuicideWisher.SuicideWisherPlayer.RemoveAll(ClearRemove);
+                    break;
+                case (CustomRPC.RoleId.Neet):
+                    Roles.RoleClass.Neet.NeetPlayer.RemoveAll(ClearRemove);
+                    break;
+                    //ロールリモベ
             }
             ChacheManager.ResetMyRoleChache();
         }
@@ -1026,6 +1052,9 @@ namespace SuperNewRoles
                 case RoleId.BlackCat:
                     IsTaskClear = true;
                     break;
+                case RoleId.Neet:
+                    IsTaskClear = true;
+                    break;
                     //タスククリアか
             }
             if (player.isImpostor())
@@ -1052,7 +1081,7 @@ namespace SuperNewRoles
             if (role == RoleId.Minimalist) return RoleClass.Minimalist.UseVent;
             if (role == RoleId.Samurai) return RoleClass.Samurai.UseVent;
             else if (player.isImpostor()) return true;
-            else if (player.isRole(RoleId.Jackal) || player.isRole(RoleId.Sidekick)) return RoleClass.Jackal.IsUseVent;
+            else if (player.isRole(RoleId.Jackal, RoleId.Sidekick)) return RoleClass.Jackal.IsUseVent;
             else if (ModeHandler.isMode(ModeId.SuperHostRoles) && IsComms()) return false;
             switch (role)
             {
@@ -1238,6 +1267,9 @@ namespace SuperNewRoles
                 case RoleId.Tuna:
                     IsNeutral = true;
                     break;
+                case RoleId.Neet:
+                    IsNeutral = true;
+                    break;
                     //第三か
             }
             return IsNeutral;
@@ -1271,9 +1303,18 @@ namespace SuperNewRoles
         }
         public static bool isRole(this PlayerControl p, params RoleId[] roles)
         {
+            RoleId MyRole;
+            try
+            {
+                MyRole = ChacheManager.MyRoleChache[p.PlayerId];
+            }
+            catch
+            {
+                MyRole = RoleId.DefaultRole;
+            }
             foreach (RoleId role in roles)
             {
-                if (p.isRole(role)) return true;
+                if (role == MyRole) return true;
             }
             return false;
         }
@@ -1311,6 +1352,9 @@ namespace SuperNewRoles
                         break;
                     case RoleId.Samurai:
                         addition = RoleClass.Samurai.KillCoolTime;
+                        break;
+                    case RoleId.Kunoichi:
+                        addition = RoleClass.Kunoichi.KillCoolTime;
                         break;
                 }
             }
@@ -1831,6 +1875,10 @@ namespace SuperNewRoles
                 {
                     return CustomRPC.RoleId.BlackCat;
                 }
+                else if (Roles.RoleClass.SecretlyKiller.SecretlyKillerPlayer.IsCheckListPlayerControl(player))
+                {
+                    return CustomRPC.RoleId.SecretlyKiller;
+                }
                 else if (Roles.RoleClass.Spy.SpyPlayer.IsCheckListPlayerControl(player))
                 {
                     return CustomRPC.RoleId.Spy;
@@ -1838,6 +1886,22 @@ namespace SuperNewRoles
                 else if (Roles.RoleClass.Kunoichi.KunoichiPlayer.IsCheckListPlayerControl(player))
                 {
                     return CustomRPC.RoleId.Kunoichi;
+                }
+                else if (Roles.RoleClass.DoubleKiller.DoubleKillerPlayer.IsCheckListPlayerControl(player))
+                {
+                    return CustomRPC.RoleId.DoubleKiller;
+                }
+                else if (Roles.RoleClass.Smasher.SmasherPlayer.IsCheckListPlayerControl(player))
+                {
+                    return CustomRPC.RoleId.Smasher;
+                }
+                else if (Roles.RoleClass.SuicideWisher.SuicideWisherPlayer.IsCheckListPlayerControl(player))
+                {
+                    return CustomRPC.RoleId.SuicideWisher;
+                }
+                else if (RoleClass.Neet.NeetPlayer.IsCheckListPlayerControl(player))
+                {
+                    return RoleId.Neet;
                 }
                 //ロールチェック
             }

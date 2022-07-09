@@ -33,7 +33,7 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 [Among-Us-Love-Couple-Mod](https://github.com/Woodi-dev/Among-Us-Love-Couple-Mod) - Idea for the Lovers role comes from **Woodi-dev**<br>
 [Among-Us-Sheriff-Mod](https://github.com/Woodi-dev/Among-Us-Sheriff-Mod) - The idea for Sheriff comes from **Woodi-dev**. (Taken from TheOtherRoles)<br>
 [au.libhalt.net](https://au.libhalt.net) - Nice Nekomata/Ivil Nekomata idea came from **au.libhalt.net**.<br>
-[TheOtherRolesGMHaoming](https://github.com/haoming37/TheOtherRoles-GM-Haoming) - Used for Add Vents and move vital. Thanks to **haoming37**!
+[TheOtherRolesGMHaoming](https://github.com/haoming37/TheOtherRoles-GM-Haoming) - Used for Add Vents , Remove Lift , AddWireTasks and move vital. Thanks to **haoming37**!
 
 ## Used custom cosmetics
 [SuperNewNamePlates](https://github.com/ykundesu/SuperNewNamePlates)(SNR)<br>
@@ -84,7 +84,7 @@ It is already on the Discord server.
 | [OverKiller](#オーバーキラー) | [NicScientist](#ナイスサイエンティスト)| [JackalSeer](#ジャッカルシーア)
 | [EvilMoving](#イビルムービング) |[NiceRedRidingHood](#ナイス赤ずきん)| [Sidekick(Seer)](#サイドキック(シーア))
 | [Levelinger](#レベリンガー) | [Mayor](#メイヤー) | [Arsonist](#アーソニスト)
-| [SideKiller](#サイドキラー) | [Technician](#技術者)
+| [SideKiller](#サイドキラー) | [Technician](#技術者) | [Neet](#ニート)
 | [Survivor](#サバイバー) | [SoothSayer](#占い師)
 | [EvilSeer](#イビルシーア)|[Spirit Medium](#霊媒師)
 | [DarkKiller](#ダークキラー)|[MadMayor](#マッドメイヤー)
@@ -96,7 +96,7 @@ It is already on the Discord server.
 | [EvilHacker](#イビルハッカー)|[NiceTeleporter](#ナイステレポーター)
 | [PositionSwapper](#ポジションスワッパー)|[Celebrity](#スター)
 | [Mafia](#マフィア)|[Nocturnality](#夜行性)
-| |[Observer](#選挙管理委員)
+| [SuicideWisher](#スーサイドウィッシャー‌)|[Observer](#選挙管理委員)
 | |[Seer](#シーア)
 | |[MadSeer](#マッドシーア)
 | |[RemoteSheriff](#リモートシェリフ)

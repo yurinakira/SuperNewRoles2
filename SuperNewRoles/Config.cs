@@ -19,6 +19,8 @@ namespace SuperNewRoles
         public static ConfigEntry<bool> EnableHorseMode { get; set; }
         public static ConfigEntry<bool> DownloadSuperNewNamePlates { get; set; }
         public static ConfigEntry<bool> DownloadOtherSkins { get; set; }
+        public static ConfigEntry<bool> IsUpdate { get; set; }
+        public static bool IsUpdated = false;
         public static ConfigEntry<bool> HidePetFromOtherVision { get; set; }
         public static void Load()
         {
@@ -36,6 +38,13 @@ namespace SuperNewRoles
             HidePetFromOtherVision = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "Hide Pet From Other Vision", false);
             Ip = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "Custom Server IP", "127.0.0.1");
             Port = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "Custom Server Port", (ushort)22023);
+            IsUpdate = SuperNewRolesPlugin.Instance.Config.Bind("Custom", "IsUpdate", true);
+            if (IsUpdate.Value)
+            {
+                SuperNewRolesPlugin.Logger.LogInfo("IsUpdateが有効でした");
+                IsUpdated = true;
+            }
+            IsUpdate.Value = false;
             IntroPatch.ShouldAlwaysHorseAround.isHorseMode = ConfigRoles.EnableHorseMode.Value;
             Patch.RegionMenuOpenPatch.defaultRegions = ServerManager.DefaultRegions;
             Patch.RegionMenuOpenPatch.UpdateRegions();
