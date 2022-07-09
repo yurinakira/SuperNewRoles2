@@ -850,6 +850,7 @@ namespace SuperNewRoles
                 RoleId.Kunoichi => CustomOptions.KunoichiPlayerCount.getFloat(),
                 RoleId.DoubleKiller => CustomOptions.DoubleKillerPlayerCount.getFloat(),
                 RoleId.Smasher => CustomOptions.SmasherPlayerCount.getFloat(),
+                RoleId.Eliminator => CustomOptions.EliminatorPlayerCount.getFloat(),
                 //プレイヤーカウント
                 _ => 1,
             };

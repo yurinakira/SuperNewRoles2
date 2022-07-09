@@ -147,6 +147,7 @@ namespace SuperNewRoles.Roles
             Kunoichi.ClearAndReload();
             DoubleKiller.ClearAndReload();
             Smasher.ClearAndReload();
+            Eliminator.ClearAndReload();
             //ロールクリア
             Quarreled.ClearAndReload();
             Lovers.ClearAndReload();
@@ -2412,6 +2413,15 @@ namespace SuperNewRoles.Roles
                 SmasherPlayer = new List<PlayerControl>();
                 KillCoolTime = CustomOptions.SmasherKillCoolTime.getFloat();
                 SmashOn = false;
+            }
+        }
+        public static class Eliminator
+        {
+            public static List<PlayerControl> EliminatorPlayer;
+            public static Color32 color = new Color32(0, 255, 0, byte.MaxValue);
+            public static void ClearAndReload()
+            {
+                EliminatorPlayer = new List<PlayerControl>();
             }
         }
         //新ロールクラス

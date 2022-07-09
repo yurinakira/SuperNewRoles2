@@ -131,6 +131,7 @@ namespace SuperNewRoles.CustomRPC
         Kunoichi,
         DoubleKiller,
         Smasher,
+        Eliminator,
         //RoleId
     }
 

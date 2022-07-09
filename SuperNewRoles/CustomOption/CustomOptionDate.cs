@@ -651,6 +651,12 @@ namespace SuperNewRoles.CustomOption
         public static CustomRoleOption SmasherOption;
         public static CustomOption SmasherPlayerCount;
         public static CustomOption SmasherKillCoolTime;
+
+        public static CustomRoleOption EliminatorOption;
+        public static CustomOption EliminatorPlayerCount;
+        public static CustomOption EliminatorKillCoolTime;
+        public static CustomOption EliminatorCoolTime;
+        public static CustomOption EliminatorDurationTime;
         //CustomOption
 
         public static CustomOption QuarreledOption;
@@ -1334,6 +1340,12 @@ namespace SuperNewRoles.CustomOption
             SmasherOption = new CustomRoleOption(653, false, CustomOptionType.Impostor, "SmasherName", RoleClass.Smasher.color, 1);
             SmasherPlayerCount = CustomOption.Create(654, false, CustomOptionType.Impostor, "SettingPlayerCountName", ImpostorPlayers[0], ImpostorPlayers[1], ImpostorPlayers[2], ImpostorPlayers[3], SmasherOption);
             SmasherKillCoolTime = CustomOption.Create(655, false, CustomOptionType.Impostor, "KillCoolTimeSetting", 30f, 2.5f, 60f, 2.5f, SmasherOption, format: "unitSeconds");
+
+            EliminatorOption = new CustomRoleOption(656, false, CustomOptionType.Crewmate, "EliminatorName", RoleClass.Eliminator.color, 1);
+            EliminatorPlayerCount = CustomOption.Create(657, false, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], EliminatorOption);
+            EliminatorKillCoolTime = CustomOption.Create(658, false, CustomOptionType.Crewmate, "KillCoolSetting", 30f, 2.5f, 60f, 2.5f, EliminatorOption, format: "unitSeconds");
+            EliminatorCoolTime = CustomOption.Create(659, false, CustomOptionType.Crewmate, "NiceScientistCoolDownSetting", 30f, 2.5f, 60f, 2.5f, EliminatorOption, format: "unitSeconds");
+            EliminatorDurationTime = CustomOption.Create(660, false, CustomOptionType.Crewmate, "NiceScientistDurationSetting", 10f, 2.5f, 20f, 2.5f, EliminatorOption, format: "unitSeconds");
             //表示設定
 
             QuarreledOption = CustomOption.Create(432, true, CustomOptionType.Neutral, cs(RoleClass.Quarreled.color, "QuarreledName"), false, null, isHeader: true);
