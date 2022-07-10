@@ -1117,62 +1117,24 @@ namespace SuperNewRoles
             switch (player.getRole())
             {
                 case RoleId.Jester:
-                    IsNeutral = true;
-                    break;
                 case RoleId.Jackal:
-                    IsNeutral = true;
-                    break;
                 case RoleId.Sidekick:
-                    IsNeutral = true;
-                    break;
                 case RoleId.Vulture:
-                    IsNeutral = true;
-                    break;
                 case RoleId.Opportunist:
-                    IsNeutral = true;
-                    break;
                 case RoleId.Researcher:
-                    IsNeutral = true;
-                    break;
                 case RoleId.God:
-                    IsNeutral = true;
-                    break;
                 case RoleId.Egoist:
-                    IsNeutral = true;
-                    break;
                 case RoleId.Workperson:
-                    IsNeutral = true;
-                    break;
                 case RoleId.truelover:
-                    IsNeutral = true;
-                    break;
                 case RoleId.Amnesiac:
-                    IsNeutral = true;
-                    break;
                 case RoleId.FalseCharges:
-                    IsNeutral = true;
-                    break;
                 case RoleId.Fox:
-                    IsNeutral = true;
-                    break;
                 case RoleId.TeleportingJackal:
-                    IsNeutral = true;
-                    break;
                 case RoleId.Demon:
-                    IsNeutral = true;
-                    break;
                 case RoleId.JackalSeer:
-                    IsNeutral = true;
-                    break;
                 case RoleId.SidekickSeer:
-                    IsNeutral = true;
-                    break;
                 case RoleId.Arsonist:
-                    IsNeutral = true;
-                    break;
                 case RoleId.MayorFriends:
-                    IsNeutral = true;
-                    break;
                 case RoleId.Tuna:
                     IsNeutral = true;
                     break;
