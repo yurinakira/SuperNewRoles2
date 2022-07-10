@@ -8,7 +8,7 @@ using SuperNewRoles.CustomOption;
 using SuperNewRoles.Mode;
 using UnityEngine;
 
-namespace SuperNewRoles.Roles
+namespace SuperNewRoles.Roles.Impostor
 {
     internal static class Kunoichi
     {
@@ -85,7 +85,7 @@ namespace SuperNewRoles.Roles
                 {
                     GameObject.Destroy(kunai.kunai);
                     RoleClass.Kunoichi.Kunais.Remove(kunai);
-                } else 
+                } else
                 {
                     var kunaipos = kunai.kunai.transform.position;
                     foreach (PlayerControl p in CachedPlayer.AllPlayers)
