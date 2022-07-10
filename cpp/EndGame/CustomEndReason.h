@@ -1,0 +1,27 @@
+﻿#pragma once
+
+namespace SuperNewRoles::EndGame
+{
+	enum class CustomGameOverReason
+	{
+		CrewmateWin = 7,
+		ImpostorWin = 8,
+		GodWin = 9,
+		HAISON = 10,
+		JesterWin,
+		JackalWin,
+		QuarreledWin,
+		EgoistWin,
+		WorkpersonWin,
+		LoversWin,
+		MadJesterWin,
+		FalseChargesWin,
+		FoxWin,
+		DemonWin,
+		ArsonistWin,
+		VultureWin,
+		TunaWin,
+		NeetWin,
+		BugEnd
+	};
+}

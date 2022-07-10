@@ -1,0 +1,32 @@
+﻿#pragma once
+
+#include <vector>
+
+using namespace HarmonyLib;
+using namespace UnityEngine;
+using namespace SuperNewRoles::Mode;
+
+namespace SuperNewRoles::Patch
+{
+	class GameStartPatch
+	{
+	private:
+//C# TO C++ CONVERTER TODO TASK: There is no C++ equivalent to the C# 'typeof' operator:
+//C# TO C++ CONVERTER NOTE: The following .NET attribute has no direct equivalent in C++:
+//ORIGINAL LINE: [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.MakePublic))] class MakePublicPatch
+		class MakePublicPatch
+		{
+		public:
+			static bool Prefix();
+		};
+	public:
+//C# TO C++ CONVERTER TODO TASK: There is no C++ equivalent to the C# 'typeof' operator:
+//C# TO C++ CONVERTER NOTE: The following .NET attribute has no direct equivalent in C++:
+//ORIGINAL LINE: [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Update))] public static class LobbyCountDownTimer
+		class LobbyCountDownTimer final
+		{
+		public:
+			static void Postfix(GameStartManager *__instance);
+		};
+	};
+}
