@@ -205,8 +205,6 @@ namespace SuperNewRoles.Mode
             Detective.DetectiveOptions.Load();
             Werewolf.WerewolfOptions.Load();
             //LevelUp.main.Load();
-
-            PlusMode.Options.Load();
         }
         public static void HudUpdate(HudManager __instance)
         {

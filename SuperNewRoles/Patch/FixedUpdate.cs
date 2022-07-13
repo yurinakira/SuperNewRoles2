@@ -82,6 +82,10 @@ namespace SuperNewRoles.Patch
                     return;
                 }
             }
+            if (ModeHandler.ModeSetting.getBool() && AmongUsClient.Instance.GameState == AmongUsClient.GameStates.Joined && !AmongUsClient.Instance.IsGamePublic)
+            {
+                AmongUsClient.Instance.ChangeGamePublic(false);
+            }
             if (AmongUsClient.Instance.GameState == AmongUsClient.GameStates.Started)
             {
                 var MyRole = PlayerControl.LocalPlayer.getRole();
