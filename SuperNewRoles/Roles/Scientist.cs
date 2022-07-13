@@ -4,6 +4,7 @@ using Hazel;
 using SuperNewRoles.Buttons;
 using SuperNewRoles.Mode;
 using UnityEngine;
+using SuperNewRoles.CustomRPC;
 
 namespace SuperNewRoles.Roles
 {
@@ -32,7 +33,7 @@ namespace SuperNewRoles.Roles
         public static void Start()
         {
             RoleClass.NiceScientist.IsScientist = true;
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetScientistRPC, Hazel.SendOption.Reliable, -1);
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetScientistRPC, Hazel.SendOption.Reliable, -1);
             writer.Write(true);
             writer.Write(CachedPlayer.LocalPlayer.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
@@ -43,7 +44,7 @@ namespace SuperNewRoles.Roles
         public static void ScientistEnd()
         {
             RoleClass.NiceScientist.IsScientist = false;
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetScientistRPC, Hazel.SendOption.Reliable, -1);
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SetScientistRPC, Hazel.SendOption.Reliable, -1);
             writer.Write(false);
             writer.Write(CachedPlayer.LocalPlayer.PlayerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
@@ -89,7 +90,7 @@ namespace SuperNewRoles.Roles
             {
                 if (AmongUsClient.Instance.GameState != AmongUsClient.GameStates.Started) return;
                 if (!ModeHandler.isMode(ModeId.Default)) return;
-                if (__instance.myPlayer.isRole(CustomRPC.RoleId.EvilScientist) || __instance.myPlayer.isRole(CustomRPC.RoleId.NiceScientist))
+                if (__instance.myPlayer.isRole(RoleId.EvilScientist) || __instance.myPlayer.isRole(RoleId.NiceScientist))
                 {
                     var Scientist = __instance.myPlayer;
                     if (Scientist == null || Scientist.isDead()) return;

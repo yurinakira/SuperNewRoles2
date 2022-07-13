@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Hazel;
-using InnerNet;
 using SuperNewRoles.CustomRPC;
 using SuperNewRoles.EndGame;
 using SuperNewRoles.Helpers;
@@ -99,7 +96,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                     if (Side.isDead())
                     {
                         RPCProcedure.ShareWinner(exiled.Object.PlayerId);
-                        MessageWriter Writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.ShareWinner, Hazel.SendOption.Reliable, -1);
+                        MessageWriter Writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.ShareWinner, Hazel.SendOption.Reliable, -1);
                         Writer.Write(exiled.Object.PlayerId);
                         AmongUsClient.Instance.FinishRpcImmediately(Writer);
                         Writer = RPCHelper.StartRPC(CustomRPC.CustomRPC.SetWinCond);

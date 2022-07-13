@@ -1,5 +1,6 @@
 using HarmonyLib;
 using SuperNewRoles.Mode;
+using SuperNewRoles.CustomRPC;
 
 namespace SuperNewRoles.Roles
 {
@@ -7,7 +8,6 @@ namespace SuperNewRoles.Roles
     public class Bakery
     {
         private static TMPro.TextMeshPro breadText;
-        private static TMPro.TextMeshPro text;
         public static bool Prefix(
             ExileController __instance,
             [HarmonyArgument(0)] GameData.PlayerInfo exiled,
@@ -30,7 +30,7 @@ namespace SuperNewRoles.Roles
             string printStr;
 
             var exile = ModeHandler.isMode(ModeId.SuperHostRoles) ? Mode.SuperHostRoles.main.RealExiled : exiled.Object;
-            if (exile != null && exile.isRole(CustomRPC.RoleId.Marine))
+            if (exile != null && exile.isRole(RoleId.Marine))
             {
                 printStr = player.Data.PlayerName + ModTranslation.getString("AssassinSucsess");
                 RoleClass.Assassin.IsImpostorWin = true;

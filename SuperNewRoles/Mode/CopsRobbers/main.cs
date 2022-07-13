@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 using SuperNewRoles.Helpers;
 using UnityEngine;
 
@@ -178,14 +176,13 @@ namespace SuperNewRoles.Mode.CopsRobbers
             }
             return new Vector2(0, 0);
         }
-        static bool IsTeleport = false;
         static float ImpostorMoveTime;
         static int LastCount;
         static float LastUpdate;
         public static List<byte> TeleportIDs = new();
         public static void Teleport(PlayerControl player, Vector2 position)
         {
-            player.NetTransform.RpcSnapTo(position);
+            player.RpcSnapTo(position);
             return;
             /*
             PlayerControl bot = GetBot();
@@ -272,7 +269,7 @@ namespace SuperNewRoles.Mode.CopsRobbers
                 int i = 0;
                 foreach (PlayerControl p in players)
                 {
-                    p.NetTransform.RpcSnapTo(new Vector2(-30, 30));
+                    p.RpcSnapTo(new Vector2(-30, 30));
                     i++;
                 }
                 if (IsMoveOK)
@@ -284,7 +281,7 @@ namespace SuperNewRoles.Mode.CopsRobbers
                     {
                         if (!p.PlayerControl.isImpostor())
                         {
-                            p.NetTransform.RpcSnapTo(getPosition(GetRandomSpawnPosition(p)));
+                            p.PlayerControl.RpcSnapTo(getPosition(GetRandomSpawnPosition(p)));
                         }
                     }
                 }
@@ -318,7 +315,7 @@ namespace SuperNewRoles.Mode.CopsRobbers
                 {
                     if (p.PlayerControl.isImpostor())
                     {
-                        p.NetTransform.RpcSnapTo(new Vector2(-30, 30));
+                        p.PlayerControl.RpcSnapTo(new Vector2(-30, 30));
                         i++;
                     }
                 }
@@ -329,7 +326,7 @@ namespace SuperNewRoles.Mode.CopsRobbers
                         p.RpcSetName("　");
                         if (p.isImpostor())
                         {
-                            p.NetTransform.RpcSnapTo(getPosition(GetRandomSpawnPosition(p)));
+                            p.RpcSnapTo(getPosition(GetRandomSpawnPosition(p)));
                         }
                     }
                 }

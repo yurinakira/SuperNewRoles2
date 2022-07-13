@@ -137,7 +137,7 @@ namespace SuperNewRoles.CustomOption
         {
             if (CachedPlayer.AllPlayers.Count <= 1 || (AmongUsClient.Instance?.AmHost == false && PlayerControl.LocalPlayer == null)) return;
 
-            MessageWriter messageWriter = AmongUsClient.Instance.StartRpc(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.ShareOptions, Hazel.SendOption.Reliable);
+            MessageWriter messageWriter = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.ShareOptions, Hazel.SendOption.Reliable);
             messageWriter.WritePacked((uint)CustomOption.options.Count);
             foreach (CustomOption option in CustomOption.options)
             {
@@ -591,18 +591,6 @@ namespace SuperNewRoles.CustomOption
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSyncSettings))]
     public class RpcSyncSettingsPatch
     {
-        public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] GameOptionsData gameOptions)
-        {
-            if (AmongUsClient.Instance.AmHost && !DestroyableSingleton<TutorialManager>.InstanceExists)
-            {
-                PlayerControl.GameOptions = gameOptions;
-                SaveManager.GameHostOptions = gameOptions;
-                MessageWriter obj = AmongUsClient.Instance.StartRpc(__instance.NetId, 2, SendOption.Reliable);
-                obj.WriteBytesAndSize(gameOptions.ToBytes(6));
-                obj.EndMessage();
-            }
-            return false;
-        }
         public static void Postfix()
         {
             CustomOption.ShareOptionSelections();
@@ -627,9 +615,9 @@ namespace SuperNewRoles.CustomOption
         public static bool isHidden(this CustomOption option)
         {
             if (option.isHidden) return true;
-            if (option.isSHROn) { return false; }
-            else { return ModeHandler.isMode(ModeId.SuperHostRoles, false); }
-            return false;
+
+            if (option.isSHROn) return false;
+            else return ModeHandler.isMode(ModeId.SuperHostRoles, false);
         }
         public static void Postfix(GameOptionsMenu __instance)
         {

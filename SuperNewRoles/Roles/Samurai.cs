@@ -1,6 +1,7 @@
 using Hazel;
 using SuperNewRoles.Buttons;
 using UnityEngine;
+using SuperNewRoles.CustomRPC;
 
 namespace SuperNewRoles.Roles
 {
@@ -10,7 +11,7 @@ namespace SuperNewRoles.Roles
         {
             public static void Postfix(PlayerControl __instance)
             {
-                if (CachedPlayer.LocalPlayer.PlayerId == __instance.PlayerId && PlayerControl.LocalPlayer.isRole(CustomRPC.RoleId.Samurai))
+                if (CachedPlayer.LocalPlayer.PlayerId == __instance.PlayerId && PlayerControl.LocalPlayer.isRole(RoleId.Samurai))
                 {
                     PlayerControl.LocalPlayer.SetKillTimerUnchecked(RoleClass.Samurai.KillCoolTime);
                 }
@@ -18,7 +19,7 @@ namespace SuperNewRoles.Roles
         }
         public static void SetSamuraiButton()
         {
-            if (PlayerControl.LocalPlayer.isRole(CustomRPC.RoleId.Samurai))
+            if (PlayerControl.LocalPlayer.isRole(RoleId.Samurai))
             {
                 if (!RoleClass.Samurai.UseVent)
                 {
@@ -68,7 +69,7 @@ namespace SuperNewRoles.Roles
                     if (Getsword(PlayerControl.LocalPlayer, p))
                     {
                         CustomRPC.RPCProcedure.BySamuraiKillRPC(CachedPlayer.LocalPlayer.PlayerId, p.PlayerId);
-                        MessageWriter Writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.BySamuraiKillRPC, Hazel.SendOption.Reliable, -1);
+                        MessageWriter Writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.BySamuraiKillRPC, Hazel.SendOption.Reliable, -1);
                         Writer.Write(CachedPlayer.LocalPlayer.PlayerId);
                         Writer.Write(p.PlayerId);
                         RoleClass.Samurai.Sword = true;

@@ -132,7 +132,7 @@ namespace SuperNewRoles.Patches
                                 if (Arsonist.IsWin(p))
                                 {
                                     RPCProcedure.ShareWinner(CachedPlayer.LocalPlayer.PlayerId);
-                                    MessageWriter Writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.ShareWinner, SendOption.Reliable, -1);
+                                    MessageWriter Writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.ShareWinner, SendOption.Reliable, -1);
                                     Writer.Write(p.PlayerId);
                                     AmongUsClient.Instance.FinishRpcImmediately(Writer);
 
@@ -149,6 +149,12 @@ namespace SuperNewRoles.Patches
                                     return true;
                                 }
                             }
+                        }
+                        return false;
+                    case RoleId.SuicideWisher:
+                        if (AmongUsClient.Instance.AmHost)
+                        {
+                            __instance.RpcMurderPlayer(__instance);
                         }
                         return false;
                 }
@@ -202,13 +208,9 @@ namespace SuperNewRoles.Patches
                             var LocalID = CachedPlayer.LocalPlayer.PlayerId;
 
                             PlayerControl.LocalPlayer.RpcShapeshift(PlayerControl.LocalPlayer, true);
-                            new LateTask(() =>
-                            {
-                                CachedPlayer.LocalPlayer.transform.localScale *= 1.4f;
-                            }, 1.1f);
 
                             CustomRPC.RPCProcedure.SheriffKill(LocalID, TargetID, misfire);
-                            MessageWriter killWriter = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SheriffKill, Hazel.SendOption.Reliable, -1);
+                            MessageWriter killWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.SheriffKill, Hazel.SendOption.Reliable, -1);
                             killWriter.Write(LocalID);
                             killWriter.Write(TargetID);
                             killWriter.Write(misfire);
@@ -262,7 +264,12 @@ namespace SuperNewRoles.Patches
             }
             if (__instance.isActiveAndEnabled && __instance.currentTarget && !__instance.isCoolingDown && PlayerControl.LocalPlayer.isAlive() && PlayerControl.LocalPlayer.CanMove)
             {
-                if (!(__instance.currentTarget.isRole(CustomRPC.RoleId.Bait) || __instance.currentTarget.isRole(CustomRPC.RoleId.NiceRedRidingHood)) && PlayerControl.LocalPlayer.isRole(CustomRPC.RoleId.Vampire))
+                if (PlayerControl.LocalPlayer.isRole(RoleId.Kunoichi))
+                {
+                    Kunoichi.KillButtonClick();
+                    return false;
+                }
+                if (!(__instance.currentTarget.isRole(RoleId.Bait) || __instance.currentTarget.isRole(RoleId.NiceRedRidingHood)) && PlayerControl.LocalPlayer.isRole(RoleId.Vampire))
                 {
                     PlayerControl.LocalPlayer.killTimer = RoleHelpers.getCoolTime(PlayerControl.LocalPlayer);
                     RoleClass.Vampire.target = __instance.currentTarget;
@@ -296,10 +303,12 @@ namespace SuperNewRoles.Patches
         public static bool isKill = false;
         public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
         {
+            SuperNewRolesPlugin.Logger.LogInfo("a(Murder)" + __instance.Data.PlayerName + " => " + target.Data.PlayerName);
             if (__instance.IsBot() || target.IsBot()) return false;
 
             if (__instance.isDead()) return false;
             if (target.isDead()) return false;
+            SuperNewRolesPlugin.Logger.LogInfo("b(Murder)" + __instance.Data.PlayerName + " => " + target.Data.PlayerName);
             if (__instance.PlayerId == target.PlayerId) { __instance.RpcMurderPlayer(target); return false; }
             if (!RoleClass.IsStart && AmongUsClient.Instance.GameMode != GameModes.FreePlay)
                 return false;
@@ -307,6 +316,7 @@ namespace SuperNewRoles.Patches
             {
                 return true;
             }
+            SuperNewRolesPlugin.Logger.LogInfo("c(Murder)" + __instance.Data.PlayerName + " => " + target.Data.PlayerName);
             switch (ModeHandler.GetMode())
             {
                 case ModeId.Zombie:
@@ -357,8 +367,31 @@ namespace SuperNewRoles.Patches
                         }
                     }
                     return false;
+                case ModeId.Default://通常モード
+                    switch (__instance.getRole())
+                    {
+                        case RoleId.FastMaker:
+                            if (!RoleClass.FastMaker.IsCreatedMadMate)//まだ作ってなくて、設定が有効の時
+                            {
+                                if (target == null || RoleClass.FastMaker.CreatePlayers.Contains(__instance.PlayerId)) return false;
+                                RoleClass.FastMaker.CreatePlayers.Add(__instance.PlayerId);
+                                target.RpcSetRoleDesync(RoleTypes.GuardianAngel);//守護天使にして
+                                target.setRoleRPC(RoleId.MadMate);//マッドにする
+                                Mode.SuperHostRoles.FixedUpdate.SetRoleName(target);//名前も変える
+                                RoleClass.FastMaker.IsCreatedMadMate = true;//作ったことにする
+                            }
+                            else
+                            {
+                                //作ってたら普通のキル
+                                __instance.RpcMurderPlayer(target);
+                            }
+                            return false;
+                    }
+                    break;
                 case ModeId.SuperHostRoles:
+                    SuperNewRolesPlugin.Logger.LogInfo("d(Murder)" + __instance.Data.PlayerName + " => " + target.Data.PlayerName);
                     if (RoleClass.Assassin.TriggerPlayer != null) return false;
+                    SuperNewRolesPlugin.Logger.LogInfo("e(Murder)" + __instance.Data.PlayerName + " => " + target.Data.PlayerName);
                     switch (__instance.getRole())
                     {
                         case RoleId.RemoteSheriff:
@@ -419,7 +452,13 @@ namespace SuperNewRoles.Patches
                             }
                             else
                             {
-                                __instance.RpcMurderPlayer(__instance);
+                                if (AmongUsClient.Instance.AmHost)
+                                {
+                                    foreach (PlayerControl p in RoleClass.MadMaker.MadMakerPlayer)
+                                    {
+                                        p.RpcMurderPlayer(p);
+                                    }
+                                }
                             }
                             return false;
                         case RoleId.Demon:
@@ -500,12 +539,48 @@ namespace SuperNewRoles.Patches
                         case RoleId.Mafia:
                             if (!Mafia.IsKillFlag()) return false;
                             break;
+                        case RoleId.FastMaker:
+                            if (!RoleClass.FastMaker.IsCreatedMadMate)//まだ作ってなくて、設定が有効の時
+                            {
+                                if (target == null || RoleClass.FastMaker.CreatePlayers.Contains(__instance.PlayerId)) return false;
+                                RoleClass.FastMaker.CreatePlayers.Add(__instance.PlayerId);
+                                target.RpcSetRoleDesync(RoleTypes.GuardianAngel);//守護天使にして
+                                target.setRoleRPC(RoleId.MadMate);//マッドにする
+                                Mode.SuperHostRoles.FixedUpdate.SetRoleName(target);//名前も変える
+                                RoleClass.FastMaker.IsCreatedMadMate = true;//作ったことにする
+                            }
+                            else
+                            {
+                                //作ってたら普通のキル
+                                SuperNewRolesPlugin.Logger.LogInfo("作ったので普通のキル");
+                                __instance.RpcMurderPlayer(target);
+                            }
+                            break;
+                        case RoleId.Jackal:
+                            if (!RoleClass.Jackal.IsCreatedFriend && RoleClass.Jackal.CanCreateFriend)//まだ作ってなくて、設定が有効の時
+                            {
+                                SuperNewRolesPlugin.Logger.LogInfo("まだ作ってなくて、設定が有効の時なんでフレンズ作成");
+                                if (target == null || RoleClass.Jackal.CreatePlayers.Contains(__instance.PlayerId)) return false;
+                                RoleClass.Jackal.CreatePlayers.Add(__instance.PlayerId);
+                                target.RpcSetRoleDesync(RoleTypes.GuardianAngel);//守護天使にして
+                                target.setRoleRPC(RoleId.JackalFriends);//フレンズにする
+                                Mode.SuperHostRoles.FixedUpdate.SetRoleName(target);//名前も変える
+                                RoleClass.Jackal.IsCreatedFriend = true;//作ったことにする
+                            }
+                            else
+                            {
+                                //作ってたら普通のキル
+                                SuperNewRolesPlugin.Logger.LogInfo("作ったので普通のキル");
+                                __instance.RpcMurderPlayer(target);
+                            }
+                            return false;
                     }
                     break;
                 case ModeId.Detective:
                     if (target.PlayerId == Mode.Detective.main.DetectivePlayer.PlayerId) return false;
                     break;
             }
+            SuperNewRolesPlugin.Logger.LogInfo("f(Murder)" + __instance.Data.PlayerName + " => " + target.Data.PlayerName);
             if (ModeHandler.isMode(ModeId.SuperHostRoles))
             {
                 SyncSetting.CustomSyncSettings(__instance);
@@ -578,7 +653,9 @@ namespace SuperNewRoles.Patches
                     }
                 }
             }
+            SuperNewRolesPlugin.Logger.LogInfo("g(Murder)" + __instance.Data.PlayerName + " => " + target.Data.PlayerName);
             __instance.RpcMurderPlayerCheck(target);
+            SuperNewRolesPlugin.Logger.LogInfo("h(Murder)" + __instance.Data.PlayerName + " => " + target.Data.PlayerName);
             return false;
         }
         public static void RpcCheckExile(this PlayerControl __instance)
@@ -639,7 +716,9 @@ namespace SuperNewRoles.Patches
                 }, 2f);
                 return;
             }
+            SuperNewRolesPlugin.Logger.LogInfo("i(Murder)" + __instance.Data.PlayerName + " => " + target.Data.PlayerName);
             __instance.RpcMurderPlayer(target);
+            SuperNewRolesPlugin.Logger.LogInfo("j(Murder)" + __instance.Data.PlayerName + " => " + target.Data.PlayerName);
         }
     }
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.SetKillTimer))]
@@ -713,8 +792,13 @@ namespace SuperNewRoles.Patches
         {
             // SuperNewRolesPlugin.Logger.LogInfo("MurderPlayer発生！元:" + __instance.getDefaultName() + "、ターゲット:" + target.getDefaultName());
             // Collect dead player info
+            Logger.Info("追加");
             DeadPlayer deadPlayer = new(target, DateTime.UtcNow, DeathReason.Kill, __instance);
             DeadPlayer.deadPlayers.Add(deadPlayer);
+            foreach (var p in DeadPlayer.deadPlayers)
+            {
+                Logger.Info($"{p.killerIfExisting.Data.PlayerName}が{p.player.Data.PlayerName}を切る");
+            }
             FinalStatusPatch.FinalStatusData.FinalStatuses[target.PlayerId] = FinalStatus.Kill;
 
             SerialKiller.MurderPlayer(__instance, target);
@@ -758,7 +842,7 @@ namespace SuperNewRoles.Patches
                         PlayerControl SideLoverPlayer = target.GetOneSideLovers();
                         if (SideLoverPlayer.isAlive())
                         {
-                            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.RPCMurderPlayer, Hazel.SendOption.Reliable, -1);
+                            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.RPCMurderPlayer, Hazel.SendOption.Reliable, -1);
                             writer.Write(SideLoverPlayer.PlayerId);
                             writer.Write(SideLoverPlayer.PlayerId);
                             writer.Write(byte.MaxValue);
@@ -775,10 +859,10 @@ namespace SuperNewRoles.Patches
                         if (Side.isDead())
                         {
                             RPCProcedure.ShareWinner(target.PlayerId);
-                            MessageWriter Writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.ShareWinner, Hazel.SendOption.Reliable, -1);
+                            MessageWriter Writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.ShareWinner, Hazel.SendOption.Reliable, -1);
                             Writer.Write(target.PlayerId);
                             AmongUsClient.Instance.FinishRpcImmediately(Writer);
-                            Roles.RoleClass.Quarreled.IsQuarreledWin = true;
+                            RoleClass.Quarreled.IsQuarreledWin = true;
                             ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.QuarreledWin, false);
                         }
                     }
@@ -829,7 +913,7 @@ namespace SuperNewRoles.Patches
                         PlayerControl SideLoverPlayer = __instance.GetOneSideLovers();
                         if (SideLoverPlayer.isAlive())
                         {
-                            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.ExiledRPC, Hazel.SendOption.Reliable, -1);
+                            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.ExiledRPC, Hazel.SendOption.Reliable, -1);
                             writer.Write(SideLoverPlayer.PlayerId);
                             AmongUsClient.Instance.FinishRpcImmediately(writer);
                             RPCProcedure.ExiledRPC(SideLoverPlayer.PlayerId);
@@ -878,6 +962,10 @@ namespace SuperNewRoles.Patches
                         }
                     }
                 }
+            }
+            if (result.isDead())
+            {
+                return null;
             }
             return result;
         }

@@ -1,16 +1,11 @@
-
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using HarmonyLib;
 using Hazel;
 using SuperNewRoles.CustomRPC;
 using SuperNewRoles.EndGame;
 using SuperNewRoles.Helpers;
 using SuperNewRoles.Patch;
 using SuperNewRoles.Roles;
-using UnityEngine;
 using static SuperNewRoles.EndGame.CheckGameEndPatch;
 
 namespace SuperNewRoles.Mode.SuperHostRoles
@@ -44,7 +39,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
         public static void CustomEndGame(ShipStatus __instance, GameOverReason reason, bool showAd)
         {
             Chat.IsOldSHR = true;
-            List<PlayerControl>? WinGods = null;
+            List<PlayerControl> WinGods = null;
             foreach (PlayerControl p in RoleClass.God.GodPlayer)
             {
                 if (p.isAlive())
@@ -259,7 +254,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                         var (playerCompleted, playerTotal) = TaskCount.TaskDate(p.Data);
                         if (playerCompleted >= playerTotal)
                         {
-                            MessageWriter Writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.ShareWinner, Hazel.SendOption.Reliable, -1);
+                            MessageWriter Writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.ShareWinner, Hazel.SendOption.Reliable, -1);
                             Writer.Write(p.PlayerId);
                             AmongUsClient.Instance.FinishRpcImmediately(Writer);
                             CustomRPC.RPCProcedure.ShareWinner(p.PlayerId);
