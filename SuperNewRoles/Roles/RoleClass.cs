@@ -5,6 +5,7 @@ using SuperNewRoles.CustomObject;
 using SuperNewRoles.CustomOption;
 using SuperNewRoles.Patch;
 using SuperNewRoles.Sabotage;
+using SuperNewRoles.MapCustoms;
 using TMPro;
 using UnityEngine;
 using SuperNewRoles.CustomRPC;
@@ -34,8 +35,8 @@ namespace SuperNewRoles.Roles
             IsStart = false;
             LadderDead.Reset();
             Map.Data.ClearAndReloads();
-            MapOptions.SpawnInMinigamePatch.resetSpawnCandidates();
-            MapOptions.SpawnInMinigamePatch.reset();
+            MapCustoms.SpawnInMinigamePatch.resetSpawnCandidates();
+            MapCustoms.SpawnInMinigamePatch.reset();
             SabotageManager.ClearAndReloads();
             Madmate.CheckedImpostor = new();
             Roles.MadMayor.CheckedImpostor = new();

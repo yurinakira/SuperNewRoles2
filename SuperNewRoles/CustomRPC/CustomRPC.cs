@@ -962,7 +962,7 @@ namespace SuperNewRoles.CustomRPC
         }*/
         public static void synchronize(byte playerId, int tag)
         {
-            MapOptions.SpawnInMinigamePatch.synchronizeData.Synchronize((MapOptions.SpawnInMinigamePatch.SynchronizeTag)tag, playerId);
+            MapCustoms.SpawnInMinigamePatch.synchronizeData.Synchronize((MapCustoms.SpawnInMinigamePatch.SynchronizeTag)tag, playerId);
         }
         [HarmonyPatch(typeof(InnerNetClient), nameof(InnerNetClient.StartEndGame))]
         class STARTENDGAME

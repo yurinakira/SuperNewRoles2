@@ -3,7 +3,7 @@ using System.Linq;
 using UnhollowerBaseLib;
 using UnityEngine;
 
-namespace SuperNewRoles.MapOptions
+namespace SuperNewRoles.MapCustoms
 {
     public class SpawnCandidate
     {

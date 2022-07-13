@@ -26,7 +26,7 @@ namespace SuperNewRoles.MapCustoms
         public static CustomOption.CustomOption RecordsAdminDestroy;
         public static CustomOption.CustomOption MoveElecPad;
         public static CustomOption.CustomOption AddWireTask;
-                public static CustomOption.CustomOption AirshipRandomSpawn;
+        public static CustomOption.CustomOption AirshipRandomSpawn;
         public static CustomOption.CustomOption AirshipInitialDoorCooldown;
         public static CustomOption.CustomOption AirshipInitialSabotageCooldown;
         public static CustomOption.CustomOption AirshipAdditionalSpawn;
@@ -58,6 +58,10 @@ namespace SuperNewRoles.MapCustoms
             RecordsAdminDestroy = CustomOption.CustomOption.Create(612, false, CustomOptionType.Generic, "RecordsAdminDestroySetting", false, AirshipSetting);
             MoveElecPad = CustomOption.CustomOption.Create(645, false, CustomOptionType.Generic, "MoveElecPadSetting", false, AirshipSetting);
             AddWireTask = CustomOption.CustomOption.Create(646, false, CustomOptionType.Generic, "AddWireTaskSetting", false, AirshipSetting);
+            AirshipAdditionalSpawn = CustomOption.CustomOption.Create(9917, false, CustomOptionType.Generic, "airshipAdditionalSpawn", false, AirshipSetting);
+            AirshipSynchronizedSpawning = CustomOption.CustomOption.Create(9918, false, CustomOptionType.Generic, "airshipSynchronizedSpawning", false, AirshipSetting);
+            AirshipInitialDoorCooldown = CustomOption.CustomOption.Create(9923, false, CustomOptionType.Generic, "airshipInitialDoorCooldown", 0f, 0f, 60f, 1f, AirshipSetting);
+            AirshipInitialSabotageCooldown = CustomOption.CustomOption.Create(9924, false, CustomOptionType.Generic, "airshipInitialSabotageCooldown", 15f, 0f, 60f, 1f, AirshipSetting);
         }
     }
 }

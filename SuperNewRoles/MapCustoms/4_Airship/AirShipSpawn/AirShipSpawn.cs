@@ -8,9 +8,8 @@ using TMPro;
 using UnhollowerBaseLib;
 using UnityEngine;
 
-namespace SuperNewRoles.MapOptions
+namespace SuperNewRoles.MapCustoms
 {
-
     [HarmonyPatch]
     public class SpawnInMinigamePatch
     {
@@ -18,8 +17,8 @@ namespace SuperNewRoles.MapOptions
         public static List<SpawnCandidate> SpawnCandidates;
         public static SynchronizeData synchronizeData = new();
         public static bool isFirstSpawn = true;
-        public static float initialDoorCooldown { get { return MapOption.AirshipInitialDoorCooldown.getFloat(); } }
-        public static float initialSabotageCooldown { get { return MapOption.AirshipInitialSabotageCooldown.getFloat(); } }
+        public static float initialDoorCooldown { get { return MapCustom.AirshipInitialDoorCooldown.getFloat(); } }
+        public static float initialSabotageCooldown { get { return MapCustom.AirshipInitialSabotageCooldown.getFloat(); } }
         public enum SynchronizeTag
         {
             PreSpawnMinigame,
@@ -74,7 +73,7 @@ namespace SuperNewRoles.MapOptions
         public static void resetSpawnCandidates()
         {
             SpawnCandidates = new List<SpawnCandidate>();
-            if (MapOption.AirshipAdditionalSpawn.getBool())
+            if (MapCustom.AirshipAdditionalSpawn.getBool())
             {
                 SpawnCandidates.Add(new SpawnCandidate(StringNames.VaultRoom, new Vector2(-8.8f, 8.6f), "SuperNewRoles.Resources.Locations.VaultButton.png", "rollover_brig"));
                 SpawnCandidates.Add(new SpawnCandidate(StringNames.MeetingRoom, new Vector2(11.0f, 14.7f), "SuperNewRoles.Resources.Locations.MeetingButton.png", "rollover_brig"));
@@ -173,7 +172,7 @@ namespace SuperNewRoles.MapOptions
 
             PlayerControl.LocalPlayer.gameObject.SetActive(false);
             PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(-25f, 40f));
-            if (MapOption.AirshipRandomSpawn.getBool())
+            if (MapCustom.AirshipRandomSpawn.getBool())
             {
                 __instance.LocationButtons.Random<PassiveButton>().ReceiveClickUp();
             }
@@ -193,7 +192,7 @@ namespace SuperNewRoles.MapOptions
         {
             selected = null;
 
-            if (!MapOption.AirshipSynchronizedSpawning.getBool() || MapOption.AirshipRandomSpawn.getBool()) return;
+            if (!MapCustom.AirshipSynchronizedSpawning.getBool() || MapCustom.AirshipRandomSpawn.getBool()) return;
 
             foreach (var button in __instance.LocationButtons)
             {
@@ -210,7 +209,7 @@ namespace SuperNewRoles.MapOptions
         [HarmonyPatch(typeof(SpawnInMinigame._RunTimer_d__10), nameof(SpawnInMinigame._RunTimer_d__10.MoveNext))]
         public static void Postfix(SpawnInMinigame._RunTimer_d__10 __instance)
         {
-            if (!MapOption.AirshipSynchronizedSpawning.getBool() || MapOption.AirshipRandomSpawn.getBool()) return;
+            if (!MapCustom.AirshipSynchronizedSpawning.getBool() || MapCustom.AirshipRandomSpawn.getBool()) return;
             if (selected != null)
                 __instance.__4__this.Text.text = ModTranslation.getString("airshipWait");
 
@@ -221,7 +220,7 @@ namespace SuperNewRoles.MapOptions
         [HarmonyPatch(typeof(SpawnInMinigame), nameof(SpawnInMinigame.SpawnAt))]
         public static bool Prefix2(SpawnInMinigame __instance, [HarmonyArgument(0)] Vector3 spawnAt)
         {
-            if (!MapOption.AirshipSynchronizedSpawning.getBool() || MapOption.AirshipRandomSpawn.getBool())
+            if (!MapCustom.AirshipSynchronizedSpawning.getBool() || MapCustom.AirshipRandomSpawn.getBool())
             {
                 //if (isFirstSpawn) resetButtons();
                 ButtonPatch.stopCountdown = false;
