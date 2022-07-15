@@ -39,6 +39,15 @@ namespace SuperNewRoles.CustomOption
         public static CustomOption DetectiveRate;
         public static CustomOption DetectivePlayerCount;
 
+        public static CustomRoleOption ScientistOption;
+        public static CustomOption ScientistPlayerCount;
+
+        public static CustomRoleOption EngineerOption;
+        public static CustomOption EngineerPlayerCount;
+
+        public static CustomRoleOption ShapeshifterOption;
+        public static CustomOption ShapeshifterPlayerCount;
+
         public static CustomRoleOption SoothSayerOption;
         public static CustomOption SoothSayerPlayerCount;
         public static CustomOption SoothSayerDisplayMode;

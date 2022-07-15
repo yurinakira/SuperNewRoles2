@@ -153,6 +153,9 @@ namespace SuperNewRoles.Roles
             Neet.ClearAndReload();
             FastMaker.ClearAndReload();
             ToiletFan.ClearAndReload();
+            Scientist.ClearAndReload();
+            Engineer.ClearAndReload();
+            Shapeshifter.ClearAndReload();
             //ロールクリア
             Quarreled.ClearAndReload();
             Lovers.ClearAndReload();
@@ -2497,6 +2500,33 @@ namespace SuperNewRoles.Roles
             {
                 ToiletFanPlayer = new List<PlayerControl>();
                 ToiletCool = CustomOptions.ToiletFanCoolTime.getFloat();
+            }
+        }
+        public static class Scientist
+        {
+            public static List<PlayerControl> ScientistPlayer;
+            public static Color32 color = new Color32(0, 255, 0, byte.MaxValue);
+            public static void ClearAndReload()
+            {
+                ScientistPlayer = new List<PlayerControl>();
+            }
+        }
+        public static class Engineer
+        {
+            public static List<PlayerControl> EngineerPlayer;
+            public static Color32 color = new Color32(0, 255, 0, byte.MaxValue);
+            public static void ClearAndReload()
+            {
+                EngineerPlayer = new List<PlayerControl>();
+            }
+        }
+        public static class Shapeshifter
+        {
+            public static List<PlayerControl> ShapeshifterPlayer;
+            public static Color32 color = ImpostorRed;
+            public static void ClearAndReload()
+            {
+                ShapeshifterPlayer = new List<PlayerControl>();
             }
         }
         //新ロールクラス

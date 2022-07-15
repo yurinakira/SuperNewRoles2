@@ -852,6 +852,9 @@ namespace SuperNewRoles
                 RoleId.Smasher => CustomOptions.SmasherPlayerCount.getFloat(),
                 RoleId.SuicideWisher => CustomOptions.SuicideWisherPlayerCount.getFloat(),
                 RoleId.Neet => CustomOptions.NeetPlayerCount.getFloat(),
+                RoleId.Scientist => CustomOptions.ScientistPlayerCount.getFloat(),
+                RoleId.Engineer => CustomOptions.EngineerPlayerCount.getFloat(),
+                RoleId.Shapeshifter => CustomOptions.ShapeshifterPlayerCount.getFloat(),
                 //プレイヤーカウント
                 _ => 1,
             };

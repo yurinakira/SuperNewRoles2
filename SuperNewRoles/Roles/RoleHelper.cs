@@ -600,6 +600,15 @@ namespace SuperNewRoles
                 case (RoleId.ToiletFan):
                     RoleClass.ToiletFan.ToiletFanPlayer.Add(player);
                     break;
+                case (RoleId.Scientist):
+                    RoleClass.Scientist.ScientistPlayer.Add(player);
+                    break;
+                case (RoleId.Engineer):
+                    RoleClass.Engineer.EngineerPlayer.Add(player);
+                    break;
+                case (RoleId.Shapeshifter):
+                    RoleClass.Shapeshifter.ShapeshifterPlayer.Add(player);
+                    break;
                 //ロールアド
                 default:
                     SuperNewRolesPlugin.Logger.LogError($"[SetRole]:No Method Found for Role Type {role}");
@@ -958,7 +967,16 @@ namespace SuperNewRoles
                 case (RoleId.ToiletFan):
                     RoleClass.ToiletFan.ToiletFanPlayer.RemoveAll(ClearRemove);
                     break;
-                    //ロールリモベ
+                    case (RoleId.Scientist):
+                    RoleClass.Scientist.ScientistPlayer.RemoveAll(ClearRemove);
+                    break;
+                case (RoleId.Engineer):
+                    RoleClass.Engineer.EngineerPlayer.RemoveAll(ClearRemove);
+                    break;
+                case (RoleId.Shapeshifter):
+                    RoleClass.Shapeshifter.ShapeshifterPlayer.RemoveAll(ClearRemove);
+                    break;
+                //ロールリモベ
             }
             ChacheManager.ResetMyRoleChache();
         }
@@ -1466,7 +1484,19 @@ namespace SuperNewRoles
                 else if (RoleClass.Neet.NeetPlayer.IsCheckListPlayerControl(player)) return RoleId.Neet;
                 else if (RoleClass.FastMaker.FastMakerPlayer.IsCheckListPlayerControl(player)) return RoleId.FastMaker;
                 else if (RoleClass.ToiletFan.ToiletFanPlayer.IsCheckListPlayerControl(player)) return RoleId.ToiletFan;
-                //ロールチェック
+                else if (RoleClass.Scientist.ScientistPlayer.IsCheckListPlayerControl(player))
+            {
+                return RoleId.Scientist;
+            }
+            else if (RoleClass.Engineer.EngineerPlayer.IsCheckListPlayerControl(player))
+            {
+                return RoleId.Engineer;
+            }
+            else if (RoleClass.Shapeshifter.ShapeshifterPlayer.IsCheckListPlayerControl(player))
+            {
+                return RoleId.Shapeshifter;
+            }
+            //ロールチェック
             }
             catch (Exception e)
             {
