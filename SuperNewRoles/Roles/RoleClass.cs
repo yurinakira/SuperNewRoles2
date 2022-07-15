@@ -153,6 +153,7 @@ namespace SuperNewRoles.Roles
             Neet.ClearAndReload();
             FastMaker.ClearAndReload();
             ToiletFan.ClearAndReload();
+            NekoKabocha.ClearAndReload();
             //ロールクリア
             Quarreled.ClearAndReload();
             Lovers.ClearAndReload();
@@ -2496,6 +2497,16 @@ namespace SuperNewRoles.Roles
             {
                 ToiletFanPlayer = new();
                 ToiletCool = CustomOptions.ToiletFanCoolTime.getFloat();
+            }
+        }
+        public static class NekoKabocha
+        {
+            public static List<PlayerControl> NekoKabochaPlayer;
+            public static Color32 color = ImpostorRed;
+            public static void ClearAndReload()
+            {
+                NekoKabochaPlayer = new();
+                
             }
         }
         //新ロールクラス
