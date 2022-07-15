@@ -190,6 +190,6 @@ namespace SuperNewRoles.Intro
         public static IntroDate FastMakerIntro = new IntroDate("FastMaker", RoleClass.FastMaker.color, 1, RoleId.FastMaker, TeamRoleType.Impostor);
         public static IntroDate ToiletFanIntro = new("ToiletFan", RoleClass.ToiletFan.color, 1, RoleId.ToiletFan, TeamRoleType.Crewmate);
         public static IntroDate NekoKabochaIntro = new("NekoKabocha", RoleClass.NekoKabocha.color, 1, RoleId.NekoKabocha, TeamRoleType.Impostor);
-            //イントロオブジェ
+        //イントロオブジェ
     }
 }
