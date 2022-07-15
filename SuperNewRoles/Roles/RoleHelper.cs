@@ -964,7 +964,7 @@ namespace SuperNewRoles
                 case (RoleId.NekoKabocha):
                     RoleClass.NekoKabocha.NekoKabochaPlayer.RemoveAll(ClearRemove);
                     break;
-                    //ロールリモベ
+                //ロールリモベ
             }
             ChacheManager.ResetMyRoleChache();
         }
