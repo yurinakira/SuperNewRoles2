@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SuperNewRoles.Patch;
 using SuperNewRoles.Roles;
 using UnityEngine;
@@ -663,6 +663,13 @@ namespace SuperNewRoles.CustomOption
         public static CustomRoleOption ToiletFanOption;
         public static CustomOption ToiletFanPlayerCount;
         public static CustomOption ToiletFanCoolTime;
+
+        public static CustomRoleOption CompanySlaveOption;
+        public static CustomOption CompanySlavePlayerCount;
+        public static CustomOption CompanySlaveMurderTask;
+        public static CustomOption CompanySlaveCommonTask;
+        public static CustomOption CompanySlaveShortTask;
+        public static CustomOption CompanySlaveLongTask;
         //CustomOption
 
         public static CustomOption QuarreledOption;
@@ -1368,6 +1375,13 @@ namespace SuperNewRoles.CustomOption
             ToiletFanPlayerCount = CustomOption.Create(657, true, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], ToiletFanOption);
             ToiletFanCoolTime = CustomOption.Create(658, true, CustomOptionType.Crewmate, "ToiletCoolDownSetting", 30f, 0f, 60f, 2.5f, ToiletFanOption);
 
+            CompanySlaveOption = new CustomRoleOption(684, true, CustomOptionType.Crewmate, " CompanySlaveName", RoleClass.CompanySlave.color, 1);
+            CompanySlavePlayerCount = CustomOption.Create(685, true, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3],  CompanySlaveOption);
+            var companyslaveoption = SelectTask.TaskSetting(686, 689, 690, CompanySlaveOption, CustomOptionType.Crewmate, true);
+            CompanySlaveCommonTask = companyslaveoption.Item1;
+            CompanySlaveShortTask = companyslaveoption.Item2;
+            CompanySlaveLongTask = companyslaveoption.Item3;
+            CompanySlaveMurderTask = CustomOption.Create(691, true, CustomOptionType.Crewmate, "MadMateCheckImpostorTaskSetting", rates4, CompanySlaveOption);
             //表示設定
 
             QuarreledOption = CustomOption.Create(432, true, CustomOptionType.Neutral, Cs(RoleClass.Quarreled.color, "QuarreledName"), false, null, isHeader: true);

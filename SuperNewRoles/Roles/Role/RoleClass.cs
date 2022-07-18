@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using SuperNewRoles.CustomObject;
@@ -153,6 +153,7 @@ namespace SuperNewRoles.Roles
             Neet.ClearAndReload();
             FastMaker.ClearAndReload();
             ToiletFan.ClearAndReload();
+            CompanySlave.ClearAndReload();
             //ロールクリア
             Quarreled.ClearAndReload();
             Lovers.ClearAndReload();
@@ -2431,6 +2432,27 @@ namespace SuperNewRoles.Roles
             {
                 ToiletFanPlayer = new();
                 ToiletCool = CustomOptions.ToiletFanCoolTime.GetFloat();
+            }
+        }
+        public static class CompanySlave
+        {
+            public static List<PlayerControl> CompanySlavePlayer;
+            public static Color32 color = ImpostorRed;
+            public static int MurderTask;
+            public static void ClearAndReload()
+            {
+                CompanySlavePlayer = new();
+                int Common = (int)CustomOptions.CompanySlaveCommonTask.GetFloat();
+                int Long = (int)CustomOptions.CompanySlaveLongTask.GetFloat();
+                int Short = (int)CustomOptions.CompanySlaveShortTask.GetFloat();
+                int AllTask = Common + Long + Short;
+                if (AllTask == 0)
+                {
+                    Common = PlayerControl.GameOptions.NumCommonTasks;
+                    Long = PlayerControl.GameOptions.NumLongTasks;
+                    Short = PlayerControl.GameOptions.NumShortTasks;
+                }
+                MurderTask = (int)(AllTask * (int.Parse(CustomOptions.BlackCatCheckImpostorTask.GetString().Replace("%", "")) / 100f));
             }
         }
         //新ロールクラス

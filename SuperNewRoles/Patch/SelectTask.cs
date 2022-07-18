@@ -148,6 +148,13 @@ namespace SuperNewRoles.Patch
                 int longt = (int)CustomOptions.TaskManagerLongTask.GetFloat();
                 if (!(commont == 0 && shortt == 0 && longt == 0)) return (commont, shortt, longt);
             }
+            else if (p.IsRole(RoleId.CompanySlave))
+            {
+                int commont = (int)CustomOptions.CompanySlaveCommonTask.GetFloat();
+                int shortt = (int)CustomOptions.CompanySlaveShortTask.GetFloat();
+                int longt = (int)CustomOptions.CompanySlaveLongTask.GetFloat();
+                if (!(commont == 0 && shortt == 0 && longt == 0)) return (commont, shortt, longt);
+            }
             else if (p.IsLovers() && !p.IsImpostor())
             {
                 int commont = (int)CustomOptions.LoversCommonTask.GetFloat();
