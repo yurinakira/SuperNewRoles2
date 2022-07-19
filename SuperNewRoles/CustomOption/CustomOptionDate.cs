@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SuperNewRoles.Patch;
 using SuperNewRoles.Roles;
 using UnityEngine;
@@ -663,6 +663,14 @@ namespace SuperNewRoles.CustomOption
         public static CustomRoleOption ToiletFanOption;
         public static CustomOption ToiletFanPlayerCount;
         public static CustomOption ToiletFanCoolTime;
+
+        public static CustomRoleOption MedicOption;
+        public static CustomOption MedicPlayerCount;
+        public static CustomOption MedicShowShielded;
+        public static CustomOption MedicShowAttemptToShielded;
+        public static CustomOption MedicSetOrShowShieldAfterMeeting;
+        public static CustomOption MedicShowAttemptToMedic;
+        public static CustomOption MedicSetShieldAfterMeeting;
         //CustomOption
 
         public static CustomOption QuarreledOption;
@@ -1368,6 +1376,13 @@ namespace SuperNewRoles.CustomOption
             ToiletFanPlayerCount = CustomOption.Create(657, true, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], ToiletFanOption);
             ToiletFanCoolTime = CustomOption.Create(658, true, CustomOptionType.Crewmate, "ToiletCoolDownSetting", 30f, 0f, 60f, 2.5f, ToiletFanOption);
 
+
+            MedicOption = new CustomRoleOption(685, true, CustomOptionType.Crewmate, "MedicName", RoleClass.Medic.color, 1);
+            MedicPlayerCount = CustomOption.Create(6852, true, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], MedicOption);
+            MedicShowShielded = CustomOption.Create(143, true, CustomOptionType.Crewmate, "Show Shielded Player", new string[] { "Everyone", "Shielded + Medic", "Medic" }, MedicOption);
+            MedicShowAttemptToShielded = CustomOption.Create(144, true, CustomOptionType.Crewmate, "Shielded Player Sees Murder Attempt", false, MedicOption);
+            MedicSetOrShowShieldAfterMeeting = CustomOption.Create(145, true, CustomOptionType.Crewmate, "Shield Will Be Activated", new string[] { "Instantly", "Instantly, Visible\nAfter Meeting", "After Meeting" }, MedicOption);
+            MedicShowAttemptToMedic = CustomOption.Create(146, true, CustomOptionType.Crewmate, "Medic Sees Murder Attempt On Shielded Player", false, MedicOption);
             //表示設定
 
             QuarreledOption = CustomOption.Create(432, true, CustomOptionType.Neutral, Cs(RoleClass.Quarreled.color, "QuarreledName"), false, null, isHeader: true);

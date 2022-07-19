@@ -294,6 +294,15 @@ namespace SuperNewRoles
                     }
                 }
             }
+            // Block impostor shielded kill
+            if (RoleClass.Medic.Shielded != null && RoleClass.Medic.Shielded == target)
+            {
+                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)CustomRPC.CustomRPC.ShieldedMurderAttempt, SendOption.Reliable, -1);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                RPCProcedure.ShieldedMurderAttempt();
+                //SoundEffectsManager.play("fail");
+                return MurderAttemptResult.SuppressKill;
+            }
             return MurderAttemptResult.PerformKill;
         }
         public static void GenerateAndAssignTasks(this PlayerControl player, int numCommon, int numShort, int numLong)

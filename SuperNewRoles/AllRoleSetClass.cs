@@ -851,6 +851,7 @@ namespace SuperNewRoles
                 RoleId.SuicideWisher => CustomOptions.SuicideWisherPlayerCount.GetFloat(),
                 RoleId.Neet => CustomOptions.NeetPlayerCount.GetFloat(),
                 RoleId.ToiletFan => CustomOptions.ToiletFanPlayerCount.GetFloat(),
+                RoleId.Medic => CustomOptions.MedicPlayerCount.GetFloat(),
                 //プレイヤーカウント
                 _ => 1,
             };

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using SuperNewRoles.CustomObject;
@@ -153,6 +153,7 @@ namespace SuperNewRoles.Roles
             Neet.ClearAndReload();
             FastMaker.ClearAndReload();
             ToiletFan.ClearAndReload();
+            Medic.ClearAndReload();
             //ロールクリア
             Quarreled.ClearAndReload();
             Lovers.ClearAndReload();
@@ -2431,6 +2432,43 @@ namespace SuperNewRoles.Roles
             {
                 ToiletFanPlayer = new();
                 ToiletCool = CustomOptions.ToiletFanCoolTime.GetFloat();
+            }
+        }
+        public static class Medic
+        {
+            public static List<PlayerControl> MedicPlayer;
+            public static PlayerControl Shielded;
+            public static PlayerControl FutureShielded;
+            public static PlayerControl CurrentTarget;
+            public static Color32 color = new(126, 251, 194, byte.MaxValue);
+            public static Color32 ShieldedColor = new(0, 221, 255, byte.MaxValue);
+            public static bool UsedShield;
+            public static int ShowShielded = 0;
+            public static bool ShowAttemptToShielded = false;
+            public static bool ShowAttemptToMedic = false;
+            public static bool SetShieldAfterMeeting = false;
+            public static bool ShowShieldAfterMeeting = false;
+            public static bool MeetingAfterShielding = false;
+            private static Sprite buttonSprite;
+            public static Sprite GetButtonSprite()
+            {
+                if (buttonSprite) return buttonSprite;
+                buttonSprite = ModHelpers.LoadSpriteFromResources("SuperNewRoles.Resources.ShieldButton.png", 115f);
+                return buttonSprite;
+            }
+            public static void ClearAndReload()
+            {
+                MedicPlayer = new();
+                Shielded=new();
+                FutureShielded=new();
+                CurrentTarget = new();
+                UsedShield = false;
+                ShowShielded = CustomOptions.MedicShowShielded.GetSelection();
+                ShowAttemptToShielded = CustomOptions.MedicShowAttemptToShielded.GetBool();
+                ShowAttemptToMedic = CustomOptions.MedicShowAttemptToMedic.GetBool();
+                SetShieldAfterMeeting = CustomOptions.MedicSetOrShowShieldAfterMeeting.GetSelection() == 2;
+                ShowShieldAfterMeeting = CustomOptions.MedicSetOrShowShieldAfterMeeting.GetSelection() == 1;
+                MeetingAfterShielding = false;
             }
         }
         //新ロールクラス

@@ -132,6 +132,7 @@ namespace SuperNewRoles.CustomRPC
         Neet,
         FastMaker,
         ToiletFan,
+        Medic,
         //RoleId
     }
 
@@ -202,7 +203,10 @@ namespace SuperNewRoles.CustomRPC
         RandomSpawn,
         KunaiKill,
         SetSecretRoomTeleportStatus,
-        ChiefSidekick
+        ChiefSidekick,
+        SetFutureShielded,
+        MedicSetShielded,
+        ShieldedMurderAttempt,
     }
     public static class RPCProcedure
     {
@@ -1000,6 +1004,30 @@ namespace SuperNewRoles.CustomRPC
                 }
             })));
         }
+        public static void SetFutureShielded(byte playerId)
+        {
+            RoleClass.Medic.FutureShielded = ModHelpers.playerById(playerId);
+            RoleClass.Medic.UsedShield = true;
+        }
+        public static void MedicSetShielded(byte shieldedId)
+        {
+            RoleClass.Medic.UsedShield = true;
+            RoleClass.Medic.Shielded = ModHelpers.playerById(shieldedId);
+            RoleClass.Medic.FutureShielded = null;
+        }
+        public static void ShieldedMurderAttempt()
+        {
+            foreach (PlayerControl p in RoleClass.Medic.MedicPlayer)
+            {
+                if (RoleClass.Medic.Shielded == null || p == null) return;
+
+                bool isShieldedAndShow = RoleClass.Medic.Shielded == CachedPlayer.LocalPlayer.PlayerControl && RoleClass.Medic.ShowAttemptToShielded;
+                isShieldedAndShow = isShieldedAndShow && (RoleClass.Medic.MeetingAfterShielding || !RoleClass.Medic.ShowShieldAfterMeeting);  // Dont show attempt, if shield is not shown yet
+                bool isMedicAndShow = p == CachedPlayer.LocalPlayer.PlayerControl && RoleClass.Medic.ShowAttemptToMedic;
+
+                if (isShieldedAndShow || isMedicAndShow) Seer.ShowFlash(Palette.ImpostorRed, duration: 0.5f);
+            }
+        }
         [HarmonyPatch(typeof(InnerNetClient), nameof(InnerNetClient.StartEndGame))]
         class STARTENDGAME
         {
@@ -1244,6 +1272,15 @@ namespace SuperNewRoles.CustomRPC
                             break;
                         case CustomRPC.ChiefSidekick:
                             ChiefSidekick(reader.ReadByte());
+                            break;
+                        case CustomRPC.SetFutureShielded:
+                            SetFutureShielded(reader.ReadByte());
+                            break;
+                        case CustomRPC.MedicSetShielded:
+                            MedicSetShielded(reader.ReadByte());
+                            break;
+                        case CustomRPC.ShieldedMurderAttempt:
+                            ShieldedMurderAttempt();
                             break;
                     }
                 }

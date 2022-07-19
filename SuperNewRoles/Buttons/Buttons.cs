@@ -65,6 +65,7 @@ namespace SuperNewRoles.Buttons
         public static CustomButton SuicideWisherSuicideButton;
         public static CustomButton FastMakerButton;
         public static CustomButton ToiletFanButton;
+        public static CustomButton MedicShieldButton;
 
         public static TMPro.TMP_Text sheriffNumShotsText;
         public static TMPro.TMP_Text GhostMechanicNumRepairText;
@@ -1967,6 +1968,40 @@ namespace SuperNewRoles.Buttons
                 showButtonText = true
             };
 
+            MedicShieldButton = new CustomButton(
+                () =>
+                {
+                    MedicShieldButton.Timer = 0f;
+
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(CachedPlayer.LocalPlayer.PlayerControl.NetId, RoleClass.Medic.SetShieldAfterMeeting ? (byte)CustomRPC.CustomRPC.SetFutureShielded : (byte)CustomRPC.CustomRPC.MedicSetShielded, SendOption.Reliable, -1);
+                    writer.Write(RoleClass.Medic.CurrentTarget.PlayerId);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    if (RoleClass.Medic.SetShieldAfterMeeting)
+                        RPCProcedure.SetFutureShielded(RoleClass.Medic.CurrentTarget.PlayerId);
+                    else
+                        RPCProcedure.MedicSetShielded(RoleClass.Medic.CurrentTarget.PlayerId);
+                    RoleClass.Medic.MeetingAfterShielding = false;
+
+                    //SoundEffectsManager.play("medicShield");
+                },
+                (bool isAlive, RoleId role) => { return isAlive && role == RoleId.Medic && ModeHandler.IsMode(ModeId.Default); },
+                () =>
+                {
+                    return true;
+                },
+                () => { },
+                RoleClass.SuicideWisher.GetButtonSprite(),
+                new Vector3(-1.8f, -0.06f, 0),
+                __instance,
+                __instance.AbilityButton,
+                KeyCode.F,
+                49,
+                () => { return false; }
+            )
+            {
+                buttonText = ModTranslation.GetString("GuardName"),
+                showButtonText = true
+            };
             SetCustomButtonCooldowns();
         }
     }
