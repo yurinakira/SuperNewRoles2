@@ -57,6 +57,11 @@ namespace SuperNewRoles.Patch
                 {
                     Assassin.AddChat(sourcePlayer, chatText);
                 }
+            } else
+            {
+                if (CustomCommand.Patch.AddChat(sourcePlayer, chatText)) {
+                    return chatText[0] != '/';
+                };
             }
 
             var Commands = chatText.Split(" ");
@@ -277,7 +282,7 @@ namespace SuperNewRoles.Patch
             }
             SendCommand(target, GetInRole(EnableOptions));
         }
-        static void Send(PlayerControl target, string rolename, string text, float time = 0)
+        public static void Send(PlayerControl target, string rolename, string text, float time = 0)
         {
             text = "\n" + text + "\n                                                                                                                                                                                                                                              ";
             if (time <= 0)
@@ -329,7 +334,7 @@ namespace SuperNewRoles.Patch
         {
             if (!AmongUsClient.Instance.AmHost) return;
             if (SendName == "NONE") SendName = SNRCommander;
-            command = $"\n{command}\n";
+            if (SendName == SNRCommander) command = $"\n{command}\n";
             if (target != null && target.Data.Disconnected) return;
             if (target == null)
             {
