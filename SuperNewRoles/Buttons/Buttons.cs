@@ -66,6 +66,7 @@ namespace SuperNewRoles.Buttons
         public static CustomButton FastMakerButton;
         public static CustomButton ToiletFanButton;
         public static CustomButton BotanerButton;
+        public static CustomButton UnderTakerButton;
 
         public static TMPro.TMP_Text sheriffNumShotsText;
         public static TMPro.TMP_Text GhostMechanicNumRepairText;
@@ -2018,6 +2019,72 @@ namespace SuperNewRoles.Buttons
                 buttonText = ModTranslation.GetString("BotanerButtonName"),
                 showButtonText = true
             };
+
+            UnderTakerButton = new CustomButton(
+                () =>
+                {
+                    if (RoleClass.UnderTaker.dragginBody)
+                    {
+                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.DragPlaceBody, Hazel.SendOption.Reliable, -1);
+                        writer.Write(RoleClass.UnderTaker.bodyId);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        RPCProcedure.DragPlaceBody(RoleClass.UnderTaker.bodyId);
+                    }
+                    else
+                    {
+                        foreach (Collider2D collider2D in Physics2D.OverlapCircleAll(PlayerControl.LocalPlayer.GetTruePosition(), 1f, Constants.PlayersOnlyMask))
+                        {
+                            if (collider2D.tag == "DeadBody")
+                            {
+                                DeadBody component = collider2D.GetComponent<DeadBody>();
+                                if (component && !component.Reported)
+                                {
+                                    Vector2 truePosition = PlayerControl.LocalPlayer.GetTruePosition();
+                                    Vector2 truePosition2 = component.TruePosition;
+                                    if (Vector2.Distance(truePosition2, truePosition) <= PlayerControl.LocalPlayer.MaxReportDistance && PlayerControl.LocalPlayer.CanMove && !PhysicsHelpers.AnythingBetween(truePosition, truePosition2, Constants.ShipAndObjectsMask, false))
+                                    {
+                                        GameData.PlayerInfo playerInfo = GameData.Instance.GetPlayerById(component.ParentId);
+                                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CustomRPC.DragPlaceBody, Hazel.SendOption.Reliable, -1);
+                                        writer.Write(playerInfo.PlayerId);
+                                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                                        RPCProcedure.DragPlaceBody(playerInfo.PlayerId);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                (bool isAlive, RoleId role) => { return isAlive && role == RoleId.UnderTaker && ModeHandler.IsMode(ModeId.Default); },
+                () =>
+                {
+                    if (RoleClass.UnderTaker.dragginBody)
+                        UnderTakerButton.buttonText = ModTranslation.GetString("dropText");
+                    else
+                        UnderTakerButton.buttonText = ModTranslation.GetString("dragText");
+                    bool canDrag = false;
+                    foreach (Collider2D collider2D in Physics2D.OverlapCircleAll(PlayerControl.LocalPlayer.GetTruePosition(), 1f, Constants.PlayersOnlyMask))
+                        if (collider2D.tag == "DeadBody")
+                            canDrag = true;
+                    return canDrag && PlayerControl.LocalPlayer.CanMove;
+                },
+                () =>
+                {
+                    UnderTakerButton.Timer = 0f;
+                    RoleClass.UnderTaker.UnderTakerResetValuesAtDead();
+                },
+                RoleClass.UnderTaker.getButtonSprite(),
+                new Vector3(-1.8f, -0.06f, 0),
+                __instance,
+                __instance.KillButton,
+                KeyCode.F,
+                49,
+                () => { return false; }
+            )
+            {
+                buttonText = ModTranslation.GetString("UnderTakerButtonName"),
+                showButtonText = true
+            };;
 
             SetCustomButtonCooldowns();
         }

@@ -663,7 +663,7 @@ namespace SuperNewRoles.CustomOption
         public static CustomRoleOption ToiletFanOption;
         public static CustomOption ToiletFanPlayerCount;
         public static CustomOption ToiletFanCoolTime;
-        
+
         public static CustomRoleOption EvilBotanerOption;
         public static CustomOption EvilBotanerPlayerCount;
         public static CustomOption EvilBotanerCoolTime;
@@ -673,6 +673,12 @@ namespace SuperNewRoles.CustomOption
         public static CustomOption NiceBotanerPlayerCount;
         public static CustomOption NiceBotanerCoolTime;
         public static CustomOption NiceBotanerCount;
+
+        public static CustomRoleOption UnderTakerOption;
+        public static CustomOption UnderTakerPlayerCount;
+        public static CustomOption UnderTakerCooldown;
+        public static CustomOption UnderTakerCanUseVents;
+        public static CustomOption UnderTakerSpeed;
         //CustomOption
 
         public static CustomOption QuarreledOption;
@@ -1378,7 +1384,6 @@ namespace SuperNewRoles.CustomOption
             ToiletFanPlayerCount = CustomOption.Create(657, true, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], ToiletFanOption);
             ToiletFanCoolTime = CustomOption.Create(658, true, CustomOptionType.Crewmate, "ToiletCoolDownSetting", 30f, 0f, 60f, 2.5f, ToiletFanOption);
 
-            
             EvilBotanerOption = new CustomRoleOption(864, true, CustomOptionType.Impostor, "EvilBotanerName", RoleClass.EvilBotaner.color, 1);
             EvilBotanerPlayerCount = CustomOption.Create(865, true, CustomOptionType.Impostor, "SettingPlayerCountName", ImpostorPlayers[0], ImpostorPlayers[1], ImpostorPlayers[2], ImpostorPlayers[3], EvilBotanerOption);
             EvilBotanerCoolTime = CustomOption.Create(866, false, CustomOptionType.Impostor, "BotanerCoolDownSetting", 20f, 2.5f, 60f, 2.5f, EvilBotanerOption, format: "unitSeconds");
@@ -1388,6 +1393,12 @@ namespace SuperNewRoles.CustomOption
             NiceBotanerPlayerCount = CustomOption.Create(869, true, CustomOptionType.Crewmate, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], NiceBotanerOption);
             NiceBotanerCoolTime = CustomOption.Create(870, false, CustomOptionType.Crewmate, "BotanerCoolDownSetting", 20f, 2.5f, 60f, 2.5f, NiceBotanerOption, format: "unitSeconds");
             NiceBotanerCount = CustomOption.Create(871, true, CustomOptionType.Crewmate, "BotanerCountSetting", 1f, 1f, 10f, 1f, NiceBotanerOption);
+
+            UnderTakerOption = new CustomRoleOption(880, false, CustomOptionType.Impostor, "UnderTakerName", RoleClass.UnderTaker.color, 1);
+            UnderTakerPlayerCount = CustomOption.Create(881, false, CustomOptionType.Impostor, "SettingPlayerCountName", ImpostorPlayers[0], ImpostorPlayers[1], ImpostorPlayers[2], ImpostorPlayers[3], UnderTakerOption);
+            UnderTakerCooldown = CustomOption.Create(882, false, CustomOptionType.Impostor, "UnderTakerCooldownSettings", 30f, 2.5f, 60f, 205f, UnderTakerOption, format: "unitSeconds");
+            UnderTakerCanUseVents = CustomOption.Create(883, false, CustomOptionType.Impostor, "UnderTakerCanUseVents", false, UnderTakerOption);
+            UnderTakerSpeed = CustomOption.Create(884, false, CustomOptionType.Impostor, "UnderTakerSpeed", 80f, 50f, 100f, 5f, UnderTakerOption, format: "unitSeconds");
             //表示設定
 
             QuarreledOption = CustomOption.Create(432, true, CustomOptionType.Neutral, Cs(RoleClass.Quarreled.color, "QuarreledName"), false, null, isHeader: true);

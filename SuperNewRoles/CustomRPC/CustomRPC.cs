@@ -134,6 +134,7 @@ namespace SuperNewRoles.CustomRPC
         ToiletFan,
         EvilBotaner,
         NiceBotaner,
+        UnderTaker,
         //RoleId
     }
 
@@ -204,7 +205,9 @@ namespace SuperNewRoles.CustomRPC
         RandomSpawn,
         KunaiKill,
         SetSecretRoomTeleportStatus,
-        ChiefSidekick
+        ChiefSidekick,
+        DragPlaceBody,
+        DevourBody
     }
     public static class RPCProcedure
     {
@@ -221,7 +224,6 @@ namespace SuperNewRoles.CustomRPC
                 FastDestroyableSingleton<HudManager>.Instance.KillOverlay.ShowKillAnimation(target.Data, source.Data);
             }
         }
-
         public static void ChiefSidekick(byte targetid)
         {
             RoleClass.Chief.SheriffPlayer.Add(targetid);
@@ -232,6 +234,77 @@ namespace SuperNewRoles.CustomRPC
                 RoleClass.Sheriff.KillMaxCount = RoleClass.Chief.KillLimit;
             }
             UncheckedSetVanilaRole(targetid, 0);
+        }
+        public static void DragPlaceBody(byte playerId)
+        {
+            DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == playerId)
+                {
+                    if (!RoleClass.UnderTaker.dragginBody)
+                    {
+                        RoleClass.UnderTaker.dragginBody = true;
+                        RoleClass.UnderTaker.bodyId = playerId;
+                        if (PlayerControl.GameOptions.MapId == 5)
+                        {
+                            GameObject vent = GameObject.Find("LowerCentralVent");
+                            vent.GetComponent<BoxCollider2D>().enabled = false;
+                        }
+                    }
+                    else
+                    {
+                        RoleClass.UnderTaker.dragginBody = false;
+                        RoleClass.UnderTaker.bodyId = 0;
+                        var currentPosition = RoleClass.UnderTaker.underTaker.GetTruePosition();
+                        var velocity = RoleClass.UnderTaker.underTaker.gameObject.GetComponent<Rigidbody2D>().velocity.normalized;
+                        var newPos = ((Vector2)RoleClass.UnderTaker.underTaker.GetTruePosition()) - (velocity / 3) + new Vector2(0.15f, 0.25f) + array[i].myCollider.offset;
+                        if (!PhysicsHelpers.AnythingBetween(
+                            currentPosition,
+                            newPos,
+                            Constants.ShipAndObjectsMask,
+                            false
+                        ))
+                        {
+                            if (PlayerControl.GameOptions.MapId == 5)
+                            {
+                                array[i].transform.position = newPos;
+                                array[i].transform.position += new Vector3(0, 0, -0.5f);
+                                GameObject vent = GameObject.Find("LowerCentralVent");
+                                vent.GetComponent<BoxCollider2D>().enabled = true;
+                            }
+                            else
+                            {
+                                array[i].transform.position = newPos;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        public static void UnderTakerResetValues()
+        {
+            // Restore UnderTaker values when rewind time
+            if (RoleClass.UnderTaker.underTaker != null && RoleClass.UnderTaker.dragginBody)
+            {
+                RoleClass.UnderTaker.dragginBody = false;
+                RoleClass.UnderTaker.bodyId = 0;
+            }
+        }
+        public static void DevourBody(byte playerId)
+        {
+            DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == playerId)
+                {
+                    UnityEngine.Object.Destroy(array[i].gameObject);
+                    if (RoleClass.UnderTaker.underTaker != null && RoleClass.UnderTaker.dragginBody && RoleClass.UnderTaker.bodyId == playerId)
+                    {
+                        UnderTakerResetValues();
+                    }
+                }
+            }
         }
         public static void FixLights()
         {
@@ -1246,6 +1319,12 @@ namespace SuperNewRoles.CustomRPC
                             break;
                         case CustomRPC.ChiefSidekick:
                             ChiefSidekick(reader.ReadByte());
+                            break;
+                        case CustomRPC.DragPlaceBody:
+                            DragPlaceBody(reader.ReadByte());
+                            break;
+                        case CustomRPC.DevourBody:
+                            DevourBody(reader.ReadByte());
                             break;
                     }
                 }

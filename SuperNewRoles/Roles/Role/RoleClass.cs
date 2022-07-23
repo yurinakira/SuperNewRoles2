@@ -155,6 +155,7 @@ namespace SuperNewRoles.Roles
             ToiletFan.ClearAndReload();
             EvilBotaner.ClearAndReload();
             NiceBotaner.ClearAndReload();
+            UnderTaker.ClearAndReload();
             //ロールクリア
             Quarreled.ClearAndReload();
             Lovers.ClearAndReload();
@@ -2470,6 +2471,48 @@ namespace SuperNewRoles.Roles
                 CoolTime = CustomOptions.NiceBotanerCoolTime.GetFloat();
                 SkillCount = CustomOptions.NiceBotanerCount.GetFloat();
                 SkillCountSHR = new();
+            }
+        }
+        public static class UnderTaker
+        {
+            public static List<PlayerControl> UnderTakerPlayer;
+            public static PlayerControl underTaker;
+            public static Color32 color = ImpostorRed;
+            public static float Cooldown;
+            public static bool CanUseVents;
+
+            public static float speedDown = 100f;
+            public static bool dragginBody = false;
+            public static byte bodyId = 0;
+
+            private static Sprite buttonSprite;
+            public static Sprite getButtonSprite()
+            {
+                if (buttonSprite) return buttonSprite;
+                buttonSprite = ModHelpers.LoadSpriteFromResources("SuperNewRoles.Resources.UnderTakerButton.png", 115f);
+                return buttonSprite;
+            }
+
+            public static void ClearAndReload()
+            {
+                UnderTakerPlayer = new();
+                underTaker = null;
+                Cooldown = CustomOptions.UnderTakerCooldown.GetFloat();
+                CanUseVents = CustomOptions.UnderTakerCanUseVents.GetBool();
+                speedDown = CustomOptions.UnderTakerSpeed.GetFloat();
+                dragginBody = false;
+                bodyId = 0;
+            }
+            public static void UnderTakerResetValuesAtDead()
+            {
+                // Restore janitor values when dead
+                dragginBody = false;
+                bodyId = 0;
+                if (PlayerControl.GameOptions.MapId == 5)
+                {
+                    GameObject vent = GameObject.Find("LowerCentralVent");
+                    vent.GetComponent<BoxCollider2D>().enabled = true;
+                }
             }
         }
         //新ロールクラス
