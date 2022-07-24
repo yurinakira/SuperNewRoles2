@@ -43,7 +43,7 @@ namespace SuperNewRoles
             Logger = Log;
             Instance = this;
             // All Load() Start
-            ModTranslation.Load();
+            ModTranslation.LoadLangs();
             ChacheManager.Load();
             CustomCosmetics.CustomColors.Load();
             ConfigRoles.Load();

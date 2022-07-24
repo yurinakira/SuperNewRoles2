@@ -1,97 +1,106 @@
-// 旧式翻訳システム
-
-/*using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
-using HarmonyLib;
-using Newtonsoft.Json.Linq;
-using SuperNewRoles.Patch;
-using UnityEngine;
 
 namespace SuperNewRoles
 {
     public class ModTranslation
     {
-        public static int defaultLanguage = (int)SupportedLangs.English;
-        public static Dictionary<string, Dictionary<int, string>> stringData = new();
-
-        public ModTranslation()
+        public static Dictionary<string, Dictionary<int, string>> tr;
+        public static void Init()
         {
-
+            SuperNewRolesPlugin.Logger.LogInfo("Language Dictionary Initialize...");
+            LoadLangs();
+            SuperNewRolesPlugin.Logger.LogInfo("Language Dictionary Initialize Finished");
         }
-        public static dynamic LangDate;
-        public static void Load()
+        public static void LoadLangs()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            Stream stream = assembly.GetManifestResourceStream("SuperNewRoles.Resources.translatedate.json");
-            var byteTexture = new byte[stream.Length];
-            var read = stream.Read(byteTexture, 0, (int)stream.Length);
-            string json = System.Text.Encoding.UTF8.GetString(byteTexture);
-            JObject parsed = JObject.Parse(json);
-            for (int i = 0; i < parsed.Count; i++)
-            {
-                JProperty token = parsed.ChildrenTokens[i].TryCast<JProperty>();
-                if (token == null) continue;
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            var stream = assembly.GetManifestResourceStream("SuperNewRoles.Resources.TranslateData.csv");
+            var sr = new StreamReader(stream);
+            tr = new Dictionary<string, Dictionary<int, string>>();
 
-                string stringName = token.Name;
-                var val = token.Value.TryCast<JObject>();
-                if (token.HasValues)
-                {
-                    var strings = new Dictionary<int, string>();
-                    for (int j = 0; j < (int)SupportedLangs.Irish + 1; j++)
-                    {
-                        string key = j.ToString();
-                        var text = val[key]?.TryCast<JValue>().Value.ToString();
+            string[] header = sr.ReadLine().Split(',');
 
-                        if (text != null && text.Length > 0)
-                        {
-                            //SuperNewRolesPlugin.Instance.Log.LogInfo($"key: {stringName} {key} {text}");
-                            strings[j] = text;
-                        }
-                    }
-                    stringData[stringName] = strings;
-                }
-            }
-        }
+            int currentLine = 1;
 
-        public static uint GetLang()
-        {
-            return SaveManager.LastLanguage;
-        }
-        public static string GetString(string key, string def = null)
-        {
-            try
+            while (!sr.EndOfStream)
             {
-                return stringData[key][(int)GetLang()].Replace("\\n", "\n");
-            }
-            catch
-            {
+                currentLine++;
+                string line = sr.ReadLine();
+                if (line == "" || line[0] == '#') continue;
+                string[] values = line.Split(',');
+                List<string> fields = new(values);
+                Dictionary<int, string> tmp = new();
                 try
                 {
-                    return stringData[key][defaultLanguage].Replace("\\n", "\n");
+                    for (var i = 1; i < fields.Count; ++i)
+                    {
+                        if (fields[i] != string.Empty && fields[i].TrimStart()[0] == '"')
+                        {
+                            while (fields[i].TrimEnd()[^1] != '"')
+                            {
+                                fields[i] = fields[i] + "," + fields[i + 1];
+                                fields.RemoveAt(i + 1);
+                            }
+                        }
+                    }
+                    for (var i = 1; i < fields.Count; i++)
+                    {
+                        var tmp_str = fields[i].Replace("\\n", "\n").Trim('"');
+                        tmp.Add(Int32.Parse(header[i]), tmp_str);
+                    }
+                    if (tr.ContainsKey(fields[0])) { SuperNewRolesPlugin.Logger.LogWarning($"翻訳用CSVに重複があります。{currentLine}行目: \"{fields[0]}\""); continue; }
+                    tr.Add(fields[0], tmp);
                 }
                 catch
                 {
-                    return key;
+                    var err = $"翻訳用CSVファイルに誤りがあります。{currentLine}行目:";
+                    foreach (var c in fields) err += $" [{c}]";
+                    Logger.Error(err, "Translator");
+                    continue;
                 }
             }
         }
 
-        public static Sprite getImage(string key, float pixelsPerUnit)
+        public static string GetString(string s, Dictionary<string, string> replacementDic = null)
         {
-            key = key.Replace("/", ".");
-            key = key.Replace("\\", ".");
-            key = "SuperNewRoles.Resources." + key;
-
-            return ModHelpers.LoadSpriteFromResources(key, pixelsPerUnit);
+            var langId = TranslationController.InstanceExists ? TranslationController.Instance.currentLanguage.languageID : SupportedLangs.English;
+            string str = GetString(s, langId);
+            if (replacementDic != null)
+                foreach (var rd in replacementDic)
+                {
+                    str = str.Replace(rd.Key, rd.Value);
+                }
+            return str;
         }
-        [HarmonyPatch(typeof(LanguageSetter), nameof(LanguageSetter.SetLanguage))]
-        class SetLanguagePatch
+
+        public static string GetString(string s, SupportedLangs langId)
         {
-            static void Postfix()
+            var res = "";
+            if (tr.TryGetValue(s, out var dic))
             {
-                ClientOptionsPatch.UpdateTranslations();
+                if (dic.TryGetValue((int)langId, out res))
+                {
+                    return res;
+                }
+                else
+                {
+                    if (dic.TryGetValue(0, out res))
+                    {
+                        SuperNewRolesPlugin.Logger.LogInfo($"Redirect to English: {res}");
+                        return res;
+                    }
+                    else
+                    {
+                        return $"<INVALID:{s}>";
+                    }
+                }
+            }
+            else
+            {
+                return $"<INVALID:{s}>";
             }
         }
     }
-}*/
+}
