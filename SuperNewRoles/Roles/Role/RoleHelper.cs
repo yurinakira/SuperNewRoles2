@@ -564,6 +564,9 @@ namespace SuperNewRoles
                 case (RoleId.NiceBotaner):
                     RoleClass.NiceBotaner.NiceBotanerPlayer.Add(player);
                     break;
+                case RoleId.UnderTaker:
+                    RoleClass.UnderTaker.UnderTakerPlayer.Add(player);
+                    break;
                 //ロールアド
                 default:
                     SuperNewRolesPlugin.Logger.LogError($"[SetRole]:No Method Found for Role Type {role}");
@@ -921,13 +924,16 @@ namespace SuperNewRoles
                 case RoleId.ToiletFan:
                     RoleClass.ToiletFan.ToiletFanPlayer.RemoveAll(ClearRemove);
                     break;
-                    case (RoleId.EvilBotaner):
+                case (RoleId.EvilBotaner):
                     RoleClass.EvilBotaner.EvilBotanerPlayer.RemoveAll(ClearRemove);
                     break;
                 case (RoleId.NiceBotaner):
                     RoleClass.NiceBotaner.NiceBotanerPlayer.RemoveAll(ClearRemove);
                     break;
-                //ロールリモベ
+                case RoleId.UnderTaker:
+                    RoleClass.UnderTaker.UnderTakerPlayer.RemoveAll(ClearRemove);
+                    break;
+                    //ロールリモベ
             }
             ChacheManager.ResetMyRoleChache();
         }
