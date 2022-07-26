@@ -160,6 +160,7 @@ namespace SuperNewRoles.Roles
             Revolutionist.ClearAndReload();
             Dictator.ClearAndReload();
             SuicidalIdeation.ClearAndReload();
+            Akujo.ClearAndReload();
             //ロールクリア
             Quarreled.ClearAndReload();
             Lovers.ClearAndReload();
@@ -2584,6 +2585,16 @@ namespace SuperNewRoles.Roles
                 AddTimeLeft = CustomOptions.SuicidalIdeationAddTimeLeft.GetFloat();
                 ButtonTimer = DateTime.Now;
                 CompletedTask = 0;
+            }
+        }
+        public static class Akujo
+        {
+            public static List<PlayerControl> AkujoPlayer;
+            public static Color32 color = new Color32(128, 0, 128, byte.MaxValue);
+            public static void ClearAndReload()
+            {
+                AkujoPlayer = new();
+                
             }
         }
         //新ロールクラス
