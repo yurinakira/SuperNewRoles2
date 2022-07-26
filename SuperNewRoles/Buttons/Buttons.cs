@@ -2093,7 +2093,7 @@ namespace SuperNewRoles.Buttons
                         RoleHelpers.SetLoversRPC(PlayerControl.LocalPlayer, target);
                     }
                 },
-                (bool isAlive, RoleId role) => { return isAlive && role == RoleId.Akujo && !RoleClass.Akujo.IsHonmeiCreated&& ModeHandler.IsMode(ModeId.Default); },
+                (bool isAlive, RoleId role) => { return isAlive && role == RoleId.Akujo && !RoleClass.Akujo.IsHonmeiCreated && ModeHandler.IsMode(ModeId.Default); },
                 () =>
                 {
                     return PlayerControl.LocalPlayer.CanMove && SetTarget();
@@ -2131,7 +2131,7 @@ namespace SuperNewRoles.Buttons
                         }
                     }
                 },
-                (bool isAlive, RoleId role) => { return isAlive && role == RoleId.Akujo && RoleClass.Akujo.IsCanCreateKeep&& ModeHandler.IsMode(ModeId.Default); },
+                (bool isAlive, RoleId role) => { return isAlive && role == RoleId.Akujo && RoleClass.Akujo.IsCanCreateKeep && ModeHandler.IsMode(ModeId.Default); },
                 () =>
                 {
                     return PlayerControl.LocalPlayer.CanMove && SetTarget();
