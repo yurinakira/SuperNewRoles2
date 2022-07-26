@@ -2086,9 +2086,9 @@ namespace SuperNewRoles.Buttons
                     if (PlayerControl.LocalPlayer.CanMove && !RoleClass.Akujo.IsHonmeiCreated && !PlayerControl.LocalPlayer.IsLovers())
                     {
                         var target = SetTarget();
-                        if (target == null || target.IsLovers()) return;
-                        RoleClass.Truelover.IsCreate = true;
-                        RoleHelpers.SetLovers(PlayerControl.LocalPlayer, target);
+                        if (target == null || target.IsLovers()) return;//ターゲットがラバーズなら破棄
+                        RoleClass.Akujo.IsHonmeiCreated = true;
+                        RoleHelpers.SetLovers(PlayerControl.LocalPlayer, target);//自分とターゲットをラバーズにする
                         RoleHelpers.SetLoversRPC(PlayerControl.LocalPlayer, target);
                     }
                 },
