@@ -2091,6 +2091,7 @@ namespace SuperNewRoles.Buttons
                         RoleClass.Akujo.IsHonmeiCreated = true;
                         RoleHelpers.SetLovers(PlayerControl.LocalPlayer, target);//自分とターゲットをラバーズにする
                         RoleHelpers.SetLoversRPC(PlayerControl.LocalPlayer, target);
+                        RoleClass.Akujo.KeepPlayer.Add(target);
                     }
                 },
                 (bool isAlive, RoleId role) => { return isAlive && role == RoleId.Akujo && !RoleClass.Akujo.IsHonmeiCreated && ModeHandler.IsMode(ModeId.Default); },
@@ -2116,20 +2117,24 @@ namespace SuperNewRoles.Buttons
                 () =>
                 {
                     var target = SetTarget();
-                    if (PlayerControl.LocalPlayer.CanMove && RoleClass.Akujo.IsCanCreateKeep && !PlayerControl.LocalPlayer.IsLovers())
+                    foreach (PlayerControl p in RoleClass.Akujo.KeepPlayer)
                     {
-                        foreach (PlayerControl player in CachedPlayer.AllPlayers)
+                        if (PlayerControl.LocalPlayer.CanMove && RoleClass.Akujo.IsCanCreateKeep && !PlayerControl.LocalPlayer.IsLovers() && target != p)
                         {
-                            if (PlayerControl.LocalPlayer.IsRole(RoleId.Akujo))
+                            foreach (PlayerControl player in CachedPlayer.AllPlayers)
                             {
-                                target.RpcSetName(ModHelpers.Cs(Palette.White, player.Data.GetPlayerName(PlayerOutfitType.Default)) + "きーぷ");
-                            }
-                            else
-                            {
-                                Patch.SetNamesClass.SetPlayerNameText(target, target.NameText().text + ModHelpers.Cs(RoleClass.Lovers.color, " ♥"));
+                                if (PlayerControl.LocalPlayer.IsRole(RoleId.Akujo))
+                                {
+                                    target.RpcSetName(ModHelpers.Cs(Palette.White, player.Data.GetPlayerName(PlayerOutfitType.Default)) + "きーぷ");
+                                }
+                                else
+                                {
+                                    Patch.SetNamesClass.SetPlayerNameText(target, target.NameText().text + ModHelpers.Cs(RoleClass.Lovers.color, " ♥"));
+                                }
                             }
                         }
                     }
+                    RoleClass.Akujo.KeepCreatedCount++;
                 },
                 (bool isAlive, RoleId role) => { return isAlive && role == RoleId.Akujo && RoleClass.Akujo.IsCanCreateKeep && ModeHandler.IsMode(ModeId.Default); },
                 () =>
