@@ -592,12 +592,6 @@ namespace SuperNewRoles.Patches
                             return false;
                         case RoleId.Akujo:
                             bool CreatedFlag = false;
-                            target.RpcProtectPlayerPrivate(target, 0, __instance);
-                            new LateTask(() =>
-                            {
-                                SyncSetting.MurderSyncSetting(__instance);
-                                __instance.RPCMurderPlayerPrivate(target);
-                            }, 0.5f);
                             if (!__instance.IsLovers())
                             {
                                 if (!CreatedFlag)
@@ -606,9 +600,7 @@ namespace SuperNewRoles.Patches
                                     RoleClass.Truelover.CreatePlayers.Add(__instance.PlayerId);
                                     RoleHelpers.SetLovers(__instance, target);
                                     RoleHelpers.SetLoversRPC(__instance, target);
-                                    //__instance.RpcSetRoleDesync(RoleTypes.GuardianAngel);
                                     Mode.SuperHostRoles.FixedUpdate.SetRoleName(__instance);
-                                    Mode.SuperHostRoles.FixedUpdate.SetRoleName(target);
                                 }
                                 else
                                 {
