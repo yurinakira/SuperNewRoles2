@@ -2590,11 +2590,35 @@ namespace SuperNewRoles.Roles
         public static class Akujo
         {
             public static List<PlayerControl> AkujoPlayer;
-            public static Color32 color = new Color32(128, 0, 128, byte.MaxValue);
+            public static Color32 color = new(128, 0, 128, byte.MaxValue);
+            public static bool IsHonmeiCreated;
+            public static int KeepCreatedCount;
+            public static List<int> CreatePlayers;
+            public static int CanCreateKeepLimit;
+
+            public static Sprite HonmeiButtonSprite;
+            public static Sprite GetHonmeiButtonSprite()
+            {
+                if (HonmeiButtonSprite) return HonmeiButtonSprite;
+                HonmeiButtonSprite = ModHelpers.LoadSpriteFromResources("SuperNewRoles.Resources.AkujoHonmeiButton.png", 115f);
+                return HonmeiButtonSprite;
+            }
+
+            public static Sprite KeepButtonSprite;
+            public static Sprite GetKeepButtonSprite()
+            {
+                if (KeepButtonSprite) return KeepButtonSprite;
+                KeepButtonSprite = ModHelpers.LoadSpriteFromResources("SuperNewRoles.Resources.AkujoKeepButton.png", 115f);
+                return KeepButtonSprite;
+            }
+
             public static void ClearAndReload()
             {
                 AkujoPlayer = new();
-                
+                IsHonmeiCreated = false;
+                KeepCreatedCount = 0;
+                CreatePlayers = new();
+                CanCreateKeepLimit = CustomOptions.AkujoCanCreateKeepLimit.GetInt();
             }
         }
         //新ロールクラス

@@ -68,6 +68,8 @@ namespace SuperNewRoles.Buttons
         public static CustomButton ButtonerButton;
         public static CustomButton RevolutionistButton;
         public static CustomButton SuicidalIdeationButton;
+        public static CustomButton AkujoHonmeiButton;
+        public static CustomButton AkujoKeepButton;
 
         public static TMPro.TMP_Text sheriffNumShotsText;
         public static TMPro.TMP_Text GhostMechanicNumRepairText;
@@ -2075,6 +2077,37 @@ namespace SuperNewRoles.Buttons
             )
             {
                 buttonText = ModTranslation.GetString("SuicidalIdeationButtonName"),
+                showButtonText = true
+            };
+
+            AkujoHonmeiButton = new(
+                () =>
+                {
+                    if (PlayerControl.LocalPlayer.CanMove && !RoleClass.Akujo.IsHonmeiCreated && !PlayerControl.LocalPlayer.IsLovers())
+                    {
+                        var target = SetTarget();
+                        if (target == null || target.IsLovers()) return;
+                        RoleClass.Truelover.IsCreate = true;
+                        RoleHelpers.SetLovers(PlayerControl.LocalPlayer, target);
+                        RoleHelpers.SetLoversRPC(PlayerControl.LocalPlayer, target);
+                    }
+                },
+                (bool isAlive, RoleId role) => { return isAlive && role == RoleId.Akujo && !RoleClass.Akujo.IsHonmeiCreated; },
+                () =>
+                {
+                    return PlayerControl.LocalPlayer.CanMove && SetTarget();
+                },
+                () => { AkujoHonmeiButton.Timer = 0f; AkujoHonmeiButton.MaxTimer = 0f; },
+                RoleClass.Akujo.GetHonmeiButtonSprite(),
+                new Vector3(-1.8f, -0.06f, 0),
+                __instance,
+                __instance.AbilityButton,
+                KeyCode.F,
+                49,
+                () => { return false; }
+            )
+            {
+                buttonText = ModTranslation.GetString("HonmeiName"),
                 showButtonText = true
             };
 

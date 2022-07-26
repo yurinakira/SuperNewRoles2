@@ -744,6 +744,7 @@ namespace SuperNewRoles.CustomOption
 
         public static CustomRoleOption AkujoOption;
         public static CustomOption AkujoPlayerCount;
+        public static CustomOption AkujoCanCreateKeepLimit;//キープを何人作れるか
         //CustomOption
 
         public static CustomOption QuarreledOption;
@@ -1526,8 +1527,9 @@ namespace SuperNewRoles.CustomOption
             SuicidalIdeationShortTask = SuicidalIdeationoption.Item2;
             SuicidalIdeationLongTask = SuicidalIdeationoption.Item3;
 
-            AkujoOption = new CustomRoleOption(930, true, CustomOptionType.Neutral, "AkujoName",RoleClass.Akujo.color, 1);
-            AkujoPlayerCount = CustomOption.Create(9302, true, CustomOptionType.Neutral, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], AkujoOption);
+            AkujoOption = new CustomRoleOption(929, true, CustomOptionType.Neutral, "AkujoName", RoleClass.Akujo.color, 1);
+            AkujoPlayerCount = CustomOption.Create(930, true, CustomOptionType.Neutral, "SettingPlayerCountName", CrewPlayers[0], CrewPlayers[1], CrewPlayers[2], CrewPlayers[3], AkujoOption);
+            AkujoCanCreateKeepLimit = CustomOption.Create(931, true, CustomOptionType.Neutral, "CanCreateKeepSetting", 1f, 1f, 5f, 1f, AkujoOption);
             //表示設定
 
             QuarreledOption = CustomOption.Create(432, true, CustomOptionType.Neutral, Cs(RoleClass.Quarreled.color, "QuarreledName"), false, null, isHeader: true);

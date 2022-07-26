@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Hazel;
 using SuperNewRoles.CustomRPC;
@@ -954,10 +954,10 @@ namespace SuperNewRoles
                 case (RoleId.SuicidalIdeation):
                     RoleClass.SuicidalIdeation.SuicidalIdeationPlayer.RemoveAll(ClearRemove);
                     break;
-                    case RoleId.Akujo:
+                case RoleId.Akujo:
                     RoleClass.Akujo.AkujoPlayer.RemoveAll(ClearRemove);
                     break;
-                //ロールリモベ
+                    //ロールリモベ
             }
             ChacheManager.ResetMyRoleChache();
         }
@@ -1009,11 +1009,10 @@ namespace SuperNewRoles
                 case RoleId.Neet:
                 case RoleId.Revolutionist:
                 case RoleId.SuicidalIdeation:
+                case RoleId.Akujo:
                     IsTaskClear = true;
                     break;
-                    case RoleId.Akujo:
-                case RoleId.Akujo:
-                //タスククリアか
+                    //タスククリアか
             }
             if (!IsTaskClear
                 && ((ModeHandler.IsMode(ModeId.SuperHostRoles) &&
@@ -1155,10 +1154,10 @@ namespace SuperNewRoles
                 case RoleId.Neet:
                 case RoleId.Revolutionist:
                 case RoleId.SuicidalIdeation:
+                case RoleId.Akujo:
                     IsNeutral = true;
                     break;
-                    case RoleId.Akujo:
-                //第三か
+                    //第三か
             }
             return IsNeutral;
         }
