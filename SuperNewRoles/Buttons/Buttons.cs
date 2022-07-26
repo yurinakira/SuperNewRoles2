@@ -2053,7 +2053,7 @@ namespace SuperNewRoles.Buttons
             };
 
             SuicidalIdeationButton = new CustomButton(
-                () =>{},
+                () => { },
                 (bool isAlive, RoleId role) => { return isAlive && role == RoleId.SuicidalIdeation; },
                 () =>
                 {
@@ -2099,7 +2099,7 @@ namespace SuperNewRoles.Buttons
                 },
                 () => { AkujoHonmeiButton.Timer = 0f; AkujoHonmeiButton.MaxTimer = 0f; },
                 RoleClass.Akujo.GetHonmeiButtonSprite(),
-                new Vector3(-1.8f, -0.06f, 0),
+                new Vector3(0f, 1f, 0),
                 __instance,
                 __instance.AbilityButton,
                 KeyCode.F,
@@ -2111,6 +2111,36 @@ namespace SuperNewRoles.Buttons
                 showButtonText = true
             };
 
+            AkujoKeepButton = new(
+                () =>
+                {
+                    if (PlayerControl.LocalPlayer.CanMove && RoleClass.Akujo.IsCanCreateKeep && !PlayerControl.LocalPlayer.IsLovers())
+                    {
+                        var target = SetTarget();
+                        if (target == null || target.IsLovers()) return;
+                        RoleClass.Truelover.IsCreate = true;
+                        RoleHelpers.SetLovers(PlayerControl.LocalPlayer, target);
+                        RoleHelpers.SetLoversRPC(PlayerControl.LocalPlayer, target);
+                    }
+                },
+                (bool isAlive, RoleId role) => { return isAlive && role == RoleId.Akujo && RoleClass.Akujo.IsCanCreateKeep; },
+                () =>
+                {
+                    return PlayerControl.LocalPlayer.CanMove && SetTarget();
+                },
+                () => { AkujoKeepButton.Timer = 0f; AkujoKeepButton.MaxTimer = 0f; },
+                RoleClass.Akujo.GetKeepButtonSprite(),
+                new Vector3(-0.9f, 1f, 0),
+                __instance,
+                __instance.AbilityButton,
+                KeyCode.F,
+                49,
+                () => { return false; }
+            )
+            {
+                buttonText = ModTranslation.GetString("KeepName"),
+                showButtonText = true
+            };
             SetCustomButtonCooldowns();
         }
     }

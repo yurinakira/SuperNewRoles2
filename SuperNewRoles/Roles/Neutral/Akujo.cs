@@ -1,10 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-namespace SuperNewRoles.RolesNeutral
+
+namespace SuperNewRoles.Roles.Neutral
 {
     public static class Akujo
     {
-        //‚±‚±‚ÉƒR[ƒh‚ğ‘‚«‚±‚ñ‚Å‚­‚¾‚³‚¢
+        public static void Postfix()
+        {
+            if (RoleClass.Akujo.CanCreateKeepLimit == RoleClass.Akujo.KeepCreatedCount||//Keepä½œæˆå¯èƒ½æ•°ãŒKeepä½œæˆæ•°ã¨ç­‰ã—ã„ãªã‚‰
+            RoleClass.Akujo.CanCreateKeepLimit < RoleClass.Akujo.KeepCreatedCount)//ã¾ãŸã€Keepä½œæˆå¯èƒ½æ•°ãŒKeepä½œæˆæ•°ã‚ˆã‚Šå°‘ãªã„ãªã‚‰
+            {
+                RoleClass.Akujo.IsCanCreateKeep = false;
+            }
+        }
     }
 }

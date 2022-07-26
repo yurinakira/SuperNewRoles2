@@ -2595,6 +2595,7 @@ namespace SuperNewRoles.Roles
             public static int KeepCreatedCount;
             public static List<int> CreatePlayers;
             public static int CanCreateKeepLimit;
+            public static bool IsCanCreateKeep;
 
             public static Sprite HonmeiButtonSprite;
             public static Sprite GetHonmeiButtonSprite()
@@ -2619,6 +2620,7 @@ namespace SuperNewRoles.Roles
                 KeepCreatedCount = 0;
                 CreatePlayers = new();
                 CanCreateKeepLimit = CustomOptions.AkujoCanCreateKeepLimit.GetInt();
+                IsCanCreateKeep = true;
             }
         }
         //新ロールクラス
