@@ -107,6 +107,7 @@ namespace SuperNewRoles.Mode.SuperHostRoles
             DesyncImpostors.AddRange(RoleClass.Truelover.trueloverPlayer);
             DesyncImpostors.AddRange(RoleClass.FalseCharges.FalseChargesPlayer);
             DesyncImpostors.AddRange(RoleClass.MadMaker.MadMakerPlayer);
+            DesyncImpostors.AddRange(RoleClass.Akujo.AkujoPlayer);
             /*============インポスターにDesync============*/
 
 

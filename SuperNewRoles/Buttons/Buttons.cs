@@ -9,6 +9,7 @@ using SuperNewRoles.Helpers;
 using SuperNewRoles.Mode;
 using SuperNewRoles.Patches;
 using SuperNewRoles.Roles;
+using SuperNewRoles.Roles.Neutral;
 using UnityEngine;
 
 namespace SuperNewRoles.Buttons
@@ -2114,13 +2115,20 @@ namespace SuperNewRoles.Buttons
             AkujoKeepButton = new(
                 () =>
                 {
+                    var target = SetTarget();
                     if (PlayerControl.LocalPlayer.CanMove && RoleClass.Akujo.IsCanCreateKeep && !PlayerControl.LocalPlayer.IsLovers())
                     {
-                        var target = SetTarget();
-                        if (target == null || target.IsLovers()) return;
-                        RoleClass.Truelover.IsCreate = true;
-                        RoleHelpers.SetLovers(PlayerControl.LocalPlayer, target);
-                        RoleHelpers.SetLoversRPC(PlayerControl.LocalPlayer, target);
+                        foreach (PlayerControl player in CachedPlayer.AllPlayers)
+                        {
+                            if (PlayerControl.LocalPlayer.IsRole(RoleId.Akujo))
+                            {
+                                target.RpcSetName(ModHelpers.Cs(Palette.White, player.Data.GetPlayerName(PlayerOutfitType.Default)) + "きーぷ");
+                            }
+                            else
+                            {
+                                Patch.SetNamesClass.SetPlayerNameText(target, target.NameText().text + ModHelpers.Cs(RoleClass.Lovers.color, " ♥"));
+                            }
+                        }
                     }
                 },
                 (bool isAlive, RoleId role) => { return isAlive && role == RoleId.Akujo && RoleClass.Akujo.IsCanCreateKeep; },

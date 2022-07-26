@@ -157,7 +157,9 @@ namespace SuperNewRoles.Mode.SuperHostRoles
                 case RoleId.EvilButtoner:
                     optdata.RoleOptions.ShapeshifterDuration = 1f;
                     break;
-
+                case RoleId.Akujo:
+                    optdata.KillCooldown = RoleClass.Akujo.CreatePlayers.Contains(player.PlayerId) ? -1f : 0.001f;
+                    break;
             }
             if (player.IsDead()) optdata.AnonymousVotes = false;
             optdata.RoleOptions.ShapeshifterLeaveSkin = false;
